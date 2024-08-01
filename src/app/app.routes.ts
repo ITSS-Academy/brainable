@@ -16,4 +16,14 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./pages/join/join.routes').then((m) => m.JOIN_ROUTERS),
   },
+  {
+    path: 'host',
+    loadChildren: () =>
+      import('./pages/host/host.routes').then((m) => m.HOST_ROUTERS),
+  },
+  {
+    path: 'guest',
+    loadChildren: () =>
+      import('./pages/guest/guest.routes').then((m) => m.GUEST_ROUTERS),
+  },
 ];

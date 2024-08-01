@@ -1,0 +1,59 @@
+@use '@angular/material' as mat;
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background-image: url("https://assets-cdn.kahoot.it/challenge/assets/teach_stud_default-4bpdEb_b.jpg?auto=webp&width=1200&crop=3%3A2");
+  background-size: cover;
+  background-position: center;
+}
+
+.header {
+  min-height: calc(7.625rem - 1.5vmin);
+  padding: 2.5vmin calc(2.5rem + 5vmin);
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+.game-info {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+
+  background-color: rgb(255, 255, 255);
+  color: rgb(51, 51, 51);
+  border-radius: 5px;
+  padding: 0 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 2px 4px 0;
+}
+
+.pin {
+  margin-left: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.start-game {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+
+.start-btn {
+}
+
+
+
+
+
+
+
+
+
+

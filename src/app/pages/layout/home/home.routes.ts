@@ -5,17 +5,6 @@ export const HOME_ROUTERS: Routes = [
   {
     path: '',
     component: HomeComponent,
-    children: [
-      {
-        path: 'host',
-        loadComponent: () =>
-          import('../host/host.component').then((m) => m.HostComponent),
-      },
-      {
-        path: 'guest',
-        loadComponent: () =>
-          import('../guest/guest.component').then((m) => m.GuestComponent),
-      },
-    ],
+    children: [],
   },
 ];
