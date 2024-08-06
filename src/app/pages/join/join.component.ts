@@ -1,11 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as AuthActions from '../../ngrx/auth/auth.actions';
-import { Auth } from '@angular/fire/auth';
 import { ProfileState } from '../../ngrx/profile/profile.state';
 import { MaterialModule } from '../../shared/material.module';
+import { AuthState } from '../../ngrx/auth/auth.state';
+import * as ProfileActions from '../../ngrx/profile/profile.actions';
 
 @Component({
   selector: 'app-join',
@@ -16,24 +17,41 @@ import { MaterialModule } from '../../shared/material.module';
 })
 export class JoinComponent implements OnInit, OnDestroy {
   constructor(
-    private auth: Auth,
-    private store: Store<{ profile: ProfileState }>,
+    private store: Store<{ profile: ProfileState; auth: AuthState }>,
     private router: Router,
   ) {}
 
   subscriptions: Subscription[] = [];
+  dashboard: string = 'My dashboard';
   profile$ = this.store.select('profile', 'profile');
+  isGettingProfile$ = this.store.select('profile', 'isSuccessful');
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.profile$.subscribe((profile) => {
-        console.log(profile);
+      this.store.select('auth', 'idToken').subscribe((token) => {
+        if (token) {
+          this.store.dispatch(ProfileActions.getProfile({ idToken: token }));
+        }
+      }),
+      this.isGettingProfile$.subscribe((isGettingProfile) => {
+        if (isGettingProfile) {
+          this.profile$.subscribe((profile) => {
+            if (profile) {
+              this.dashboard = profile.fullName + "'s dashboard";
+            }
+          });
+        }
       }),
     );
   }
 
   signWithGoogle() {
     this.store.dispatch(AuthActions.login());
+  }
+
+  signOut() {
+    this.store.dispatch(AuthActions.logout());
+    this.dashboard = 'My dashboard';
   }
 
   homePage() {

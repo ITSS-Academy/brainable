@@ -1,1 +1,19 @@
-<p>slidebar works!</p>
+<div class="sidebar">
+  <h1 class="logo">Brainable</h1>
+  <div class="profile">
+    <img src="https://via.placeholder.com/60" alt="Profile Image">
+    <span class="username">Username</span>
+  </div>
+  <button [routerLink]="['/creator']" class="btn-create" mat-flat-button>
+    <mat-icon fontIcon="add"></mat-icon>
+    Create
+  </button>
+  <nav>
+    @for (page of navLinks; track $index) {
+      <a [ngClass]="{ 'active': activeLink === page }"
+         (click)="setActive(page)">
+        <mat-icon [fontIcon]="page.icon" class="icon"></mat-icon>
+        {{ page.name }}</a>
+    }
+  </nav>
+</div>

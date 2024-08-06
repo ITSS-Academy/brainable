@@ -1,17 +1,19 @@
 <div class="container">
   <div class="header">
     <div class="header-content">
-      <button class="btn-home" mat-flat-button (click)="homePage()">My dashboard</button>
-      <button
-        mat-flat-button (click)="signWithGoogle()">Login
-      </button>
+      <button class="btn-home" mat-flat-button (click)="homePage()">{{ dashboard }}</button>
+      <button class="btn-home" mat-flat-button (click)="signWithGoogle()">Login</button>
+      <button class="btn-home" mat-flat-button (click)="signOut()">Logout</button>
+
 
     </div>
   </div>
   <div class="content">
     <div class="content-body">
       <input type="text" placeholder="Enter a join code">
-      <button mat-flat-button>Join</button>
+      <button class="btn-join" mat-flat-button>Join</button>
     </div>
   </div>
 </div>
+
+

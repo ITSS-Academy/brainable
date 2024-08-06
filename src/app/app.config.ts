@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -13,6 +13,11 @@ import { AuthEffects } from './ngrx/auth/auth.effects';
 import { provideHttpClient } from '@angular/common/http';
 import { profileReducer } from './ngrx/profile/profile.reducer';
 import { ProfileEffects } from './ngrx/profile/profile.effects';
+import { quizReducer } from './ngrx/quiz/quiz.reducer';
+import { QuizEffects } from './ngrx/quiz/quiz.effects';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,7 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'profile', reducer: profileReducer }),
-    provideEffects([AuthEffects, ProfileEffects]),
+    provideState({ name: 'quiz', reducer: quizReducer }),
+    provideEffects([AuthEffects, ProfileEffects, QuizEffects]),
     provideFirebaseApp(() =>
       initializeApp({
         projectId: 'brainable-d5919',
@@ -35,5 +41,6 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
     provideHttpClient(),
+    importProvidersFrom(SocketIoModule.forRoot(config)),
   ],
 };

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { CreatorComponent } from './pages/game/creator/creator.component';
 
 export const routes: Routes = [
   {
@@ -19,11 +20,15 @@ export const routes: Routes = [
   {
     path: 'host',
     loadChildren: () =>
-      import('./pages/host/host.routes').then((m) => m.HOST_ROUTERS),
+      import('./pages/game/host/host.routes').then((m) => m.HOST_ROUTERS),
   },
   {
     path: 'guest',
     loadChildren: () =>
-      import('./pages/guest/guest.routes').then((m) => m.GUEST_ROUTERS),
+      import('./pages/game/guest/guest.routes').then((m) => m.GUEST_ROUTERS),
+  },
+  {
+    path: 'creator',
+    component: CreatorComponent,
   },
 ];

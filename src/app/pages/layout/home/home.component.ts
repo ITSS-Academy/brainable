@@ -2,26 +2,19 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
-import { ProfileState } from '../../../ngrx/profile/profile.state';
 import { Subscription } from 'rxjs';
-import * as ProfileActions from '../../../ngrx/profile/profile.actions';
+import { QuizState } from '../../../ngrx/quiz/quiz.state';
+import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
+import { Quiz, QuizDTO } from '../../../models/quiz.model';
+import { MaterialModule } from '../../../shared/material.module';
+import { FormsModule } from '@angular/forms';
+import { LocalTimePipe } from '../../../shared/pipes/local-time.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MaterialModule, FormsModule, LocalTimePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  constructor(
-    private store: Store<{ auth: AuthState; profile: ProfileState }>,
-    private router: Router,
-  ) {}
-
-  subscriptions: Subscription[] = [];
-
-  ngOnInit(): void {}
-
-  ngOnDestroy() {}
-}
+export class HomeComponent {}

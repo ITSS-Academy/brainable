@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  padding: 10px;
+  background-color: #F2F2F2;
+  display: flex;
+}
+
+.slide-bar {
+  width: 190px;
+  height: 1000px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.main-content {
+  width: calc(100% - 190px);
+  margin-left: 10px;
+
+  .header {
+    height: 60px;
+    border-radius: 12px 12px 0 0;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .content {
+    height: calc(100% - 60px);
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 0 0 12px 12px;
+  }
+}
