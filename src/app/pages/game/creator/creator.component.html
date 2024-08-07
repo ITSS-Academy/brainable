@@ -1,1 +1,130 @@
-<p>creator works!</p>
+<div id="container">
+  <mat-toolbar class="header">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    <span>Bài quiz không có tiêu đề</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+      <button mat-fab extended class="save-btn">
+        <mat-icon>save</mat-icon>
+        Xuất bản
+      </button>
+  </mat-toolbar>
+
+  <div class="content">
+    <div class="question-list">
+      <span class="question-type">1 Quiz</span>
+      <div class="question-content">
+        <div class="icon">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="content_copy"></mat-icon>
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+        </div>
+        <div class="question-overview">
+          <span class="question-title">Question</span>
+          <div class="timer-and-img">
+            <div class="timer">
+              20
+            </div>
+              <img src="assets/images/background-game.png" alt="">
+          </div>
+
+            <div class="answers">
+              <div class="answer">
+              </div>
+              <div class="answer">
+              </div>
+              <div class="answer">
+              </div>
+              <div class="answer">
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="btn">
+        <button mat-flat-button>Add question</button>
+        <button mat-flat-button>Add slide</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <input type="text" class="question-input" placeholder="Question">
+      <img src="assets/images/background-game.png" alt="">
+      <div class="answers">
+        <div class="answer">
+          <div class="answer-color">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="change_history"></mat-icon>
+          </div>
+          <p>Add answer 1</p>
+        </div>
+        <div class="answer">
+          <div class="answer-color">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+          </div>
+          <p>Add answer 2</p>
+        </div>
+        <div class="answer">
+          <div class="answer-color">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="circle"></mat-icon>
+          </div>
+          <p>Add answer 3</p>
+        </div>
+        <div class="answer">
+          <div class="answer-color">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+          </div>
+          <p>Add answer 4</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div>
+        <mat-form-field>
+          <mat-label>Question type</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Time limit</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Points</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Answer options</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="footer">
+        <button mat-button>Delete</button>
+        <button mat-stroked-button>Duplicate</button>
+      </div>
+    </div>
+  </div>
+</div>
