@@ -131,39 +131,16 @@ $light-theme: mat.define-theme((
     tertiary: $_tertiary,
   ),
   typography: (
-    brand-family: "Open Sans,sans-serif",
-    plain-family: "Open Sans,sans-serif",
+    brand-family: "Montserrat",
+    plain-family: "Open Sans",
   ),
   density: (
     scale: 0,
   )
 ));
 
-
-$dark-theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: $_primary,
-    tertiary: $_tertiary,
-  ),
-  typography: (
-    brand-family: "Open Sans,sans-serif",
-    plain-family: "Open Sans,sans-serif",
-  ),
-  density: (
-    scale: 0,
-  )
-));
-
-body.light-theme {
+:root {
   @include mat.all-component-themes($light-theme);
-}
-
-body.dark-theme {
-  @include mat.all-component-themes($dark-theme);
-}
-
-.light-theme {
   --md-sys-color-primary: rgb(98 45 152);
   --md-sys-color-surface-tint: rgb(120 68 175);
   --md-sys-color-on-primary: rgb(255 255 255);
@@ -215,64 +192,13 @@ body.dark-theme {
   --md-sys-color-surface-container-highest: rgb(232 224 234);
 }
 
-.dark-theme {
-  --md-sys-color-primary: rgb(220 184 255);
-  --md-sys-color-surface-tint: rgb(220 184 255);
-  --md-sys-color-on-primary: rgb(71 7 126);
-  --md-sys-color-primary-container: rgb(127 75 182);
-  --md-sys-color-on-primary-container: rgb(255 255 255);
-  --md-sys-color-secondary: rgb(214 188 238);
-  --md-sys-color-on-secondary: rgb(59 40 79);
-  --md-sys-color-secondary-container: rgb(75 55 96);
-  --md-sys-color-on-secondary-container: rgb(229 202 253);
-  --md-sys-color-tertiary: rgb(255 255 255);
-  --md-sys-color-on-tertiary: rgb(50 47 58);
-  --md-sys-color-tertiary-container: rgb(216 210 225);
-  --md-sys-color-on-tertiary-container: rgb(65 61 74);
-  --md-sys-color-error: rgb(255 180 171);
-  --md-sys-color-on-error: rgb(105 0 5);
-  --md-sys-color-error-container: rgb(147 0 10);
-  --md-sys-color-on-error-container: rgb(255 218 214);
-  --md-sys-color-background: rgb(22 18 25);
-  --md-sys-color-on-background: rgb(232 224 234);
-  --md-sys-color-surface: rgb(22 18 25);
-  --md-sys-color-on-surface: rgb(232 224 234);
-  --md-sys-color-surface-variant: rgb(75 68 81);
-  --md-sys-color-on-surface-variant: rgb(206 195 211);
-  --md-sys-color-outline: rgb(151 141 156);
-  --md-sys-color-outline-variant: rgb(75 68 81);
-  --md-sys-color-shadow: rgb(0 0 0);
-  --md-sys-color-scrim: rgb(0 0 0);
-  --md-sys-color-inverse-surface: rgb(232 224 234);
-  --md-sys-color-inverse-on-surface: rgb(51 47 54);
-  --md-sys-color-inverse-primary: rgb(120 68 175);
-  --md-sys-color-primary-fixed: rgb(239 219 255);
-  --md-sys-color-on-primary-fixed: rgb(43 0 82);
-  --md-sys-color-primary-fixed-dim: rgb(220 184 255);
-  --md-sys-color-on-primary-fixed-variant: rgb(95 42 150);
-  --md-sys-color-secondary-fixed: rgb(239 219 255);
-  --md-sys-color-on-secondary-fixed: rgb(37 18 57);
-  --md-sys-color-secondary-fixed-dim: rgb(214 188 238);
-  --md-sys-color-on-secondary-fixed-variant: rgb(82 62 103);
-  --md-sys-color-tertiary-fixed: rgb(231 224 240);
-  --md-sys-color-on-tertiary-fixed: rgb(29 26 37);
-  --md-sys-color-tertiary-fixed-dim: rgb(202 196 211);
-  --md-sys-color-on-tertiary-fixed-variant: rgb(73 69 81);
-  --md-sys-color-surface-dim: rgb(22 18 25);
-  --md-sys-color-surface-bright: rgb(60 55 63);
-  --md-sys-color-surface-container-lowest: rgb(16 13 19);
-  --md-sys-color-surface-container-low: rgb(30 26 33);
-  --md-sys-color-surface-container: rgb(34 30 37);
-  --md-sys-color-surface-container-high: rgb(45 40 48);
-  --md-sys-color-surface-container-highest: rgb(56 51 59);
-}
+@include mat.color-variants-backwards-compatibility($light-theme);
+@include mat.typography-hierarchy($light-theme);
 
 html,
 body {
   height: 100%;
   width: 100%;
-  // overflow: hidden;
-  // overflow: auto;
 }
 
 * {
@@ -281,9 +207,14 @@ body {
 
 body {
   margin: 0;
-  font-family: "Open Sans", sans-serif;
 }
 
 body::-webkit-scrollbar {
   display: none;
 }
+
+.cdk-overlay-pane {
+  background: var(--mat-app-background-color);
+}
+
+

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './reports.component.html',
-  styleUrl: './reports.component.scss'
+  styleUrl: './reports.component.scss',
 })
-export class ReportsComponent {
-
-}
+export class ReportsComponent {}

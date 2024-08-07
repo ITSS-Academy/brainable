@@ -24,23 +24,24 @@
     height: 60px;
     border-radius: 12px 12px 0 0;
     background-color: #ffffff;
-    //position: fixed;
-    //top: 10px;
-    width: 100%; /* Adjust width to account for slide-bar, margins, and scrollbar */
-    //z-index: 1000; /* Ensure the header is above other content */
+    width: 100%;
   }
 
   .content {
-    margin-top: 10px; /* Add margin to account for the fixed header height */
-    height: calc(100vh - 90px); /* Adjust height to account for the fixed header */
-    background-color: #ffffff;
-    padding: 0 0 0 10px;
-    border-radius: 0 0 12px 12px;
-    //overflow-y: auto; /* Enable vertical scrolling */
-    .example-viewport {
-      height: 100%;
-      width: 100%;
-    }
+    margin-top: 10px;
+    height: calc(100vh - 90px);
+    //background-color: red;
+    //padding: 0 0 0 10px;
+    //border-radius: 0 0 12px 12px;
+
+
+    //.example-viewport {
+    //  height: 100%;
+    //  width: 100%;
+    //  //background-color: #ffffff;
+    //}
 
   }
 }
+
+

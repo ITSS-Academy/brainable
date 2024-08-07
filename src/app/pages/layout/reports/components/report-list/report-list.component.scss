@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 0 0 12px 12px;
+  background-color: #ffffff;
+}
+
+.example-viewport {
+  height: 100%;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.mat-mdc-row:hover {
+  background-color: var(--mat-option-hover-state-layer-color);
+  cursor: pointer;
+}

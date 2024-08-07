@@ -16,8 +16,7 @@ import { ProfileEffects } from './ngrx/profile/profile.effects';
 import { quizReducer } from './ngrx/quiz/quiz.reducer';
 import { QuizEffects } from './ngrx/quiz/quiz.effects';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,19 +27,12 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'profile', reducer: profileReducer }),
     provideState({ name: 'quiz', reducer: quizReducer }),
     provideEffects([AuthEffects, ProfileEffects, QuizEffects]),
-    provideFirebaseApp(() =>
-      initializeApp({
-        projectId: 'brainable-d5919',
-        appId: '1:1040011988423:web:359333ff1101fa7cdc1de2',
-        storageBucket: 'brainable-d5919.appspot.com',
-        apiKey: 'AIzaSyAbWdZ5bTZN_JqBXFGxFig0KlNVVWQXAqI',
-        authDomain: 'brainable-d5919.firebaseapp.com',
-        messagingSenderId: '1040011988423',
-      }),
-    ),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig as any)),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
     provideHttpClient(),
-    importProvidersFrom(SocketIoModule.forRoot(config)),
+    importProvidersFrom(
+      SocketIoModule.forRoot(environment.socketIoConfig as SocketIoConfig),
+    ),
   ],
 };
