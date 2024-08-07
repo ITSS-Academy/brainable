@@ -35,7 +35,7 @@
 .btn-create {
   font-size: 16px;
   width: 90%;
-  height: 55px;
+  height: 45px;
   margin-bottom: 20px;
 }
 
@@ -47,9 +47,8 @@
   display: flex;
   align-items: center;
   padding: 10px 0 10px 15px;
-  margin-bottom: 10px;
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: 100px;
   color: var(--md-sys-color-tertiary);
   font-size: 14px;
   font-weight: 500;
@@ -58,7 +57,8 @@
 }
 
 .sidebar nav a:hover {
-  background-color: var(--md-sys-color-tertiary-container);
+  background-color: #E1DFE4;
+  opacity: 0.9;
 }
 
 .sidebar nav a.active {

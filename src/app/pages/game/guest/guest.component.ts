@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { Question } from '../../../models/question.model';
 import { QuestionService } from '../../../services/question/question.service';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '../../../shared/material.module';
+import { MaterialModule } from '../../../shared/modules/material.module';
 
 @Component({
   selector: 'app-guest',

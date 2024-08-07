@@ -9,7 +9,7 @@
 
 .header {
   height: 56px;
-  background-color: hsla(0, 0%, 3.5%, 0.3);
+  background-color: #0909094C
 }
 
 .header-content {
@@ -22,7 +22,6 @@
 }
 
 .btn-home.mat-mdc-unelevated-button:not(:disabled) {
-  //background-color: var(--md-sys-color-primary);
   background-color: hsla(0, 0, 100, .2);
   margin: 0 4px;
   font-size: 16px;

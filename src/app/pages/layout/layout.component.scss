@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  height: 100vh;
   padding: 10px;
   background-color: #F2F2F2;
   display: flex;
@@ -7,7 +8,7 @@
 
 .slide-bar {
   width: 190px;
-  height: 1000px;
+  height: calc(100vh - 20px);
   border-radius: 12px;
   background-color: #ffffff;
   padding: 10px;
@@ -16,18 +17,30 @@
 .main-content {
   width: calc(100% - 190px);
   margin-left: 10px;
+  height: calc(100vh - 20px);
+
 
   .header {
     height: 60px;
     border-radius: 12px 12px 0 0;
     background-color: #ffffff;
-    margin-bottom: 10px;
+    //position: fixed;
+    //top: 10px;
+    width: 100%; /* Adjust width to account for slide-bar, margins, and scrollbar */
+    //z-index: 1000; /* Ensure the header is above other content */
   }
 
   .content {
-    height: calc(100% - 60px);
+    margin-top: 10px; /* Add margin to account for the fixed header height */
+    height: calc(100vh - 90px); /* Adjust height to account for the fixed header */
     background-color: #ffffff;
-    padding: 10px;
+    padding: 0 0 0 10px;
     border-radius: 0 0 12px 12px;
+    //overflow-y: auto; /* Enable vertical scrolling */
+    .example-viewport {
+      height: 100%;
+      width: 100%;
+    }
+
   }
 }

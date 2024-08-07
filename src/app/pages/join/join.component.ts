@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { ProfileState } from '../../ngrx/profile/profile.state';
-import { MaterialModule } from '../../shared/material.module';
+import { MaterialModule } from '../../shared/modules/material.module';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import * as ProfileActions from '../../ngrx/profile/profile.actions';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../shared/modules/material.module';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { filter } from 'rxjs';

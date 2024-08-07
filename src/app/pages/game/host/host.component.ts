@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MaterialModule } from '../../../shared/material.module';
+import { MaterialModule } from '../../../shared/modules/material.module';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';

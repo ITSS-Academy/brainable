@@ -35,6 +35,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const materialModules = [
   CdkTreeModule,
@@ -72,6 +73,7 @@ const materialModules = [
   MatSlideToggleModule,
   MatProgressBarModule,
   MatNativeDateModule,
+  ScrollingModule,
 ];
 
 @NgModule({
