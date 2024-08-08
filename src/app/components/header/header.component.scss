@@ -11,9 +11,9 @@
   justify-content: center;
   align-items: center;
   width: 360px;
-  background-color: #eee7f7;
+  background-color: var(--md-sys-color-surface-container);
   border-radius: 28px;
-  padding: 2px 5px;
+  padding: 2px 8px;
   margin: 0 auto; /* Center the search container */
 }
 
@@ -25,7 +25,6 @@
   padding: 10px;
   border-radius: 20px;
   font-size: 16px;
-  color: #5f4b8b;
 }
 
 .action {
