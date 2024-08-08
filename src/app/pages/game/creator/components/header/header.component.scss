@@ -7,8 +7,11 @@
 }
 
 .title {
+  width: 40%;
   font-size: 16px;
   color: #0f0d11;
+  border: none;
+  outline: none;
 }
 
 .save-btn {
@@ -17,4 +20,11 @@
   box-shadow: none;
   color: var(--md-sys-color-on-primary);
   background-color: var(--md-sys-color-primary);
+}
+
+.save-btn mat-icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
 }
