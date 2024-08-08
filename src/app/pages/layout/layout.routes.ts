@@ -19,7 +19,7 @@ export const LAYOUT_ROUTERS: Routes = [
       {
         path: 'profile',
         loadChildren: () =>
-          import('./profile/profile.routes').then((m) => m.PROFILE_ROUTES),
+          import('./profile/profile.routes').then((m) => m.PROFILE_ROUTERS),
       },
       {
         path: 'library',

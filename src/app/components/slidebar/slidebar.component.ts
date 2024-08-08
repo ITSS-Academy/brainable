@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { filter } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ProfileState } from '../../ngrx/profile/profile.state';
 
 @Component({
   selector: 'app-slidebar',
   standalone: true,
-  imports: [MaterialModule, RouterLink, NgClass],
+  imports: [MaterialModule, RouterLink, NgClass, AsyncPipe],
   templateUrl: './slidebar.component.html',
   styleUrl: './slidebar.component.scss',
 })
@@ -36,8 +38,13 @@ export class SlidebarComponent implements OnInit {
   ];
 
   activeLink = this.navLinks[0];
+  photoUrl$ = this.store.select('profile', 'profile', 'photoUrl');
+  username$ = this.store.select('profile', 'profile', 'fullName');
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private store: Store<{ profile: ProfileState }>,
+  ) {
     if (this.router.url.includes('home')) {
       this.activeLink = this.navLinks[0];
     } else if (this.router.url.includes('library')) {

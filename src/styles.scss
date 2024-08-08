@@ -6,91 +6,91 @@
 $_palettes: (
   primary: (
     0: #000000,
-    10: #2B0052,
-    20: #47077E,
-    25: #531B89,
-    30: #5F2A96,
-    35: #6B37A2,
-    40: #7844AF,
-    50: #925ECB,
-    60: #AD78E7,
-    70: #C894FF,
-    80: #DCB8FF,
-    90: #EFDBFF,
-    95: #F9ECFF,
-    98: #FFF7FF,
+    10: #321300,
+    20: #4D260B,
+    25: #5A3115,
+    30: #683C1F,
+    35: #764729,
+    40: #835334,
+    50: #A06B4A,
+    60: #BD8462,
+    70: #DB9E7A,
+    80: #F9B893,
+    90: #FFDBC8,
+    95: #FFEDE5,
+    98: #FFF8F5,
     99: #FFFBFF,
     100: #FFFFFF
   ),
   secondary: (
     0: #000000,
-    10: #22172D,
-    20: #372B43,
-    25: #43364F,
-    30: #4E425B,
-    35: #5A4D67,
-    40: #675973,
-    50: #80718D,
-    60: #9A8BA7,
-    70: #B6A5C3,
-    80: #D1C0DF,
-    90: #EEDCFC,
-    95: #F9ECFF,
-    98: #FFF7FF,
+    10: #251911,
+    20: #3C2D25,
+    25: #48382F,
+    30: #54433A,
+    35: #604F45,
+    40: #6D5B51,
+    50: #877369,
+    60: #A18D82,
+    70: #BDA79B,
+    80: #D9C2B6,
+    90: #F6DED1,
+    95: #FFEDE5,
+    98: #FFF8F5,
     99: #FFFBFF,
     100: #FFFFFF
   ),
   tertiary: (
     0: #000000,
-    10: #1D1A25,
-    20: #322F3A,
-    25: #3D3A46,
-    30: #494551,
-    35: #54505D,
-    40: #615C6A,
-    50: #7A7583,
-    60: #948E9D,
-    70: #AEA9B8,
-    80: #CAC4D3,
-    90: #E7E0F0,
-    95: #F5EEFE,
-    98: #FDF7FF,
+    10: #1D1C08,
+    20: #32311B,
+    25: #3D3C26,
+    30: #494830,
+    35: #55543B,
+    40: #616046,
+    50: #7A785D,
+    60: #949276,
+    70: #AFAC8F,
+    80: #CBC8A9,
+    90: #E7E4C4,
+    95: #F5F2D1,
+    98: #FEFBD9,
     99: #FFFBFF,
     100: #FFFFFF
   ),
   neutral: (
     0: #000000,
-    10: #1D1B1E,
-    20: #322F33,
-    25: #3D3A3E,
-    30: #49464A,
-    35: #555155,
-    40: #615D61,
-    50: #7A767A,
-    60: #948F94,
-    70: #AFAAAE,
-    80: #CBC5C9,
-    90: #E7E1E5,
-    95: #F5EFF4,
-    98: #FEF7FC,
+    10: #1E1B19,
+    20: #342F2E,
+    25: #3F3A38,
+    30: #4B4644,
+    35: #56514F,
+    40: #635D5B,
+    50: #7C7673,
+    60: #968F8D,
+    70: #B1AAA7,
+    80: #CDC5C2,
+    90: #E9E1DD,
+    95: #F8EFEB,
+    98: #FFF8F5,
     99: #FFFBFF,
     100: #FFFFFF
   ),
   neutral-variant: (
     0: #000000,
-    10: #1E1A22,
-    20: #332F37,
-    25: #3F3A42,
-    30: #4A454E,
-    35: #565059,
-    40: #625C66,
-    50: #7B757E,
-    60: #958E98,
-    70: #B0A9B3,
-    80: #CCC4CF,
-    90: #E9E0EB,
-    95: #F7EEF9,
-    98: #FFF7FF,
+    10: #211A17,
+    20: #372F2B,
+    25: #423A35,
+    30: #4E4541,
+    35: #5A514C,
+    40: #665C58,
+    50: #7F7570,
+    60: #9A8E89,
+    70: #B5A9A3,
+    80: #D1C4BE,
+    90: #EEE0D9,
+    95: #FCEEE7,
+    98: #FFF8F5,
     99: #FFFBFF,
     100: #FFFFFF
   ),
@@ -131,7 +131,7 @@ $light-theme: mat.define-theme((
     tertiary: $_tertiary,
   ),
   typography: (
-    brand-family: "Montserrat",
+    brand-family: "Open Sans",
     plain-family: "Open Sans",
   ),
   density: (
@@ -141,55 +141,55 @@ $light-theme: mat.define-theme((
 
 :root {
   @include mat.all-component-themes($light-theme);
-  --md-sys-color-primary: rgb(98 45 152);
-  --md-sys-color-surface-tint: rgb(120 68 175);
+  --md-sys-color-primary: rgb(131 83 52);
+  --md-sys-color-surface-tint: rgb(131 83 52);
   --md-sys-color-on-primary: rgb(255 255 255);
-  --md-sys-color-primary-container: rgb(136 84 192);
-  --md-sys-color-on-primary-container: rgb(255 255 255);
-  --md-sys-color-secondary: rgb(107 85 128);
+  --md-sys-color-primary-container: rgb(255 199 167);
+  --md-sys-color-on-primary-container: rgb(94 52 24);
+  --md-sys-color-secondary: rgb(115 89 74);
   --md-sys-color-on-secondary: rgb(255 255 255);
-  --md-sys-color-secondary-container: rgb(235 211 255);
-  --md-sys-color-on-secondary-container: rgb(79 59 100);
-  --md-sys-color-tertiary: rgb(97 92 106);
+  --md-sys-color-secondary-container: rgb(255 224 208);
+  --md-sys-color-on-secondary-container: rgb(93 69 55);
+  --md-sys-color-tertiary: rgb(98 97 43);
   --md-sys-color-on-tertiary: rgb(255 255 255);
-  --md-sys-color-tertiary-container: rgb(240 233 249);
-  --md-sys-color-on-tertiary-container: rgb(79 75 88);
+  --md-sys-color-tertiary-container: rgb(217 214 148);
+  --md-sys-color-on-tertiary-container: rgb(65 64 13);
   --md-sys-color-error: rgb(186 26 26);
   --md-sys-color-on-error: rgb(255 255 255);
   --md-sys-color-error-container: rgb(255 218 214);
   --md-sys-color-on-error-container: rgb(65 0 2);
-  --md-sys-color-background: rgb(255 247 255);
-  --md-sys-color-on-background: rgb(30 26 33);
-  --md-sys-color-surface: rgb(255 247 255);
-  --md-sys-color-on-surface: rgb(30 26 33);
-  --md-sys-color-surface-variant: rgb(234 223 239);
-  --md-sys-color-on-surface-variant: rgb(75 68 81);
-  --md-sys-color-outline: rgb(125 116 130);
-  --md-sys-color-outline-variant: rgb(206 195 211);
+  --md-sys-color-background: rgb(255 248 245);
+  --md-sys-color-on-background: rgb(32 26 24);
+  --md-sys-color-surface: rgb(255 248 245);
+  --md-sys-color-on-surface: rgb(32 26 24);
+  --md-sys-color-surface-variant: rgb(243 222 212);
+  --md-sys-color-on-surface-variant: rgb(81 68 61);
+  --md-sys-color-outline: rgb(132 116 108);
+  --md-sys-color-outline-variant: rgb(214 195 185);
   --md-sys-color-shadow: rgb(0 0 0);
   --md-sys-color-scrim: rgb(0 0 0);
-  --md-sys-color-inverse-surface: rgb(51 47 54);
-  --md-sys-color-inverse-on-surface: rgb(247 238 248);
-  --md-sys-color-inverse-primary: rgb(220 184 255);
-  --md-sys-color-primary-fixed: rgb(239 219 255);
-  --md-sys-color-on-primary-fixed: rgb(43 0 82);
-  --md-sys-color-primary-fixed-dim: rgb(220 184 255);
-  --md-sys-color-on-primary-fixed-variant: rgb(95 42 150);
-  --md-sys-color-secondary-fixed: rgb(239 219 255);
-  --md-sys-color-on-secondary-fixed: rgb(37 18 57);
-  --md-sys-color-secondary-fixed-dim: rgb(214 188 238);
-  --md-sys-color-on-secondary-fixed-variant: rgb(82 62 103);
-  --md-sys-color-tertiary-fixed: rgb(231 224 240);
-  --md-sys-color-on-tertiary-fixed: rgb(29 26 37);
-  --md-sys-color-tertiary-fixed-dim: rgb(202 196 211);
-  --md-sys-color-on-tertiary-fixed-variant: rgb(73 69 81);
-  --md-sys-color-surface-dim: rgb(224 215 225);
-  --md-sys-color-surface-bright: rgb(255 247 255);
+  --md-sys-color-inverse-surface: rgb(53 47 44);
+  --md-sys-color-inverse-on-surface: rgb(250 238 234);
+  --md-sys-color-inverse-primary: rgb(249 184 147);
+  --md-sys-color-primary-fixed: rgb(255 219 200);
+  --md-sys-color-on-primary-fixed: rgb(50 19 0);
+  --md-sys-color-primary-fixed-dim: rgb(249 184 147);
+  --md-sys-color-on-primary-fixed-variant: rgb(104 60 31);
+  --md-sys-color-secondary-fixed: rgb(255 219 200);
+  --md-sys-color-on-secondary-fixed: rgb(41 23 12);
+  --md-sys-color-secondary-fixed-dim: rgb(226 192 173);
+  --md-sys-color-on-secondary-fixed-variant: rgb(89 66 52);
+  --md-sys-color-tertiary-fixed: rgb(233 230 163);
+  --md-sys-color-on-tertiary-fixed: rgb(29 29 0);
+  --md-sys-color-tertiary-fixed-dim: rgb(204 201 137);
+  --md-sys-color-on-tertiary-fixed-variant: rgb(74 73 21);
+  --md-sys-color-surface-dim: rgb(227 216 211);
+  --md-sys-color-surface-bright: rgb(255 248 245);
   --md-sys-color-surface-container-lowest: rgb(255 255 255);
-  --md-sys-color-surface-container-low: rgb(250, 241, 251);
-  --md-sys-color-surface-container: rgb(244 235 245);
-  --md-sys-color-surface-container-high: rgb(238 229 239);
-  --md-sys-color-surface-container-highest: rgb(232 224 234);
+  --md-sys-color-surface-container-low: rgb(253 241 236);
+  --md-sys-color-surface-container: rgb(247 236 231);
+  --md-sys-color-surface-container-high: rgb(241 230 225);
+  --md-sys-color-surface-container-highest: rgb(235 224 219);
 }
 
 @include mat.color-variants-backwards-compatibility($light-theme);

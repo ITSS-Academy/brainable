@@ -1,8 +1,8 @@
 <div class="sidebar">
   <h1 class="logo">Brainable</h1>
   <div class="profile">
-    <img src="https://via.placeholder.com/60" alt="Profile Image">
-    <span class="username">Username</span>
+    <img [src]="photoUrl$ | async " alt="Profile Image">
+    <span class="username">{{ username$ | async }}</span>
   </div>
   <button [routerLink]="['/creator']" class="btn-create" mat-flat-button>
     <mat-icon fontIcon="add"></mat-icon>
