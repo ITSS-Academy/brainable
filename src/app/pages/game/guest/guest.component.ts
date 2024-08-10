@@ -8,11 +8,13 @@ import { Question } from '../../../models/question.model';
 import { QuestionService } from '../../../services/question/question.service';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../shared/modules/material.module';
+import {WaitingComponent} from "./components/waiting/waiting.component";
+import {AnswerComponent} from "./components/answer/answer.component";
 
 @Component({
   selector: 'app-guest',
   standalone: true,
-  imports: [FormsModule, MaterialModule],
+  imports: [FormsModule, MaterialModule, WaitingComponent, AnswerComponent],
   templateUrl: './guest.component.html',
   styleUrl: './guest.component.scss',
 })
