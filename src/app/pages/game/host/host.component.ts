@@ -18,6 +18,7 @@ import { QuestionChannel } from '../../../models/question.model';
   styleUrl: './host.component.scss',
 })
 export class HostComponent implements OnInit {
+  private quizzes: any;
   constructor(
     private store: Store<{ quiz: QuizState; auth: AuthState }>,
     private questionService: QuestionService,
@@ -42,7 +43,7 @@ export class HostComponent implements OnInit {
           this.quiz$.subscribe((quiz) => {
             if (quiz) {
               this.quiz = quiz;
-              console.log('Quiz:', quiz[0].questions);
+              // console.log('Quiz:', quiz[0].questions);
             }
           });
         }
@@ -51,18 +52,22 @@ export class HostComponent implements OnInit {
   }
 
   sendQuestion() {
-    const question = this.quiz[0].questions[0];
-    const questionChannel: QuestionChannel = {
-      pin: this.pin,
-      question: question.question,
-      answer: question.answer,
-      option1: question.option1,
-      option2: question.option2,
-      option3: question.option3,
-      option4: question.option4,
-      timeLimit: question.timeLimit,
-      quizId: this.quiz[0].id,
-    };
-    this.questionService.sendQuestionByPin(questionChannel);
+    if (this.quizzes.length > 0 && this.quizzes[0].questions.length > 0) {
+      const question = this.quizzes[0].questions[0];
+      const questionChannel: QuestionChannel = {
+        pin: this.pin,
+        question: question.text, // Chỉnh sửa để phù hợp với thuộc tính đúng
+        answer: question.answer ?? '',
+        option1: question.option1 ?? '',
+        option2: question.option2 ?? '',
+        option3: question.option3 ?? '',
+        option4: question.option4 ?? '',
+        timeLimit: question.timeLimit ?? 0,
+        quizId: this.quizzes[0].id,
+      };
+      this.questionService.sendQuestionByPin(questionChannel);
+    } else {
+      console.error('No questions available.');
+    }
   }
 }
