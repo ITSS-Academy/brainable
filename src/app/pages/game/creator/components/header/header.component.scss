@@ -1,0 +1,30 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.header {
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.25);
+}
+
+.title {
+  width: 40%;
+  font-size: 16px;
+  color: #0f0d11;
+  border: none;
+  outline: none;
+}
+
+.save-btn {
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: none;
+  color: var(--md-sys-color-on-primary);
+  background-color: var(--md-sys-color-primary);
+}
+
+.save-btn mat-icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}

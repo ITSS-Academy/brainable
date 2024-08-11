@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuestionState } from '../../../ngrx/question/question.state';
 import { Subscription } from 'rxjs';
@@ -8,11 +7,13 @@ import { Question } from '../../../models/question.model';
 import { QuestionService } from '../../../services/question/question.service';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../shared/modules/material.module';
+import { WaitingComponent } from './components/waiting/waiting.component';
+import { AnswerComponent } from './components/answer/answer.component';
 
 @Component({
   selector: 'app-guest',
   standalone: true,
-  imports: [FormsModule, MaterialModule],
+  imports: [FormsModule, MaterialModule, WaitingComponent, AnswerComponent],
   templateUrl: './guest.component.html',
   styleUrl: './guest.component.scss',
 })
