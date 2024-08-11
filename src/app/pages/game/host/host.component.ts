@@ -9,11 +9,12 @@ import { Quiz } from '../../../models/quiz.model';
 import { FormsModule } from '@angular/forms';
 import { QuestionService } from '../../../services/question/question.service';
 import { QuestionChannel } from '../../../models/question.model';
+import {LobbyComponent} from "./components/lobby/lobby.component";
 
 @Component({
   selector: 'app-host',
   standalone: true,
-  imports: [MaterialModule, FormsModule],
+  imports: [MaterialModule, FormsModule, LobbyComponent],
   templateUrl: './host.component.html',
   styleUrl: './host.component.scss',
 })
