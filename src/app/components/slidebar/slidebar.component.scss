@@ -49,7 +49,7 @@
   padding: 10px 0 10px 15px;
   text-decoration: none;
   border-radius: 100px;
-  color: var(--md-sys-color-tertiary);
+  color: var(--md-sys-color-on-background);
   font-size: 14px;
   font-weight: 500;
   transition: background-color 0.3s;
@@ -57,14 +57,14 @@
 }
 
 .sidebar nav a:hover {
-  background-color: #E1DFE4;
-  opacity: 0.9;
+  background-color: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .sidebar nav a.active {
   background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
   font-weight: 600;
-
 }
 
 .sidebar nav a .icon {
