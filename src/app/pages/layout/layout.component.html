@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="slide-bar">
+  <div class="slide-bar" [ngClass]="{'hidden': !isSlideBarVisible}">
     <app-slidebar></app-slidebar>
   </div>
-  <div class="main-content">
+  <div class="main-content" [ngClass]="{'disabled': isSlideBarVisible}">
     <div class="header">
-      <app-header></app-header>
+      <app-header (menuClick)="onMenuClick()"></app-header>
     </div>
     <div class="content">
       <router-outlet></router-outlet>
