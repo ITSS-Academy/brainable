@@ -22,28 +22,43 @@
   justify-content: center;
 }
 
-#quiz-name {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+#quiz-name{
   width: 100%;
-  padding-bottom: 15px;
-  margin-right: 20px;
-
-  button.mat-fab {
-    display: flex;
-    align-items: center; // Căn giữa chữ và biểu tượng
-    padding: 0 16px; // Padding để làm cho nút rộng hơn
-    font-size: 16px; // Kích thước chữ, có thể điều chỉnh tùy theo thiết kế
-  }
-
-  mat-icon {
-    margin-left: 8px; // Khoảng cách giữa chữ "Home" và biểu tượng
-  }
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
+#quiz-title{
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px 0px;
+  width: 100%;
+  height: 70px;
+}
+
+#quiz-see-more{
+  padding-top: 18px;
+}
+
+.see-more-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 115px;
+  height: 40px;
+  border-radius: 100px;
+  background-color: rgba(98, 45, 152, 0.12);
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+
 #quiz-content{
- width: 182px;
+  width: 182px;
   height: 241.42px;
   background: #FFFFFF;
   border: 1px solid #4A4153;
@@ -54,33 +69,41 @@
   width: 100%;
   height: 50%;
 
+  h5{
+    font-size: 20px;
+  }
+
   img{
     width: 100%;
     height: 100%;
     border-radius: 12px;
   }
 }
-
 .quiz-bot{
   width: 100%;
-  height: 50%;
   padding: 2px 10px;
 }
 
-.quiz-title{
+.quiz-bot h6{
   font-size: 20px;
-  font-weight: bold;
+  padding-top: 10px;
 }
-
 
 .quiz-note {
   display: flex;
   justify-content: space-between;
   align-items:end;
   font-size: 12px;
-  padding-top: 10px;
+  padding-top: 40px;
+}
+.title {
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
 }
 
 .quiz-note p {
-  margin: 0; /* Xóa margin mặc định của các thẻ p */
+  margin: 0;
 }

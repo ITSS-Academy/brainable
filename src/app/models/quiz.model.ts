@@ -27,3 +27,9 @@ export interface QuizDTO {
     isPublic: boolean;
   };
 }
+
+export interface Topic{
+  img:string;
+  title:string;
+  description:string;
+}
