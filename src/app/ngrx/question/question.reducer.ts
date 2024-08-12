@@ -3,7 +3,12 @@ import * as QuestionActions from './question.actions';
 import { QuestionState } from './question.state';
 import { Question, QuestionDTO } from '../../models/question.model';
 
-export const initialState: QuestionState = {
+export const initialState: {
+  isCreateQuestionSuccessful: boolean;
+  isCreateQuestionLoading: boolean;
+  createQuestionErrorMessage: string;
+  createQuestion: QuestionDTO
+} = {
   createQuestion: <QuestionDTO>{},
   isCreateQuestionLoading: false,
   isCreateQuestionSuccessful: false,

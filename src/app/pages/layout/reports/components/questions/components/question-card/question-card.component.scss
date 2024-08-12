@@ -1,0 +1,186 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#question-head-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#question-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#question-options-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 20px;
+
+}
+
+#question-statistics-right {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 25%;
+}
+
+#question-hb-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 25%;
+}
+
+mat-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-size: 14px;
+  margin-right: 4px;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+#text {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+#question-hb-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 27%;
+}
+
+.question-hb-right-text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.question-hb-right-text p {
+  margin: 2px;
+}
+
+#question-body {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.question-title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#question-format {
+  display: flex;
+  align-items: flex-start;
+}
+
+#question-number {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+#question-display {
+  flex-grow: 1;
+  margin-left: 8px;
+}
+
+.circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+.circle-and-number-container {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 3%;
+}
+
+.circle-container .material-symbols-outlined {
+  font-size: 24px;
+  margin-right: 0px;
+}
+
+.circle-container .letter {
+  position: absolute;
+  font-size: 14px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ques-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.question-ans {
+  font-size: 18px;
+  margin: 0;
+}
+
+.progress-bar-container {
+  margin-top: 2px;
+}
+
+mat-progress-bar {
+  width: 50%;
+}
+
+
+.stas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.correct {
+  margin: 0;
+}
+
+.students {
+  margin: 0;
+  text-align: right;
+}
+
+
+
