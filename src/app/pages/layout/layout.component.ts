@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { SlidebarComponent } from '../../components/slidebar/slidebar.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { MaterialModule } from '../../shared/modules/material.module';
-import { fakeAsync } from '@angular/core/testing';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -25,12 +24,18 @@ export class LayoutComponent {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const slideBar = document.querySelector('.slide-bar');
-    if (slideBar && !slideBar.contains(event.target as Node)) {
-      this.isSlideBarVisible = !this.isSlideBarVisible;
+    const menuIcon = document.querySelector('.menu-icon');
+    if (
+      slideBar &&
+      !slideBar.contains(event.target as Node) &&
+      menuIcon !== event.target &&
+      this.isSlideBarVisible
+    ) {
+      this.isSlideBarVisible = false;
     }
   }
 
   onMenuClick(): void {
-    this.isSlideBarVisible = false;
+    this.isSlideBarVisible = true;
   }
 }
