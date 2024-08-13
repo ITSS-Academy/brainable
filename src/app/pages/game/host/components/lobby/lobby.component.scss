@@ -5,7 +5,7 @@
   justify-content: space-evenly;
   width: 100%;
   height: 100%;
-  background-image: url('../../../../../../assets/images/z5714813450402_17d12c1680cfb5a3fede63bf191ee94c.jpg');
+  background-image: url('../../../../../../assets/images/background-game.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -18,7 +18,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 }
 
 .game-link {
@@ -30,16 +29,23 @@
   justify-content: center;
   flex-direction: column;
   padding-left: 20px;
+  clip-path: polygon(calc(100% - 2.5vmin) 0px, 100% 50%, calc(100% - 2.5vmin) 100%, 0px 100%, 0px 0px);
+  margin: 0px -1vmin 0px 0px;
+  border-radius: 4px 0 0 4px;
 }
 
 .game-pin {
-  width: 15%;
+  width: 20%;
   height: 85%;
   background-color: var(--md-sys-color-background);
   display: flex;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+  margin: 0px 0px 0px -1vmin;
+  clip-path: polygon(0px 0%, 100% 0px, 100% 100%, 0px 100%, 2.5vmin 50%);
+  padding: 0 10px;
+  border-radius: 0 4px 4px 0;
 }
 
 .game-pin .title {
@@ -55,12 +61,20 @@
 }
 
 .qr-code {
-  width: 120px;
-  height: 120px;
+  width: 118px;
+  height: 118px;
   background-color: var(--md-sys-color-background);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 8px;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.qr-code img {
+  width: 100%;
+  height: 100%;
 }
 
 .buttons {
