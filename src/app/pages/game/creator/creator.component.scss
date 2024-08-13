@@ -1,21 +1,70 @@
 #container {
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100vh;
+  position: relative;
+}
+
+app-header {
+  position: fixed;
+  width: 100%;
 }
 
 .content {
+  margin-top: 65px;
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 90%;
+  height: calc(100% - 65px)
 }
 
-app-question-list,
-app-setting {
+app-question-list {
   width: 15%;
 }
 
+.question {
+  display: flex;
+  width: 85%;
+  height: 100%;
+}
+
+app-setting {
+  width: 18%;
+  height: 100%;
+}
+
 app-main-content {
-  width: 70%;
+  width: 82%;
+}
+
+@media screen and (max-width: 992px) {
+  app-setting {
+    display: none;
+  }
+
+  .content {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .question {
+    width: 100%;
+  }
+
+  app-main-content {
+    width: 100%;
+    height: calc(100% - 80px);
+    margin-top: 65px;
+  }
+
+  app-question-list {
+    width: 100%;
+    height: 80px !important;
+    //position: absolute;
+    background-color: var(--md-sys-color-on-primary);
+    //bottom: 0;
+  }
+
 }
