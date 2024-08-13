@@ -1,16 +1,15 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<div class="container">
-  <div>
-    <div id ="question-head-bar">
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <div id="question-head-bar">
       <div id="question-hb-left">
         <div class="check">
-          <mat-chip disabled>
+          <mat-chip>
             <span class="material-symbols-outlined">check_box</span>
             <span id="text">Multiple choice</span>
           </mat-chip>
         </div>
         <div class="check">
-          <mat-chip disabled>
+          <mat-chip>
             <span class="material-symbols-outlined">grade</span>
             <span id="text1" style="margin-right: 4px;">1</span>
             <span id="text2">Point</span>
@@ -25,111 +24,38 @@
             [value]="value"
             [diameter]="30">
           </mat-progress-spinner>
-          <p style="font-weight: bold">76%</p><p>Accuracy</p>
+          <p class="data-number">76%</p>
+          <p>Accuracy</p>
         </div>
+        <div class="line"></div>
         <div class="question-hb-right-text">
-          <p style="font-weight: bold">8s</p><p> Avg.time</p>
+          <p class="data-number">8s</p>
+          <p> Avg.time</p>
         </div>
       </div>
-  </div>
-  <div id="question-body">
-    <h6 class="question-title">Question</h6>
-    <div id="question-format">
-    <div id ="question-number">
-      <p>1.</p>
     </div>
-    <div id="question-display">
-      <p> Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên chủ nghĩa xã hội (bổ sung, phát triển năm 2011) đã phát triển mô hình chủ nghĩa xã hội Việt Nam với mấy đặc trưng</p>
-    </div>
-  </div>
-    <div id="question-data">
-      <div id ="question-options-left">
-        <div id="question-multiple-choice">
-          <div class="circle-and-number-container">
-            <div class="circle-container">
-              <span class="material-symbols-outlined">radio_button_unchecked</span>
-              <span class="letter">A</span>
-            </div>
-            <div class="ques-info">
-              <div class="question-ans">
-                <p>5</p>
-              </div>
-              <div class="progress-bar-container">
-                <mat-progress-bar mode="determinate" value="15"></mat-progress-bar>
-              </div>
-            </div>
-          </div>
-          <div class="circle-and-number-container">
-            <div class="circle-container">
-              <span class="material-symbols-outlined">radio_button_unchecked</span>
-              <span class="letter">B</span>
-            </div>
-            <div class="ques-info">
-              <div class="question-ans">
-                <p>6</p>
-              </div>
-              <div class="progress-bar-container">
-                <mat-progress-bar mode="determinate" value="25"></mat-progress-bar>
-              </div>
-            </div>
-          </div>
-          <div class="circle-and-number-container">
-            <div class="circle-container">
-              <span class="material-symbols-outlined">radio_button_unchecked</span>
-              <span class="letter">C</span>
-            </div>
-            <div class="ques-info">
-              <div class="question-ans">
-                <p>7</p>
-              </div>
-              <div class="progress-bar-container">
-                <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
-              </div>
-            </div>
-          </div>
-          <div class="circle-and-number-container">
-            <div class="circle-container">
-              <span class="material-symbols-outlined">radio_button_unchecked</span>
-              <span class="letter">D</span>
-            </div>
-            <div class="ques-info">
-              <div class="question-ans">
-                <p>8</p>
-              </div>
-              <div class="progress-bar-container">
-                <mat-progress-bar mode="determinate" value="80"></mat-progress-bar>
-              </div>
-            </div>
-          </div>
+    <div id="question-body">
+      <span class="question-title">Question</span>
+      <div id="question-format">
+        <div id="question-display">
+          <p>1. Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên chủ nghĩa xã hội (bổ sung, phát triển năm 2011) đã
+            phát triển mô hình chủ nghĩa xã hội Việt Nam với mấy đặc trưng</p>
         </div>
       </div>
-      <div id="question-statistics-right">
-        <div class="stas">
-          <p class="correct">Correct</p>
-          <p class="students">44 students</p>
-        </div>
-        <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" value="80" style="width: 100%"></mat-progress-bar>
-        </div>
-        <div class="stas">
-          <p class="correct">Incorrect</p>
-          <p class="students">10 students</p>
-        </div>
-        <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" value="15" style="width: 100%"></mat-progress-bar>
-        </div>
-        <div class="stas">
-          <p class="correct">Unattempted</p>
-          <p class="students">4 students</p>
-        </div>
-        <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" value="7" style="width: 100%"></mat-progress-bar>
-        </div>
 
+      <div class="option-body">
+        <span class="option-title">Options</span>
+        <div id="question-data">
+          <div id="question-options-left">
+            <app-quiz-result></app-quiz-result>
+          </div>
+          <div id="question-statistics-right">
+            <app-answer-status-bar></app-answer-status-bar>
+          </div>
+        </div>
       </div>
 
     </div>
-  </div>
-</div>
-</div>
+  </mat-card-content>
+</mat-card>
 

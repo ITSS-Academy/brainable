@@ -1,0 +1,56 @@
+:host {
+  --mdc-linear-progress-track-height: 16px;
+  --mdc-linear-progress-track-shape: 1px;
+  --mdc-linear-progress-active-indicator-height: 16px;
+}
+
+.correct {
+  --mdc-linear-progress-active-indicator-color: var(--md-sys-color-primary)
+}
+
+.inCorrect {
+  --mdc-linear-progress-active-indicator-color: var(--md-sys-color-error)
+}
+
+.unAttempted {
+  --mdc-linear-progress-active-indicator-color: var(--md-sys-color-outline)
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+  align-items: start;
+}
+
+.line {
+  width: 1px;
+  height: 200px;
+  background-color: var(--md-sys-color-outline);
+}
+
+.status-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .status-item {
+    width: 300px;
+
+    .status-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .status-label {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .status-count {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+}
