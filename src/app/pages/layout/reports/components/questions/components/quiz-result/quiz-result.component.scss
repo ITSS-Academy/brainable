@@ -1,0 +1,69 @@
+:host {
+  --mdc-linear-progress-track-height: 16px;
+  --mdc-linear-progress-track-shape: 1px;
+  --mdc-linear-progress-active-indicator-height: 16px;
+}
+
+.process-bar-correct {
+  --mdc-linear-progress-active-indicator-color: var(--md-sys-color-primary)
+}
+
+.process-bar-wrong {
+  --mdc-linear-progress-active-indicator-color: var(--md-sys-color-error)
+}
+
+
+.container {
+  width: 100%;
+}
+
+.question-multiple-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.circle-and-number-container {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+
+  .circle-container {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: var(--md-sys-color-surface-dim);
+  }
+
+  .ques-info {
+    width: 300px;
+    margin-left: 10px;
+
+    .ques-ans {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .ans {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .number {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--md-sys-color-text-secondary);
+      }
+    }
+
+  }
+}
+
+
+
+
+
+
