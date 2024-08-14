@@ -1,14 +1,24 @@
 import { Component } from '@angular/core';
-import { MaterialModule } from "../../../../../../../shared/modules/material.module";
-import { SharedModule } from "../../../../../../../shared/modules/shared.module";
-import {MatSlider} from "@angular/material/slider";
-import {NgIf} from "@angular/common";
-
+import { MaterialModule } from '../../../../../../../shared/modules/material.module';
+import { SharedModule } from '../../../../../../../shared/modules/shared.module';
+import { MatSlider } from '@angular/material/slider';
+import { NgIf } from '@angular/common';
+import { QuizResultComponent } from '../quiz-result/quiz-result.component';
+import { AnswerStatusBarComponent } from '../answer-status-bar/answer-status-bar.component';
+import { QuestionHeadComponent } from '../question-head/question-head.component';
 
 @Component({
   selector: 'app-question-card',
   standalone: true,
-  imports: [MaterialModule, SharedModule, MatSlider, NgIf],
+  imports: [
+    MaterialModule,
+    SharedModule,
+    MatSlider,
+    NgIf,
+    QuizResultComponent,
+    AnswerStatusBarComponent,
+    QuestionHeadComponent,
+  ],
   templateUrl: './question-card.component.html', // Corrected to a string
   styleUrls: ['./question-card.component.scss'], // Ensure this is plural and correct
 })
@@ -17,4 +27,5 @@ export class QuestionCardComponent {
   mode: 'determinate' | 'indeterminate' = 'determinate';
   constructor() {
   }
+
 }

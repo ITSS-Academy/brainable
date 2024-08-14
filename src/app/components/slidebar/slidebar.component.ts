@@ -30,11 +30,6 @@ export class SlidebarComponent implements OnInit {
       route: '/reports',
       icon: 'bar_chart',
     },
-    {
-      name: 'Profile',
-      route: '/profile',
-      icon: 'person',
-    },
   ];
 
   activeLink = this.navLinks[0];
@@ -51,8 +46,6 @@ export class SlidebarComponent implements OnInit {
       this.activeLink = this.navLinks[1];
     } else if (this.router.url.includes('reports')) {
       this.activeLink = this.navLinks[2];
-    } else if (this.router.url.includes('profile')) {
-      this.activeLink = this.navLinks[3];
     }
   }
 
@@ -78,8 +71,6 @@ export class SlidebarComponent implements OnInit {
       this.activeLink = this.navLinks[1];
     } else if (this.router.url.includes('reports')) {
       this.activeLink = this.navLinks[2];
-    } else if (this.router.url.includes('profile')) {
-      this.activeLink = this.navLinks[3];
     }
   }
 }

@@ -1,3 +1,65 @@
 .container {
   width: 100%;
+  height: fit-content;
+  flex-direction: column;
+  display: flex;
+  background: var(--md-sys-color-on-primary);
+}
+
+#quiz-header {
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    padding-top: 5px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+#header-quiz {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.quiz-menu {
+  flex: 1 1 110px;
+  max-width: 110px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.quiz-menu img {
+  width: 100%;
+  height: auto;
+  max-width: 52px;
+}
+
+.quiz-menu p {
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+@media (max-width: 648px) {
+  #Header-quiz {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto; // Thêm thanh cuộn ngang
+    white-space: nowrap; // Ngăn chặn việc xuống dòng nội dung
+  }
+
+  .quiz-menu {
+    flex: 0 0 23%; // Đảm bảo mỗi mục chiếm khoảng 23% chiều rộng của khối chứa, có thể điều chỉnh để vừa với 4 mục trong hàng
+    max-width: 23%; // Kích thước tối đa của mỗi mục
+  }
 }

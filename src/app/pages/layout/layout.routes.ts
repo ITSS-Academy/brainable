@@ -17,11 +17,6 @@ export const LAYOUT_ROUTERS: Routes = [
           import('./home/home.routes').then((m) => m.HOME_ROUTERS),
       },
       {
-        path: 'profile',
-        loadChildren: () =>
-          import('./profile/profile.routes').then((m) => m.PROFILE_ROUTERS),
-      },
-      {
         path: 'library',
         loadChildren: () =>
           import('./library/library.routes').then((m) => m.LIBRARY_ROUTERS),
@@ -35,6 +30,13 @@ export const LAYOUT_ROUTERS: Routes = [
         path: 'quiz/:uid',
         loadChildren: () =>
           import('./quiz/quiz.routes').then((m) => m.QUIZ_ROUTERS),
+      },
+      {
+        path: 'categories/:name',
+        loadChildren: () =>
+          import('./categories/categories.routes').then(
+            (m) => m.CATEGORIES_ROUTERS,
+          ),
       },
     ],
   },

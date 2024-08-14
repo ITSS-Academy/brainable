@@ -1,12 +1,23 @@
-import { Question } from './question.model';
+
+
+export interface Questions {
+  id: number;
+  text: string;
+  option1?: string;
+  option2?: string;
+  option3?: string;
+  option4?: string;
+  answer?: string;
+  timeLimit?: number;
+}
 
 export interface Quiz {
-  id: string;
+  id: number;
   title: string;
   description: string;
   isPublic: boolean;
   createdAt: Date;
-  questions: Question[];
+  plays: number;
 }
 
 export interface QuizDTO {
@@ -16,3 +27,11 @@ export interface QuizDTO {
     isPublic: boolean;
   };
 }
+
+export interface Topic {
+  title: string;
+  text: string;
+  questions: number;
+  plays: number;
+}
+
