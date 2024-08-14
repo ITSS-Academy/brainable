@@ -1,0 +1,159 @@
+.container{
+  width:50%;
+ display :flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.container-general{
+  width:100%;
+  height:130px;
+  display:flex;
+  flex-direction:row;
+  align-items: center;
+  background-color: var( --md-sys-color-outline-variant);
+
+
+}
+.profile-picture{
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-left: 10px;
+}
+
+
+.info{
+  width: 70%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.info p {
+  margin: unset;
+}
+#text{
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-weight: bold;
+}
+.task{
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+.info-question , .education {
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: row;
+}
+
+.info-history{
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+
+}
+.ava{
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.info-time{
+  display: flex;
+  flex-direction: row;
+
+}
+mat-icon[fontIcon="fiber_manual_record"] {
+  font-size: 0.5rem;
+  color: var(--md-sys-color-on-surface-variant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+.info-name {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+.info-time p {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.play-button {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.function {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+}
+.play-button {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+
+
+}
