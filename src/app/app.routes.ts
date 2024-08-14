@@ -1,8 +1,5 @@
 import { Routes } from '@angular/router';
 import { CreatorComponent } from './pages/game/creator/creator.component';
-import {
-  DetailQuizComponent
-} from "./pages/layout/home/components/detail-quiz/detail-quiz.component";
 
 export const routes: Routes = [
   {
@@ -34,11 +31,4 @@ export const routes: Routes = [
     path: 'creator',
     component: CreatorComponent,
   },
-  //thêm 1 trang khi ấn vào see more
-  {
-    path: 'detail-quiz/:id',
-    component: DetailQuizComponent,
-  },
-
-
 ];
