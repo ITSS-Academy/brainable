@@ -38,13 +38,42 @@
 .time {
   width: 50px;
   height: 50px;
-  background-color: var(--md-sys-color-on-primary);
+  background-color: var(--md-sys-color-on-primary-fixed);
+  color: var(--md-sys-color-surface-container-low);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
   font-weight: 600;
+}
+
+.number-of-answers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.number-of-answers .number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--md-sys-color-on-primary-fixed);
+  color: var(--md-sys-color-surface-container-low);
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.number-of-answers .text {
+  color: var(--md-sys-color-surface-container-low);
+  background-color: var(--md-sys-color-on-primary-fixed);
+  border-radius: 4px;
+  padding: 0 5px;
 }
 
 #container .answers {
@@ -65,11 +94,16 @@
   border-radius: 4px;
 }
 
+.answer-text {
+  color: var(--md-sys-color-surface-container-low);
+}
+
 #container .answer mat-icon {
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--md-sys-color-surface-container-low);
+  margin: 0 10px;
 }
 
 .answer.red {
@@ -79,7 +113,7 @@
 .answer.red mat-icon {
   rotate: -90deg;
   font-size: 30px;
-}
+  }
 
 .answer.blue {
   background-color: #3066C7;
@@ -88,7 +122,7 @@
 .answer.blue mat-icon {
   rotate: 45deg;
   font-size: 18px;
-}
+  }
 
 .answer.yellow {
   background-color: #CFA035;
@@ -101,7 +135,7 @@
 .answer.green {
   background-color: #468729;
 }
-
 .answer.green mat-icon{
+
   font-size: 20px;
-}
+  }
