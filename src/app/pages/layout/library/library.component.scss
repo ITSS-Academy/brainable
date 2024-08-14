@@ -1,3 +1,7 @@
+:host {
+  --mdc-outlined-card-container-color: #ffffff;
+}
+
 .container {
   width: 100%;
   height: 100%;
@@ -16,6 +20,10 @@
     .library-scroll {
       width: 60%;
       height: 100%;
+
+      &::-webkit-scrollbar {
+        display: none; /* Safari and Chrome */
+      }
 
 
       .quiz-list {
@@ -56,7 +64,6 @@
 
 @media screen and (max-width: 1024px) {
   .container {
-
     .profile-container {
       height: 250px;
     }
@@ -74,7 +81,7 @@
         }
       }
 
-      .quiz-content {
+      .content-container {
         display: none;
       }
     }
