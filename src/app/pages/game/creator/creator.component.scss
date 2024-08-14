@@ -44,19 +44,17 @@ app-main-content {
   }
 
   .content {
-    margin-top: 56px;
-    display: flex;
     flex-direction: column-reverse;
   }
 
   .question {
     width: 100%;
+    height: calc(100% - 80px);
   }
 
   app-main-content {
     width: 100%;
-    height: calc(100% - 80px);
-    margin-top: 65px;
+    height: 100%;
   }
 
   app-question-list {

@@ -21,8 +21,8 @@
 }
 
 .game-link {
-  width: 15%;
-  height: 85%;
+  width: 230px;
+  height: 118px;
   background-color: var(--md-sys-color-background);
   display: flex;
   //align-items: center;
@@ -35,8 +35,8 @@
 }
 
 .game-pin {
-  width: 20%;
-  height: 85%;
+  width: 308px;
+  height: 118px;
   background-color: var(--md-sys-color-background);
   display: flex;
   justify-content: center;
@@ -123,4 +123,25 @@
   gap: 8px;
   padding: 10px 16px;
   border-radius: 4px;
+}
+
+.join-info-respond {
+  display: none;
+  background-color: var(--md-sys-color-background);
+  width: 100%;
+  height: 20%;
+}
+
+@media screen and (max-width: 768px) {
+  .join-info {
+    display: none;
+  }
+
+ .join-info-respond {
+   display: block;
+ }
+
+  .buttons {
+    display: none;
+  }
 }

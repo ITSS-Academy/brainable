@@ -44,3 +44,9 @@
   font-weight: 700;
   color: var(--md-sys-color-on-background);
 }
+
+@media screen and (max-width: 576px) {
+  .content h5 {
+    font-size: 22px;
+  }
+}
