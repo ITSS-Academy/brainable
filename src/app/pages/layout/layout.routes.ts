@@ -36,6 +36,13 @@ export const LAYOUT_ROUTERS: Routes = [
         loadChildren: () =>
           import('./quiz/quiz.routes').then((m) => m.QUIZ_ROUTERS),
       },
+      {
+        path: 'categories/:name',
+        loadChildren: () =>
+          import('./categories/categories.routes').then(
+            (m) => m.CATEGORIES_ROUTERS,
+          ),
+      },
     ],
   },
 ];
