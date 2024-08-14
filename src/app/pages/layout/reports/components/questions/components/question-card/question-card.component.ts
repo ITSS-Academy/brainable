@@ -5,6 +5,7 @@ import { MatSlider } from '@angular/material/slider';
 import { NgIf } from '@angular/common';
 import { QuizResultComponent } from '../quiz-result/quiz-result.component';
 import { AnswerStatusBarComponent } from '../answer-status-bar/answer-status-bar.component';
+import { QuestionHeadComponent } from '../question-head/question-head.component';
 
 @Component({
   selector: 'app-question-card',
@@ -16,6 +17,7 @@ import { AnswerStatusBarComponent } from '../answer-status-bar/answer-status-bar
     NgIf,
     QuizResultComponent,
     AnswerStatusBarComponent,
+    QuestionHeadComponent,
   ],
   templateUrl: './question-card.component.html', // Corrected to a string
   styleUrls: ['./question-card.component.scss'], // Ensure this is plural and correct

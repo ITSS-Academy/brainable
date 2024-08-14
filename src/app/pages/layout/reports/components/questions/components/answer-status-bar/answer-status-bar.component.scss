@@ -54,3 +54,25 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .line {
+    width: 100%;
+    height: 1px;
+  }
+
+  .status-bar {
+    width: 100%;
+
+    .status-item {
+      width: 100%
+    }
+  }
+
+}

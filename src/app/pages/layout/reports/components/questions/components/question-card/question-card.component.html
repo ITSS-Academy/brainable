@@ -1,38 +1,7 @@
 <mat-card appearance="outlined">
   <mat-card-content>
     <div id="question-head-bar">
-      <div id="question-hb-left">
-        <div class="check">
-          <mat-chip>
-            <span class="material-symbols-outlined">check_box</span>
-            <span id="text">Multiple choice</span>
-          </mat-chip>
-        </div>
-        <div class="check">
-          <mat-chip>
-            <span class="material-symbols-outlined">grade</span>
-            <span id="text1" style="margin-right: 4px;">1</span>
-            <span id="text2">Point</span>
-          </mat-chip>
-        </div>
-      </div>
-      <div id="question-hb-right">
-        <div class="question-hb-right-text">
-          <mat-progress-spinner
-            class="example-margin"
-            [mode]="mode"
-            [value]="value"
-            [diameter]="30">
-          </mat-progress-spinner>
-          <p class="data-number">76%</p>
-          <p>Accuracy</p>
-        </div>
-        <div class="line"></div>
-        <div class="question-hb-right-text">
-          <p class="data-number">8s</p>
-          <p> Avg.time</p>
-        </div>
-      </div>
+      <app-question-head></app-question-head>
     </div>
     <div id="question-body">
       <span class="question-title">Question</span>
