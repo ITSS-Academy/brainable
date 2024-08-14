@@ -17,4 +17,5 @@ export class QuestionCardComponent {
   mode: 'determinate' | 'indeterminate' = 'determinate';
   constructor() {
   }
+
 }
