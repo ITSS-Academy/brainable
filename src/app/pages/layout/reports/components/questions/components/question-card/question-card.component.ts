@@ -25,6 +25,7 @@ import { QuestionHeadComponent } from '../question-head/question-head.component'
 export class QuestionCardComponent {
   value: number = 76;
   mode: 'determinate' | 'indeterminate' = 'determinate';
+  constructor() {
+  }
 
-  constructor() {}
 }

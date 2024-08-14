@@ -14,10 +14,10 @@ export const initialState: {
   isCreateQuestionSuccessful: false,
   createQuestionErrorMessage: '',
 
-  getQuestions: <Question>{},
-  isGetQuestionsLoading: false,
-  isGetQuestionsSuccessful: false,
-  getQuestionsErrorMessage: '',
+  // getQuestions: <Question>{},
+  // isGetQuestionsLoading: false,
+  // isGetQuestionsSuccessful: false,
+  // getQuestionsErrorMessage: '',
 };
 
 export const questionReducer = createReducer(
