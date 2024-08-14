@@ -32,7 +32,7 @@ export const LAYOUT_ROUTERS: Routes = [
           import('./reports/reports.routes').then((m) => m.REPORTS_ROUTERS),
       },
       {
-        path: 'quiz',
+        path: 'quiz/:uid',
         loadChildren: () =>
           import('./quiz/quiz.routes').then((m) => m.QUIZ_ROUTERS),
       },

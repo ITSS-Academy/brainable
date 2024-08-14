@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as QuestionActions from './question.actions';
 import { QuestionState } from './question.state';
-import { QuestionDTO } from '../../models/question.model';
+import { Question, QuestionDTO } from '../../models/question.model';
 
 export const initialState: {
   isCreateQuestionSuccessful: boolean;
@@ -13,6 +13,11 @@ export const initialState: {
   isCreateQuestionLoading: false,
   isCreateQuestionSuccessful: false,
   createQuestionErrorMessage: '',
+
+  getQuestions: <Question>{},
+  isGetQuestionsLoading: false,
+  isGetQuestionsSuccessful: false,
+  getQuestionsErrorMessage: '',
 };
 
 export const questionReducer = createReducer(

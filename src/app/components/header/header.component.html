@@ -1,15 +1,12 @@
 <div class="container">
+  <mat-icon fontIcon="menu" class="menu-icon" (click)="onMenuClick()"></mat-icon>
   <div class="search-container">
-    <input type="text" placeholder="Search public content">
-
     <mat-icon fontIcon="search" class="search-icon"></mat-icon>
-
+    <input type="text" placeholder="Search public content">
   </div>
   <div class="action">
     <button mat-flat-button class="btn-enter" [routerLink]="['/join']">
       Enter code
     </button>
   </div>
-
-
 </div>

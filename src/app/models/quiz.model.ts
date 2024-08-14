@@ -28,8 +28,10 @@ export interface QuizDTO {
   };
 }
 
-export interface Topic{
-  img:string;
-  title:string;
-  description:string;
+export interface Topic {
+  title: string;
+  text: string;
+  questions: number;
+  plays: number;
 }
+
