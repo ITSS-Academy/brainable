@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   width: 48%;
-  height: 44%;
+  height: 46%;
   border-radius: 4px;
 }
 
@@ -128,4 +128,28 @@
   color: var(--md-sys-color-background);
   padding: 6px 10px;
   border-radius: 4px;
+}
+
+@media screen and (max-width: 576px) {
+.answers .answer {
+    width: 48%;
+    height: 48%;
+  }
+
+  .answer.red mat-icon::before {
+    font-size: 150px;
+  }
+
+  .answer.blue mat-icon::before {
+    font-size: 90px;
+  }
+
+  .answer.yellow mat-icon::before {
+    font-size: 100px;
+  }
+
+  .answer.green mat-icon::before {
+    font-size: 100px;
+  }
+
 }
