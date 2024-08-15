@@ -1,51 +1,32 @@
 :host {
-  .dialog-container {
+  .mat-dialog-content {
     width: 100%;
     display: flex;
     justify-content: center;
     background-color: var(--md-sys-color-background);
     overflow: hidden;
-    //box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
 
   .dialog-content {
     flex: 1;
-    max-width: 50%;
+    max-width: 100%;
     max-height: 100vh;
     padding: 1% 4%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  .dialog-image {
-    flex: 1;
-    max-width: 50%;
-    max-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .dialog-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-    background-color: unset;
+    text-align: center;
   }
 
   .dialog-title {
-    font-size: xx-large;
+    font-size: xxx-large;
     font-weight: bold;
     color: var(--md-sys-color-on-secondary-container);
-    text-align: left;
     margin: 5% 0 7% 0;
   }
 
   .description-text {
-    font-size: larger;
+    font-size: x-large;
     color: var(--md-sys-color-on-surface);
     margin-bottom: 3%;
   }
@@ -58,7 +39,7 @@
     justify-items: center;
     display: inline-flex;
     flex-direction: row;
-    margin: 5% 0;
+    margin: 3% 0;
     border-radius: 8px;
   }
 
@@ -139,23 +120,9 @@
   .guest-text .guest-link:hover {
     text-decoration: underline;
     pointer-events: auto;
+    cursor: pointer;
   }
 
-  .dialog-actions {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0;
-  }
-
-  .cancel-button {
-    font-size: 14px;
-    color: var(--md-sys-color-secondary);
-  }
-
-  .cancel-button:hover {
-
-    text-decoration: underline;
-  }
 
   @media (max-width: 900px) {
     .dialog-container {
@@ -165,14 +132,14 @@
     .dialog-content {
       max-width: 100%;
     }
-    .dialog-image {
-      display: none;
-    }
+
     .dialog-title {
       font-size: xx-large;
+      margin: 4% 0 4% 0;
+
     }
     .description-text {
-      font-size: medium;
+      font-size: larger;
     }
   }
 
@@ -184,18 +151,18 @@
     .dialog-content {
       max-width: 100%;
     }
-    .dialog-image {
-      display: none;
-    }
+
     .dialog-title {
       font-size: x-large;
+      margin: 4% 0 3% 0;
     }
     .description-text {
       font-size: medium;
+      margin-bottom: 4%;
     }
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 431px) {
     .material-symbols-outlined {
       display: inline-flex;
       vertical-align: middle;

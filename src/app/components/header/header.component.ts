@@ -22,8 +22,8 @@ export class HeaderComponent {
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '60vw';
-    dialogConfig.maxWidth = '90vw';
+    dialogConfig.width = '40vw';
+    dialogConfig.maxWidth = '80vw';
     dialogConfig.panelClass = 'custom-dialog-container';
 
     const dialogRef = this.dialog.open(LoginComponent, dialogConfig);
