@@ -1,5 +1,19 @@
 <div id="container">
-  <input type="text" class="question-input" placeholder="Start typing your question">
+  <div class="question-input">
+      <textarea
+        placeholder="Start typing your question"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="3"
+        [(ngModel)]="question"
+        (input)="updateCharCount()"
+        maxlength="120">
+      </textarea>
+    <span class="char-count">{{ charCount }}</span>
+  </div>
+
+  <!--  <textarea class="question-input" [(ngModel)]="question" (input)="updateCharCount()"-->
+  <!--            placeholder="Start typing your question" maxlength="120"></textarea>-->
   <img src="assets/images/background-game.png" alt="">
   <div class="answers">
     <div class="answer">
