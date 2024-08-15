@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import {MatDialog, MatDialogModule, MatDialogConfig} from '@angular/material/dialog';
+import {ComponentType} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-login',
@@ -10,4 +11,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {}
+export class LoginComponent {
+  constructor(private dialog: MatDialog) {
+  }
+
+}
