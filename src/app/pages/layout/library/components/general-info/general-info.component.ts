@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
-import {MaterialModule} from "../../../../../shared/modules/material.module";
-import {SharedModule} from "../../../../../shared/modules/shared.module";
-
+import { MaterialModule } from '../../../../../shared/modules/material.module';
+import { SharedModule } from '../../../../../shared/modules/shared.module';
 
 @Component({
   selector: 'app-general-info',
   standalone: true,
-  imports: [
-    MaterialModule, SharedModule
-  ],
+  imports: [MaterialModule, SharedModule],
   templateUrl: './general-info.component.html',
-  styleUrl: './general-info.component.scss'
+  styleUrl: './general-info.component.scss',
 })
 export class GeneralInfoComponent {
+  showAnswer = false;
 
+  constructor() {}
+
+  toggleAnswer() {
+    this.showAnswer = !this.showAnswer;
+  }
 }

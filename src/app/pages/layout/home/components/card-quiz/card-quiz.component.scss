@@ -33,24 +33,6 @@
   }
 }
 
-.see-more-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 115px;
-  height: 40px;
-  border-radius: 100px;
-  background-color: var(--md-sys-color-surface-tint);
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  color: var(--md-sys-color-on-primary);
-}
-
-.see-more-btn:hover {
-  background-color: var(--md-sys-color-on-primary-fixed-variant);
-}
-
 .card-quiz-container {
   display: flex;
   justify-content: flex-start;

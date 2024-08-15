@@ -41,9 +41,8 @@
 
 
       .quiz-scroll {
-        margin-top: 5px;
         width: 100%;
-        height: calc(100% - 150px);
+        height: 100%;
 
         &::-webkit-scrollbar {
           display: none; /* Safari and Chrome */
@@ -89,71 +88,4 @@
   }
 }
 
-.quiz-detail {
-  width: 100%;
-  display: flex;
-
-  &__info {
-    width: 100%;
-    margin-left: 10px;
-
-    .question {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .row-info {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      .num-questions {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .category {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-
-        img {
-          width: 24px;
-          height: 24px;
-          object-fit: cover;
-        }
-      }
-    }
-
-    .row-creator {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-
-      img {
-        width: 24px;
-        height: 24px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-    }
-  }
-
-  &__img {
-    width: 140px;
-    height: auto;
-
-    img {
-      width: 140px;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-  }
-}
 
