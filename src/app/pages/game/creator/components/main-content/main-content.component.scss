@@ -19,13 +19,16 @@
 
 #container .question-input {
   width: 85%;
-  height: 45px;
+  min-height: 45px;
   border: none;
   outline: none;
   border-radius: 4px;
   font-size: 18px;
-  padding: 0 10px;
   text-align: center;
+  resize: none;
+  line-height: 29px;
+  padding: 8px;
+  background-color: #fff;
 }
 
 #container .question-input::placeholder {
@@ -51,7 +54,7 @@
   display: flex;
   align-items: center;
   width: 46%;
-  height: 40%;
+  height: 45%;
   background-color: #fff;
   border-radius: 4px;
 }
