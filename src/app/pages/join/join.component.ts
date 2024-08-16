@@ -45,15 +45,6 @@ export class JoinComponent implements OnInit, OnDestroy {
     );
   }
 
-  signWithGoogle() {
-    this.store.dispatch(AuthActions.login());
-  }
-
-  signOut() {
-    this.store.dispatch(AuthActions.logout());
-    this.dashboard = 'My dashboard';
-  }
-
   homePage() {
     this.router.navigate(['/home']);
   }

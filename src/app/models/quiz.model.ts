@@ -1,15 +1,4 @@
-
-
-export interface Questions {
-  id: number;
-  text: string;
-  option1?: string;
-  option2?: string;
-  option3?: string;
-  option4?: string;
-  answer?: string;
-  timeLimit?: number;
-}
+import { Question } from './question.model';
 
 export interface Quiz {
   id: number;
@@ -17,7 +6,7 @@ export interface Quiz {
   description: string;
   isPublic: boolean;
   createdAt: Date;
-  plays: number;
+  questions: Question[];
 }
 
 export interface QuizDTO {
@@ -27,11 +16,3 @@ export interface QuizDTO {
     isPublic: boolean;
   };
 }
-
-export interface Topic {
-  title: string;
-  text: string;
-  questions: number;
-  plays: number;
-}
-

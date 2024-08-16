@@ -18,7 +18,6 @@ export const profileReducer = createReducer(
       ...state,
       isLoading: true,
       isSuccessful: false,
-      errorMessage: '',
     };
   }),
 
@@ -28,7 +27,6 @@ export const profileReducer = createReducer(
       ...state,
       isLoading: false,
       isSuccessful: true,
-      errorMessage: '',
     };
   }),
 
@@ -38,7 +36,7 @@ export const profileReducer = createReducer(
       ...state,
       isLoading: false,
       isSuccessful: false,
-      errorMessage,
+      errorMessage: errorMessage,
     };
   }),
 
@@ -48,7 +46,6 @@ export const profileReducer = createReducer(
       ...state,
       isLoading: true,
       isSuccessful: false,
-      errorMessage: '',
     };
   }),
 
@@ -59,7 +56,6 @@ export const profileReducer = createReducer(
       isLoading: false,
       isSuccessful: true,
       profile,
-      errorMessage: '',
     };
   }),
 
@@ -69,7 +65,15 @@ export const profileReducer = createReducer(
       ...state,
       isLoading: false,
       isSuccessful: false,
-      errorMessage,
+      errorMessage: errorMessage,
+    };
+  }),
+  on(ProfileActions.clearState, (state) => {
+    return {
+      profile: <Profile>{},
+      isLoading: false,
+      isSuccessful: false,
+      errorMessage: '',
     };
   }),
 );

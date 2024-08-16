@@ -3,21 +3,16 @@ import * as QuestionActions from './question.actions';
 import { QuestionState } from './question.state';
 import { Question, QuestionDTO } from '../../models/question.model';
 
-export const initialState: {
-  isCreateQuestionSuccessful: boolean;
-  isCreateQuestionLoading: boolean;
-  createQuestionErrorMessage: string;
-  createQuestion: QuestionDTO
-} = {
+export const initialState: QuestionState = {
   createQuestion: <QuestionDTO>{},
   isCreateQuestionLoading: false,
   isCreateQuestionSuccessful: false,
   createQuestionErrorMessage: '',
 
-  // getQuestions: <Question>{},
-  // isGetQuestionsLoading: false,
-  // isGetQuestionsSuccessful: false,
-  // getQuestionsErrorMessage: '',
+  getQuestion: <Question>{},
+  isGetQuestionsLoading: false,
+  isGetQuestionsSuccessful: false,
+  getQuestionsErrorMessage: '',
 };
 
 export const questionReducer = createReducer(
@@ -28,7 +23,6 @@ export const questionReducer = createReducer(
       ...state,
       isCreateQuestionLoading: true,
       isCreateQuestionSuccessful: false,
-      createQuestionErrorMessage: '',
     };
   }),
 

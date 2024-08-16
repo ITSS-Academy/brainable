@@ -10,10 +10,37 @@ import { MaterialModule } from '../../../../../shared/modules/material.module';
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
-  question: string = '';
-  charCount: number = 0;
+  questionInput: string = '';
+  charCountQuestion: number = 120;
 
-  updateCharCount(): void {
-    this.charCount = 120 - this.question.length;
+  answerInput1: string = '';
+  answerInput2: string = '';
+  answerInput3: string = '';
+  answerInput4: string = '';
+
+  charCountAnswer1: number = 75;
+  charCountAnswer2: number = 75;
+  charCountAnswer3: number = 75;
+  charCountAnswer4: number = 75;
+
+  updateCharCountQuestion(): void {
+    this.charCountQuestion = 120 - this.questionInput.length;
+  }
+
+  updateCharCountAnswer(index: number): void {
+    switch (index) {
+      case 1:
+        this.charCountAnswer1 = 75 - this.answerInput1.length;
+        break;
+      case 2:
+        this.charCountAnswer2 = 75 - this.answerInput2.length;
+        break;
+      case 3:
+        this.charCountAnswer3 = 75 - this.answerInput3.length;
+        break;
+      case 4:
+        this.charCountAnswer4 = 75 - this.answerInput4.length;
+        break;
+    }
   }
 }

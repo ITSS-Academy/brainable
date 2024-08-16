@@ -1,4 +1,5 @@
 .sidebar {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,4 +70,8 @@
 
 .sidebar nav a .icon {
   margin-right: 10px;
+}
+
+.logout {
+  margin-top: 200px;
 }

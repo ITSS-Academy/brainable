@@ -28,7 +28,6 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.getQuizSuccess, (state, { quiz }) => {
-    console.log(quiz);
     return {
       ...state,
       getQuiz: quiz,
