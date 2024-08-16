@@ -1,6 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import {
+  getDownloadURL,
+  ref,
+  Storage,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-main-content',
@@ -10,6 +17,36 @@ import { MaterialModule } from '../../../../../shared/modules/material.module';
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
+  uploadedFileURL: string = '';
+
+  constructor(private storage: Storage) {}
+
+  uploadFile(input: HTMLInputElement) {
+    if (!input.files) return;
+    const files: FileList = input.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files.item(i);
+      if (file) {
+        const storageRef = ref(this.storage, file.name);
+        uploadBytesResumable(storageRef, file)
+          .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((url) => {
+                this.uploadedFileURL = url;
+                console.log('Uploaded file URL:', this.uploadedFileURL);
+              })
+              .catch((error) => {
+                console.error('Error getting file URL:', error);
+              });
+          })
+          .catch((error) => {
+            console.error('Error uploading file:', error);
+          });
+      }
+    }
+  }
+
   questionInput: string = '';
   charCountQuestion: number = 120;
 

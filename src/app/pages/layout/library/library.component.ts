@@ -16,6 +16,7 @@ import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { Quiz } from '../../../models/quiz.model';
+import { Storage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-library',
@@ -42,6 +43,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
       profile: ProfileState;
       quiz: QuizState;
     }>,
+    private storage: Storage,
   ) {}
 
   toggleAnswer() {
