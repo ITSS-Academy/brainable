@@ -16,9 +16,26 @@
   background-repeat: no-repeat;
   background-position: center;
 
-  img {
-    height: 40%;
+  .image-input {
+    width: 385px;
+    height: 255px;
     box-shadow: #5A514C 0 0 6px 0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    input {
+      position: absolute;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
   }
 
   .question-input {
@@ -83,6 +100,21 @@
       box-shadow: rgba(0, 0, 0, 0.15) 0px -4px 0px 0px inset;
       position: relative;
 
+      &.red.active {
+        background-color: #D03542;
+      }
+
+      &.blue.active {
+        background-color: #3066C7;
+      }
+
+      &.yellow.active {
+        background-color: #CFA035;
+      }
+
+      &.green.active {
+        background-color: #468729;
+      }
 
       textarea {
         appearance: none;
@@ -100,6 +132,7 @@
         width: 100%;
         outline: none;
         overflow: hidden;
+        color: var(--md-sys-color-surface-container-low);
       }
 
       .char-count-ans {

@@ -56,6 +56,10 @@ app-main-content {
       width: 100%;
       height: 164px;
 
+      &.active {
+        background-color: rgb(234, 244, 252);
+      }
+
       .question-type {
         padding: 8px 28px;
       }
@@ -97,6 +101,11 @@ app-main-content {
           height: 104px;
           border: var(--md-sys-color-outline) 1px solid;
           border-radius: 4px;
+          background-color: var(--md-sys-color-surface-container-lowest);
+
+          &.active {
+            border: rgb(19, 104, 206) 3px solid;
+          }
 
           .question-title {
             color: var(--md-sys-color-outline);
