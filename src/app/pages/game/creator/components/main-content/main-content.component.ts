@@ -80,4 +80,16 @@ export class MainContentComponent {
         break;
     }
   }
+
+  selectedImage: string | ArrayBuffer = '';
+
+  selectImage(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = e => this.selectedImage = reader.result as string | ArrayBuffer;
+      reader.readAsDataURL(file);
+    }
+  }
 }
