@@ -35,6 +35,18 @@
       color: var(--md-sys-color-on-surface);
       font-weight: 600;
     }
+
+    .mail {
+      font-size: 16px;
+      color: var(--md-sys-color-on-surface-variant);
+      font-weight: 600;
+    }
+
+    .gender {
+      font-size: 16px;
+      color: var(--md-sys-color-on-surface-variant);
+      font-weight: 600;
+    }
   }
 }
 
@@ -100,8 +112,6 @@
         font-size: 14px;
       }
     }
-
-
   }
 }
 

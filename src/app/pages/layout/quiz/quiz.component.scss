@@ -4,10 +4,19 @@
   display: flex;
 }
 
+.scroll {
+  width: 100%;
+  height: calc(100% - 20px);
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
 .quiz-info {
   width: 300px;
   height: 100%;
-  background-color: var(--md-sys-color-surface);
+  background-color: var(--md-sys-color-background);
   border-radius: 0 0 12px 12px;
 
   &__image {
@@ -81,9 +90,8 @@
 
 .quiz-detail {
   width: calc(100% - 300px);
-  height: fit-content; /* Adjust height to avoid touching the bottom */
+  //height: fit-content;
   margin-left: 10px;
-  padding-bottom: 10px;
 
   &__header {
     display: flex;

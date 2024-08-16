@@ -29,3 +29,5 @@ export const createProfileFailure = createAction(
   '[Profile] Create Profile Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const clearState = createAction('[Profile] Clear State');

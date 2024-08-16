@@ -20,13 +20,13 @@ export class AppComponent implements OnInit {
   token$ = this.store.select('auth', 'idToken');
 
   constructor(
-    private router: Router,
     private auth: Auth,
     private store: Store<{ auth: AuthState; profile: ProfileState }>,
   ) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken(true);
+        console.log(idToken);
         this.store.dispatch(AuthActions.storeIdToken({ idToken }));
       }
     });
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.token$.subscribe(async (idToken) => {
       if (idToken) {
-        this.store.dispatch(ProfileActions.createProfile({ idToken }));
+        this.store.dispatch(ProfileActions.getProfile({ idToken }));
       }
     });
   }

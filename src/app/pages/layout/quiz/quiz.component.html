@@ -27,18 +27,19 @@
       <span class="number-question">Question(12)</span>
       <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
     </div>
-    <div class="quiz-detail__content">
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-      <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+    <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
+      <div class="quiz-detail__content">
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+      </div>
+    </cdk-virtual-scroll-viewport>
 
-
-    </div>
 
   </div>
 </div>

@@ -5,6 +5,12 @@
     <input type="text" placeholder="Search public content">
   </div>
   <div class="action">
+    @if (!(profile$ | async)) {
+      <button mat-flat-button class="btn-login" (click)="openDialog()">
+        Login
+      </button>
+    }
+
     <button mat-flat-button class="btn-enter" [routerLink]="['/join']">
       Enter code
     </button>

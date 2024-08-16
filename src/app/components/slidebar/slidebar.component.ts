@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { AsyncPipe, NgClass } from '@angular/common';
 import { filter } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ProfileState } from '../../ngrx/profile/profile.state';
+import { AuthState } from '../../ngrx/auth/auth.state';
+import { SharedModule } from '../../shared/modules/shared.module';
+import * as AuthActions from '../../ngrx/auth/auth.actions';
+import * as ProfileActions from '../../ngrx/profile/profile.actions';
 
 @Component({
   selector: 'app-slidebar',
   standalone: true,
-  imports: [MaterialModule, RouterLink, NgClass, AsyncPipe],
+  imports: [MaterialModule, SharedModule, RouterLink],
   templateUrl: './slidebar.component.html',
   styleUrl: './slidebar.component.scss',
 })
@@ -38,7 +41,7 @@ export class SlidebarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<{ profile: ProfileState }>,
+    private store: Store<{ profile: ProfileState; auth: AuthState }>,
   ) {
     if (this.router.url.includes('home')) {
       this.activeLink = this.navLinks[0];
@@ -57,6 +60,14 @@ export class SlidebarComponent implements OnInit {
       });
 
     this.setActiveLinkBasedOnUrl();
+
+    this.store
+      .select('auth', 'isLogoutSuccess')
+      .subscribe((isLogoutSuccess) => {
+        if (isLogoutSuccess) {
+          this.store.dispatch(ProfileActions.clearState());
+        }
+      });
   }
 
   setActive(link: any) {
@@ -72,5 +83,9 @@ export class SlidebarComponent implements OnInit {
     } else if (this.router.url.includes('reports')) {
       this.activeLink = this.navLinks[2];
     }
+  }
+
+  signOut() {
+    this.store.dispatch(AuthActions.logout());
   }
 }

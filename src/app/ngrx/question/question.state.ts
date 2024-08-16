@@ -8,7 +8,7 @@ export interface QuestionState {
   createQuestionErrorMessage: string;
 
   //   get questions
-  getQuestions: Question;
+  getQuestion: Question;
   isGetQuestionsLoading: boolean;
   isGetQuestionsSuccessful: boolean;
   getQuestionsErrorMessage: string;

@@ -1,9 +1,15 @@
+:host {
+  --mat-table-background-color: #FFFFFF;
+  --mdc-filled-text-field-container-color: #FFFFFF;
+  --mat-paginator-container-background-color: #FFFFFF;
+}
+
 .container {
   width: 100%;
   height: 100%;
   padding: 10px;
   border-radius: 0 0 12px 12px;
-  background-color: var(--md-sys-color-background);
+  background-color: #FFFFFF;
 }
 
 .example-viewport {

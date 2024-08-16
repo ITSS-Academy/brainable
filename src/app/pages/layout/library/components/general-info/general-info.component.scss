@@ -1,7 +1,24 @@
+:host {
+  --mdc-outlined-card-container-color: #ffffff;
+}
+
+mat-card {
+  cursor: pointer;
+}
+
+mat-card:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  filter: brightness(0.9);
+}
+
+
 .quiz-detail {
+  width: 100%;
   display: flex;
 
   &__info {
+    width: calc(100% - 140px);
     margin-left: 10px;
 
     .question {
@@ -36,7 +53,9 @@
     }
 
     .row-creator {
+      width: 100%;
       display: flex;
+      justify-content: space-between;
       align-items: center;
       gap: 10px;
       margin-top: 10px;
@@ -62,4 +81,17 @@
     }
 
   }
+}
+
+@media screen and (max-width: 576px) {
+  .quiz-detail {
+    &__img {
+      width: 100px;
+
+      img {
+        width: 100px;
+      }
+    }
+  }
+
 }
