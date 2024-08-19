@@ -10,6 +10,7 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { WaitingComponent } from './components/waiting/waiting.component';
 import { AnswerComponent } from './components/answer/answer.component';
 import { ResultComponent } from './components/result/result.component';
+import {EnterNicknameComponent} from "./components/enter-nickname/enter-nickname.component";
 
 @Component({
   selector: 'app-guest',
@@ -20,6 +21,7 @@ import { ResultComponent } from './components/result/result.component';
     WaitingComponent,
     AnswerComponent,
     ResultComponent,
+    EnterNicknameComponent,
   ],
   templateUrl: './guest.component.html',
   styleUrl: './guest.component.scss',
