@@ -7,11 +7,12 @@ import { ProfileState } from '../../ngrx/profile/profile.state';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import * as ProfileActions from '../../ngrx/profile/profile.actions';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-join',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, LoadingComponent],
   templateUrl: './join.component.html',
   styleUrl: './join.component.scss',
 })

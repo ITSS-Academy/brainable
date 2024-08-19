@@ -1,8 +1,8 @@
 <mat-toolbar class="header">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" [routerLink]="['/home']">
     <mat-icon>navigate_before</mat-icon>
   </button>
-  <input class="title" type="text" placeholder="Bài quiz không có tiêu đề">
+  <input class="title" type="text" [placeholder]="title">
   <span class="example-spacer"></span>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
     <mat-icon>settings</mat-icon>

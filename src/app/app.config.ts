@@ -17,6 +17,11 @@ import { quizReducer } from './ngrx/quiz/quiz.reducer';
 import { QuizEffects } from './ngrx/quiz/quiz.effects';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
+import { categoriesReducer } from './ngrx/categories/categories.reducer';
+import { CategoriesEffects } from './ngrx/categories/categories.effects';
+import { questionReducer } from './ngrx/question/question.reducer';
+import { QuestionEffects } from './ngrx/question/question.effects';
+import { gameReducer } from './ngrx/game/game.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +31,16 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'profile', reducer: profileReducer }),
     provideState({ name: 'quiz', reducer: quizReducer }),
-    provideEffects([AuthEffects, ProfileEffects, QuizEffects]),
+    provideState({ name: 'categories', reducer: categoriesReducer }),
+    provideState({ name: 'question', reducer: questionReducer }),
+    provideState({ name: 'game', reducer: gameReducer }),
+    provideEffects([
+      AuthEffects,
+      ProfileEffects,
+      QuizEffects,
+      CategoriesEffects,
+      QuestionEffects,
+    ]),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig as any)),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),

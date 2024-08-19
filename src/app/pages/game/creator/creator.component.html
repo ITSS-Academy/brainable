@@ -1,45 +1,48 @@
 <div id="container">
   <div id="header">
-    <app-header></app-header>
+    <app-header [title]="quiz.title"></app-header>
   </div>
 
   <div id="body-content">
     <div id="question-list">
       <div class="content-container">
-        <div class="content active">
-          <span class="question-type">1 Quiz</span>
-          <span class="question-type-respond">1</span>
+        @if (quiz.questions) {
+          @for (question of quiz.questions; track $index) {
+            <div class="content" [ngClass]="{'active': $index==currentQuestionIndex}" (click)="activeQuestion($index)">
+              <span class="question-type">{{ $index + 1 }} Quiz</span>
+              <span class="question-type-respond">1</span>
 
-          <div class="question-content">
-            <div class="icons">
-              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="content_copy"></mat-icon>
-              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
-            </div>
-            <div class="question-overview active">
-              <span class="question-title">Question</span>
-              <div class="timer-and-img">
-                <div class="timer">
-                  20
+              <div class="question-content">
+                <div class="icons">
+                  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="content_copy"></mat-icon>
+                  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
                 </div>
-                <img src="assets/images/background-game.png" alt="">
-              </div>
+                <div class="question-overview" [ngClass]="{'active': $index==currentQuestionIndex}">
+                  <span class="question-title">Question</span>
+                  <div class="timer-and-img">
+                    <div class="timer">
+                      20
+                    </div>
+                    <img src="assets/images/background-game.png" alt="">
+                  </div>
 
-              <div class="answers">
-                <div class="answer">
-                </div>
-                <div class="answer">
-                </div>
-                <div class="answer">
-                </div>
-                <div class="answer">
+                  <div class="answers">
+                    <div class="answer">
+                    </div>
+                    <div class="answer">
+                    </div>
+                    <div class="answer">
+                    </div>
+                    <div class="answer">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          }
+        }
+
       </div>
-
-
       <div class="btn">
         <button mat-flat-button class="add-question-btn">Add question</button>
         <button class="add-question-icon" mat-mini-fab aria-label="Example icon button with a menu icon">
@@ -48,8 +51,16 @@
       </div>
     </div>
     <div class="question">
-      <app-main-content></app-main-content>
+      <app-main-content
+      ></app-main-content>
       <app-setting></app-setting>
     </div>
   </div>
 </div>
+
+@if (!(isGetQuizByIdSuccessful$ | async)) {
+  <div class="loading-container">
+    <app-loading></app-loading>
+  </div>
+}
+

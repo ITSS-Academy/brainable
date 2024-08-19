@@ -6,10 +6,4 @@ export interface QuestionState {
   isCreateQuestionLoading: boolean;
   isCreateQuestionSuccessful: boolean;
   createQuestionErrorMessage: string;
-
-  //   get questions
-  getQuestion: Question;
-  isGetQuestionsLoading: boolean;
-  isGetQuestionsSuccessful: boolean;
-  getQuestionsErrorMessage: string;
 }

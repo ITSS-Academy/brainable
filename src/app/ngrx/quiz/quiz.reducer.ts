@@ -1,48 +1,65 @@
 import { createReducer, on } from '@ngrx/store';
 import * as QuizActions from './quiz.actions';
 import { QuizState } from './quiz.state';
-import { QuizDTO } from '../../models/quiz.model';
+import { Quiz, QuizDTO } from '../../models/quiz.model';
+import { questionReducer } from '../question/question.reducer';
+import { Question } from '../../models/question.model';
+import * as QuestionActions from '../question/question.actions';
 
 export const initialState: QuizState = {
-  getQuiz: [],
-  isGetQuizLoading: false,
-  isGetQuizSuccessful: false,
-  getQuizErrorMessage: '',
+  quizzes: [],
+  isGetAllQuizLoading: false,
+  isGetAllQuizSuccessful: false,
+  getAllQuizErrorMessage: '',
+
+  quiz: <Quiz>{},
+  isGetQuizByIdLoading: false,
+  isGetQuizByIdSuccessful: false,
+  getQuizByIdErrorMessage: '',
 
   createQuiz: <QuizDTO>{},
   isCreateQuizLoading: false,
   isCreateQuizSuccessful: false,
   createQuizErrorMessage: '',
+
+  isUpdateQuestionLoading: false,
+  isUpdateQuestionSuccessful: false,
+  updateQuestionErrorMessage: '',
+
+  currentQuestion: <Question>{},
+  currentQuestionIndex: -1,
+  previousQuestionIndex: -1,
+  isStoreCurrentQuestionLoading: false,
+  isStoreCurrentQuestionSuccessful: false,
+  storeCurrentQuestionErrorMessage: '',
 };
 
 export const quizReducer = createReducer(
   initialState,
-  on(QuizActions.getQuiz, (state, action) => {
+  on(QuizActions.getAllQuiz, (state, action) => {
     console.log(action.type);
     return {
       ...state,
-      isGetQuizLoading: true,
-      isGetQuizSuccessful: false,
-      getQuizErrorMessage: '',
+      isGetAllQuizLoading: true,
     };
   }),
 
-  on(QuizActions.getQuizSuccess, (state, { quiz }) => {
+  on(QuizActions.getAllQuizSuccess, (state, { quiz }) => {
     return {
       ...state,
-      getQuiz: quiz,
-      isGetQuizLoading: false,
-      isGetQuizSuccessful: true,
+      quizzes: quiz,
+      isGetAllQuizLoading: false,
+      isGetAllQuizSuccessful: true,
     };
   }),
 
-  on(QuizActions.getQuizFailure, (state, { errorMessage }) => {
+  on(QuizActions.getAllQuizFailure, (state, { errorMessage }) => {
     console.log(errorMessage);
     return {
       ...state,
-      isGetQuizLoading: false,
-      isGetQuizSuccessful: false,
-      getQuizErrorMessage: errorMessage,
+      isGetAllQuizLoading: false,
+      isGetAllQuizSuccessful: false,
+      getAllQuizErrorMessage: errorMessage,
     };
   }),
 
@@ -74,12 +91,63 @@ export const quizReducer = createReducer(
       createQuizErrorMessage: errorMessage,
     };
   }),
-  on(QuizActions.clearCreateState, (state) => {
+
+  on(QuizActions.getQuizById, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
-      isCreateQuizLoading: false,
-      isCreateQuizSuccessful: false,
-      createQuizErrorMessage: '',
+      isGetQuizByIdLoading: true,
+    };
+  }),
+
+  on(QuizActions.getQuizByIdSuccess, (state, { quiz, type }) => {
+    console.log(type);
+    return {
+      ...state,
+      quiz: quiz,
+      isGetQuizByIdLoading: false,
+      isGetQuizByIdSuccessful: true,
+    };
+  }),
+
+  on(QuizActions.getQuizByIdFailure, (state, { errorMessage }) => {
+    console.log(errorMessage);
+    return {
+      ...state,
+      isGetQuizByIdLoading: false,
+      isGetQuizByIdSuccessful: false,
+      getQuizByIdErrorMessage: errorMessage,
+    };
+  }),
+
+  on(QuizActions.updateQuestionByIndex, (state, { question, type }) => {
+    console.log(type);
+
+    if (!Array.isArray(state.quiz.questions)) {
+      return state;
+    }
+    const updatedQuestions = [...state.quiz.questions];
+    updatedQuestions[state.previousQuestionIndex] = question;
+
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        questions: updatedQuestions,
+      },
+      isUpdateQuestionLoading: true,
+    };
+  }),
+  on(QuizActions.storeCurrentQuestion, (state, { type, question, index }) => {
+    console.log(type);
+    const updatedIndex = state.currentQuestionIndex;
+
+    return {
+      ...state,
+      previousQuestionIndex: updatedIndex,
+      currentQuestion: question,
+      currentQuestionIndex: index,
+      isStoreCurrentQuestionLoading: true,
     };
   }),
 );

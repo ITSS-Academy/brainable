@@ -1,89 +1,125 @@
 <div id="container">
   <div class="question-input">
-      <textarea
-        placeholder="Start typing your question"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="3"
-        [(ngModel)]="questionInput"
-        (input)="updateCharCountQuestion()"
-        maxlength="120">
-      </textarea>
+    <textarea
+      placeholder="Start typing your question"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="3"
+      [(ngModel)]="currentQuestion.question"
+      (input)="updateCharCountQuestion()"
+      maxlength="120"
+    >
+    </textarea>
     <span class="char-count">{{ charCountQuestion }}</span>
   </div>
 
   <div class="image-input">
-  <input type="file" (change)="selectImage($event)">
-  <img [src]="selectedImage || 'assets/images/background-game.png'" alt="">
+    @if (!selectedImage) {
+      <input id="uploadBtn" type="file" (change)="selectImage($event)"/>
+      <label for="uploadBtn">
+        <div class="media-library">
+        </div>
+        <button mat-fab (click)="triggerFileInput($event)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <span class="add-media-btn">Find and insert media</span>
+      </label>
+    }
+    @if (selectedImage) {
+      <div class="img-container">
+        <img [src]="selectedImage" alt=""/>
+      </div>
+      <button mat-fab class="remove-btn" (click)="removeImage()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    }
   </div>
 
   <div class="answers">
-    <div class="answer red" [ngClass]="{active: answerInput1}">
+    <div class="answer red" [ngClass]="{ active: currentQuestion.option1 }">
       <div class="answer-color red">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="play_arrow"></mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="play_arrow"
+        ></mat-icon>
       </div>
       <textarea
         placeholder="Add answer 1"
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="answerInput1"
+        [(ngModel)]="currentQuestion.option1"
         (input)="updateCharCountAnswer(1)"
-        maxlength="75">
+        maxlength="75"
+      >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer1 }}</span>
-
     </div>
 
-    <div class="answer blue" [ngClass]="{active: answerInput2}">
+    <div class="answer blue" [ngClass]="{ active: currentQuestion.option2 }">
       <div class="answer-color blue">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="square"
+        ></mat-icon>
       </div>
       <textarea
         placeholder="Add answer 2"
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="answerInput2"
+        [(ngModel)]="currentQuestion.option2"
         (input)="updateCharCountAnswer(2)"
-        maxlength="75">
+        maxlength="75"
+      >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer2 }}</span>
-
     </div>
 
-    <div class="answer yellow" [ngClass]="{active: answerInput3}">
+    <div class="answer yellow" [ngClass]="{ active: currentQuestion.option3 }">
       <div class="answer-color yellow">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="circle"></mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="circle"
+        ></mat-icon>
       </div>
       <textarea
         placeholder="Add answer 3"
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="answerInput3"
+        [(ngModel)]="currentQuestion.option3"
         (input)="updateCharCountAnswer(3)"
-        maxlength="75">
+        maxlength="75"
+      >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer3 }}</span>
-
     </div>
 
-    <div class="answer green" [ngClass]="{active: answerInput4}">
+    <div class="answer green" [ngClass]="{ active: currentQuestion.option4 }">
       <div class="answer-color green">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="square"
+        ></mat-icon>
       </div>
       <textarea
         placeholder="Add answer 4"
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="answerInput4"
+        [(ngModel)]="currentQuestion.option4"
         (input)="updateCharCountAnswer(4)"
-        maxlength="75">
+        maxlength="75"
+      >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer4 }}</span>
-
     </div>
   </div>
 </div>
+
+

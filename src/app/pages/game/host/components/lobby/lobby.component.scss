@@ -101,7 +101,7 @@
   width: 100%;
   height: 10%;
   display: flex;
-  justify-content:  space-between;
+  justify-content: space-between;
   align-items: center;
   color: var(--md-sys-color-background);
   padding: 0 16px;
@@ -123,6 +123,10 @@
   gap: 8px;
   padding: 10px 16px;
   border-radius: 4px;
+  cursor: pointer;
+  //  give me some animation
+
+
 }
 
 .join-info-respond {
@@ -146,11 +150,11 @@
     display: none;
   }
 
- .join-info-respond {
-   display: flex;
+  .join-info-respond {
+    display: flex;
     align-items: center;
     justify-content: center;
- }
+  }
 
   .buttons {
     display: none;

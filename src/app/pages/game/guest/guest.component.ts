@@ -10,7 +10,10 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { WaitingComponent } from './components/waiting/waiting.component';
 import { AnswerComponent } from './components/answer/answer.component';
 import { ResultComponent } from './components/result/result.component';
-import {EnterNicknameComponent} from "./components/enter-nickname/enter-nickname.component";
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { GameService } from '../../../services/game/game.service';
+import { GameState } from '../../../ngrx/game/game.state';
+import * as GameActions from '../../../ngrx/game/game.actions';
 
 @Component({
   selector: 'app-guest',
@@ -21,38 +24,23 @@ import {EnterNicknameComponent} from "./components/enter-nickname/enter-nickname
     WaitingComponent,
     AnswerComponent,
     ResultComponent,
-    EnterNicknameComponent,
+    RouterOutlet,
   ],
   templateUrl: './guest.component.html',
   styleUrl: './guest.component.scss',
 })
 export class GuestComponent implements OnInit {
   constructor(
-    private store: Store<{ question: QuestionState; auth: AuthState }>,
-    private questionService: QuestionService,
+    private activatedRoute: ActivatedRoute,
+    private store: Store<{
+      question: QuestionState;
+      auth: AuthState;
+      game: GameState;
+    }>,
   ) {}
 
-  // subscriptions: Subscription[] = [];
-  // questions$ = this.store.select('question', 'getQuestions');
-  // question!: Question;
-  // pin = '';
-
   ngOnInit(): void {
-    // this.subscriptions.push(
-    //   this.questions$.subscribe((questions) => {
-    //     if (questions) {
-    //       this.question = questions;
-    //       console.log('Questions:', questions);
-    //     }
-    //   }),
-    // );
+    const pin = this.activatedRoute.snapshot.paramMap.get('pin');
+    this.store.dispatch(GameActions.storePin({ pin }));
   }
-
-  // joinGame(pin: string) {
-  //   console.log('Joining game:', pin);
-  //   this.questions$ = this.questionService.getQuestionByPin(pin);
-  //   this.questions$.subscribe((question) => {
-  //     console.log('Question:', question);
-  //   });
-  // }
 }

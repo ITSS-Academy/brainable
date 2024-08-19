@@ -1,11 +1,15 @@
 import { Question } from './question.model';
+import { Categories } from './categories.model';
 
 export interface Quiz {
   id: number;
   title: string;
   description: string;
   isPublic: boolean;
+  totalQuestions: number;
+  imgUrl: string;
   createdAt: Date;
+  category: Categories;
   questions: Question[];
 }
 
