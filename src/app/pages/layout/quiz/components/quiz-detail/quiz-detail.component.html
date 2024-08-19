@@ -4,12 +4,12 @@
       <mat-list-item class="content">
         <div class="quiz-detail">
           <div class="quiz-detail__title">
-            <span class="order">1. Multiple Choice</span>
-            <p class="question">First stop! Russell finds a beautiful flower. Which feeling might Russell feel?</p>
+            <span class="order">{{ index }}. Multiple Choice</span>
+            <p class="question">{{ question.question }}</p>
           </div>
           <div class="quiz-detail__img">
             <img
-              src="https://images-cdn.kahoot.it/6920163d-ce8f-43cc-97c2-8427dcf0a9b9?auto=webp&width=1000&crop=893,595,x20,y0"
+              [src]="question.imgUrl"
               alt="">
           </div>
         </div>
@@ -19,7 +19,7 @@
         <mat-list-item>
           <div class="answer-detail">
             <div class="answer-detail__content">
-              <p class="answer">Happy</p>
+              <p class="answer">{{ question.option1 }}</p>
             </div>
             <mat-icon class="answer-icon__wrong">close</mat-icon>
           </div>
@@ -28,7 +28,7 @@
         <mat-list-item>
           <div class="answer-detail">
             <div class="answer-detail__content">
-              <p class="answer">Sad</p>
+              <p class="answer">{{ question.option2 }}</p>
             </div>
             <mat-icon class="answer-icon__wrong">close</mat-icon>
           </div>
@@ -37,7 +37,7 @@
         <mat-list-item>
           <div class="answer-detail">
             <div class="answer-detail__content">
-              <p class="answer">Excited</p>
+              <p class="answer">{{ question.option3 }}</p>
             </div>
             <mat-icon class="answer-icon__check">check</mat-icon>
           </div>
@@ -46,7 +46,7 @@
         <mat-list-item>
           <div class="answer-detail">
             <div class="answer-detail__content">
-              <p class="answer">Mad</p>
+              <p class="answer">{{ question.option4 }}</p>
             </div>
             <mat-icon class="answer-icon__wrong">close</mat-icon>
           </div>
@@ -55,3 +55,4 @@
     </mat-list>
   </mat-card-content>
 </mat-card>
+

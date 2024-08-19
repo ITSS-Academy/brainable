@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { Quiz } from '../../../../../models/quiz.model';
@@ -12,11 +12,13 @@ import { Quiz } from '../../../../../models/quiz.model';
 })
 export class GeneralInfoComponent {
   @Input() quiz!: Quiz;
-  showAnswer = false;
+  @Output() showAnswer = new EventEmitter<boolean>();
+  showAnsStatus = false;
 
   constructor() {}
 
   toggleAnswer() {
-    this.showAnswer = !this.showAnswer;
+    this.showAnsStatus = !this.showAnsStatus;
+    this.showAnswer.emit(this.showAnsStatus);
   }
 }

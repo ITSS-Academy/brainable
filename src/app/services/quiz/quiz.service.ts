@@ -23,4 +23,12 @@ export class QuizService {
       },
     });
   }
+
+  getQuizById(idToken: string, id: string) {
+    return this.http.get(`http://localhost:3000/quiz/${id}`, {
+      headers: {
+        Authorization: `${idToken}`,
+      },
+    });
+  }
 }

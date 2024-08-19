@@ -6,7 +6,8 @@
     <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
       <div class="quiz-list">
         @for (quiz of listQuiz; track $index) {
-          <app-general-info [quiz]="quiz"></app-general-info>
+          <app-general-info [quiz]="quiz" (showAnswer)="showAnswer = !showAnswer"
+                            (click)="activeQuiz($index)"></app-general-info>
         }
       </div>
     </cdk-virtual-scroll-viewport>
@@ -15,7 +16,9 @@
     <div class="content-container">
       <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
         <div class="quiz-content">
-          <app-quiz-detail [showAnswer]=showAnswer></app-quiz-detail>
+          @for (question of listQuestion; track $index) {
+            <app-quiz-detail [showAnswer]=showAnswer [question]="question" [index]="$index+1"></app-quiz-detail>
+          }
         </div>
       </cdk-virtual-scroll-viewport>
     </div>

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { Question } from '../../../../../models/question.model';
 
 @Component({
   selector: 'app-quiz-detail',
@@ -11,4 +12,6 @@ import { SharedModule } from '../../../../../shared/modules/shared.module';
 })
 export class QuizDetailComponent {
   @Input() showAnswer: boolean = false;
+  @Input() question!: Question;
+  @Input() index!: number;
 }

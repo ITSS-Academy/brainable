@@ -13,11 +13,11 @@
         <div class="row-info">
           <div class="num-questions">
             <mat-icon fontIcon="list"></mat-icon>
-            <span>8 Question</span>
+            <span>{{ quiz.totalQuestions }} Question</span>
           </div>
           <div class="category">
-            <img src="assets/images/ellipse2.png" alt="menu Pic">
-            <span>Math</span>
+            <img [src]="quiz.category.imgUrl" alt="menu Pic">
+            <span>{{ quiz.category.name }}</span>
           </div>
         </div>
         <div class="row-creator">

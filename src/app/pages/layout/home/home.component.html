@@ -5,46 +5,14 @@
     </div>
 
     <div id="header-quiz">
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse1.png" alt="menu Pic">
-        <p>Ice breaker</p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse2.png" alt="menu Pic">
-        <p>Math</p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse3.png" alt="menu Pic">
-        <p>English</p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse4.png" alt="menu Pic">
-        <p>Social </p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse5.png" alt="menu Pic">
-        <p>Languages</p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse6.png" alt="menu Pic">
-        <p>Science</p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse7.png" alt="menu Pic">
-        <p>Computers</p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse8.png" alt="menu Pic">
-        <p>Chemistry</p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse9.png" alt="menu Pic">
-        <p>Creative </p>
-      </div>
-      <div class="quiz-menu">
-        <img src="assets/images/ellipse10.png" alt="menu Pic">
-        <p>Health & PE</p>
-      </div>
+      @for (category of listCategories; track $index) {
+        <div class="quiz-menu">
+          <img [src]="category.imgUrl" alt="menu Pic">
+          <p>{{ category.name }}</p>
+        </div>
+      }
+
+
     </div>
     <div class="popular-quiz">
       <app-card-quiz></app-card-quiz>
@@ -53,4 +21,10 @@
     </div>
   </cdk-virtual-scroll-viewport>
 </div>
+
+@if (!(isGettingCategories$ | async)) {
+  <div class="loading-container">
+    <app-loading></app-loading>
+  </div>
+}
 

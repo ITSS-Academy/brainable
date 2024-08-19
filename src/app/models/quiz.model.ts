@@ -1,4 +1,5 @@
 import { Question } from './question.model';
+import { Categories } from './categories.model';
 
 export interface Quiz {
   id: number;
@@ -6,7 +7,9 @@ export interface Quiz {
   description: string;
   isPublic: boolean;
   totalQuestions: number;
+  imgUrl: string;
   createdAt: Date;
+  category: Categories;
   questions: Question[];
 }
 
