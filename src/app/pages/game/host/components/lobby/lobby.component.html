@@ -34,9 +34,15 @@
   </div>
 
   <div class="players">
-    @for (guest of guests; track $index) {
-      <div class="player">
-        <div class="player-name">{{ guest }}</div>
+    @if (guests.length > 0) {
+      @for (guest of guests; track $index) {
+        <div class="player">
+          <div class="player-name">{{ guest }}</div>
+        </div>
+      }
+    } @else {
+      <div class="waiting">
+        <div class="content">Waiting for players...</div>
       </div>
     }
   </div>

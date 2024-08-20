@@ -14,6 +14,7 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { GameService } from '../../../services/game/game.service';
 import { GameState } from '../../../ngrx/game/game.state';
 import * as GameActions from '../../../ngrx/game/game.actions';
+import {CountdownToQuestionComponent} from "./components/countdown-to-question/countdown-to-question.component";
 
 @Component({
   selector: 'app-guest',
@@ -24,6 +25,7 @@ import * as GameActions from '../../../ngrx/game/game.actions';
     WaitingComponent,
     AnswerComponent,
     ResultComponent,
+    CountdownToQuestionComponent,
     RouterOutlet,
   ],
   templateUrl: './guest.component.html',

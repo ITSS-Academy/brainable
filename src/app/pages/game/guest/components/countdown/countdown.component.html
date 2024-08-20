@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="countdown">
+    <div class="square" [ngClass]="getClass(activeNumber)">
+      <div class="number">{{ activeNumber }}</div>
+    </div>
+  </div>
+  <div class="final-text" *ngIf="showFinalText">
+  </div>
+</div>
