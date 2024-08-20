@@ -143,63 +143,69 @@
     align-items: center;
     width: 100%;
     height: 30%;
+    gap: 16px;
 
     .answer {
       display: flex;
       align-items: center;
       width: 46%;
-      height: 40%;
+      height: 50%;
       background-color: #fff;
       border-radius: 4px;
       box-shadow: rgba(0, 0, 0, 0.15) 0px -4px 0px 0px inset;
       position: relative;
 
-      &.red.active {
-        background-color: #D03542;
-
-        .char-count-ans {
-          color: #fff;
-        }
-
-        textarea {
-          color: var(--md-sys-color-surface-container-low);
-        }
+      .circle {
+        flex: 0 0 auto;
+        background: transparent;
+        margin: 0px 0.5rem;
+        width: 45px;
+        height: 45px;
+        border: 0.25rem solid rgb(255, 255, 255);
+        transition: background 0.2s;
+        transform-origin: center bottom;
+        box-shadow: transparent 0px 0px 0px 0.125rem, rgba(0, 0, 0, 0.35) 0px 0.125rem 0.125rem, rgba(0, 0, 0, 0.35) 0px 0px 0px 0.0625rem;
+        animation: 4.6s linear 2s infinite normal none running animation;
+        border-radius: 50%;
+        margin-right: 24px;
+        cursor: pointer;
       }
 
-      &.blue.active {
-        background-color: #3066C7;
-
-        .char-count-ans {
-          color: #fff;
-        }
-
-        textarea {
-          color: var(--md-sys-color-surface-container-low);
-        }
-      }
-
-      &.yellow.active {
-        background-color: #CFA035;
-
-        .char-count-ans {
-          color: #fff;
-        }
-
-        textarea {
-          color: var(--md-sys-color-surface-container-low);
-        }
-      }
-
-      &.green.active {
+      .effect {
         background-color: #468729;
 
-        .char-count-ans {
+        mat-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
           color: #fff;
-        }
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
 
-        textarea {
-          color: var(--md-sys-color-surface-container-low);
+          &::before {
+            width: 35px;
+            height: 35px;
+            font-size: 33px;
+          }
         }
+      }
+
+      &.red {
+        background-color: #D03542;
+      }
+
+      &.blue {
+        background-color: #3066C7;
+      }
+
+      &.yellow {
+        background-color: #CFA035;
+      }
+
+      &.green {
+        background-color: #468729;
       }
 
       textarea {
@@ -218,6 +224,7 @@
         width: 100%;
         outline: none;
         overflow: hidden;
+        color: var(--md-sys-color-surface-container-low);
       }
 
       .char-count-ans {
@@ -283,6 +290,40 @@
           font-size: 20px;
         }
       }
+    }
+  }
+
+  @keyframes animation {
+    0% {
+      transform: translateY(0px) scaleX(1) scaleY(1);
+    }
+
+    4.96696% {
+      transform: translateY(0px) scaleX(1.1) scaleY(0.9);
+    }
+
+    9.94783% {
+      transform: translateY(-10px) scaleX(0.9) scaleY(1.1);
+    }
+
+    14.9565% {
+      transform: translateY(0px) scaleX(1.1) scaleY(0.9);
+    }
+
+    19.8261% {
+      transform: translateY(-5px) scaleX(0.95) scaleY(1.05);
+    }
+
+    24.6957% {
+      transform: translateY(0px) scaleX(1.05) scaleY(0.95);
+    }
+
+    29.8087% {
+      transform: translateY(-2.5px) scaleX(0.975) scaleY(1.025);
+    }
+
+    34.7826% {
+      transform: translateY(0px) scaleX(1) scaleY(1);
     }
   }
 }
