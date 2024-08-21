@@ -15,7 +15,8 @@
               <div class="question-content">
                 <div class="icons">
                   <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="content_copy"></mat-icon>
-                  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+                  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"
+                            (click)="deleteQuestion()"></mat-icon>
                 </div>
                 <div class="question-overview" [ngClass]="{'active': $index==currentQuestionIndex}">
                   <span class="question-title">Question</span>
@@ -44,7 +45,7 @@
 
       </div>
       <div class="btn">
-        <button mat-flat-button class="add-question-btn">Add question</button>
+        <button mat-flat-button class="add-question-btn" (click)="addQuestion()">Add question</button>
         <button class="add-question-icon" mat-mini-fab aria-label="Example icon button with a menu icon">
           <mat-icon>add</mat-icon>
         </button>

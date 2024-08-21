@@ -5,75 +5,65 @@ import { Profile } from '../../models/profile.model';
 
 export const initialState: ProfileState = {
   profile: <Profile>{},
-  isLoading: false,
-  isSuccessful: false,
-  errorMessage: '',
+  isGettingProfileSuccessful: false,
+  gettingProfileError: '',
+
+  isCreatedProfileSuccessful: false,
+  createdProfileError: '',
 };
 
 export const profileReducer = createReducer(
   initialState,
   on(ProfileActions.createProfile, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
-      isLoading: true,
-      isSuccessful: false,
     };
   }),
 
   on(ProfileActions.createProfileSuccess, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: true,
+      isCreatedProfileSuccessful: true,
     };
   }),
 
   on(ProfileActions.createProfileFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: false,
-      errorMessage: errorMessage,
+      isCreatedProfileSuccessful: false,
+      createdProfileError: errorMessage,
     };
   }),
 
   on(ProfileActions.getProfile, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
-      isLoading: true,
-      isSuccessful: false,
     };
   }),
 
   on(ProfileActions.getProfileSuccess, (state, { profile, type }) => {
-    console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: true,
-      profile,
+      isGettingProfileSuccessful: true,
+      profile: profile,
     };
   }),
 
   on(ProfileActions.getProfileFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: false,
-      errorMessage: errorMessage,
+      isGettingProfileSuccessful: false,
+      gettingProfileError: errorMessage,
     };
   }),
   on(ProfileActions.clearState, (state) => {
     return {
-      profile: <Profile>{},
-      isLoading: false,
-      isSuccessful: false,
-      errorMessage: '',
+      ...state,
+      isGettingProfileSuccessful: false,
+      gettingProfileError: '',
+
+      isCreatedProfileSuccessful: false,
+      createdProfileError: '',
     };
   }),
 );

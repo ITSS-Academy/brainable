@@ -5,6 +5,7 @@ import { Quiz, QuizDTO } from '../../models/quiz.model';
 import { questionReducer } from '../question/question.reducer';
 import { Question } from '../../models/question.model';
 import * as QuestionActions from '../question/question.actions';
+import { Q } from '@angular/cdk/keycodes';
 
 export const initialState: QuizState = {
   quizzes: [],
@@ -17,7 +18,6 @@ export const initialState: QuizState = {
   isGetQuizByIdSuccessful: false,
   getQuizByIdErrorMessage: '',
 
-  createQuiz: <QuizDTO>{},
   isCreateQuizLoading: false,
   isCreateQuizSuccessful: false,
   createQuizErrorMessage: '',
@@ -32,6 +32,14 @@ export const initialState: QuizState = {
   isStoreCurrentQuestionLoading: false,
   isStoreCurrentQuestionSuccessful: false,
   storeCurrentQuestionErrorMessage: '',
+
+  isAddNewQuestionLoading: false,
+  isAddNewQuestionSuccessful: false,
+  addNewQuestionErrorMessage: '',
+
+  isDeleteQuestionLoading: false,
+  isDeleteQuestionSuccessful: false,
+  deleteQuestionErrorMessage: '',
 };
 
 export const quizReducer = createReducer(
@@ -148,6 +156,39 @@ export const quizReducer = createReducer(
       currentQuestion: question,
       currentQuestionIndex: index,
       isStoreCurrentQuestionLoading: true,
+    };
+  }),
+  on(QuizActions.storeCurrentQuiz, (state, { type, quiz }) => {
+    console.log(type);
+    return {
+      ...state,
+      quiz: quiz,
+    };
+  }),
+  on(QuizActions.addNewQuestion, (state, { type, question }) => {
+    console.log(type);
+    console.log(state.quiz);
+    return {
+      ...state,
+      isAddNewQuestionLoading: true,
+      quiz: {
+        ...state.quiz,
+        questions: [...state.quiz.questions, { ...question }],
+      },
+    };
+  }),
+  on(QuizActions.deleteQuestion, (state, { type }) => {
+    console.log(type);
+    const updatedQuestions = state.quiz.questions.filter(
+      (_, i) => i !== state.currentQuestionIndex,
+    );
+    return {
+      ...state,
+      isDeleteQuestionSuccessful: true,
+      quiz: {
+        ...state.quiz,
+        questions: updatedQuestions,
+      },
     };
   }),
 );

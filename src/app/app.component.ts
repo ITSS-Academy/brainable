@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { AuthState } from './ngrx/auth/auth.state';

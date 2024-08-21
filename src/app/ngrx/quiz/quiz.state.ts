@@ -15,7 +15,6 @@ export interface QuizState {
   getQuizByIdErrorMessage: string;
 
   // create quiz
-  createQuiz: QuizDTO;
   isCreateQuizLoading: boolean;
   isCreateQuizSuccessful: boolean;
   createQuizErrorMessage: string;
@@ -32,4 +31,14 @@ export interface QuizState {
   isStoreCurrentQuestionLoading: boolean;
   isStoreCurrentQuestionSuccessful: boolean;
   storeCurrentQuestionErrorMessage: string;
+
+  // add new question to quiz
+  isAddNewQuestionLoading: boolean;
+  isAddNewQuestionSuccessful: boolean;
+  addNewQuestionErrorMessage: string;
+
+  // delete question from quiz by index
+  isDeleteQuestionLoading: boolean;
+  isDeleteQuestionSuccessful: boolean;
+  deleteQuestionErrorMessage: string;
 }

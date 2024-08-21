@@ -54,4 +54,16 @@ export const storeCurrentQuestion = createAction(
   props<{ question: Question; index: number }>(),
 );
 
+export const storeCurrentQuiz = createAction(
+  '[Quiz] Store Current Quiz',
+  props<{ quiz: Quiz }>(),
+);
+
+export const addNewQuestion = createAction(
+  '[Quiz] Add New Question',
+  props<{ question: Question }>(),
+);
+
+export const deleteQuestion = createAction('[Quiz] Delete Question');
+
 export const clearQuizState = createAction('[Quiz] Clear Quiz State');

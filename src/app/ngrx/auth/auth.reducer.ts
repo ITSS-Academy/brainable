@@ -24,7 +24,6 @@ export const authReducer = createReducer(
   }),
 
   on(AuthActions.loginSuccess, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       isLoginLoading: false,
@@ -33,7 +32,6 @@ export const authReducer = createReducer(
   }),
 
   on(AuthActions.loginFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
       isLoginLoading: false,
@@ -43,7 +41,6 @@ export const authReducer = createReducer(
   }),
 
   on(AuthActions.logout, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       isLogoutLoading: true,
@@ -52,7 +49,6 @@ export const authReducer = createReducer(
   }),
 
   on(AuthActions.logoutSuccess, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       idToken: '',
@@ -62,7 +58,6 @@ export const authReducer = createReducer(
   }),
 
   on(AuthActions.logoutFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
       isLogoutLoading: false,
@@ -72,7 +67,6 @@ export const authReducer = createReducer(
   }),
 
   on(AuthActions.storeIdToken, (state, { idToken, type }) => {
-    console.log(type);
     return {
       ...state,
       idToken,
