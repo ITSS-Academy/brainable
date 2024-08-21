@@ -55,6 +55,9 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer1 }}</span>
+      <div class="circle effect">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon>
+      </div>
     </div>
 
     <div class="answer blue" [ngClass]="{ active: currentQuestion.option2 }">
@@ -76,6 +79,9 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer2 }}</span>
+      <div class="circle">
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon> -->
+      </div>
     </div>
 
     <div class="answer yellow" [ngClass]="{ active: currentQuestion.option3 }">
@@ -97,6 +103,9 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer3 }}</span>
+      <div class="circle">
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon> -->
+      </div>
     </div>
 
     <div class="answer green" [ngClass]="{ active: currentQuestion.option4 }">
@@ -118,6 +127,9 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer4 }}</span>
+      <div class="circle">
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon> -->
+      </div>
     </div>
   </div>
 </div>

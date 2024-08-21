@@ -1,0 +1,119 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.countdown {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square {
+  width: 150px;
+  height: 150px;
+  background-color: #1a3b5d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: rotate(0deg);
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.square.hidden {
+  display: none;
+}
+
+.square.hidden .number {
+  animation: scaleDown 0.5s forwards;
+}
+
+.square .number {
+  //transform: rotate(-0deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.square.active-3 {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.square.active-3 .number {
+  //transform: rotate(0deg);
+  animation: scaleUp-3 0.5s forwards;
+}
+
+
+.square.active-2 {
+  opacity: 1;
+  transform: rotate(45deg);
+}
+
+.square.active-2 .number {
+  rotate: -45deg;
+  animation: scaleUp-2 0.5s forwards;
+}
+
+.square.active-1 {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+.square.active-1 .number {
+  rotate: -90deg;
+  transform: rotate(-90deg);
+  animation: scaleUp-1 0.5s forwards;
+}
+
+.number {
+  font-size: 4rem;
+  color: white;
+}
+
+.final-text {
+  font-size: 4rem;
+  color: white;
+  opacity: 0;
+  transform: scale(0.5);
+  animation: scaleUp 2s forwards;
+}
+
+
+@keyframes scaleUp-3 {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleUp-2 {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-45deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleUp-1 {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

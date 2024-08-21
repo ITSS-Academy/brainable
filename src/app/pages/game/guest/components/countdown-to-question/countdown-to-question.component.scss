@@ -1,0 +1,132 @@
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../../../../assets/images/z5714813450402_17d12c1680cfb5a3fede63bf191ee94c.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.header {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.question-number {
+  width: 35px;
+  height: 35px;
+  background-color: var(--md-sys-color-surface-container);
+  color: #1A32AB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  position: absolute;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.logo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  color: var(--md-sys-color-on-primary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  position: relative;
+
+  h2 {
+    font-weight: 600;
+  }
+
+  .circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-background);
+    position: relative;
+    background-color: #1a3b5d;
+    overflow: hidden;
+
+    .number {
+      font-size: 4rem;
+      color: white;
+      position: relative;
+      z-index: 1;
+    }
+
+    .half-circle {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background-color: var(--md-sys-color-surface-container-low);
+      bottom: 0;
+      left: 0;
+      transform-origin: center right;
+      animation: rotate-progress 2s infinite;
+    }
+  }
+}
+
+@keyframes rotate-progress {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 10%;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: var(--md-sys-color-surface-bright);
+  padding: 0 30px;
+}
+
+.player-name {
+  font-weight: 700;
+  color: var(--md-sys-color-on-background);
+}
+
+.score {
+  font-size: 16px;
+  font-weight: 700;
+  background-color: var(--md-sys-color-on-background);
+  color: var(--md-sys-color-background);
+  padding: 6px 10px;
+  border-radius: 4px;
+}

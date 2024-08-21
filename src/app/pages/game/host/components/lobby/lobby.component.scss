@@ -97,6 +97,15 @@
   gap: 20px;
 }
 
+.waiting {
+  background-color: var(--md-sys-color-on-secondary-container);
+  font-size: 32px;
+  line-height: 32px;
+  padding: 12px 18px;
+  border-radius: 4px;
+
+}
+
 .footer {
   width: 100%;
   height: 10%;
@@ -116,7 +125,7 @@
 .player,
 .number-of-players,
 .setting {
-  background-color: var(--md-sys-color-on-background);
+  background-color: var(--md-sys-color-on-secondary-container);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,8 +134,10 @@
   border-radius: 4px;
   cursor: pointer;
   //  give me some animation
+}
 
-
+.player {
+  animation: ease-in 2s player-animation infinite;
 }
 
 .join-info-respond {
@@ -139,6 +150,20 @@
 
 .pin {
   font-weight: 700;
+}
+
+@keyframes player-animation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 @media screen and (max-width: 768px) {
