@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+import * as AuthGuard from '../../guards/auth.guard';
 
 export const LAYOUT_ROUTERS: Routes = [
   {
@@ -20,11 +21,13 @@ export const LAYOUT_ROUTERS: Routes = [
         path: 'library',
         loadChildren: () =>
           import('./library/library.routes').then((m) => m.LIBRARY_ROUTERS),
+        canActivate: [AuthGuard.canActivateLibrary],
       },
       {
         path: 'reports',
         loadChildren: () =>
           import('./reports/reports.routes').then((m) => m.REPORTS_ROUTERS),
+        canActivate: [AuthGuard.canActivateReports],
       },
       {
         path: 'quiz/:uid',

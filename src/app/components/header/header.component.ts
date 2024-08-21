@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   @Output() menuClick = new EventEmitter<void>();
 
   dialog = inject(MatDialog);
-  profile$ = this.store.select('profile', 'isSuccessful');
+  profile$ = this.store.select('profile', 'isGettingProfileSuccessful');
 
   constructor(
     private store: Store<{ auth: AuthState; profile: ProfileState }>,

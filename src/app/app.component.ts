@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { AuthState } from './ngrx/auth/auth.state';
@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.token$.subscribe(async (idToken) => {
       if (idToken) {
+        this.store.dispatch(ProfileActions.createProfile({ idToken }));
         this.store.dispatch(ProfileActions.getProfile({ idToken }));
       }
     });

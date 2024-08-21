@@ -25,7 +25,10 @@ export class JoinComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   dashboard: string = 'My dashboard';
   profile$ = this.store.select('profile', 'profile');
-  isGettingProfile$ = this.store.select('profile', 'isSuccessful');
+  isGettingProfile$ = this.store.select(
+    'profile',
+    'isGettingProfileSuccessful',
+  );
 
   ngOnInit(): void {
     this.subscriptions.push(

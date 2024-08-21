@@ -28,6 +28,7 @@ export class CountdownComponent implements OnInit {
       }
       this.activeNumber = this.countdownNumbers[index];
       index++;
+      console.log(this.activeNumber);
 
       if (index === this.countdownNumbers.length) {
         clearInterval(countdownInterval);

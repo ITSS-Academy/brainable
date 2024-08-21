@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CreatorComponent } from './pages/game/creator/creator.component';
 import { LoadingComponent } from './pages/loading/loading.component';
+import * as AuthGuard from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -31,10 +32,12 @@ export const routes: Routes = [
   {
     path: 'creator',
     component: CreatorComponent,
+    canActivate: [AuthGuard.canActivateCreate],
   },
   {
     path: 'creator/:id',
     component: CreatorComponent,
+    canActivate: [AuthGuard.canActivateCreate],
   },
   {
     path: 'loading',

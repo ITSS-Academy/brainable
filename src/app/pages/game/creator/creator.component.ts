@@ -10,8 +10,9 @@ import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
-import { Quiz } from '../../../models/quiz.model';
+import { Quiz, QuizDTO } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
+import { Question } from '../../../models/question.model';
 
 @Component({
   selector: 'app-creator',
@@ -30,11 +31,21 @@ import { LoadingComponent } from '../../loading/loading.component';
 export class CreatorComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   quiz!: Quiz;
-  currentQuestionIndex = 0;
   isGetQuizByIdSuccessful$ = this.store.select(
     'quiz',
     'isGetQuizByIdSuccessful',
   );
+  questions: Question = {
+    question: '',
+    answer: 0,
+    option1: '',
+    option2: '',
+    option3: '',
+    option4: '',
+    imgUrl: '',
+    timeLimit: 0,
+  };
+  currentQuestionIndex = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -68,6 +79,12 @@ export class CreatorComponent implements OnInit, OnDestroy {
             }
           }),
       );
+      this.store
+        .select('quiz', 'isDeleteQuestionSuccessful')
+        .subscribe((isDeleteQuestionSuccessful) => {
+          if (isDeleteQuestionSuccessful) {
+          }
+        });
     }
   }
 
@@ -85,5 +102,44 @@ export class CreatorComponent implements OnInit, OnDestroy {
         index: this.currentQuestionIndex,
       }),
     );
+  }
+
+  addQuestion(): void {
+    // Ensure the questions property is an array
+    if (!Array.isArray(this.quiz.questions)) {
+      this.quiz.questions = [];
+    }
+
+    // Check if the quiz object is frozen or sealed
+    if (Object.isFrozen(this.quiz) || Object.isSealed(this.quiz)) {
+      // Create a new quiz object by copying properties
+      this.quiz = {
+        ...this.quiz,
+        questions: [...this.quiz.questions, { ...this.questions }],
+      };
+      this.store.dispatch(
+        QuizActions.addNewQuestion({ question: this.questions }),
+      );
+    } else {
+      // Create a new array with the existing questions and the new question
+      this.quiz.questions = [...this.quiz.questions, { ...this.questions }];
+      this.store.dispatch(
+        QuizActions.addNewQuestion({ question: this.questions }),
+      );
+    }
+
+    this.currentQuestionIndex = this.quiz.questions.length - 1;
+
+    // Dispatch the storeCurrentQuestion action
+    this.store.dispatch(
+      QuizActions.storeCurrentQuestion({
+        question: this.questions,
+        index: this.currentQuestionIndex,
+      }),
+    );
+  }
+
+  deleteQuestion() {
+    this.store.dispatch(QuizActions.deleteQuestion());
   }
 }

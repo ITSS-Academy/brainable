@@ -65,7 +65,6 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   currentQuestion: Question = {
-    id: '',
     question: '',
     option1: '',
     option2: '',
@@ -163,7 +162,6 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   resetQuestion(): void {
     this.currentQuestion = {
-      id: '',
       question: '',
       option1: '',
       option2: '',
