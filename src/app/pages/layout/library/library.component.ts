@@ -44,7 +44,6 @@ export class LibraryComponent implements OnInit, OnDestroy {
       profile: ProfileState;
       quiz: QuizState;
     }>,
-    private storage: Storage,
   ) {}
 
   ngOnInit(): void {

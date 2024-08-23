@@ -1,9 +1,22 @@
 <div id="container">
-  <div class="content">
-    <h2>You're in!</h2>
-    <h5>See your nickname on screen?</h5>
-  </div>
-  <div class="footer">
-    <span class="player-name">Player 1</span>
-  </div>
+  @if (isJoining) {
+    <div class="waiting-content">
+      <h2>You're in!</h2>
+      <h5>See your nickname on screen?</h5>
+    </div>
+    <div class="footer">
+      <span class="player-name">{{ nickname }}</span>
+    </div>
+
+  } @else {
+    <div class="nickname-content">
+      <img src="assets/images/logo/black%20ver.png" alt="logo"/>
+      <div class="enter-nickname">
+        <input type="text" name="" id="" placeholder="Enter nickname..." [(ngModel)]="nickname"/>
+        <button class="btn-join" mat-flat-button (click)="joinGame()">Join</button>
+      </div>
+    </div>
+  }
 </div>
+
+

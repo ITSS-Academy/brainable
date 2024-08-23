@@ -2,25 +2,33 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { ProfileState } from '../../ngrx/profile/profile.state';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import * as ProfileActions from '../../ngrx/profile/profile.actions';
 import { LoadingComponent } from '../loading/loading.component';
+import { SharedModule } from '../../shared/modules/shared.module';
+import { GameState } from '../../ngrx/game/game.state';
+import * as GameActions from '../../ngrx/game/game.actions';
 
 @Component({
   selector: 'app-join',
   standalone: true,
-  imports: [MaterialModule, LoadingComponent],
+  imports: [MaterialModule, LoadingComponent, SharedModule],
   templateUrl: './join.component.html',
   styleUrl: './join.component.scss',
 })
 export class JoinComponent implements OnInit, OnDestroy {
   constructor(
-    private store: Store<{ profile: ProfileState; auth: AuthState }>,
+    private store: Store<{
+      profile: ProfileState;
+      auth: AuthState;
+      game: GameState;
+    }>,
     private router: Router,
   ) {}
+
+  pin: string = '';
 
   subscriptions: Subscription[] = [];
   dashboard: string = 'My dashboard';
@@ -51,6 +59,13 @@ export class JoinComponent implements OnInit, OnDestroy {
 
   homePage() {
     this.router.navigate(['/home']);
+  }
+
+  joinGame() {
+    this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+    this.router.navigate([`/guest/${this.pin}/waiting`]).then(() => {
+      this.pin = '';
+    });
   }
 
   ngOnDestroy(): void {}

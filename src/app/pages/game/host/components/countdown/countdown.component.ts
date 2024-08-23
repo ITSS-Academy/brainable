@@ -18,7 +18,7 @@ export class CountdownComponent implements OnInit {
   showFinalText = false;
   hideSquares = false;
   hiddenNumbers: Set<number> = new Set(); // Track hidden numbers
-  pin = this.store.select('game', 'pin');
+  pin!: string;
 
   constructor(
     private router: Router,
@@ -27,6 +27,9 @@ export class CountdownComponent implements OnInit {
 
   ngOnInit() {
     this.startCountdown();
+    this.store.select('game', 'pin').subscribe((pin) => {
+      this.pin = pin as string;
+    });
   }
 
   startCountdown() {
@@ -37,7 +40,6 @@ export class CountdownComponent implements OnInit {
       }
       this.activeNumber = this.countdownNumbers[index];
       index++;
-      console.log(this.activeNumber);
 
       if (index === this.countdownNumbers.length) {
         clearInterval(countdownInterval);

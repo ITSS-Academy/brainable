@@ -7,10 +7,10 @@
     </div>
   </div>
   <div class="content">
-    <img src="assets/images/logo/brainable.png" alt="Logo" class="logo" />
+    <img src="assets/images/logo/brainable.png" alt="Logo" class="logo"/>
     <div class="content-body">
-      <input type="text" placeholder="Enter a join code" />
-      <button class="btn-join" mat-flat-button>Join</button>
+      <input type="text" placeholder="Enter a join code" [(ngModel)]="pin"/>
+      <button class="btn-join" mat-flat-button (click)="joinGame()">Join</button>
     </div>
   </div>
 </div>

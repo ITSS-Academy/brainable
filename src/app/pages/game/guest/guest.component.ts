@@ -14,7 +14,7 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { GameService } from '../../../services/game/game.service';
 import { GameState } from '../../../ngrx/game/game.state';
 import * as GameActions from '../../../ngrx/game/game.actions';
-import {CountdownToQuestionComponent} from "./components/countdown-to-question/countdown-to-question.component";
+import { CountdownToQuestionComponent } from './components/countdown-to-question/countdown-to-question.component';
 
 @Component({
   selector: 'app-guest',
@@ -39,10 +39,12 @@ export class GuestComponent implements OnInit {
       auth: AuthState;
       game: GameState;
     }>,
+    private gameService: GameService,
   ) {}
 
   ngOnInit(): void {
+    this.gameService.listenForErrors();
     const pin = this.activatedRoute.snapshot.paramMap.get('pin');
-    this.store.dispatch(GameActions.storePin({ pin }));
+    this.store.dispatch(GameActions.storePin({ pin: pin }));
   }
 }

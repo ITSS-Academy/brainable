@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { Subscription } from 'rxjs';
 import { GameService } from '../../../../../services/game/game.service';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lobby',
@@ -32,15 +32,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.gameService.listenForErrors();
-
     this.subscriptions.push(
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
-          console.log('Pin:', pin);
-
           this.pin = pin;
-          this.gameService.createRoom(pin);
           this.gameService.listenForGuestJoined().subscribe((guest) => {
             console.log('Guest joined:', guest);
             this.guests.push(guest.username);
@@ -51,7 +46,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.gameService.disconnect();
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   startGame() {

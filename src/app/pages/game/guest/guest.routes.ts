@@ -5,17 +5,12 @@ import { AnswerComponent } from './components/answer/answer.component';
 import { ResultComponent } from './components/result/result.component';
 import { CountdownComponent } from './components/countdown/countdown.component';
 import { CountdownToQuestionComponent } from './components/countdown-to-question/countdown-to-question.component';
-import { EnterNicknameComponent } from './components/enter-nickname/enter-nickname.component';
 
 export const GUEST_ROUTERS: Routes = [
   {
     path: '',
     component: GuestComponent,
     children: [
-      {
-        path: 'nickname',
-        component: EnterNicknameComponent,
-      },
       {
         path: 'waiting',
         component: WaitingComponent,

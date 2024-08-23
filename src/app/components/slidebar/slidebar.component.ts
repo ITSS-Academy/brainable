@@ -74,7 +74,6 @@ export class SlidebarComponent implements OnInit {
   }
 
   setActiveLinkBasedOnUrl() {
-    console.log(this.router.url);
     if (this.router.url.includes('home')) {
       this.activeLink = this.navLinks[0];
     } else if (this.router.url.includes('library')) {

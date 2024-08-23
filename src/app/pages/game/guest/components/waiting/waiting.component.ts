@@ -4,36 +4,44 @@ import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { GameService } from '../../../../../services/game/game.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-waiting',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, MatButton],
   templateUrl: './waiting.component.html',
   styleUrl: './waiting.component.scss',
 })
 export class WaitingComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
+  nickname: string = '';
+  pin!: string;
+  isJoining: boolean = false;
 
   constructor(
     private store: Store<{ game: GameState }>,
     private gameService: GameService,
-    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.gameService.listenForErrors();
+    this.gameService.listenForNavigation(this.pin);
+    this.subscriptions.push(
+      this.store.select('game', 'pin').subscribe((pin) => {
+        if (pin) {
+          this.pin = pin;
+        }
+      }),
+    );
+  }
 
-    this.store.select('game', 'pin').subscribe((pin) => {
-      if (pin) {
-        console.log('Pin:', pin);
-        this.gameService.joinRoom(pin, 'mtri');
-        this.gameService.listenForNavigation(pin);
-      }
-    });
+  joinGame(): void {
+    this.gameService.joinRoom(this.pin, this.nickname);
+    this.isJoining = true;
   }
 
   ngOnDestroy(): void {
-    this.gameService.disconnect();
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }
