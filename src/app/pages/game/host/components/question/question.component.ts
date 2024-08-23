@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {MaterialModule} from "../../../../../shared/modules/material.module";
+import { Component, Input, OnInit } from '@angular/core';
+import { MaterialModule } from '../../../../../shared/modules/material.module';
+import { Question } from '../../../../../models/question.model';
 
 @Component({
   selector: 'app-question',
   standalone: true,
   imports: [MaterialModule],
   templateUrl: './question.component.html',
-  styleUrl: './question.component.scss'
+  styleUrl: './question.component.scss',
 })
 export class QuestionComponent implements OnInit {
+  // @Input() question!: Question;
   progressValue = 0;
 
   private duration = 4000; // Duration of the animation in milliseconds
@@ -19,7 +21,7 @@ export class QuestionComponent implements OnInit {
   }
 
   animateProgress() {
-    const increment = (100 / (this.duration / this.interval)); // Calculate increment value
+    const increment = 100 / (this.duration / this.interval); // Calculate increment value
 
     const intervalId = setInterval(() => {
       if (this.progressValue + increment >= 100) {
