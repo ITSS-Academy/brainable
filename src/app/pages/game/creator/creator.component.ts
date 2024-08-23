@@ -35,16 +35,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
     'quiz',
     'isGetQuizByIdSuccessful',
   );
-  questions: Question = {
-    question: '',
-    answer: 0,
-    option1: '',
-    option2: '',
-    option3: '',
-    option4: '',
-    imgUrl: '',
-    timeLimit: 0,
-  };
+
   currentQuestionIndex = 0;
 
   constructor(
@@ -63,28 +54,10 @@ export class CreatorComponent implements OnInit, OnDestroy {
         }),
         this.store.select('quiz', 'quiz').subscribe((quiz) => {
           if (quiz) {
-            this.quiz = quiz;
+            this.quiz = this.deepClone(quiz);
           }
         }),
-        this.store
-          .select('quiz', 'isGetQuizByIdSuccessful')
-          .subscribe((isGetQuizByIdSuccessful) => {
-            if (isGetQuizByIdSuccessful) {
-              this.store.dispatch(
-                QuizActions.storeCurrentQuestion({
-                  question: this.quiz.questions[this.currentQuestionIndex],
-                  index: this.currentQuestionIndex,
-                }),
-              );
-            }
-          }),
       );
-      this.store
-        .select('quiz', 'isDeleteQuestionSuccessful')
-        .subscribe((isDeleteQuestionSuccessful) => {
-          if (isDeleteQuestionSuccessful) {
-          }
-        });
     }
   }
 
@@ -96,50 +69,21 @@ export class CreatorComponent implements OnInit, OnDestroy {
 
   activeQuestion(index: number): void {
     this.currentQuestionIndex = index;
-    this.store.dispatch(
-      QuizActions.storeCurrentQuestion({
-        question: this.quiz.questions[this.currentQuestionIndex],
-        index: this.currentQuestionIndex,
-      }),
-    );
   }
 
   addQuestion(): void {
-    // Ensure the questions property is an array
-    if (!Array.isArray(this.quiz.questions)) {
-      this.quiz.questions = [];
-    }
-
-    // Check if the quiz object is frozen or sealed
-    if (Object.isFrozen(this.quiz) || Object.isSealed(this.quiz)) {
-      // Create a new quiz object by copying properties
-      this.quiz = {
-        ...this.quiz,
-        questions: [...this.quiz.questions, { ...this.questions }],
-      };
-      this.store.dispatch(
-        QuizActions.addNewQuestion({ question: this.questions }),
-      );
-    } else {
-      // Create a new array with the existing questions and the new question
-      this.quiz.questions = [...this.quiz.questions, { ...this.questions }];
-      this.store.dispatch(
-        QuizActions.addNewQuestion({ question: this.questions }),
-      );
-    }
-
-    this.currentQuestionIndex = this.quiz.questions.length - 1;
-
-    // Dispatch the storeCurrentQuestion action
-    this.store.dispatch(
-      QuizActions.storeCurrentQuestion({
-        question: this.questions,
-        index: this.currentQuestionIndex,
-      }),
-    );
+    this.store.dispatch(QuizActions.addNewQuestion());
+    this.activeQuestion(this.quiz.questions.length - 1);
   }
 
-  deleteQuestion() {
-    this.store.dispatch(QuizActions.deleteQuestion());
+  deleteQuestion(index: number) {
+    this.store.dispatch(QuizActions.deleteQuestionByIndex({ index: index }));
+    if (this.currentQuestionIndex === index && this.quiz.questions.length > 0) {
+      this.activeQuestion(this.currentQuestionIndex - 1);
+    }
+  }
+
+  deepClone(obj: any): any {
+    return JSON.parse(JSON.stringify(obj));
   }
 }

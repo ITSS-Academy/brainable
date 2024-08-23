@@ -14,31 +14,13 @@ export interface QuizState {
   isGetQuizByIdSuccessful: boolean;
   getQuizByIdErrorMessage: string;
 
+  // update quiz
+  isUpdateQuizLoading: boolean;
+  isUpdateQuizSuccessful: boolean;
+  updateQuizErrorMessage: string;
+
   // create quiz
   isCreateQuizLoading: boolean;
   isCreateQuizSuccessful: boolean;
   createQuizErrorMessage: string;
-
-  // update quizzes by index
-  isUpdateQuestionLoading: boolean;
-  isUpdateQuestionSuccessful: boolean;
-  updateQuestionErrorMessage: string;
-
-  // store current question
-  currentQuestion: Question;
-  currentQuestionIndex: number;
-  previousQuestionIndex: number;
-  isStoreCurrentQuestionLoading: boolean;
-  isStoreCurrentQuestionSuccessful: boolean;
-  storeCurrentQuestionErrorMessage: string;
-
-  // add new question to quiz
-  isAddNewQuestionLoading: boolean;
-  isAddNewQuestionSuccessful: boolean;
-  addNewQuestionErrorMessage: string;
-
-  // delete question from quiz by index
-  isDeleteQuestionLoading: boolean;
-  isDeleteQuestionSuccessful: boolean;
-  deleteQuestionErrorMessage: string;
 }

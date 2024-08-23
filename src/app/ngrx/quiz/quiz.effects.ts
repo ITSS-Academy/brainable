@@ -42,6 +42,21 @@ export class QuizEffects {
     );
   });
 
+  updateQuiz$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(QuizActions.updateQuiz),
+      switchMap((action) => {
+        return this.quizService.updateQuiz(action.idToken, action.quiz);
+      }),
+      map(() => {
+        return QuizActions.updateQuizSuccess();
+      }),
+      catchError((error) => {
+        return of(QuizActions.updateQuizFailure({ errorMessage: error }));
+      }),
+    );
+  });
+
   getQuizById$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(QuizActions.getQuizById),

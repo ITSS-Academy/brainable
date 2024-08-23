@@ -15,8 +15,14 @@ export interface Quiz {
 
 export interface QuizDTO {
   quiz: {
+    id: number;
     title: string;
     description: string;
     isPublic: boolean;
+    totalQuestions: number;
+    imgUrl: string;
+    createdAt: Date;
+    category: Categories;
+    questions: Question[];
   };
 }

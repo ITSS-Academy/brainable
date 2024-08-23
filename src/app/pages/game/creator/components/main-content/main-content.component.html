@@ -5,8 +5,9 @@
       cdkTextareaAutosize
       cdkAutosizeMinRows="1"
       cdkAutosizeMaxRows="3"
-      [(ngModel)]="currentQuestion.question"
-      (input)="updateCharCountQuestion()"
+      [(ngModel)]="question.question"
+
+      (input)="questionChangeEvent.next({type:'question',data:question.question})"
       maxlength="120"
     >
     </textarea>
@@ -36,7 +37,7 @@
   </div>
 
   <div class="answers">
-    <div class="answer red" [ngClass]="{ active: currentQuestion.option1 }">
+    <div class="answer red" [ngClass]="{ active: question.option1 }">
       <div class="answer-color red">
         <mat-icon
           aria-hidden="false"
@@ -49,7 +50,7 @@
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="currentQuestion.option1"
+        [(ngModel)]="question.option1"
         (input)="updateCharCountAnswer(1)"
         maxlength="75"
       >
@@ -60,7 +61,7 @@
       </div>
     </div>
 
-    <div class="answer blue" [ngClass]="{ active: currentQuestion.option2 }">
+    <div class="answer blue" [ngClass]="{ active: question.option2 }">
       <div class="answer-color blue">
         <mat-icon
           aria-hidden="false"
@@ -73,7 +74,7 @@
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="currentQuestion.option2"
+        [(ngModel)]="question.option2"
         (input)="updateCharCountAnswer(2)"
         maxlength="75"
       >
@@ -84,7 +85,7 @@
       </div>
     </div>
 
-    <div class="answer yellow" [ngClass]="{ active: currentQuestion.option3 }">
+    <div class="answer yellow" [ngClass]="{ active: question.option3 }">
       <div class="answer-color yellow">
         <mat-icon
           aria-hidden="false"
@@ -97,7 +98,7 @@
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="currentQuestion.option3"
+        [(ngModel)]="question.option3"
         (input)="updateCharCountAnswer(3)"
         maxlength="75"
       >
@@ -108,7 +109,7 @@
       </div>
     </div>
 
-    <div class="answer green" [ngClass]="{ active: currentQuestion.option4 }">
+    <div class="answer green" [ngClass]="{ active: question.option4 }">
       <div class="answer-color green">
         <mat-icon
           aria-hidden="false"
@@ -121,7 +122,7 @@
         cdkTextareaAutosize
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
-        [(ngModel)]="currentQuestion.option4"
+        [(ngModel)]="question.option4"
         (input)="updateCharCountAnswer(4)"
         maxlength="75"
       >

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { QuizDTO } from '../../models/quiz.model';
+import { Quiz, QuizDTO } from '../../models/quiz.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,15 @@ export class QuizService {
 
   createQuiz(idToken: string, quiz: QuizDTO) {
     return this.http.post(`http://localhost:3000/quiz`, quiz, {
+      headers: {
+        Authorization: `${idToken}`,
+      },
+    });
+  }
+
+  updateQuiz(idToken: string, quiz: QuizDTO) {
+    console.log(quiz);
+    return this.http.put(`http://localhost:3000/quiz`, quiz, {
       headers: {
         Authorization: `${idToken}`,
       },

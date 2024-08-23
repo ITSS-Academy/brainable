@@ -18,28 +18,13 @@ export const initialState: QuizState = {
   isGetQuizByIdSuccessful: false,
   getQuizByIdErrorMessage: '',
 
+  isUpdateQuizLoading: false,
+  isUpdateQuizSuccessful: false,
+  updateQuizErrorMessage: '',
+
   isCreateQuizLoading: false,
   isCreateQuizSuccessful: false,
   createQuizErrorMessage: '',
-
-  isUpdateQuestionLoading: false,
-  isUpdateQuestionSuccessful: false,
-  updateQuestionErrorMessage: '',
-
-  currentQuestion: <Question>{},
-  currentQuestionIndex: -1,
-  previousQuestionIndex: -1,
-  isStoreCurrentQuestionLoading: false,
-  isStoreCurrentQuestionSuccessful: false,
-  storeCurrentQuestionErrorMessage: '',
-
-  isAddNewQuestionLoading: false,
-  isAddNewQuestionSuccessful: false,
-  addNewQuestionErrorMessage: '',
-
-  isDeleteQuestionLoading: false,
-  isDeleteQuestionSuccessful: false,
-  deleteQuestionErrorMessage: '',
 };
 
 export const quizReducer = createReducer(
@@ -51,7 +36,6 @@ export const quizReducer = createReducer(
       isGetAllQuizLoading: true,
     };
   }),
-
   on(QuizActions.getAllQuizSuccess, (state, { quiz }) => {
     return {
       ...state,
@@ -60,7 +44,6 @@ export const quizReducer = createReducer(
       isGetAllQuizSuccessful: true,
     };
   }),
-
   on(QuizActions.getAllQuizFailure, (state, { errorMessage }) => {
     console.log(errorMessage);
     return {
@@ -80,7 +63,6 @@ export const quizReducer = createReducer(
       createQuizErrorMessage: '',
     };
   }),
-
   on(QuizActions.createQuizSuccess, (state) => {
     console.log(QuizActions.createQuizSuccess.type);
     return {
@@ -89,7 +71,6 @@ export const quizReducer = createReducer(
       isCreateQuizSuccessful: true,
     };
   }),
-
   on(QuizActions.createQuizFailure, (state, { errorMessage }) => {
     console.log(errorMessage);
     return {
@@ -107,7 +88,6 @@ export const quizReducer = createReducer(
       isGetQuizByIdLoading: true,
     };
   }),
-
   on(QuizActions.getQuizByIdSuccess, (state, { quiz, type }) => {
     console.log(type);
     return {
@@ -117,7 +97,6 @@ export const quizReducer = createReducer(
       isGetQuizByIdSuccessful: true,
     };
   }),
-
   on(QuizActions.getQuizByIdFailure, (state, { errorMessage }) => {
     console.log(errorMessage);
     return {
@@ -128,36 +107,33 @@ export const quizReducer = createReducer(
     };
   }),
 
-  on(QuizActions.updateQuestionByIndex, (state, { question, type }) => {
-    console.log(type);
-
-    if (!Array.isArray(state.quiz.questions)) {
-      return state;
-    }
-    const updatedQuestions = [...state.quiz.questions];
-    updatedQuestions[state.previousQuestionIndex] = question;
-
+  on(QuizActions.updateQuiz, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
-      quiz: {
-        ...state.quiz,
-        questions: updatedQuestions,
-      },
-      isUpdateQuestionLoading: true,
+      isUpdateQuizLoading: true,
     };
   }),
-  on(QuizActions.storeCurrentQuestion, (state, { type, question, index }) => {
-    console.log(type);
-    const updatedIndex = state.currentQuestionIndex;
 
+  on(QuizActions.updateQuizSuccess, (state, { type }) => {
+    console.log(type);
     return {
       ...state,
-      previousQuestionIndex: updatedIndex,
-      currentQuestion: question,
-      currentQuestionIndex: index,
-      isStoreCurrentQuestionLoading: true,
+      isUpdateQuizLoading: false,
+      isUpdateQuizSuccessful: true,
     };
   }),
+
+  on(QuizActions.updateQuizFailure, (state, { errorMessage }) => {
+    console.log(errorMessage);
+    return {
+      ...state,
+      isUpdateQuizLoading: false,
+      isUpdateQuizSuccessful: false,
+      updateQuizErrorMessage: errorMessage,
+    };
+  }),
+
   on(QuizActions.storeCurrentQuiz, (state, { type, quiz }) => {
     console.log(type);
     return {
@@ -165,26 +141,45 @@ export const quizReducer = createReducer(
       quiz: quiz,
     };
   }),
-  on(QuizActions.addNewQuestion, (state, { type, question }) => {
+  on(QuizActions.addNewQuestion, (state, { type }) => {
     console.log(type);
-    console.log(state.quiz);
     return {
       ...state,
-      isAddNewQuestionLoading: true,
       quiz: {
         ...state.quiz,
-        questions: [...state.quiz.questions, { ...question }],
+        questions: [...state.quiz.questions, {} as Question],
       },
     };
   }),
-  on(QuizActions.deleteQuestion, (state, { type }) => {
+  on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
     console.log(type);
-    const updatedQuestions = state.quiz.questions.filter(
-      (_, i) => i !== state.currentQuestionIndex,
-    );
+
+    if (!Array.isArray(state.quiz.questions)) {
+      return state;
+    }
+    const updatedQuestions = [...state.quiz.questions];
+    updatedQuestions[index] = question;
+
     return {
       ...state,
-      isDeleteQuestionSuccessful: true,
+      quiz: {
+        ...state.quiz,
+        questions: updatedQuestions,
+      },
+    };
+  }),
+  on(QuizActions.deleteQuestionByIndex, (state, { index, type }) => {
+    console.log(type);
+
+    if (!Array.isArray(state.quiz.questions)) {
+      return state;
+    }
+    const updatedQuestions = state.quiz.questions.filter(
+      (question, questionIndex) => questionIndex !== index,
+    );
+
+    return {
+      ...state,
       quiz: {
         ...state.quiz,
         questions: updatedQuestions,

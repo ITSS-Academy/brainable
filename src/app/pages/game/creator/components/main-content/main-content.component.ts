@@ -10,9 +10,10 @@ import {
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { QuestionState } from '../../../../../ngrx/question/question.state';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { Question } from '../../../../../models/question.model';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
+import { BehaviorSubject } from 'rxjs';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 
 @Component({
@@ -23,8 +24,15 @@ import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent implements OnInit, OnDestroy {
+  @Input() question!: Question;
+  @Input() index!: number;
+
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
+
+  questionChangeEvent = new BehaviorSubject<any>(null).pipe(
+    debounceTime(500),
+  ) as BehaviorSubject<any>;
 
   constructor(
     private storage: Storage,
@@ -37,25 +45,17 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.store.select('auth', 'idToken').subscribe((idToken) => {
-        if (idToken) {
-          this.store.select('quiz', 'currentQuestion').subscribe((question) => {
-            if (question) {
-              this.store.dispatch(
-                QuizActions.updateQuestionByIndex({
-                  question: this.currentQuestion,
-                }),
-              );
-              this.resetQuestion();
-              this.currentQuestion = question as Question;
-            }
-            this.updateCharCountQuestion();
-            this.updateCharCountAnswer(1);
-            this.updateCharCountAnswer(2);
-            this.updateCharCountAnswer(3);
-            this.updateCharCountAnswer(4);
-          });
+      this.questionChangeEvent.subscribe((data) => {
+        console.log('Data changed');
+        if (data.type == 'question') {
+          this.question.question = data.data;
         }
+        this.store.dispatch(
+          QuizActions.updateQuestionByIndex({
+            question: this.question,
+            index: this.index,
+          }),
+        );
       }),
     );
   }
@@ -111,10 +111,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   updateCharCountQuestion(): void {
-    this.currentQuestion = {
-      ...this.currentQuestion,
-    };
-    this.charCountQuestion = 120 - this.currentQuestion.question.length;
+    this.charCountQuestion = 120 - this.question.question.length;
   }
 
   updateCharCountAnswer(index: number): void {
