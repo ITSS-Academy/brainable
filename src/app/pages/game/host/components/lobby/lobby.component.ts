@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { Subscription } from 'rxjs';
 import { GameService } from '../../../../../services/game/game.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-lobby',
@@ -21,6 +22,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{ game: GameState }>,
     private gameService: GameService,
+    private router: Router,
   ) {
     this.playMusic();
 
@@ -55,6 +57,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   startGame() {
     console.log('Starting game...');
     this.gameService.startGame(this.pin);
+    this.router.navigate([`/host/${this.pin}/countdown`]);
   }
 
   song = new Audio();

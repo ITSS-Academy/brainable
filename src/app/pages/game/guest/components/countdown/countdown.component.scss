@@ -35,7 +35,7 @@
 }
 
 .square .number {
-  //transform: rotate(-0deg);
+  transform: rotate(-0deg);
   transition: transform 0.5s ease-in-out;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .square.active-3 .number {
-  //transform: rotate(0deg);
+  transform: rotate(0deg);
   animation: scaleUp-3 0.5s forwards;
 }
 
@@ -56,8 +56,8 @@
 }
 
 .square.active-2 .number {
-  rotate: -45deg;
   animation: scaleUp-2 0.5s forwards;
+
 }
 
 .square.active-1 {
@@ -66,8 +66,6 @@
 }
 
 .square.active-1 .number {
-  rotate: -90deg;
-  transform: rotate(-90deg);
   animation: scaleUp-1 0.5s forwards;
 }
 
@@ -99,21 +97,21 @@
 @keyframes scaleUp-2 {
   0% {
     opacity: 0;
-    transform: scale(0.5) rotate(-45deg);
+    transform: scale(0.5) rotate(0deg);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotate(-45deg);
   }
 }
 
 @keyframes scaleUp-1 {
   0% {
     opacity: 0;
-    transform: scale(0.5) rotate(90deg);
+    transform: scale(0.5) rotate(0deg);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotate(-90deg);
   }
 }

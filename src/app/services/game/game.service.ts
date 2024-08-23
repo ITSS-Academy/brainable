@@ -35,7 +35,7 @@ export class GameService {
   listenForNavigation(pin: string): void {
     this.socket.on('navigateToQuestion', () => {
       console.log('Navigating to answer page');
-      this.router.navigate([`/guest/${pin}/answer`]);
+      this.router.navigate([`/guest/${pin}/countdown`]);
     });
   }
 

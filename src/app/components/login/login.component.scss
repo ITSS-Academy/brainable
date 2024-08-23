@@ -8,7 +8,7 @@
   }
 
   .dialog-content {
-    flex: 1;
+    //flex: 1;
     max-width: 100%;
     max-height: 100vh;
     padding: 1% 4%;
@@ -18,11 +18,9 @@
     text-align: center;
   }
 
-  .dialog-title {
-    font-size: xxx-large;
-    font-weight: bold;
-    color: var(--md-sys-color-on-secondary-container);
-    margin: 5% 0 7% 0;
+  .logo {
+    width: 220px;
+    margin: 5% auto;
   }
 
   .description-text {
@@ -71,7 +69,6 @@
     padding: 3% 0;
   }
 
-
   .google-login-btn:hover {
     background-color: var(--md-sys-color-surface-tint);
     color: var(--md-sys-color-on-primary);
@@ -88,7 +85,7 @@
 
   .or-text:before,
   .or-text:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     width: 40%;
@@ -123,8 +120,12 @@
     cursor: pointer;
   }
 
-
   @media (max-width: 900px) {
+    .logo {
+      width: 170px;
+      margin: 5% auto;
+    }
+
     .dialog-container {
       flex-direction: column;
       padding: 5%;
@@ -136,10 +137,14 @@
     .dialog-title {
       font-size: xx-large;
       margin: 4% 0 4% 0;
-
     }
+
     .description-text {
       font-size: larger;
+    }
+
+    .google-login-text {
+      font-size: medium;
     }
   }
 
@@ -163,6 +168,11 @@
   }
 
   @media (max-width: 431px) {
+    .logo {
+      width: 150px;
+      margin: 5% auto;
+    }
+
     .material-symbols-outlined {
       display: inline-flex;
       vertical-align: middle;
@@ -184,8 +194,4 @@
       justify-content: flex-start;
     }
   }
-
-
 }
-
-

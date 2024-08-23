@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  Question,
-  QuestionChannel,
-  QuestionDTO,
-} from '../../models/question.model';
-import { Socket } from 'ngx-socket-io';
-import { Observable } from 'rxjs';
+import { QuestionDTO } from '../../models/question.model';
 
 @Injectable({
   providedIn: 'root',

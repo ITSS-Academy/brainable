@@ -1,13 +1,26 @@
 <mat-toolbar class="header">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" [routerLink]="['/home']">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    [routerLink]="['/home']"
+  >
     <mat-icon>navigate_before</mat-icon>
   </button>
-  <input class="title" type="text" [placeholder]="title">
+  <input class="title" type="text" [placeholder]="title" />
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
     <mat-icon>settings</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with share icon"
+  >
     <mat-icon>play_arrow</mat-icon>
   </button>
   <button mat-fab extended class="save-btn" (click)="saveQuiz()">

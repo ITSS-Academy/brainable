@@ -11,17 +11,17 @@
     </div>
 
     <div class="qr-code">
-      <img src="assets/images/qr-test.png" alt="">
+      <img src="assets/images/qr-test.png" alt="" />
     </div>
   </div>
 
   <div class="join-info-respond">
-    <div>Join at
+    <div>
+      Join at
       <strong>www.brainable.io.vn</strong>
       with Game PIN:
       <span class="pin">
-        <span>80</span>
-        <span>697</span>
+        <span>{{ pin }}</span>
       </span>
     </div>
   </div>
@@ -30,7 +30,9 @@
     <!--    <button mat-mini-fab aria-label="Example icon button with a menu icon">-->
     <!--      <mat-icon>lock_open</mat-icon>-->
     <!--    </button>-->
-    <button class="btn-join" mat-flat-button (click)="startGame()">Start Game</button>
+    <button class="btn-join" mat-flat-button (click)="startGame()">
+      Start Game
+    </button>
   </div>
 
   <div class="players">
@@ -48,9 +50,7 @@
   </div>
 
   <div class="footer">
-    <div class="logo">
-      Logo
-    </div>
+    <div class="logo">Logo</div>
 
     <div class="game-info">
       <div class="number-of-players">
@@ -64,7 +64,14 @@
         } @else {
           <mat-icon (click)="playMusic()">volume_off</mat-icon>
         }
-        <input type="range" min="0" max="1" step="0.01" value="0.5" (input)="volume($event)">
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.5"
+          (input)="volume($event)"
+        />
       </div>
     </div>
   </div>
