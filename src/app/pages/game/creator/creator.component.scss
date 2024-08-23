@@ -54,7 +54,8 @@ app-main-content {
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 164px;
+      height: 145px;
+      min-height: 145px;
       cursor: pointer;
       transition: background-color 0.3s;
       background-color: #ffffff;
@@ -87,7 +88,6 @@ app-main-content {
         flex-direction: row;
         width: 100%;
         height: 104px;
-
 
         .icons {
           display: flex;
@@ -142,8 +142,8 @@ app-main-content {
               color: var(--md-sys-color-outline-variant);
               border-radius: 50%;
               border: var(--md-sys-color-outline-variant) 1px solid;
-              margin-left: 15px;
-              margin-right: 25px;
+              margin-left: 14px;
+              margin-right: 14px;
               font-size: 10px;
             }
 
@@ -262,7 +262,9 @@ app-main-content {
         flex-direction: row;
         align-items: center;
         height: 65px;
-        width: calc(100% - 48px);
+        width: 135px;
+        min-width: 125px;
+        padding: 0;
 
         .question-type-respond {
           display: block !important;
@@ -291,11 +293,8 @@ app-main-content {
               img {
                 width: 35px !important;
               }
-
             }
-
           }
-
         }
       }
     }

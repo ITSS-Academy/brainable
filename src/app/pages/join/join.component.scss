@@ -9,7 +9,7 @@
 
 .header {
   height: 56px;
-  background-color: #0909094C
+  background-color: #0909094c;
 }
 
 .header-content {
@@ -45,6 +45,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.logo {
+  width: 280px;
 }
 
 .content-body {
@@ -61,7 +67,7 @@
 input {
   width: 320px;
   margin-bottom: 0;
-  color: #292A3AFF;
+  color: #292a3aff;
   font-size: 20px;
   font-weight: 600;
   padding: 14px;
@@ -82,7 +88,7 @@ input::placeholder {
   //border-radius: 8px;
   box-shadow: 0 4px 0 var(--md-sys-color-primary);
   cursor: pointer; /* Pointer/hand icon */
-  transition: all .1s ease; /* Smooth transition for the effects */
+  transition: all 0.1s ease; /* Smooth transition for the effects */
 }
 
 .btn-join:hover {
@@ -93,10 +99,5 @@ input::placeholder {
 .btn-join:active {
   box-shadow: 0 0 var(--md-sys-color-primary); /* Move shadow to create 'pressed' effect */
   transform: translateY(4px); /* Move the button down */
-  transition: all .1s ease; /* Smooth transition for the effects */
-
+  transition: all 0.1s ease; /* Smooth transition for the effects */
 }
-
-
-
-

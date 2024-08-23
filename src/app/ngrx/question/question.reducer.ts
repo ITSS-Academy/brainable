@@ -8,6 +8,11 @@ export const initialState: QuestionState = {
   isCreateQuestionLoading: false,
   isCreateQuestionSuccessful: false,
   createQuestionErrorMessage: '',
+
+  questions: [],
+  isGetQuestionsByQuizIdLoading: false,
+  isGetQuestionsByQuizIdSuccessful: false,
+  getQuestionsByQuizIdErrorMessage: '',
 };
 
 export const questionReducer = createReducer(

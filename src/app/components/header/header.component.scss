@@ -10,6 +10,10 @@
     display: none;
   }
 
+  .search-icon-response {
+    display: none;
+  }
+
   .search-container {
     display: flex;
     justify-content: center;
@@ -29,7 +33,6 @@
       border-radius: 20px;
       font-size: 14px;
     }
-
   }
 
   .action {
@@ -40,7 +43,6 @@
     }
   }
 }
-
 
 @media screen and (max-width: 1024px) {
   .container {
@@ -53,7 +55,6 @@
 
 @media screen and (max-width: 768px) {
   .container {
-
     .search-container {
       width: 50%;
 
@@ -61,13 +62,21 @@
         width: 80%;
       }
     }
+
+    .action {
+    }
   }
 }
 
+@media screen and (max-width: 576px) {
+  .container {
+    .search-container {
+      display: none;
+    }
 
-
-
-
-
-
-
+    .search-icon-response {
+      display: block;
+      cursor: pointer;
+    }
+  }
+}

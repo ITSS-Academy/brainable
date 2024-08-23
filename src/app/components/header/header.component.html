@@ -1,9 +1,14 @@
 <div class="container">
-  <mat-icon fontIcon="menu" class="menu-icon" (click)="onMenuClick()"></mat-icon>
+  <mat-icon
+    fontIcon="menu"
+    class="menu-icon"
+    (click)="onMenuClick()"
+  ></mat-icon>
   <div class="search-container">
     <mat-icon fontIcon="search" class="search-icon"></mat-icon>
-    <input type="text" placeholder="Search public content">
+    <input type="text" placeholder="Search public content" />
   </div>
+  <mat-icon fontIcon="search" class="search-icon-response"></mat-icon>
   <div class="action">
     @if (!(profile$ | async)) {
       <button mat-flat-button class="btn-login" (click)="openDialog()">

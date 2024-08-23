@@ -8,12 +8,25 @@
 }
 
 .header {
-  width: 100%;
-  height: 10%;
   display: flex;
   justify-content: flex-end;
-  padding-right: 10px;
   align-items: center;
+  width: 100%;
+  height: 10%;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.question {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 50px;
+  padding: 0 10px;
+  border-radius: 4px;
+  background-color: var(--md-sys-color-on-primary);
+  flex-basis: 90%;
 }
 
 .result {
@@ -78,7 +91,7 @@ mat-icon {
 }
 
 .answer.red {
-  background-color: #D03542;
+  background-color: #d03542;
 }
 
 .answer.red mat-icon {
@@ -87,7 +100,7 @@ mat-icon {
 }
 
 .answer.blue {
-  background-color: #3066C7;
+  background-color: #3066c7;
 }
 
 .answer.blue mat-icon {
@@ -96,30 +109,33 @@ mat-icon {
 }
 
 .answer.yellow {
-  background-color: #CFA035;
+  background-color: #cfa035;
 }
 
-.answer.yellow mat-icon{
+.answer.yellow mat-icon {
   font-size: 20px;
 }
 
 .answer.green {
   background-color: #468729;
 }
-.answer.green mat-icon{
 
+.answer.green mat-icon {
   font-size: 20px;
 }
 
 .result .answer.red {
-  background-color: #C40C0C;
+  background-color: #c40c0c;
 }
+
 .result .answer.blue {
-  background-color: #050C9C;
+  background-color: #050c9c;
 }
+
 .result .answer.yellow {
-  background-color: #D49B54;
+  background-color: #d49b54;
 }
+
 .result .answer.green {
-  background-color: #00712D;
+  background-color: #00712d;
 }

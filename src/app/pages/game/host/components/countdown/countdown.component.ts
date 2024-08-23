@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { NgForOf, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
+import { GameState } from '../../../../../ngrx/game/game.state';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-countdown',
@@ -15,6 +18,12 @@ export class CountdownComponent implements OnInit {
   showFinalText = false;
   hideSquares = false;
   hiddenNumbers: Set<number> = new Set(); // Track hidden numbers
+  pin = this.store.select('game', 'pin');
+
+  constructor(
+    private router: Router,
+    private store: Store<{ game: GameState }>,
+  ) {}
 
   ngOnInit() {
     this.startCountdown();
@@ -35,6 +44,7 @@ export class CountdownComponent implements OnInit {
         setTimeout(() => {
           this.showFinalText = true;
           this.hideSquares = true; // Hide squares after countdown
+          this.router.navigate([`/host/${this.pin}/question`]);
         }, 1000);
       }
     }, 1000);
