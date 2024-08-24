@@ -26,11 +26,11 @@
   flex-direction: column;
   padding-left: 20px;
   clip-path: polygon(
-      calc(100% - 2.5vmin) 0px,
-      100% 50%,
-      calc(100% - 2.5vmin) 100%,
-      0px 100%,
-      0px 0px
+    calc(100% - 2.5vmin) 0px,
+    100% 50%,
+    calc(100% - 2.5vmin) 100%,
+    0px 100%,
+    0px 0px
   );
   margin: 0px -1vmin 0px 0px;
   border-radius: 4px 0 0 4px;
@@ -115,6 +115,10 @@
   align-items: center;
   color: var(--md-sys-color-background);
   padding: 0 16px;
+}
+
+.logo {
+  width: 200px;
 }
 
 .footer .game-info {
