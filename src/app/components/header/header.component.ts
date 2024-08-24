@@ -45,4 +45,10 @@ export class HeaderComponent implements OnInit {
 
     this.dialog.open(LoginComponent, dialogConfig);
   }
+
+  isSearch = false;
+
+  isClickSearch() {
+    this.isSearch = !this.isSearch;
+  }
 }

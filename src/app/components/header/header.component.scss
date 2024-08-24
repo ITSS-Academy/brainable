@@ -11,27 +11,35 @@
   }
 
   .search-icon-response {
+    margin-right: 12px;
     display: none;
   }
 
-  .search-container {
+  .right {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 360px;
-    background-color: var(--md-sys-color-surface-container);
-    border-radius: 28px;
-    padding: 2px 12px;
-    margin: 0 auto; /* Center the search container */
+    justify-content: flex-end;
+    width: 100%;
 
-    input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background-color: unset;
-      padding: 10px;
-      border-radius: 20px;
-      font-size: 14px;
+    .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 360px;
+      background-color: var(--md-sys-color-surface-container);
+      border-radius: 28px;
+      padding: 2px 12px;
+      margin: 0 auto; /* Center the search container */
+
+      input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background-color: unset;
+        padding: 10px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
     }
   }
 
@@ -55,28 +63,63 @@
 
 @media screen and (max-width: 768px) {
   .container {
-    .search-container {
-      width: 50%;
+    .right {
+      .search-container {
+        width: 50%;
 
-      input {
-        width: 80%;
+        input {
+          width: 80%;
+        }
       }
-    }
-
-    .action {
     }
   }
 }
 
 @media screen and (max-width: 576px) {
   .container {
-    .search-container {
-      display: none;
+    .right {
+      .search-container {
+        display: none;
+      }
+
+      .search-icon-response {
+        display: block;
+        cursor: pointer;
+      }
     }
 
-    .search-icon-response {
-      display: block;
-      cursor: pointer;
+    .search-click {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+
+      .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 360px;
+        background-color: var(--md-sys-color-surface-container);
+        border-radius: 28px;
+        padding: 2px 12px;
+        margin: 0 auto; /* Center the search container */
+
+        input {
+          flex: 1;
+          border: none;
+          outline: none;
+          background-color: unset;
+          padding: 10px;
+          border-radius: 20px;
+          font-size: 14px;
+        }
+      }
+
+      .search-icon-response,
+      .btn-login,
+      .btn-enter {
+        display: none;
+      }
     }
   }
 }
