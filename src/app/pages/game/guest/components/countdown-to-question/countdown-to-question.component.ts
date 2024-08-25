@@ -17,7 +17,7 @@ import * as GameActions from '../../../../../ngrx/game/game.actions';
   styleUrl: './countdown-to-question.component.scss',
 })
 export class CountdownToQuestionComponent implements OnInit {
-  countdownNumbers = [3, 2, 1];
+  countdownNumbers = [3, 2, 1, 0];
   activeNumber = 4;
   showFinalText = false;
   hideCircle = false;
@@ -26,19 +26,25 @@ export class CountdownToQuestionComponent implements OnInit {
   subscription: Subscription[] = [];
 
   pin = '';
+  playerName = '';
 
   constructor(
     private router: Router,
     private store: Store<{ game: GameState }>,
     private gameService: GameService,
   ) {
-    this.store.select('game', 'pin').subscribe((pin) => {
-      if (pin) {
-        this.pin = pin as string;
-      } else {
-        this.store.dispatch(GameActions.storePin({ pin: this.pin }));
-      }
-    });
+    this.subscription.push(
+      this.store.select('game', 'pin').subscribe((pin) => {
+        if (pin) {
+          this.pin = pin as string;
+        } else {
+          this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+        }
+      }),
+      this.store.select('game', 'playerName').subscribe((playerName) => {
+        this.playerName = playerName as string;
+      }),
+    );
   }
 
   ngOnInit() {

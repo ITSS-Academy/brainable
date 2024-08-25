@@ -29,7 +29,6 @@ export class CountdownComponent implements OnInit {
   ngOnInit() {
     this.startCountdown();
     this.store.select('game', 'pin').subscribe((pin) => {
-      console.log('pin', pin);
       if (pin) {
         this.pin = pin as string;
       } else {

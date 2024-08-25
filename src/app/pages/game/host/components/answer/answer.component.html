@@ -1,13 +1,12 @@
 <div id="container">
   <div class="header">
     <div class="question">{{ questions[currentQuestion].question }}</div>
-    <button mat-flat-button>Skip</button>
   </div>
 
   <div class="timer">
     <div class="time">{{ activeNumber }}</div>
     <div class="number-of-answers">
-      <div class="number">0</div>
+      <div class="number">{{ numOfUserResponses }}</div>
       <div class="text">Answers</div>
     </div>
   </div>

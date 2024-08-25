@@ -6,3 +6,8 @@ export const storePin = createAction(
 );
 
 export const nextQuestion = createAction('[Game] Next Question');
+
+export const storePlayerName = createAction(
+  '[Game] Store Player Name',
+  props<{ playerName: string }>(),
+);

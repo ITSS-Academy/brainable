@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { GameService } from '../../../../../services/game/game.service';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
@@ -43,6 +42,9 @@ export class WaitingComponent implements OnInit, OnDestroy {
 
   joinGame(): void {
     this.gameService.joinRoom(this.pin, this.nickname);
+    this.store.dispatch(
+      GameActions.storePlayerName({ playerName: this.nickname }),
+    );
     this.isJoining = true;
   }
 

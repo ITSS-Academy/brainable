@@ -101,3 +101,17 @@ input::placeholder {
   transform: translateY(4px); /* Move the button down */
   transition: all 0.1s ease; /* Smooth transition for the effects */
 }
+
+@media screen and (max-width: 576px) {
+  .logo {
+    width: 55%;
+  }
+
+  .content-body {
+    width: 70%;
+
+    input {
+      width: 100%;
+    }
+  }
+}
