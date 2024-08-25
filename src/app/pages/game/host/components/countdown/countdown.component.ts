@@ -4,6 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { Store } from '@ngrx/store';
+import * as GameActions from '../../../../../ngrx/game/game.actions';
 
 @Component({
   selector: 'app-countdown',
@@ -28,7 +29,12 @@ export class CountdownComponent implements OnInit {
   ngOnInit() {
     this.startCountdown();
     this.store.select('game', 'pin').subscribe((pin) => {
-      this.pin = pin as string;
+      console.log('pin', pin);
+      if (pin) {
+        this.pin = pin as string;
+      } else {
+        this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+      }
     });
   }
 

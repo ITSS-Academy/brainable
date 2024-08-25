@@ -32,10 +32,23 @@ export class GameService {
     this.socket.emit('startGame', pin);
   }
 
-  listenForNavigation(pin: string): void {
-    this.socket.on('navigateToQuestion', () => {
-      console.log('Navigating to answer page');
+  listenForNavigationCountDown(pin: string): void {
+    this.socket.on('navigateToCountDown', () => {
       this.router.navigate([`/guest/${pin}/countdown`]);
+    });
+  }
+
+  showAnswer(pin: string): void {
+    console.log('Showing answer');
+    this.socket.emit('showAnswer', pin);
+    this.router.navigate([`/host/${pin}/answer`]);
+  }
+
+  listenForNavigateChooseAnswer(pin: string) {
+    console.log('Listening for chooseAnswer', pin);
+    this.socket.on('chooseAnswer', () => {
+      console.log('Navigating to answer page');
+      this.router.navigate([`/guest/${pin}/answer`]);
     });
   }
 

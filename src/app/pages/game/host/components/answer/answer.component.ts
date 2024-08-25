@@ -44,7 +44,11 @@ export class AnswerComponent implements OnInit, OnDestroy {
         this.startCountdown(this.activeNumber);
       }),
       this.store.select('game', 'pin').subscribe((pin) => {
-        this.pin = pin as string;
+        if (pin) {
+          this.pin = pin as string;
+        } else {
+          this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+        }
       }),
       this.store
         .select('game', 'currentQuestion')
@@ -62,7 +66,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
       if (countTime < 1) {
         clearInterval(countdownInterval);
-        this.router.navigate([`/host/${this.pin}/results`]);
       }
     }, 1000);
   }

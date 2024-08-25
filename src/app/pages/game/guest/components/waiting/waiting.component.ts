@@ -6,6 +6,7 @@ import { GameService } from '../../../../../services/game/game.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
+import * as GameActions from '../../../../../ngrx/game/game.actions';
 
 @Component({
   selector: 'app-waiting',
@@ -26,11 +27,15 @@ export class WaitingComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.gameService.listenForNavigation(this.pin);
+    this.gameService.listenForNavigationCountDown(this.pin);
     this.subscriptions.push(
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
-          this.pin = pin;
+          if (pin) {
+            this.pin = pin as string;
+          } else {
+            this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+          }
         }
       }),
     );
