@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
+import * as GameActions from '../../../../../ngrx/game/game.actions';
 
 @Component({
   selector: 'app-countdown',
@@ -31,7 +32,9 @@ export class CountdownComponent implements OnInit {
     this.subscription.push(
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
-          this.pin = pin;
+          this.pin = pin as string;
+        } else {
+          this.store.dispatch(GameActions.storePin({ pin: this.pin }));
         }
       }),
     );

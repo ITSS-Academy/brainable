@@ -9,6 +9,7 @@ import { GameState } from '../../../../../ngrx/game/game.state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
+import { SendQuestion } from '../../../../../models/game.model';
 
 @Component({
   selector: 'app-answer',
@@ -25,6 +26,8 @@ export class AnswerComponent implements OnInit, OnDestroy {
   activeNumber!: number;
   pin!: string;
 
+  numOfUserResponses = 0;
+
   constructor(
     private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
     private activatedRoute: ActivatedRoute,
@@ -33,6 +36,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.gameService.listenForPlayerSubmittedAnswerAnswer().subscribe(() => {
+      this.numOfUserResponses++;
+    });
     const pin = this.activatedRoute.snapshot.paramMap.get('pin');
     this.store.dispatch(GameActions.storePin({ pin: pin }));
     this.subscription.push(
@@ -44,7 +50,11 @@ export class AnswerComponent implements OnInit, OnDestroy {
         this.startCountdown(this.activeNumber);
       }),
       this.store.select('game', 'pin').subscribe((pin) => {
-        this.pin = pin as string;
+        if (pin) {
+          this.pin = pin as string;
+        } else {
+          this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+        }
       }),
       this.store
         .select('game', 'currentQuestion')
@@ -52,6 +62,15 @@ export class AnswerComponent implements OnInit, OnDestroy {
           this.currentQuestion = currentQuestion as number;
         }),
     );
+    //   check pin and currentQuestion !== null
+    if (this.pin && this.currentQuestion !== null) {
+      const data: SendQuestion = {
+        pin: this.pin,
+        questionId: this.questions[this.currentQuestion].id,
+        correctAnswer: this.questions[this.currentQuestion].answer,
+      };
+      this.gameService.sendQuestion(data);
+    }
   }
 
   startCountdown(timeLimit: number) {
@@ -62,7 +81,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
       if (countTime < 1) {
         clearInterval(countdownInterval);
-        this.router.navigate([`/host/${this.pin}/results`]);
+        this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
+          this.gameService.nextShowResults(this.pin);
+        });
       }
     }, 1000);
   }

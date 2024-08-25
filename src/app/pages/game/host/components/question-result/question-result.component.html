@@ -1,6 +1,6 @@
 <div id="container">
   <div class="header">
-    <div class="question">Question</div>
+    <div class="question">{{ questions[currentQuestion].question }}</div>
     <button mat-flat-button (click)="nextQuestionClicked()">Next</button>
   </div>
 
@@ -39,7 +39,7 @@
         fontIcon="square"
       ></mat-icon>
       <span class="number-of-answers">3</span>
-      <mat-icon class="check">check</mat-icon>
+      <mat-icon class="check" fontIcon="check"></mat-icon>
     </div>
   </div>
 
@@ -50,8 +50,8 @@
         aria-label="Example home icon"
         fontIcon="play_arrow"
       ></mat-icon>
-      <div class="answer-text">Answer 1</div>
-      <mat-icon class="wrong">close</mat-icon>
+      <div class="answer-text">{{ questions[currentQuestion].option1 }}</div>
+      <mat-icon class="wrong" fontIcon="close"></mat-icon>
     </div>
     <div class="answer blue wrong-answer">
       <mat-icon
@@ -59,8 +59,8 @@
         aria-label="Example home icon"
         fontIcon="square"
       ></mat-icon>
-      <div class="answer-text">Answer 2</div>
-      <mat-icon class="wrong">close</mat-icon>
+      <div class="answer-text">{{ questions[currentQuestion].option2 }}</div>
+      <mat-icon class="wrong" fontIcon="close"></mat-icon>
     </div>
     <div class="answer yellow wrong-answer">
       <mat-icon
@@ -68,8 +68,8 @@
         aria-label="Example home icon"
         fontIcon="circle"
       ></mat-icon>
-      <div class="answer-text">Answer 3</div>
-      <mat-icon class="wrong">close</mat-icon>
+      <div class="answer-text">{{ questions[currentQuestion].option3 }}</div>
+      <mat-icon class="wrong" fontIcon="close"></mat-icon>
     </div>
     <div class="answer green">
       <mat-icon
@@ -77,8 +77,8 @@
         aria-label="Example home icon"
         fontIcon="square"
       ></mat-icon>
-      <div class="answer-text">Answer 4</div>
-      <mat-icon class="right">check</mat-icon>
+      <div class="answer-text">{{ questions[currentQuestion].option4 }}</div>
+      <mat-icon class="right" fontIcon="check"></mat-icon>
     </div>
   </div>
 

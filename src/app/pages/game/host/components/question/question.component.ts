@@ -44,7 +44,11 @@ export class QuestionComponent implements OnInit, OnDestroy {
         this.questions = quiz.questions;
       }),
       this.store.select('game', 'pin').subscribe((pin) => {
-        this.pin = pin as string;
+        if (pin) {
+          this.pin = pin as string;
+        } else {
+          this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+        }
       }),
       this.store
         .select('game', 'currentQuestion')
@@ -65,7 +69,8 @@ export class QuestionComponent implements OnInit, OnDestroy {
       if (this.progressValue + increment >= 100) {
         this.progressValue = 100; // Ensure we reach exactly 100%
         clearInterval(intervalId); // Stop the interval when progress reaches 100%
-        this.router.navigate([`/host/${this.pin}/answer`]);
+        this.gameService.showAnswer(this.pin);
+        // this.router.navigate([`/host/${this.pin}/answer`]);
       } else {
         this.progressValue += increment; // Update progress value
       }
