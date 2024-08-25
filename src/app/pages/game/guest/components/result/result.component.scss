@@ -61,15 +61,23 @@
   font-weight: 700;
 }
 
-.correct-icon {
+.correct-icon,
+.incorrect-icon {
   width: 100px;
   height: 100px;
-  background-color: forestgreen;
   border-radius: 50%;
   border: #fff solid 8px;
 }
 
-.correct-icon mat-icon {
+.correct-icon {
+  background-color: forestgreen;
+}
+
+.incorrect-icon {
+  background-color: red;
+}
+
+.content mat-icon {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -80,7 +88,7 @@
   font-weight: 700;
 }
 
-.correct-icon mat-icon::before {
+.content mat-icon::before {
   width: 100px;
   height: 100px;
   font-size: 84px;
