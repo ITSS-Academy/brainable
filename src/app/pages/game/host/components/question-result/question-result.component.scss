@@ -76,6 +76,7 @@
   width: 46%;
   height: 40%;
   border-radius: 4px;
+  position: relative;
 }
 
 .answer-text {
@@ -90,6 +91,30 @@ mat-icon {
   margin: 0 8px;
 }
 
+.number-of-answers {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--md-sys-color-surface-container-lowest);
+}
+
+//class làm mờ khi sai
+.wrong-answer {
+  filter: brightness(0.7);
+}
+
+.check {
+  margin: 0 !important;
+}
+
+.right,
+.wrong {
+  position: absolute;
+  right: 0;
+  font-weight: 700;
+  rotate: none !important;
+  font-size: 20px !important;
+}
+
 .answer.red {
   background-color: #d03542;
   height: 20px;
@@ -98,6 +123,7 @@ mat-icon {
 .answer.red mat-icon {
   rotate: -90deg;
   font-size: 30px;
+  padding-right: 4px;
 }
 
 .answer.blue {
@@ -106,7 +132,7 @@ mat-icon {
 
 .answer.blue mat-icon {
   rotate: 45deg;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .answer.yellow {
