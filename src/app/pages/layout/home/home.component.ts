@@ -40,6 +40,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     'isGetAllCategoriesSuccessful',
   );
 
+  
+
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
   ) {}
