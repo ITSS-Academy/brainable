@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(

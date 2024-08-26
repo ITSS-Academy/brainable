@@ -9,22 +9,22 @@
   <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
     <div class="card-quiz-container">
       @for (card of category.quizzes.slice(0, 7); track $index) {
-        <div class="card-quiz-card">
-          <div class="quiz-content">
-            <div class="quiz-top">
-              <img [src]="card.imgUrl" alt="Media Pic" />
-            </div>
-            <div class="quiz-bot">
-              <p class="title">
-                {{ card.title }}
-              </p>
-              <div class="quiz-note">
-                <p>123 questions</p>
-                <p>321 plays</p>
-              </div>
+      <div class="card-quiz-card">
+        <div class="quiz-content">
+          <div class="quiz-top">
+            <img [src]="card.imgUrl" alt="Media Pic" />
+          </div>
+          <div class="quiz-bot">
+            <p class="title">
+              {{ card.title }}
+            </p>
+            <div class="quiz-note">
+              <p>123 questions</p>
+              <p>321 plays</p>
             </div>
           </div>
         </div>
+      </div>
       }
     </div>
   </cdk-virtual-scroll-viewport>

@@ -17,10 +17,10 @@ import { CategoriesByUid } from '../../../../../models/categories.model';
     ScrollingModule,
   ],
   templateUrl: './card-quiz.component.html',
-  styleUrl: './card-quiz.component.scss',
+  styleUrls: ['./card-quiz.component.scss'],
 })
 export class CardQuizComponent implements OnInit {
   @Input() category!: CategoriesByUid;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
