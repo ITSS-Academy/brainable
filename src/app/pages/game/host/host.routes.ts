@@ -33,7 +33,7 @@ export const HOST_ROUTERS: Routes = [
         component: CountdownComponent,
       },
       {
-        path: 'result',
+        path: 'game-result',
         component: GameResultComponent,
       },
     ],

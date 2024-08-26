@@ -5,81 +5,81 @@
   </div>
 
   <div class="result">
-    <div class="answer red">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="play_arrow"
-      ></mat-icon>
-      <span class="number-of-answers">3</span>
-      <!--      <mat-icon class="check">check</mat-icon>-->
-    </div>
-    <div class="answer blue">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="square"
-      ></mat-icon>
-      <span class="number-of-answers">3</span>
-      <!--      <mat-icon class="check">check</mat-icon>-->
-    </div>
-    <div class="answer yellow">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="circle"
-      ></mat-icon>
-      <span class="number-of-answers">3</span>
-      <!--      <mat-icon class="check">check</mat-icon>-->
-    </div>
-    <div class="answer green">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="square"
-      ></mat-icon>
-      <span class="number-of-answers">3</span>
-      <mat-icon class="check" fontIcon="check"></mat-icon>
-    </div>
+    @if (answerStatistics) {
+      <div class="answer red" [style.height]="calculateHeight(answerStatistics.answerStatistics['1'])">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="play_arrow"
+          class="ans-icon"
+        ></mat-icon>
+        <span class="number-of-answers">{{ answerStatistics.answerStatistics["1"] }}</span>
+        <mat-icon *ngIf="isCorrectAnswer(1)" class="check" fontIcon="check"></mat-icon>
+      </div>
+      <div class="answer blue" [style.height]="calculateHeight(answerStatistics.answerStatistics['2'])">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="square"
+          class="ans-icon"
+
+        ></mat-icon>
+        <span class="number-of-answers">{{ answerStatistics.answerStatistics["2"] }}</span>
+        <mat-icon *ngIf="isCorrectAnswer(2)" class="check" fontIcon="check"></mat-icon>
+      </div>
+      <div class="answer yellow" [style.height]="calculateHeight(answerStatistics.answerStatistics['3'])">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="circle"
+          class="ans-icon"
+
+        ></mat-icon>
+        <span class="number-of-answers">{{ answerStatistics.answerStatistics["3"] }}</span>
+        <mat-icon *ngIf="isCorrectAnswer(3)" class="check" fontIcon="check"></mat-icon>
+      </div>
+      <div class="answer green" [style.height]="calculateHeight(answerStatistics.answerStatistics['4'])">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="square"
+          class="ans-icon"
+
+        ></mat-icon>
+        <span class="number-of-answers">{{ answerStatistics.answerStatistics["4"] }}</span>
+        <mat-icon *ngIf="isCorrectAnswer(4)" class="check" fontIcon="check"></mat-icon>
+      </div>
+    }
+
   </div>
 
   <div class="answers">
-    <div class="answer red wrong-answer">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="play_arrow"
-      ></mat-icon>
-      <div class="answer-text">{{ questions[currentQuestion].option1 }}</div>
-      <mat-icon class="wrong" fontIcon="close"></mat-icon>
+    <div class="answer red" [ngClass]="{'wrong-answer': isIncorrectAnswer(1)}">
+      <mat-icon class="ans-icon"
+                aria-hidden="false" aria-label="Example home icon" fontIcon="play_arrow"></mat-icon>
+      <span class="number-of-answers">{{ questions[currentQuestion].option1 }}</span>
+      <mat-icon *ngIf="isCorrectAnswer(1)" class="right" fontIcon="check"></mat-icon>
+      <mat-icon *ngIf="!isCorrectAnswer(1)" class="wrong" fontIcon="close"></mat-icon>
     </div>
-    <div class="answer blue wrong-answer">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="square"
-      ></mat-icon>
-      <div class="answer-text">{{ questions[currentQuestion].option2 }}</div>
-      <mat-icon class="wrong" fontIcon="close"></mat-icon>
+    <div class="answer blue" [ngClass]="{'wrong-answer': isIncorrectAnswer(2)}">
+      <mat-icon class="ans-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+      <span class="number-of-answers">{{ questions[currentQuestion].option2 }}</span>
+      <mat-icon *ngIf="isCorrectAnswer(2)" class="right" fontIcon="check"></mat-icon>
+      <mat-icon *ngIf="!isCorrectAnswer(2)" class="wrong" fontIcon="close"></mat-icon>
     </div>
-    <div class="answer yellow wrong-answer">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="circle"
-      ></mat-icon>
-      <div class="answer-text">{{ questions[currentQuestion].option3 }}</div>
-      <mat-icon class="wrong" fontIcon="close"></mat-icon>
+    <div class="answer yellow" [ngClass]="{'wrong-answer': isIncorrectAnswer(3)}">
+      <mat-icon class="ans-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="circle"></mat-icon>
+      <span class="number-of-answers">{{ questions[currentQuestion].option3 }}</span>
+      <mat-icon *ngIf="isCorrectAnswer(3)" class="right" fontIcon="check"></mat-icon>
+      <mat-icon *ngIf="!isCorrectAnswer(3)" class="wrong" fontIcon="close"></mat-icon>
     </div>
-    <div class="answer green">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="square"
-      ></mat-icon>
-      <div class="answer-text">{{ questions[currentQuestion].option4 }}</div>
-      <mat-icon class="right" fontIcon="check"></mat-icon>
+    <div class="answer green" [ngClass]="{'wrong-answer': isIncorrectAnswer(4)}">
+      <mat-icon class="ans-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+      <span class="number-of-answers">{{ questions[currentQuestion].option4 }}</span>
+      <mat-icon *ngIf="isCorrectAnswer(4)" class="right" fontIcon="check"></mat-icon>
+      <mat-icon *ngIf="!isCorrectAnswer(4)" class="wrong" fontIcon="close"></mat-icon>
     </div>
+
   </div>
 
   <div class="footer"></div>

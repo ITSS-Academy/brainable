@@ -30,9 +30,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
 
-  questionChangeEvent = new BehaviorSubject<any>(null).pipe(
-    debounceTime(500),
-  ) as BehaviorSubject<any>;
+  changeEvent = new BehaviorSubject<any>(null);
 
   constructor(
     private storage: Storage,
@@ -45,10 +43,20 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.questionChangeEvent.subscribe((data) => {
+      this.changeEvent.subscribe((data) => {
         console.log('Data changed');
         if (data.type == 'question') {
           this.question.question = data.data;
+          this.updateCharCountQuestion();
+        } else if (data.type == 'option1') {
+          this.question.option1 = data.data;
+          this.updateCharCountAnswer(1);
+        } else if (data.type == 'option2') {
+          this.question.option2 = data.data;
+          this.updateCharCountAnswer(2);
+        } else if (data.type == 'option3') {
+          this.question.option3 = data.data;
+          this.updateCharCountAnswer(3);
         }
         this.store.dispatch(
           QuizActions.updateQuestionByIndex({
@@ -63,18 +71,6 @@ export class MainContentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
-
-  currentQuestion: Question = {
-    id: '',
-    question: '',
-    option1: '',
-    option2: '',
-    option3: '',
-    option4: '',
-    answer: 0,
-    timeLimit: 10,
-    imgUrl: '',
-  };
 
   charCountQuestion: number = 120;
   charCountAnswer1: number = 75;
@@ -108,7 +104,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
           });
       }
     }
-    this.currentQuestion.imgUrl = this.uploadedFileURL;
+    this.question.imgUrl = this.uploadedFileURL;
   }
 
   updateCharCountQuestion(): void {
@@ -118,16 +114,16 @@ export class MainContentComponent implements OnInit, OnDestroy {
   updateCharCountAnswer(index: number): void {
     switch (index) {
       case 1:
-        this.charCountAnswer1 = 75 - this.currentQuestion.option1.length;
+        this.charCountAnswer1 = 75 - this.question.option1.length;
         break;
       case 2:
-        this.charCountAnswer2 = 75 - this.currentQuestion.option2.length;
+        this.charCountAnswer2 = 75 - this.question.option2.length;
         break;
       case 3:
-        this.charCountAnswer3 = 75 - this.currentQuestion.option3.length;
+        this.charCountAnswer3 = 75 - this.question.option3.length;
         break;
       case 4:
-        this.charCountAnswer4 = 75 - this.currentQuestion.option4.length;
+        this.charCountAnswer4 = 75 - this.question.option4.length;
         break;
     }
   }
@@ -147,7 +143,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   removeImage() {
     this.selectedImage = '';
     this.uploadedFileURL = '';
-    this.currentQuestion.imgUrl = '';
+    this.question.imgUrl = '';
   }
 
   triggerFileInput(event: any): void {

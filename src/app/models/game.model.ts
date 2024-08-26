@@ -10,3 +10,12 @@ export interface SendAnswer {
   playerName: string;
   answer: number;
 }
+
+export interface AnswerStatistics {
+  answerStatistics: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+  };
+}

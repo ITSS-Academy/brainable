@@ -43,7 +43,7 @@
   width: 130px;
   height: 25px;
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
   border-radius: 0 0 4px 4px;
 }
@@ -120,7 +120,7 @@ mat-icon {
   height: 20px;
 }
 
-.answer.red mat-icon {
+.answer.red .ans-icon {
   rotate: -90deg;
   font-size: 30px;
   padding-right: 4px;
@@ -130,7 +130,7 @@ mat-icon {
   background-color: #3066c7;
 }
 
-.answer.blue mat-icon {
+.answer.blue .ans-icon {
   rotate: 45deg;
   font-size: 16px;
 }
@@ -139,7 +139,7 @@ mat-icon {
   background-color: #cfa035;
 }
 
-.answer.yellow mat-icon {
+.answer.yellow .ans-icon {
   font-size: 20px;
 }
 
@@ -147,7 +147,7 @@ mat-icon {
   background-color: #468729;
 }
 
-.answer.green mat-icon {
+.answer.green .ans-icon {
   font-size: 20px;
 }
 

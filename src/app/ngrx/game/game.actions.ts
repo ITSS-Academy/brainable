@@ -11,3 +11,8 @@ export const storePlayerName = createAction(
   '[Game] Store Player Name',
   props<{ playerName: string }>(),
 );
+
+export const storePlayerAnswer = createAction(
+  '[Game] Store Player Answer',
+  props<{ answer: number }>(),
+);

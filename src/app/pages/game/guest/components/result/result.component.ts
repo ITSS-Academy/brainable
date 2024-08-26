@@ -17,10 +17,13 @@ import { GameService } from '../../../../../services/game/game.service';
 export class ResultComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   pin!: string;
+  playerAnswer!: number;
+  correctAnswer!: number;
+  isCorrect!: boolean;
+  playerName!: string;
 
   constructor(
     private store: Store<{ game: GameState; quiz: QuizState }>,
-    private router: Router,
     private gameService: GameService,
   ) {
     this.subscription.push(
@@ -32,6 +35,20 @@ export class ResultComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gameService.listenForNavigateToNextQuestion(this.pin);
+    this.gameService.receiveCorrectAnswer().subscribe((correctAnswer) => {
+      this.correctAnswer = correctAnswer.correctAnswer;
+      this.isCorrect = this.playerAnswer === this.correctAnswer;
+    });
+    this.subscription.push(
+      this.store
+        .select('game', 'playerAnswer')
+        .subscribe(
+          (playerAnswer) => (this.playerAnswer = playerAnswer as number),
+        ),
+      this.store
+        .select('game', 'playerName')
+        .subscribe((playerName) => (this.playerName = playerName as string)),
+    );
   }
 
   ngOnDestroy(): void {

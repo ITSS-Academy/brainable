@@ -8,7 +8,7 @@ import { Quiz, QuizDTO } from '../../models/quiz.model';
 export class QuizService {
   constructor(private http: HttpClient) {}
 
-  createQuiz(idToken: string, quiz: QuizDTO) {
+  createQuiz(idToken: string, quiz: any) {
     return this.http.post(`http://localhost:3000/quiz`, quiz, {
       headers: {
         Authorization: `${idToken}`,
