@@ -154,27 +154,6 @@ export class MainContentComponent implements OnInit, OnDestroy {
     }
   }
 
-  resetQuestion(): void {
-    this.currentQuestion = {
-      id: '',
-      question: '',
-      option1: '',
-      option2: '',
-      option3: '',
-      option4: '',
-      answer: 0,
-      timeLimit: 10,
-      imgUrl: '',
-    };
-    this.charCountQuestion = 120;
-    this.charCountAnswer1 = 75;
-    this.charCountAnswer2 = 75;
-    this.charCountAnswer3 = 75;
-    this.charCountAnswer4 = 75;
-    this.selectedImage = '';
-    this.uploadedFileURL = '';
-  }
-
   isCheckAnswer1 = false;
   isCheckAnswer2 = false;
   isCheckAnswer3 = false;
@@ -207,8 +186,4 @@ export class MainContentComponent implements OnInit, OnDestroy {
     this.isCheckAnswer2 = false;
     this.isCheckAnswer3 = false;
   }
-
-  // isIncorrect() {
-  //   this.isCheck = false;
-  // }
 }
