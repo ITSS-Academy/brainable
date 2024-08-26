@@ -1,7 +1,6 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
-import { catchError, of, map, switchMap } from 'rxjs';
-
+import { catchError, map, switchMap, of } from 'rxjs';
 import * as CategoriesActions from './categories.actions';
 import { CategoriesService } from '../../services/categories/categories.service';
 
@@ -24,6 +23,23 @@ export class CategoriesEffects {
       catchError((error) => {
         return of(
           CategoriesActions.getAllCategoriesFailure({ errorMessage: error }),
+        );
+      }),
+    );
+  });
+
+  getCategoriesById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CategoriesActions.getCategoryById),
+      switchMap((action) => {
+        return this.categoriesService.getCategoriesById(action.uid);
+      }),
+      map((category: any) => {
+        return CategoriesActions.getCategoryByIdSuccess({ category });
+      }),
+      catchError((error) => {
+        return of(
+          CategoriesActions.getCategoryByIdFailure({ errorMessage: error }),
         );
       }),
     );
