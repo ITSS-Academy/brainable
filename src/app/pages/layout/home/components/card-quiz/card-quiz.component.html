@@ -1,147 +1,31 @@
 <div class="card-quiz">
-
   <div id="quiz-name">
     <div class="quiz-title">
-      <p>⭐Subject here</p>
+      <p>⭐{{ category.name }}</p>
     </div>
-    <button mat-button [routerLink]="['/categories/math']">
-      More...
-    </button>
+    <button mat-button [routerLink]="['/categories/math']">More...</button>
   </div>
 
   <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
     <div class="card-quiz-container">
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long title so is just a test hehe hehe hehe</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
+      @for (card of category.quizzes.slice(0, 7); track $index) {
+        <div class="card-quiz-card">
+          <div class="quiz-content">
+            <div class="quiz-top">
+              <img [src]="card.imgUrl" alt="Media Pic" />
+            </div>
+            <div class="quiz-bot">
+              <p class="title">
+                {{ card.title }}
+              </p>
+              <div class="quiz-note">
+                <p>123 questions</p>
+                <p>321 plays</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-quiz-card">
-        <div class="quiz-content">
-          <div class="quiz-top">
-            <img src="assets/images/media.png" alt="Media Pic">
-          </div>
-          <div class="quiz-bot">
-            <p class="title"> this is a long titles</p>
-            <div class="quiz-note">
-              <p>123 questions </p>
-              <p>321 plays </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      }
     </div>
   </cdk-virtual-scroll-viewport>
-
 </div>
-
-
-
