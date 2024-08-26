@@ -19,6 +19,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
   nickname: string = '';
   pin!: string;
   isJoining: boolean = false;
+  isEmptyInput = false;
 
   constructor(
     private store: Store<{ game: GameState }>,
@@ -41,11 +42,24 @@ export class WaitingComponent implements OnInit, OnDestroy {
   }
 
   joinGame(): void {
-    this.gameService.joinRoom(this.pin, this.nickname);
-    this.store.dispatch(
-      GameActions.storePlayerName({ playerName: this.nickname }),
-    );
-    this.isJoining = true;
+    if (this.nickname.length == 0) {
+      this.isEmptyInput = !this.isEmptyInput;
+      setTimeout(() => {
+        this.isEmptyInput = false;
+      }, 5000);
+    } else {
+      this.gameService.joinRoom(this.pin, this.nickname);
+      this.store.dispatch(
+        GameActions.storePlayerName({ playerName: this.nickname }),
+      );
+      this.isJoining = true;
+    }
+  }
+
+  onKey(event: any) {
+    if (event.key === 'Enter') {
+      this.joinGame();
+    }
   }
 
   ngOnDestroy(): void {

@@ -17,11 +17,18 @@
           id=""
           placeholder="Enter nickname..."
           [(ngModel)]="nickname"
+          (keydown)="onKey($event)"
         />
         <button class="btn-join" mat-flat-button (click)="joinGame()">
           Join
         </button>
       </div>
     </div>
+
+    @if (isEmptyInput) {
+      <div class="empty-input">
+        <p class="text">Please enter game pin!</p>
+      </div>
+    }
   }
 </div>

@@ -6,8 +6,9 @@
       cdkAutosizeMinRows="1"
       cdkAutosizeMaxRows="3"
       [(ngModel)]="question.question"
-
-      (input)="questionChangeEvent.next({type:'question',data:question.question})"
+      (input)="
+        questionChangeEvent.next({ type: 'question', data: question.question })
+      "
       maxlength="120"
     >
     </textarea>
@@ -16,10 +17,9 @@
 
   <div class="image-input">
     @if (!selectedImage) {
-      <input id="uploadBtn" type="file" (change)="selectImage($event)"/>
+      <input id="uploadBtn" type="file" (change)="selectImage($event)" />
       <label for="uploadBtn">
-        <div class="media-library">
-        </div>
+        <div class="media-library"></div>
         <button mat-fab (click)="triggerFileInput($event)">
           <mat-icon>add</mat-icon>
         </button>
@@ -28,7 +28,7 @@
     }
     @if (selectedImage) {
       <div class="img-container">
-        <img [src]="selectedImage" alt=""/>
+        <img [src]="selectedImage" alt="" />
       </div>
       <button mat-fab class="remove-btn" (click)="removeImage()">
         <mat-icon>delete</mat-icon>
@@ -56,8 +56,16 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer1 }}</span>
-      <div class="circle effect">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon>
+      <div
+        class="circle"
+        (click)="isAnswer1Correct()"
+        [ngClass]="{ effect: isCheckAnswer1 }"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="check_small"
+        ></mat-icon>
       </div>
     </div>
 
@@ -80,8 +88,16 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer2 }}</span>
-      <div class="circle">
-        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon> -->
+      <div
+        class="circle"
+        (click)="isAnswer2Correct()"
+        [ngClass]="{ effect: isCheckAnswer2 }"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="check_small"
+        ></mat-icon>
       </div>
     </div>
 
@@ -104,8 +120,16 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer3 }}</span>
-      <div class="circle">
-        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon> -->
+      <div
+        class="circle"
+        (click)="isAnswer3Correct()"
+        [ngClass]="{ effect: isCheckAnswer3 }"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="check_small"
+        ></mat-icon>
       </div>
     </div>
 
@@ -128,11 +152,17 @@
       >
       </textarea>
       <span class="char-count-ans">{{ charCountAnswer4 }}</span>
-      <div class="circle">
-        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon> -->
+      <div
+        class="circle"
+        (click)="isAnswer4Correct()"
+        [ngClass]="{ effect: isCheckAnswer4 }"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="check_small"
+        ></mat-icon>
       </div>
     </div>
   </div>
 </div>
-
-
