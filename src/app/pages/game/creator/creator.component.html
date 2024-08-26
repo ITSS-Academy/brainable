@@ -42,7 +42,7 @@
                   <span class="question-title">Question</span>
                   <div class="timer-and-img">
                     <div class="timer">20</div>
-                    <img src="assets/images/background-game.png" alt="" />
+                    <!--                    <img src="assets/images/background-game.png" alt="">-->
                   </div>
 
                   <div class="answers">
@@ -74,10 +74,8 @@
           [question]="deepClone(quiz.questions[currentQuestionIndex])"
           [index]="currentQuestionIndex"
         ></app-main-content>
-        <app-setting
-          [question]="deepClone(quiz.questions[currentQuestionIndex])"
-          [index]="currentQuestionIndex"
-        ></app-setting>
+        <!--        <app-setting [question]="deepClone(quiz.questions[currentQuestionIndex])"-->
+        <!--                     [index]="currentQuestionIndex"></app-setting>-->
       }
     </div>
   </div>
