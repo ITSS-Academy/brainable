@@ -11,14 +11,12 @@ export interface Question {
 }
 
 export interface QuestionDTO {
-  question: {
-    quizId: string;
-    question: string;
-    answer: number;
-    option1: string;
-    option2: string;
-    option3: string;
-    option4: string;
-    timeLimit: number;
-  };
+  question: string;
+  answer: number;
+  option1: string;
+  option2: string;
+  option3: string;
+  option4: string;
+  imgUrl: string;
+  timeLimit: number;
 }

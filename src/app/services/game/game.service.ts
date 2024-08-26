@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { Router } from '@angular/router';
-import { SendAnswer, SendQuestion } from '../../models/game.model';
+import {
+  AnswerStatistics,
+  SendAnswer,
+  SendQuestion,
+} from '../../models/game.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +49,6 @@ export class GameService {
   }
 
   listenForNavigateChooseAnswer(pin: string) {
-    console.log('Listening for chooseAnswer', pin);
     this.socket.on('chooseAnswer', () => {
       this.router.navigate([`/guest/${pin}/answer`]);
     });
@@ -76,19 +79,33 @@ export class GameService {
   }
 
   nextShowResults(pin: string): void {
-    console.log('nextShowResults');
     this.socket.emit('nextShowResults', pin);
   }
 
   listenForNavigateToResults(pin: string): void {
-    console.log('Listening for navigateToResults', pin);
     this.socket.on('navigateToResults', () => {
       this.router.navigate([`/guest/${pin}/result`]);
     });
   }
 
-  showResults(pin: string): void {
-    this.socket.emit('showResults', pin);
+  showResults(pin: string, questionId: string): void {
+    this.socket.emit('showResults', { pin, questionId });
+  }
+
+  receiveAnswerStatistics(): Observable<AnswerStatistics> {
+    return new Observable((observer) => {
+      this.socket.on('answerStatistics', (answerStatistics: any) => {
+        observer.next(answerStatistics);
+      });
+    });
+  }
+
+  receiveCorrectAnswer(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('correctAnswer', (correctAnswer: any) => {
+        observer.next(correctAnswer);
+      });
+    });
   }
 
   nextQuestion(pin: string): void {
@@ -98,6 +115,24 @@ export class GameService {
   listenForNavigateToNextQuestion(pin: string): void {
     this.socket.on('navigateToNextQuestion', () => {
       this.router.navigate([`/guest/${pin}/countdown-to-question`]);
+    });
+  }
+
+  endGame(pin: string): void {
+    this.socket.emit('endGame', pin);
+  }
+
+  receiveLeaderboard(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('questionList', (leaderboard: any) => {
+        observer.next(leaderboard);
+      });
+    });
+  }
+
+  listenForNavigateToEndGame(pin: string): void {
+    this.socket.on('navigateToEndGame', () => {
+      this.router.navigate([`/guest/${pin}/result`]);
     });
   }
 

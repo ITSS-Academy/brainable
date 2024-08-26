@@ -32,7 +32,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
           this.pin = pin as string;
-          console.log('Pin:', this.pin);
         } else {
           this.store.dispatch(
             GameActions.storePin({ pin: this.pin as string }),
@@ -51,6 +50,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
   chooseAnswer(answer: number) {
     this.isChoosing = true;
+    this.store.dispatch(GameActions.storePlayerAnswer({ answer }));
     const answerData: SendAnswer = {
       pin: this.pin,
       questionId: this.questionId,

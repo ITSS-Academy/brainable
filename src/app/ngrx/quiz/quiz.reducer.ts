@@ -143,6 +143,7 @@ export const quizReducer = createReducer(
   }),
   on(QuizActions.addNewQuestion, (state, { type }) => {
     console.log(type);
+    console.log(state.quiz);
     return {
       ...state,
       quiz: {
@@ -168,6 +169,25 @@ export const quizReducer = createReducer(
       },
     };
   }),
+  on(QuizActions.updateSettingByIndex, (state, { setting, index, type }) => {
+    console.log(type);
+
+    if (!Array.isArray(state.quiz.questions)) {
+      return state;
+    }
+    const updatedQuestions = [...state.quiz.questions];
+    updatedQuestions[index] = setting.timeLimt;
+
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        isPublic: setting.isPublic,
+        category: setting.category,
+        questions: updatedQuestions,
+      },
+    };
+  }),
   on(QuizActions.deleteQuestionByIndex, (state, { index, type }) => {
     console.log(type);
 
@@ -184,6 +204,14 @@ export const quizReducer = createReducer(
         ...state.quiz,
         questions: updatedQuestions,
       },
+    };
+  }),
+
+  on(QuizActions.storeDefaultQuiz, (state, { type, quiz }) => {
+    console.log(type);
+    return {
+      ...state,
+      quiz: quiz,
     };
   }),
 );

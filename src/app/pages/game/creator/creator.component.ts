@@ -13,6 +13,7 @@ import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz, QuizDTO } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Question } from '../../../models/question.model';
+import { Categories } from '../../../models/categories.model';
 
 @Component({
   selector: 'app-creator',
@@ -31,6 +32,36 @@ import { Question } from '../../../models/question.model';
 export class CreatorComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   quiz!: Quiz;
+
+  quizDefault: Quiz = {
+    id: 0,
+    title: 'Untitled Quiz',
+    description: '',
+    isPublic: false,
+    totalQuestions: 0,
+    imgUrl: '',
+    createdAt: new Date(),
+    category: {
+      uid: '08c8a3a2-bf52-4033-b294-fa4e685990e4',
+      name: 'Ice breaker',
+      imgUrl:
+        'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/ellipse1.png?alt=media&token=7e32d5f3-939b-43fd-be83-6e385799123a',
+    },
+    questions: [
+      {
+        id: '',
+        question: '',
+        answer: 0,
+        option1: '',
+        option2: '',
+        option3: '',
+        option4: '',
+        imgUrl: '',
+        timeLimit: 0,
+      },
+    ],
+  };
+  isCreateNewQuiz = false;
   isGetQuizByIdSuccessful$ = this.store.select(
     'quiz',
     'isGetQuizByIdSuccessful',
@@ -58,6 +89,18 @@ export class CreatorComponent implements OnInit, OnDestroy {
           }
         }),
       );
+    } else {
+      this.isCreateNewQuiz = true;
+      this.store.dispatch(
+        QuizActions.storeDefaultQuiz({
+          quiz: this.deepClone(this.quizDefault),
+        }),
+      );
+      this.store.select('quiz', 'quiz').subscribe((quiz) => {
+        if (quiz) {
+          this.quiz = this.deepClone(quiz);
+        }
+      });
     }
   }
 
