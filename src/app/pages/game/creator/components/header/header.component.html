@@ -7,7 +7,12 @@
   >
     <mat-icon>navigate_before</mat-icon>
   </button>
-  <input class="title" type="text" [placeholder]="title"/>
+  <input
+    (click)="openDialog()"
+    class="title"
+    type="text"
+    [placeholder]="title"
+  />
   <span class="example-spacer"></span>
   <!--  <button-->
   <!--    mat-icon-button-->
