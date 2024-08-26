@@ -153,4 +153,37 @@ export class MainContentComponent implements OnInit, OnDestroy {
       fileInput.click();
     }
   }
+
+  isCheckAnswer1 = false;
+  isCheckAnswer2 = false;
+  isCheckAnswer3 = false;
+  isCheckAnswer4 = false;
+
+  isAnswer1Correct() {
+    this.isCheckAnswer1 = !this.isCheckAnswer1;
+    this.isCheckAnswer2 = false;
+    this.isCheckAnswer3 = false;
+    this.isCheckAnswer4 = false;
+  }
+
+  isAnswer2Correct() {
+    this.isCheckAnswer2 = !this.isCheckAnswer2;
+    this.isCheckAnswer1 = false;
+    this.isCheckAnswer3 = false;
+    this.isCheckAnswer4 = false;
+  }
+
+  isAnswer3Correct() {
+    this.isCheckAnswer3 = !this.isCheckAnswer3;
+    this.isCheckAnswer1 = false;
+    this.isCheckAnswer2 = false;
+    this.isCheckAnswer4 = false;
+  }
+
+  isAnswer4Correct() {
+    this.isCheckAnswer4 = !this.isCheckAnswer4;
+    this.isCheckAnswer1 = false;
+    this.isCheckAnswer2 = false;
+    this.isCheckAnswer3 = false;
+  }
 }

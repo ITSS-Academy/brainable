@@ -29,6 +29,7 @@ export class JoinComponent implements OnInit, OnDestroy {
   ) {}
 
   pin: string = '';
+  isEmptyInput = false;
 
   subscriptions: Subscription[] = [];
   dashboard: string = 'My dashboard';
@@ -62,10 +63,23 @@ export class JoinComponent implements OnInit, OnDestroy {
   }
 
   joinGame() {
-    this.store.dispatch(GameActions.storePin({ pin: this.pin }));
-    this.router.navigate([`/guest/${this.pin}/waiting`]).then(() => {
-      this.pin = '';
-    });
+    if (this.pin.length == 0) {
+      this.isEmptyInput = !this.isEmptyInput;
+      setTimeout(() => {
+        this.isEmptyInput = false;
+      }, 5000);
+    } else {
+      this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+      this.router.navigate([`/guest/${this.pin}/waiting`]).then(() => {
+        this.pin = '';
+      });
+    }
+  }
+
+  onKey(event: any) {
+    if (event.key === 'Enter') {
+      this.joinGame();
+    }
   }
 
   ngOnDestroy(): void {}
