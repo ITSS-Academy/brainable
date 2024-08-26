@@ -24,11 +24,6 @@
   }
 }
 
-//app-setting {
-//  width: 200px;
-//  height: 100%;
-//}
-
 app-main-content {
   width: 100%;
 }
@@ -39,7 +34,7 @@ app-main-content {
   width: 200px;
   height: 100%;
 
-  .content-container {
+  #content-container {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -232,7 +227,7 @@ app-main-content {
     align-items: center;
     height: 80px;
 
-    .content-container {
+    #content-container {
       display: flex;
       flex-direction: row;
       width: calc(100% - 48px);

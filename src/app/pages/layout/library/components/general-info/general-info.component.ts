@@ -49,4 +49,8 @@ export class GeneralInfoComponent {
     }
     return pin;
   }
+
+  editQuiz() {
+    this.router.navigate([`/creator/${this.quiz.id}`]);
+  }
 }

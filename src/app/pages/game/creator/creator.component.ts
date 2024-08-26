@@ -11,8 +11,6 @@ import { Subscription } from 'rxjs';
 import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz, QuizDTO } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
-import { Question } from '../../../models/question.model';
-import { Categories } from '../../../models/categories.model';
 
 @Component({
   selector: 'app-creator',
@@ -30,6 +28,7 @@ import { Categories } from '../../../models/categories.model';
 export class CreatorComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   quiz!: Quiz;
+  isEdit = false;
 
   quizDefault: Quiz = {
     id: 0,
@@ -75,6 +74,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
     if (id) {
+      this.isEdit = true;
       this.subscriptions.push(
         this.store.select('auth', 'idToken').subscribe((idToken) => {
           if (idToken) {
@@ -115,6 +115,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
   addQuestion(): void {
     this.store.dispatch(QuizActions.addNewQuestion());
     this.activeQuestion(this.quiz.questions.length - 1);
+    this.scrollToBottom();
   }
 
   deleteQuestion(index: number) {
@@ -126,5 +127,12 @@ export class CreatorComponent implements OnInit, OnDestroy {
 
   deepClone(obj: any): any {
     return JSON.parse(JSON.stringify(obj));
+  }
+
+  scrollToBottom() {
+    const questionList = document.getElementById('content-container');
+    if (questionList) {
+      questionList.scrollTop = questionList.scrollHeight;
+    }
   }
 }

@@ -20,53 +20,82 @@ mat-card:hover {
   &__info {
     width: calc(100% - 140px);
     margin-left: 10px;
-
-    .question {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 18px;
-      font-weight: 600;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
 
     .row-info {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      .num-questions {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+      .question {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 18px;
+        font-weight: 600;
       }
 
-      .category {
+      .row-info {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 15px;
+
+        .num-questions {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .category {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          img {
+            width: 24px;
+            height: 24px;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .row-creator {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
 
         img {
           width: 24px;
           height: 24px;
           object-fit: cover;
+          border-radius: 50%;
         }
       }
     }
 
-    .row-creator {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
+    .row-button {
+      .edit-btn {
+       
+        margin-right: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
 
-      img {
-        width: 24px;
-        height: 24px;
-        object-fit: cover;
-        border-radius: 50%;
+        &:hover {
+          background-color: #e0e0e0;
+        }
+      }
+
+      .delete-btn {
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #e0e0e0;
+        }
       }
     }
+
+
   }
 
   &__img {

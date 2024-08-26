@@ -63,7 +63,7 @@ export const updateQuestionByIndex = createAction(
 
 export const updateSettingByIndex = createAction(
   '[Quiz] Update Setting By Index',
-  props<{ setting: any; index: number }>(),
+  props<{ setting: any }>(),
 );
 
 export const storeCurrentQuiz = createAction(

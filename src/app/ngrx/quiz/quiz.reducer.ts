@@ -30,7 +30,6 @@ export const initialState: QuizState = {
 export const quizReducer = createReducer(
   initialState,
   on(QuizActions.getAllQuiz, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       isGetAllQuizLoading: true,
@@ -45,7 +44,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.getAllQuizFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isGetAllQuizLoading: false,
@@ -55,7 +53,6 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.createQuiz, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       isCreateQuizLoading: true,
@@ -64,7 +61,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.createQuizSuccess, (state) => {
-    console.log(QuizActions.createQuizSuccess.type);
     return {
       ...state,
       isCreateQuizLoading: false,
@@ -72,7 +68,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.createQuizFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isCreateQuizLoading: false,
@@ -82,14 +77,12 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.getQuizById, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       isGetQuizByIdLoading: true,
     };
   }),
   on(QuizActions.getQuizByIdSuccess, (state, { quiz, type }) => {
-    console.log(type);
     return {
       ...state,
       quiz: quiz,
@@ -98,7 +91,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.getQuizByIdFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isGetQuizByIdLoading: false,
@@ -108,7 +100,6 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.updateQuiz, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       isUpdateQuizLoading: true,
@@ -116,7 +107,6 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.updateQuizSuccess, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isUpdateQuizLoading: false,
@@ -125,7 +115,6 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.updateQuizFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isUpdateQuizLoading: false,
@@ -135,15 +124,12 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.storeCurrentQuiz, (state, { type, quiz }) => {
-    console.log(type);
     return {
       ...state,
       quiz: quiz,
     };
   }),
   on(QuizActions.addNewQuestion, (state, { type }) => {
-    console.log(type);
-    console.log(state.quiz);
     return {
       ...state,
       quiz: {
@@ -153,8 +139,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
-    console.log(type);
-
     if (!Array.isArray(state.quiz.questions)) {
       return state;
     }
@@ -169,28 +153,25 @@ export const quizReducer = createReducer(
       },
     };
   }),
-  on(QuizActions.updateSettingByIndex, (state, { setting, index, type }) => {
-    console.log(type);
-
+  on(QuizActions.updateSettingByIndex, (state, { setting, type }) => {
     if (!Array.isArray(state.quiz.questions)) {
       return state;
     }
     const updatedQuestions = [...state.quiz.questions];
-    updatedQuestions[index] = setting.timeLimt;
 
     return {
       ...state,
       quiz: {
         ...state.quiz,
+        title: setting.title,
+        description: setting.description,
         isPublic: setting.isPublic,
-        category: setting.category,
+        // category: setting.category,
         questions: updatedQuestions,
       },
     };
   }),
   on(QuizActions.deleteQuestionByIndex, (state, { index, type }) => {
-    console.log(type);
-
     if (!Array.isArray(state.quiz.questions)) {
       return state;
     }
@@ -208,7 +189,6 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.storeDefaultQuiz, (state, { type, quiz }) => {
-    console.log(type);
     return {
       ...state,
       quiz: quiz,

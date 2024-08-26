@@ -21,6 +21,8 @@ import { SettingDialogComponent } from '../setting-dialog/setting-dialog.compone
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Input() title: string = 'Untitled Quiz';
+  @Input() isEdit: boolean = false;
+
   subscription: Subscription[] = [];
   quiz!: Quiz;
   idToken!: string;
@@ -47,15 +49,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.router.navigate(['/library']);
           }
         }),
+      this.store
+        .select('quiz', 'isCreateQuizSuccessful')
+        .subscribe((isCreateQuizSuccessful) => {
+          if (isCreateQuizSuccessful) {
+            this.router.navigate(['/library']);
+          }
+        }),
     );
   }
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '620px';
-    dialogConfig.maxWidth = '80vw';
+    dialogConfig.width = '60%';
+    dialogConfig.maxWidth = '85vw';
     dialogConfig.panelClass = 'custom-dialog-container';
-
     this.dialog.open(SettingDialogComponent, dialogConfig);
   }
 

@@ -5,12 +5,12 @@
 }
 <div id="container">
   <div id="header">
-    <app-header [title]="quiz.title"></app-header>
+    <app-header [title]="quiz.title" [isEdit]="isEdit"></app-header>
   </div>
 
   <div id="body-content">
     <div id="question-list">
-      <div class="content-container">
+      <div id="content-container">
         @if (quiz.questions) {
           @for (question of quiz.questions; track $index) {
             <div
@@ -73,9 +73,8 @@
         <app-main-content
           [question]="deepClone(quiz.questions[currentQuestionIndex])"
           [index]="currentQuestionIndex"
+
         ></app-main-content>
-        <!--        <app-setting [question]="deepClone(quiz.questions[currentQuestionIndex])"-->
-        <!--                     [index]="currentQuestionIndex"></app-setting>-->
       }
     </div>
   </div>
