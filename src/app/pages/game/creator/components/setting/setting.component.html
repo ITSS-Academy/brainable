@@ -2,40 +2,35 @@
   <div class="quiz-settings">
     <mat-form-field>
       <mat-label>Mode</mat-label>
-      <mat-select>
-        <mat-option value="one">Public</mat-option>
-        <mat-option value="two">Private</mat-option>
+      <mat-select (selectionChange)="onModeChange($event)" value="true">
+        <mat-option value="true">Public</mat-option>
+        <mat-option value="false">Private</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Time limit</mat-label>
-      <mat-select>
-        <mat-option value="one">5 seconds</mat-option>
-        <mat-option value="two">10 seconds</mat-option>
-        <mat-option value="three">15 seconds</mat-option>
+      <mat-select (selectionChange)="onTimeLimitChange($event)" value="5">
+        <mat-option value="5">5 seconds</mat-option>
+        <mat-option value="10">10 seconds</mat-option>
+        <mat-option value="15">15 seconds</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Categories</mat-label>
-      <mat-select>
-        <mat-option value="one">Ice breaker</mat-option>
-        <mat-option value="two">Math</mat-option>
-        <mat-option value="three">English</mat-option>
-        <mat-option value="four">Social</mat-option>
-        <mat-option value="five">Languages</mat-option>
-        <mat-option value="six">Science</mat-option>
-        <mat-option value="seven">Computers</mat-option>
-        <mat-option value="eight">Chemistry</mat-option>
-        <mat-option value="nine">Creative</mat-option>
-        <mat-option value="ten">Health & PE</mat-option>
+      <mat-select (selectionChange)="onCategoryChange($event)" value="0">
+        @if (isGettingCategories$|async) {
+          @for (category of listCategories; track $index) {
+            <mat-option value="{{$index}}">{{ category.name }}</mat-option>
+          }
+        }
       </mat-select>
     </mat-form-field>
   </div>
 
-  <div class="footer">
-    <button mat-button>Delete</button>
-    <button mat-stroked-button>Duplicate</button>
-  </div>
+  <!--  <div class="footer">-->
+  <!--    <button mat-button>Delete</button>-->
+  <!--    <button mat-stroked-button>Duplicate</button>-->
+  <!--  </div>-->
 </div>

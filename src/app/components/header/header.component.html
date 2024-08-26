@@ -2,22 +2,28 @@
   <mat-icon
     fontIcon="menu"
     class="menu-icon"
-    (click)="onMenuClick()"
+    (click)="onMenuClick(); hideSearch()"
   ></mat-icon>
-  <div class="search-container">
-    <mat-icon fontIcon="search" class="search-icon"></mat-icon>
-    <input type="text" placeholder="Search public content" />
-  </div>
-  <mat-icon fontIcon="search" class="search-icon-response"></mat-icon>
-  <div class="action">
-    @if (!(profile$ | async)) {
-      <button mat-flat-button class="btn-login" (click)="openDialog()">
-        Login
-      </button>
-    }
+  <div class="right" [ngClass]="{ 'search-click': isSearch }">
+    <div class="search-container">
+      <mat-icon fontIcon="search" class="search-icon"></mat-icon>
+      <input type="text" placeholder="Search public content" />
+    </div>
+    <mat-icon
+      fontIcon="search"
+      class="search-icon-response"
+      (click)="showSearch()"
+    ></mat-icon>
+    <div class="action">
+      @if (!(profile$ | async)) {
+        <button mat-flat-button class="btn-login" (click)="openDialog()">
+          Login
+        </button>
+      }
 
-    <button mat-flat-button class="btn-enter" [routerLink]="['/join']">
-      Enter code
-    </button>
+      <button mat-flat-button class="btn-enter" [routerLink]="['/join']">
+        Enter code
+      </button>
+    </div>
   </div>
 </div>

@@ -1,19 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Question, QuestionDTO } from '../../models/question.model';
-
-export const createQuestion = createAction(
-  '[Question] Create Question',
-  props<{ idToken: string; question: QuestionDTO }>(),
-);
-
-export const createQuestionSuccess = createAction(
-  '[Question] Create Question Success',
-);
-
-export const createQuestionFailure = createAction(
-  '[Question] Create Question Failure',
-  props<{ errorMessage: string }>(),
-);
+import { Question } from '../../models/question.model';
 
 export const getQuestionsByQuizId = createAction(
   '[Question] Get Questions By Quiz Id',

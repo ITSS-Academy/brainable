@@ -1,0 +1,167 @@
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .header {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .btn-home {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      cursor: pointer;
+    }
+
+    .logo {
+      width: 350px;
+    }
+
+    .title {
+      font-size: 2rem;
+      line-height: 2.5rem;
+      font-weight: bold;
+      margin-top: 24px;
+      padding: 8px 12px;
+      background-color: var(--md-sys-color-surface-container-lowest);
+      border-radius: 4px;
+    }
+  }
+
+  .content {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    .first-place,
+    .second-place,
+    .third-place {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .name {
+        font-size: 1.3rem;
+        font-weight: bold;
+        padding: 8px;
+        margin: 12px 0;
+        border-radius: 4px;
+        background-color: var(--md-sys-color-surface-container-lowest);
+      }
+    }
+
+    .first-place {
+      order: 2;
+      height: 100%;
+
+      .result {
+        order: 2;
+        height: 100%;
+      }
+    }
+
+    .second-place {
+      order: 1;
+      height: 85%;
+
+      .result {
+        order: 1;
+        height: 100%;
+      }
+    }
+
+    .third-place {
+      order: 3;
+      height: 70%;
+
+      .result {
+        order: 3;
+        height: 100%;
+      }
+    }
+
+    .result {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      width: 175px;
+      color: var(--md-sys-color-inverse-on-surface);
+      background-color: rgba(3, 10, 44, 0.8);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.8);
+
+      .rank {
+        width: 100px;
+        height: 100px;
+        margin: 32px 0;
+      }
+
+      .score {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media screen and (min-height: 700px) {
+  #container {
+    .content {
+      height: 50%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  #container {
+    .header {
+      .logo {
+        width: 250px;
+      }
+
+      .title {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+    }
+
+    .content {
+      .first-place,
+      .second-place,
+      .third-place {
+        width: 30%;
+
+        .name {
+          font-size: 1rem;
+        }
+      }
+
+      .result {
+        width: 100%;
+
+        .rank {
+          width: 80px;
+          height: 80px;
+        }
+
+        .score {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}

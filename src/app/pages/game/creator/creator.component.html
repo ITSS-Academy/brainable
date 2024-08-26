@@ -1,4 +1,4 @@
-@if (!(isGetQuizByIdSuccessful$ | async)) {
+@if (!(isGetQuizByIdSuccessful$ | async) && !isCreateNewQuiz) {
   <div class="loading-container">
     <app-loading></app-loading>
   </div>
@@ -30,7 +30,7 @@
                     <div class="timer">
                       20
                     </div>
-                    <img src="assets/images/background-game.png" alt="">
+                    <!--                    <img src="assets/images/background-game.png" alt="">-->
                   </div>
 
                   <div class="answers">
@@ -58,10 +58,11 @@
       </div>
     </div>
     <div class="question">
-      @if (isGetQuizByIdSuccessful$ | async) {
+      @if ((isGetQuizByIdSuccessful$ | async) || isCreateNewQuiz) {
         <app-main-content [question]="deepClone(quiz.questions[currentQuestionIndex])" [index]="currentQuestionIndex"
         ></app-main-content>
-        <app-setting></app-setting>
+        <app-setting [question]="deepClone(quiz.questions[currentQuestionIndex])"
+                     [index]="currentQuestionIndex"></app-setting>
       }
     </div>
   </div>

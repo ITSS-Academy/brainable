@@ -5,6 +5,8 @@ import { GameState } from './game.state';
 export const initialState: GameState = {
   pin: '',
   currentQuestion: 0,
+  playerName: '',
+  playerAnswer: 0,
 };
 
 export const gameReducer = createReducer(
@@ -19,6 +21,18 @@ export const gameReducer = createReducer(
     return {
       ...state,
       currentQuestion: state.currentQuestion + 1,
+    };
+  }),
+  on(GameActions.storePlayerName, (state, { playerName }) => {
+    return {
+      ...state,
+      playerName: playerName,
+    };
+  }),
+  on(GameActions.storePlayerAnswer, (state, { answer }) => {
+    return {
+      ...state,
+      playerAnswer: answer,
     };
   }),
 );

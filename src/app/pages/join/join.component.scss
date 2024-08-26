@@ -101,3 +101,55 @@ input::placeholder {
   transform: translateY(4px); /* Move the button down */
   transition: all 0.1s ease; /* Smooth transition for the effects */
 }
+
+@media screen and (max-width: 576px) {
+  .logo {
+    width: 55%;
+  }
+
+  .content-body {
+    width: 70%;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
+.empty-input {
+  position: absolute;
+  top: calc(100% - 240px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ease-in 0.5s shake;
+
+  p {
+    width: 420px;
+    font-size: 22px;
+    padding: 8px 12px;
+    background-color: #d5546d;
+    color: var(--md-sys-color-on-error);
+    border-radius: 18px;
+    text-align: center;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

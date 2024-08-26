@@ -9,7 +9,7 @@
 
 .header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 65px;
@@ -27,6 +27,7 @@
   border-radius: 4px;
   background-color: var(--md-sys-color-on-primary);
   flex-basis: 90%;
+  font-size: 24px;
 }
 
 .timer {

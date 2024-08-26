@@ -34,7 +34,7 @@ export const getQuizByIdFailure = createAction(
 
 export const createQuiz = createAction(
   '[Quiz] Create Quiz',
-  props<{ idToken: string; quiz: QuizDTO }>(),
+  props<{ idToken: string; quiz: any }>(),
 );
 
 export const createQuizSuccess = createAction('[Quiz] Create Quiz Success');
@@ -61,6 +61,11 @@ export const updateQuestionByIndex = createAction(
   props<{ question: Question; index: number }>(),
 );
 
+export const updateSettingByIndex = createAction(
+  '[Quiz] Update Setting By Index',
+  props<{ setting: any; index: number }>(),
+);
+
 export const storeCurrentQuiz = createAction(
   '[Quiz] Store Current Quiz',
   props<{ quiz: Quiz }>(),
@@ -71,6 +76,11 @@ export const addNewQuestion = createAction('[Quiz] Add New Question');
 export const deleteQuestionByIndex = createAction(
   '[Quiz] Delete Question By Index',
   props<{ index: number }>(),
+);
+
+export const storeDefaultQuiz = createAction(
+  '[Quiz] Store Default Quiz',
+  props<{ quiz: Quiz }>(),
 );
 
 export const clearQuizState = createAction('[Quiz] Clear Quiz State');

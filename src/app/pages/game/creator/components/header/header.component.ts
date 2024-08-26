@@ -7,7 +7,7 @@ import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import { Quiz, QuizDTO } from '../../../../../models/quiz.model';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
-import { idToken } from '@angular/fire/auth';
+import { Question, QuestionDTO } from '../../../../../models/question.model';
 
 @Component({
   selector: 'app-header',
@@ -51,6 +51,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
     };
     this.store.dispatch(
       QuizActions.updateQuiz({ idToken: this.idToken, quiz: quizUpdate }),
+    );
+  }
+
+  convertToQuestionDTO(question: Question): QuestionDTO {
+    return {
+      question: question.question,
+      answer: question.answer,
+      option1: question.option1,
+      option2: question.option2,
+      option3: question.option3,
+      option4: question.option4,
+      imgUrl: question.imgUrl,
+      timeLimit: question.timeLimit,
+    };
+  }
+
+  addQuiz() {
+    const quizAdd = {
+      quiz: {
+        ...this.quiz,
+        questions: this.quiz.questions.map(this.convertToQuestionDTO),
+      },
+    };
+    this.store.dispatch(
+      QuizActions.createQuiz({ idToken: this.idToken, quiz: quizAdd }),
     );
   }
 

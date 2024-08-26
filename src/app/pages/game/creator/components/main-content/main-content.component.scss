@@ -16,7 +16,7 @@
   justify-content: space-evenly;
   width: 100%;
   height: 100%;
-  background-image: url('../../../../../../assets/images/background-game.jpg');
+  background-image: url("../../../../../../assets/images/background-game.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -24,7 +24,7 @@
   .image-input {
     width: 385px;
     height: 255px;
-    box-shadow: #5A514C 0 0 6px 0;
+    box-shadow: #5a514c 0 0 6px 0;
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -47,13 +47,13 @@
       align-items: center;
       cursor: pointer;
       flex-direction: column;
-      background: rgba(250, 250, 250, 0.7);;
+      background: rgba(250, 250, 250, 0.7);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 0.25rem;
 
       .media-library {
         display: flex;
-        background-image: url('../../../../../../assets/images/media-6GHnspiQ.svg');
+        background-image: url("../../../../../../assets/images/media-6GHnspiQ.svg");
         background-repeat: no-repeat;
         background-position: center center;
         width: 186px;
@@ -72,7 +72,7 @@
     .img-container {
       width: 100%;
       height: 100%;
-      background: rgba(250, 250, 250, 0.7);;
+      background: rgba(250, 250, 250, 0.7);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 0.25rem;
 
@@ -83,7 +83,6 @@
         border-radius: 4px;
       }
     }
-
 
     .remove-btn {
       position: absolute;
@@ -132,7 +131,6 @@
       font-weight: 500;
       color: var(--md-sys-color-outline);
     }
-
   }
 
   .answers {
@@ -164,11 +162,18 @@
         border: 0.25rem solid rgb(255, 255, 255);
         transition: background 0.2s;
         transform-origin: center bottom;
-        box-shadow: transparent 0px 0px 0px 0.125rem, rgba(0, 0, 0, 0.35) 0px 0.125rem 0.125rem, rgba(0, 0, 0, 0.35) 0px 0px 0px 0.0625rem;
+        box-shadow:
+          transparent 0px 0px 0px 0.125rem,
+          rgba(0, 0, 0, 0.35) 0px 0.125rem 0.125rem,
+          rgba(0, 0, 0, 0.35) 0px 0px 0px 0.0625rem;
         animation: 4.6s linear 2s infinite normal none running animation;
         border-radius: 50%;
         margin-right: 24px;
         cursor: pointer;
+
+        mat-icon {
+          display: none;
+        }
       }
 
       .effect {
@@ -193,15 +198,15 @@
       }
 
       &.red {
-        background-color: #D03542;
+        background-color: #d03542;
       }
 
       &.blue {
-        background-color: #3066C7;
+        background-color: #3066c7;
       }
 
       &.yellow {
-        background-color: #CFA035;
+        background-color: #cfa035;
       }
 
       &.green {
@@ -255,7 +260,7 @@
       }
 
       .red {
-        background-color: #D03542;
+        background-color: #d03542;
 
         mat-icon {
           rotate: -90deg;
@@ -263,9 +268,8 @@
         }
       }
 
-
       .blue {
-        background-color: #3066C7;
+        background-color: #3066c7;
 
         mat-icon {
           rotate: 45deg;
@@ -273,15 +277,13 @@
         }
       }
 
-
       .yellow {
-        background-color: #CFA035;
+        background-color: #cfa035;
 
         mat-icon {
           font-size: 20px;
         }
       }
-
 
       .green {
         background-color: #468729;
@@ -328,5 +330,20 @@
   }
 }
 
+.circle:hover mat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex !important;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
 
-
+  &::before {
+    width: 35px;
+    height: 35px;
+    font-size: 33px;
+  }
+}

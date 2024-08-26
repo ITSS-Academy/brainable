@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { GameService } from '../../../../../services/game/game.service';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { Subscription } from 'rxjs';
+import { GameService } from '../../../../../services/game/game.service';
+import { SendAnswer } from '../../../../../models/game.model';
+import * as GameActions from '../../../../../ngrx/game/game.actions';
 
 @Component({
   selector: 'app-answer',
@@ -12,58 +14,51 @@ import { Subscription } from 'rxjs';
   templateUrl: './answer.component.html',
   styleUrl: './answer.component.scss',
 })
-export class AnswerComponent implements OnInit {
-  constructor(private gameService: GameService, private store: Store<{game: GameState}>) {}
-
-  pin!: string;
+export class AnswerComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
+  questionId = '';
+  playerName = '';
+  pin = '';
+  isChoosing = false;
 
-  ngOnInit() {
+  constructor(
+    private store: Store<{ game: GameState }>,
+    private gameService: GameService,
+  ) {
     this.subscription.push(
+      this.store.select('game', 'playerName').subscribe((playerName) => {
+        this.playerName = playerName;
+      }),
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
-          this.pin = pin;
+          this.pin = pin as string;
+        } else {
+          this.store.dispatch(
+            GameActions.storePin({ pin: this.pin as string }),
+          );
         }
       }),
     );
-    this.gameService.listenForQuestion().subscribe((question) => {
-      console.log('Question:', question);
+  }
+
+  ngOnInit() {
+    this.gameService.listenForReceiveQuestion().subscribe((questionId) => {
+      this.questionId = questionId;
     });
+    this.gameService.listenForNavigateToResults(this.pin);
   }
 
-  answersForRender = [
-    {
-      id:1,
-      class: "answer red",
-      fontIcon: "play_arrow"  
-    },
-    {
-      id:2,
-      class: "answer blue",
-      fontIcon: "square"  
-    },
-    {
-      id:3,
-      class: "answer green",
-      fontIcon: "circle"  
-    },
-    {
-      id:4,
-      class: "answer yellow",
-      fontIcon: "square"  
-    }
-  ]
-
-  chooseAnswer(id: number) {
-    console.log('Answer chosen:', id);
-    
-    let data = {
+  chooseAnswer(answer: number) {
+    this.isChoosing = true;
+    this.store.dispatch(GameActions.storePlayerAnswer({ answer }));
+    const answerData: SendAnswer = {
       pin: this.pin,
-      questionId: "",
-      playerName: 'Guest 1',
-      answer: id
-    }
-
-    this.gameService.chooseAnswer(data);
+      questionId: this.questionId,
+      playerName: this.playerName,
+      answer: answer,
+    };
+    this.gameService.sendAnswer(answerData);
   }
+
+  ngOnDestroy() {}
 }

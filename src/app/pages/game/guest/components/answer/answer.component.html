@@ -1,24 +1,58 @@
 <div id="container">
+
+
   <div class="header">
-    <div class="question-number">1</div>
+    <!--    <div class="question-number">1</div>-->
     <div class="logo-container">
-      <img src="assets/images/logo/brainable.png" alt="" class="logo" />
+      <img src="assets/images/logo/brainable-white.png" alt="" class="logo"/>
     </div>
   </div>
 
+  @if (isChoosing) {
+    <div class="animation">
+      <iframe
+        src="https://lottie.host/embed/eab93023-d3d0-47e9-85c6-ba2acc35745e/CEGA31AGvC.json"></iframe>
 
-  <div class="answers">
-    @for(answerForRender of this.answersForRender; track $index){
-      <div (click)="chooseAnswer(answerForRender.id)" class="{{answerForRender.class}}">
+      <p class="desc">Easy does it!</p>
+    </div>
+  } @else {
+    <div class="answers">
+      <div class="answer red" (click)="chooseAnswer(1)">
         <mat-icon
-          fontIcon="{{answerForRender.fontIcon}}"
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="play_arrow"
         ></mat-icon>
       </div>
-    }
-  </div>
+      <div class="answer blue" (click)="chooseAnswer(2)">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="square"
+        ></mat-icon>
+      </div>
+      <div class="answer yellow" (click)="chooseAnswer(3)">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="circle"
+        ></mat-icon>
+      </div>
+      <div class="answer green" (click)="chooseAnswer(4)">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="square"
+        ></mat-icon>
+      </div>
+    </div>
+  }
+
+
+
 
   <div class="footer">
-    <span class="player-name">Player 1</span>
-    <span class="score">923</span>
+    <span class="player-name">{{ playerName }}</span>
+    <!--    <span class="score">923</span>-->
   </div>
 </div>

@@ -7,16 +7,28 @@
     <div class="footer">
       <span class="player-name">{{ nickname }}</span>
     </div>
-
   } @else {
     <div class="nickname-content">
-      <img src="assets/images/logo/black%20ver.png" alt="logo"/>
+      <img src="assets/images/logo/brainable-white.png" alt="logo" />
       <div class="enter-nickname">
-        <input type="text" name="" id="" placeholder="Enter nickname..." [(ngModel)]="nickname"/>
-        <button class="btn-join" mat-flat-button (click)="joinGame()">Join</button>
+        <input
+          type="text"
+          name=""
+          id=""
+          placeholder="Enter nickname..."
+          [(ngModel)]="nickname"
+          (keydown)="onKey($event)"
+        />
+        <button class="btn-join" mat-flat-button (click)="joinGame()">
+          Join
+        </button>
       </div>
     </div>
+
+    @if (isEmptyInput) {
+      <div class="empty-input">
+        <p class="text">Please enter game pin!</p>
+      </div>
+    }
   }
 </div>
-
-

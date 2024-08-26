@@ -1,4 +1,13 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  inject,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { RouterLink } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
@@ -44,5 +53,15 @@ export class HeaderComponent implements OnInit {
     dialogConfig.panelClass = 'custom-dialog-container';
 
     this.dialog.open(LoginComponent, dialogConfig);
+  }
+
+  isSearch = false;
+
+  showSearch() {
+    this.isSearch = !this.isSearch;
+  }
+
+  hideSearch() {
+    this.isSearch = false;
   }
 }
