@@ -1,35 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MaterialModule } from '../../../shared/modules/material.module';
-import { FormsModule } from '@angular/forms';
 import { LocalTimePipe } from '../../../shared/pipes/local-time.pipe';
 import { CardQuizComponent } from './components/card-quiz/card-quiz.component';
-import { TopicService } from '../../../services/topic/topic.service';
-import { Topic } from '../../../models/quiz.model'; // Import mô hình Topic
+import {
+  CdkFixedSizeVirtualScroll,
+  ScrollingModule,
+} from '@angular/cdk/scrolling';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../ngrx/auth/auth.state';
+import { Categories } from '../../../models/categories.model';
+import { Subscription } from 'rxjs';
+import { SharedModule } from '../../../shared/modules/shared.module';
+import * as CategoriesActions from '../../../ngrx/categories/categories.actions';
+import { CategoriesState } from '../../../ngrx/categories/categories.state';
+import { LoadingComponent } from '../../loading/loading.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, MaterialModule, FormsModule, LocalTimePipe, CardQuizComponent],
+  imports: [
+    RouterOutlet,
+    MaterialModule,
+    LocalTimePipe,
+    SharedModule,
+    CardQuizComponent,
+    CdkFixedSizeVirtualScroll,
+    ScrollingModule,
+    LoadingComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  quizzes: Topic[] = []; // Khai báo biến quizzes
+export class HomeComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
+  listCategories: Categories[] = [];
+  isGettingCategories$ = this.store.select(
+    'categories',
+    'isGetAllCategoriesSuccessful',
+  );
 
-  constructor(private topicService: TopicService) { }
+  constructor(
+    private store: Store<{ auth: AuthState; categories: CategoriesState }>,
+  ) {}
 
   ngOnInit(): void {
-    this.loadQuizzes(); // Gọi phương thức để lấy dữ liệu
+    this.subscriptions.push(
+      this.store
+        .select('categories', 'getAllCategories')
+        .subscribe((categories) => {
+          this.listCategories = categories as Categories[];
+        }),
+    );
+    this.store.dispatch(CategoriesActions.getAllCategories());
   }
 
-  loadQuizzes(): void {
-    this.topicService.getCardData().subscribe((data: Topic[]) => {
-      this.quizzes = data;
-    });
-  }
-
-  trackByIndex(index: number, item: Topic): number {
-    return index; // Trả về chỉ mục cho trackBy
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

@@ -1,14 +1,25 @@
 import { Quiz, QuizDTO } from '../../models/quiz.model';
+import { Question } from '../../models/question.model';
 
 export interface QuizState {
-  // get quiz
-  getQuiz: Quiz[];
-  isGetQuizLoading: boolean;
-  isGetQuizSuccessful: boolean;
-  getQuizErrorMessage: string;
+  // get all quiz
+  quizzes: Quiz[];
+  isGetAllQuizLoading: boolean;
+  isGetAllQuizSuccessful: boolean;
+  getAllQuizErrorMessage: string;
+
+  // get quiz by id
+  quiz: Quiz;
+  isGetQuizByIdLoading: boolean;
+  isGetQuizByIdSuccessful: boolean;
+  getQuizByIdErrorMessage: string;
+
+  // update quiz
+  isUpdateQuizLoading: boolean;
+  isUpdateQuizSuccessful: boolean;
+  updateQuizErrorMessage: string;
 
   // create quiz
-  createQuiz: QuizDTO;
   isCreateQuizLoading: boolean;
   isCreateQuizSuccessful: boolean;
   createQuizErrorMessage: string;

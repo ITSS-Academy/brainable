@@ -1,0 +1,34 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <div class="quiz-detail">
+      <div class="quiz-detail__img">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/quiz.png?alt=media&token=d3876348-25c5-43a0-a80f-9731cb7e653c"
+          alt="">
+      </div>
+      <div class="quiz-detail__info">
+        <p class="question">{{ quiz.title }}
+
+        </p>
+        <div class="row-info">
+          <div class="num-questions">
+            <mat-icon fontIcon="list"></mat-icon>
+            <span>{{ quiz.totalQuestions }} Question</span>
+          </div>
+          <div class="category">
+            <img [src]="quiz.category.imgUrl" alt="menu Pic">
+            <span>{{ quiz.category.name }}</span>
+          </div>
+        </div>
+        <div class="row-creator">
+          <button mat-flat-button (click)="playGame()">Play</button>
+          <p>
+            <mat-slide-toggle labelPosition="before" (click)="toggleAnswer()" class="primary-slide-toggle">Show
+              answer
+            </mat-slide-toggle>
+          </p>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

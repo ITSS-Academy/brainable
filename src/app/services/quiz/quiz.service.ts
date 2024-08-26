@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { QuizDTO } from '../../models/quiz.model';
+import { Quiz, QuizDTO } from '../../models/quiz.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +8,17 @@ import { QuizDTO } from '../../models/quiz.model';
 export class QuizService {
   constructor(private http: HttpClient) {}
 
-  createQuiz(idToken: string, quiz: QuizDTO) {
+  createQuiz(idToken: string, quiz: any) {
     return this.http.post(`http://localhost:3000/quiz`, quiz, {
+      headers: {
+        Authorization: `${idToken}`,
+      },
+    });
+  }
+
+  updateQuiz(idToken: string, quiz: QuizDTO) {
+    console.log(quiz);
+    return this.http.put(`http://localhost:3000/quiz`, quiz, {
       headers: {
         Authorization: `${idToken}`,
       },
@@ -18,6 +27,14 @@ export class QuizService {
 
   getQuiz(idToken: string) {
     return this.http.get(`http://localhost:3000/quiz`, {
+      headers: {
+        Authorization: `${idToken}`,
+      },
+    });
+  }
+
+  getQuizById(idToken: string, id: string) {
+    return this.http.get(`http://localhost:3000/quiz/${id}`, {
       headers: {
         Authorization: `${idToken}`,
       },

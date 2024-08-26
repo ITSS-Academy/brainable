@@ -13,6 +13,8 @@
   align-items: center;
   width: 100%;
   height: 65px;
+  gap: 20px;
+  padding: 0 20px;
 }
 
 .question {
@@ -20,10 +22,12 @@
   justify-content: center;
   align-items: center;
   width: fit-content;
-  height: 54px;
+  height: 50px;
   padding: 0 10px;
   border-radius: 4px;
   background-color: var(--md-sys-color-on-primary);
+  flex-basis: 90%;
+  font-size: 24px;
 }
 
 .timer {
@@ -107,35 +111,35 @@
 }
 
 .answer.red {
-  background-color: #D03542;
+  background-color: #d03542;
 }
 
 .answer.red mat-icon {
   rotate: -90deg;
   font-size: 30px;
-  }
+}
 
 .answer.blue {
-  background-color: #3066C7;
+  background-color: #3066c7;
 }
 
 .answer.blue mat-icon {
   rotate: 45deg;
   font-size: 18px;
-  }
-
-.answer.yellow {
-  background-color: #CFA035;
 }
 
-.answer.yellow mat-icon{
+.answer.yellow {
+  background-color: #cfa035;
+}
+
+.answer.yellow mat-icon {
   font-size: 20px;
 }
 
 .answer.green {
   background-color: #468729;
 }
-.answer.green mat-icon{
 
+.answer.green mat-icon {
   font-size: 20px;
-  }
+}

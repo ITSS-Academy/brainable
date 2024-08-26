@@ -11,24 +11,4 @@ export class QuestionEffects {
     private actions$: Actions,
     private questionService: QuestionService,
   ) {}
-
-  createQuestion$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(QuestionActions.createQuestion),
-      switchMap((action) => {
-        return this.questionService.createQuestion(
-          action.idToken,
-          action.question,
-        );
-      }),
-      map(() => {
-        return QuestionActions.createQuestionSuccess();
-      }),
-      catchError((error) => {
-        return of(
-          QuestionActions.createQuestionFailure({ errorMessage: error }),
-        );
-      }),
-    );
-  });
 }

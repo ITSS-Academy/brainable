@@ -1,37 +1,28 @@
-
-
-export interface Questions {
-  id: number;
-  text: string;
-  option1?: string;
-  option2?: string;
-  option3?: string;
-  option4?: string;
-  answer?: string;
-  timeLimit?: number;
-}
+import { Question } from './question.model';
+import { Categories } from './categories.model';
 
 export interface Quiz {
   id: number;
   title: string;
   description: string;
   isPublic: boolean;
+  totalQuestions: number;
+  imgUrl: string;
   createdAt: Date;
-  plays: number;
+  category: Categories;
+  questions: Question[];
 }
 
 export interface QuizDTO {
   quiz: {
+    id: number;
     title: string;
     description: string;
     isPublic: boolean;
+    totalQuestions: number;
+    imgUrl: string;
+    createdAt: Date;
+    category: Categories;
+    questions: Question[];
   };
 }
-
-export interface Topic {
-  title: string;
-  text: string;
-  questions: number;
-  plays: number;
-}
-

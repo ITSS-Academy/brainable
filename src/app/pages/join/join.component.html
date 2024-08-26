@@ -1,20 +1,29 @@
 <div class="container">
   <div class="header">
     <div class="header-content">
-
-      <button class="btn-home" mat-flat-button (click)="homePage()">{{ dashboard }}</button>
-      <!--      <button class="btn-home" mat-flat-button (click)="signWithGoogle()">Login</button>-->
-      <!--      <button class="btn-home" mat-flat-button (click)="signOut()">Logout</button>-->
-
-
+      <button class="btn-home" mat-flat-button (click)="homePage()">
+        {{ dashboard }}
+      </button>
     </div>
   </div>
   <div class="content">
+    <img src="assets/images/logo/brainable-white.png" alt="Logo" class="logo" />
     <div class="content-body">
-      <input type="text" placeholder="Enter a join code">
-      <button class="btn-join" mat-flat-button>Join</button>
+      <input
+        type="text"
+        placeholder="Enter a join code"
+        [(ngModel)]="pin"
+        (keydown)="onKey($event)"
+      />
+      <button class="btn-join" mat-flat-button (click)="joinGame()">
+        Join
+      </button>
     </div>
   </div>
+
+  @if (isEmptyInput) {
+    <div class="empty-input">
+      <p class="text">Please enter game pin!</p>
+    </div>
+  }
 </div>
-
-

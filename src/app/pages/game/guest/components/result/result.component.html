@@ -1,21 +1,40 @@
 <div id="container">
   <div class="header">
-    <div class="question-number">1</div>
-    <div class="logo">Logo</div>
+    <!--    <div class="question-number">1</div>-->
+    <div class="logo-container">
+      <img src="assets/images/logo/brainable-white.png" alt="" class="logo"/>
+    </div>
   </div>
 
   <div class="content">
-    <h2>Correct!</h2>
-    <div class="correct-icon">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_small"></mat-icon>
-    </div>
-    <div class="score">
-      <span>+100</span>
-    </div>
+    @if (isCorrect) {
+      <h2>Correct!</h2>
+      <div class="correct-icon">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="check_small"
+        ></mat-icon>
+      </div>
+      <div class="score">
+        <!--        <span>+100</span>-->
+      </div>
+    } @else {
+      <h2>Incorrect!</h2>
+      <div class="incorrect-icon">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="close"
+        ></mat-icon>
+      </div>
+      <div class="score">
+        <span>Try again!</span>
+      </div>
+    }
   </div>
-
   <div class="footer">
-    <span class="player-name">Player 1</span>
-    <span class="total-score">923</span>
+    <span class="player-name">{{ playerName }}</span>
+    <!--    <span class="total-score">923</span>-->
   </div>
 </div>

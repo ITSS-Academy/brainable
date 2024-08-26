@@ -4,11 +4,12 @@ import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { PlayersComponent } from '../players/players.component';
 import { QuestionsComponent } from '../questions/questions.component';
+import {OverviewReportComponent} from "./components/overview-report/overview-report.component";
 
 @Component({
   selector: 'app-report-detail',
   standalone: true,
-  imports: [MaterialModule, SharedModule, PlayersComponent, QuestionsComponent],
+  imports: [MaterialModule, SharedModule, PlayersComponent, QuestionsComponent, OverviewReportComponent],
   templateUrl: './report-detail.component.html',
   styleUrl: './report-detail.component.scss',
 })

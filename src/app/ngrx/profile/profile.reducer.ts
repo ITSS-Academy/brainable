@@ -5,71 +5,65 @@ import { Profile } from '../../models/profile.model';
 
 export const initialState: ProfileState = {
   profile: <Profile>{},
-  isLoading: false,
-  isSuccessful: false,
-  errorMessage: '',
+  isGettingProfileSuccessful: false,
+  gettingProfileError: '',
+
+  isCreatedProfileSuccessful: false,
+  createdProfileError: '',
 };
 
 export const profileReducer = createReducer(
   initialState,
   on(ProfileActions.createProfile, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
-      isLoading: true,
-      isSuccessful: false,
-      errorMessage: '',
     };
   }),
 
   on(ProfileActions.createProfileSuccess, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: true,
-      errorMessage: '',
+      isCreatedProfileSuccessful: true,
     };
   }),
 
   on(ProfileActions.createProfileFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: false,
-      errorMessage,
+      isCreatedProfileSuccessful: false,
+      createdProfileError: errorMessage,
     };
   }),
 
   on(ProfileActions.getProfile, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
-      isLoading: true,
-      isSuccessful: false,
-      errorMessage: '',
     };
   }),
 
   on(ProfileActions.getProfileSuccess, (state, { profile, type }) => {
-    console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: true,
-      profile,
-      errorMessage: '',
+      isGettingProfileSuccessful: true,
+      profile: profile,
     };
   }),
 
   on(ProfileActions.getProfileFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: false,
-      errorMessage,
+      isGettingProfileSuccessful: false,
+      gettingProfileError: errorMessage,
+    };
+  }),
+  on(ProfileActions.clearState, (state) => {
+    return {
+      ...state,
+      isGettingProfileSuccessful: false,
+      gettingProfileError: '',
+
+      isCreatedProfileSuccessful: false,
+      createdProfileError: '',
     };
   }),
 );

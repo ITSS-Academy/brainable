@@ -14,15 +14,15 @@ export class QuizEffects {
 
   getQuiz$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(QuizActions.getQuiz),
+      ofType(QuizActions.getAllQuiz),
       switchMap((action) => {
         return this.quizService.getQuiz(action.idToken);
       }),
       map((quiz: any) => {
-        return QuizActions.getQuizSuccess({ quiz });
+        return QuizActions.getAllQuizSuccess({ quiz });
       }),
       catchError((error) => {
-        return of(QuizActions.getQuizFailure({ errorMessage: error }));
+        return of(QuizActions.getAllQuizFailure({ errorMessage: error }));
       }),
     );
   });
@@ -38,6 +38,36 @@ export class QuizEffects {
       }),
       catchError((error) => {
         return of(QuizActions.createQuizFailure({ errorMessage: error }));
+      }),
+    );
+  });
+
+  updateQuiz$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(QuizActions.updateQuiz),
+      switchMap((action) => {
+        return this.quizService.updateQuiz(action.idToken, action.quiz);
+      }),
+      map(() => {
+        return QuizActions.updateQuizSuccess();
+      }),
+      catchError((error) => {
+        return of(QuizActions.updateQuizFailure({ errorMessage: error }));
+      }),
+    );
+  });
+
+  getQuizById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(QuizActions.getQuizById),
+      switchMap((action) => {
+        return this.quizService.getQuizById(action.idToken, action.id);
+      }),
+      map((quiz: any) => {
+        return QuizActions.getQuizByIdSuccess({ quiz });
+      }),
+      catchError((error) => {
+        return of(QuizActions.getQuizByIdFailure({ errorMessage: error }));
       }),
     );
   });

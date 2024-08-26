@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { AuthState } from './ngrx/auth/auth.state';
@@ -20,13 +20,13 @@ export class AppComponent implements OnInit {
   token$ = this.store.select('auth', 'idToken');
 
   constructor(
-    private router: Router,
     private auth: Auth,
     private store: Store<{ auth: AuthState; profile: ProfileState }>,
   ) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken(true);
+        // console.log(idToken);
         this.store.dispatch(AuthActions.storeIdToken({ idToken }));
       }
     });
@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
     this.token$.subscribe(async (idToken) => {
       if (idToken) {
         this.store.dispatch(ProfileActions.createProfile({ idToken }));
+        this.store.dispatch(ProfileActions.getProfile({ idToken }));
       }
     });
   }

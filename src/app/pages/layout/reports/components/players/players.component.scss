@@ -1,13 +1,19 @@
 :host {
   --mat-table-background-color: #ffffff;
   --mat-paginator-container-background-color: #ffffff;
-  //--mdc-filled-text-field-container-color: #ffffff;
+  --mdc-filled-text-field-container-color: #ffffff;
   --mdc-linear-progress-track-height: 16px;
   --mdc-linear-progress-track-shape: 1px;
   --mdc-linear-progress-active-indicator-height: 16px;
   --mdc-linear-progress-active-indicator-color: rgba(0, 201, 133, 1);
   --mdc-circular-progress-active-indicator-color: rgba(0, 201, 133, 1);
   --mat-table-row-item-label-text-line-height: 4.25rem;
+}
+
+:host {
+  --mat-table-background-color: #FFFFFF;
+  --mdc-filled-text-field-container-color: #FFFFFF;
+  --mat-paginator-container-background-color: #FFFFFF;
 }
 
 .container {

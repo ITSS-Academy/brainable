@@ -1,14 +1,13 @@
 .sidebar {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .sidebar .logo {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--md-sys-color-primary);
-  margin-bottom: 20px;
+  width: 150px;
+  margin-bottom: 30px;
 }
 
 .sidebar .profile {
@@ -69,4 +68,8 @@
 
 .sidebar nav a .icon {
   margin-right: 10px;
+}
+
+.logout {
+  margin-top: 200px;
 }

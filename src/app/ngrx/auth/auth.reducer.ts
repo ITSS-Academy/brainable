@@ -4,11 +4,12 @@ import { AuthState } from './auth.state';
 
 export const initialState: AuthState = {
   idToken: '',
-  isLoading: false,
-  isSuccessful: false,
+  isLoginLoading: false,
+  isLoginSuccess: false,
+  loginErrorMessage: '',
   isLogoutLoading: false,
   isLogoutSuccess: false,
-  errorMessage: '',
+  logoutErrorMessage: '',
 };
 
 export const authReducer = createReducer(
@@ -17,65 +18,55 @@ export const authReducer = createReducer(
     console.log(action.type);
     return {
       ...state,
-      isLoading: true,
-      isSuccessful: false,
-      errorMessage: '',
+      isLoginLoading: true,
+      isLoginSuccess: false,
     };
   }),
 
   on(AuthActions.loginSuccess, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: true,
-      errorMessage: '',
+      isLoginLoading: false,
+      isLoginSuccess: true,
     };
   }),
 
   on(AuthActions.loginFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: false,
-      errorMessage,
+      isLoginLoading: false,
+      isLoginSuccess: false,
+      loginErrorMessage: errorMessage,
     };
   }),
 
   on(AuthActions.logout, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       isLogoutLoading: true,
       isLogoutSuccess: false,
-      errorMessage: '',
     };
   }),
 
   on(AuthActions.logoutSuccess, (state, action) => {
-    console.log(action.type);
     return {
       ...state,
       idToken: '',
       isLogoutLoading: false,
       isLogoutSuccess: true,
-      errorMessage: '',
     };
   }),
 
   on(AuthActions.logoutFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
       isLogoutLoading: false,
       isLogoutSuccess: false,
-      errorMessage,
+      logoutErrorMessage: errorMessage,
     };
   }),
 
   on(AuthActions.storeIdToken, (state, { idToken, type }) => {
-    console.log(type);
     return {
       ...state,
       idToken,

@@ -1,0 +1,91 @@
+:host {
+  --mdc-outlined-card-container-color: #ffffff;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+
+  .profile-container {
+    width: 100%;
+    height: 150px;
+  }
+
+  .library-container {
+    width: 100%;
+    height: calc(100% - 170px);
+    display: flex;
+    margin-top: 20px;
+
+    .library-scroll {
+      width: 60%;
+      height: 100%;
+
+      &::-webkit-scrollbar {
+        display: none; /* Safari and Chrome */
+      }
+
+
+      .quiz-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    .content-container {
+      width: 40%;
+      height: 100%;
+      margin-left: 10px;
+
+
+      .quiz-scroll {
+        width: 100%;
+        height: 100%;
+
+        &::-webkit-scrollbar {
+          display: none; /* Safari and Chrome */
+        }
+
+        .quiz-content {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 1024px) {
+  .container {
+    .profile-container {
+      height: 250px;
+    }
+
+    .library-container {
+      width: 100%;
+      height: calc(100% - 270px);
+
+      .library-scroll {
+        width: 100%;
+        height: 100%;
+
+        .quiz-list {
+          width: 100%;
+        }
+      }
+
+      .content-container {
+        display: none;
+      }
+    }
+
+  }
+}
+
+

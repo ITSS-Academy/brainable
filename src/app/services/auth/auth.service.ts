@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,17 @@ export class AuthService {
     } catch (error) {
       throw error;
     }
+  }
+
+  isSignedIn(): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.auth.onAuthStateChanged((user) => {
+        if (user) {
+          observer.next(true);
+        } else {
+          observer.next(false);
+        }
+      });
+    });
   }
 }

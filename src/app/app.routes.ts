@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { CreatorComponent } from './pages/game/creator/creator.component';
+import { LoadingComponent } from './pages/loading/loading.component';
+import * as AuthGuard from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -18,17 +20,31 @@ export const routes: Routes = [
       import('./pages/join/join.routes').then((m) => m.JOIN_ROUTERS),
   },
   {
-    path: 'host',
+    path: 'host/:pin',
     loadChildren: () =>
       import('./pages/game/host/host.routes').then((m) => m.HOST_ROUTERS),
   },
   {
-    path: 'guest',
+    path: 'guest/:pin',
     loadChildren: () =>
       import('./pages/game/guest/guest.routes').then((m) => m.GUEST_ROUTERS),
   },
   {
     path: 'creator',
     component: CreatorComponent,
+    canActivate: [AuthGuard.canActivateCreate],
+  },
+  {
+    path: 'creator/:id',
+    component: CreatorComponent,
+    canActivate: [AuthGuard.canActivateCreate],
+  },
+  {
+    path: 'loading',
+    component: LoadingComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'join',
   },
 ];
