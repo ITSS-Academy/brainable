@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,9 @@ import { Subscription } from 'rxjs';
 import { Quiz, QuizDTO } from '../../../../../models/quiz.model';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { Question, QuestionDTO } from '../../../../../models/question.model';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { LoginComponent } from '../../../../../components/login/login.component';
+import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +24,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   quiz!: Quiz;
   idToken!: string;
+
+  dialog = inject(MatDialog);
 
   constructor(
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
@@ -43,6 +48,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         }),
     );
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '620px';
+    dialogConfig.maxWidth = '80vw';
+    dialogConfig.panelClass = 'custom-dialog-container';
+
+    this.dialog.open(SettingDialogComponent, dialogConfig);
   }
 
   saveQuiz() {

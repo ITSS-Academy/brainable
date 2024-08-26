@@ -3,7 +3,6 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
-import { SettingComponent } from './components/setting/setting.component';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
@@ -23,7 +22,6 @@ import { Categories } from '../../../models/categories.model';
     SharedModule,
     HeaderComponent,
     MainContentComponent,
-    SettingComponent,
     LoadingComponent,
   ],
   templateUrl: './creator.component.html',

@@ -1,0 +1,42 @@
+<mat-dialog-content class="dialog-container">
+  <div class="dialog-header">
+    <h1>Settings</h1>
+  </div>
+  <div class="dialog-content">
+    <div class="left">
+      <div class="title">
+        <label><b>Title</b></label>
+        <input type="text" placeholder="Enter your title..." />
+      </div>
+      <div class="description">
+        <label><b>Description</b> (optional)</label>
+        <textarea></textarea>
+      </div>
+      <div class="visibility">
+        <label><b>Visibility</b></label>
+        <mat-radio-group>
+          <mat-radio-button value="public">Public</mat-radio-button>
+          <mat-radio-button value="private">Private</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="right">
+      <div class="image-input">
+        <!--                <input id="uploadBtn" type="file" />-->
+        <label>
+          <div class="media-library"></div>
+          <span class="add-media-btn">Find and insert media</span>
+        </label>
+      </div>
+
+      <button mat-fab>
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="dialog-footer">
+    <button mat-stroked-button>Cancel</button>
+    <button mat-flat-button color="primary">Done</button>
+  </div>
+</mat-dialog-content>
