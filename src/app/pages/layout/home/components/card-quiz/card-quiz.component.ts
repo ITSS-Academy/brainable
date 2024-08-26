@@ -1,11 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
-import {
-  CdkFixedSizeVirtualScroll,
-  ScrollingModule,
-} from '@angular/cdk/scrolling';
-import { CategoriesByUid } from '../../../../../models/categories.model';
+import { CdkFixedSizeVirtualScroll, ScrollingModule } from '@angular/cdk/scrolling';
+
 
 @Component({
   selector: 'app-card-quiz',
@@ -19,8 +16,5 @@ import { CategoriesByUid } from '../../../../../models/categories.model';
   templateUrl: './card-quiz.component.html',
   styleUrls: ['./card-quiz.component.scss'],
 })
-export class CardQuizComponent implements OnInit {
-  @Input() category!: CategoriesByUid;
-
-  ngOnInit(): void { }
+export class CardQuizComponent {
 }
