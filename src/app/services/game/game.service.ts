@@ -50,4 +50,25 @@ export class GameService {
       this.socket.disconnect();
     }
   }
+
+  chooseAnswer(data:any): void {
+    this.socket.emit('sendAnswer', data);
+  }
+
+  listenForQuestion() {
+    return new Observable((observer) => {
+      this.socket.on('newQuestion', (question: any) => {
+        observer.next(question);
+      });
+    });
+  }
+
+  listenForAnswer() {
+    return new Observable((observer) => {
+      this.socket.on('answerStatistics', (answer: any) => {
+        observer.next(answer);
+      });
+    });
+  }
+
 }

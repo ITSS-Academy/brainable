@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {NgClass, NgIf} from "@angular/common";
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { GameState } from '../../../../../ngrx/game/game.state';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-countdown-to-question',
@@ -16,14 +20,26 @@ import {NgClass, NgIf} from "@angular/common";
   styleUrl: './countdown-to-question.component.scss'
 })
 export class CountdownToQuestionComponent implements OnInit {
+  constructor(private router: Router,
+    private store: Store<{ game: GameState }>,
+  ) {}
   countdownNumbers = [3, 2, 1];
   activeNumber = 4;
   showFinalText = false;
   hideCircle = false;
   hiddenNumbers: Set<number> = new Set(); // Track hidden numbers
+  subscription: Subscription[] = [];
+  pin!: string;
 
   ngOnInit() {
     this.startCountdown();
+    this.subscription.push(
+      this.store.select('game', 'pin').subscribe((pin) => {
+        if (pin) {
+          this.pin = pin;
+        }
+      }),
+    );
   }
 
   startCountdown() {
@@ -39,7 +55,8 @@ export class CountdownToQuestionComponent implements OnInit {
         clearInterval(countdownInterval);
         setTimeout(() => {
           this.showFinalText = true;
-          this.hideCircle = true; // Hide squares after countdown
+          this.hideCircle = true;
+          this.router.navigate([`/guest/${this.pin}/answer`]) // Hide squares after countdown
         }, 1000);
       }
     }, 1000);

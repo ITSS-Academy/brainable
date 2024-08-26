@@ -6,35 +6,15 @@
     </div>
   </div>
 
+
   <div class="answers">
-    <div class="answer red">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="play_arrow"
-      ></mat-icon>
-    </div>
-    <div class="answer blue">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="square"
-      ></mat-icon>
-    </div>
-    <div class="answer yellow">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="circle"
-      ></mat-icon>
-    </div>
-    <div class="answer green">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="square"
-      ></mat-icon>
-    </div>
+    @for(answerForRender of this.answersForRender; track $index){
+      <div (click)="chooseAnswer(answerForRender.id)" class="{{answerForRender.class}}">
+        <mat-icon
+          fontIcon="{{answerForRender.fontIcon}}"
+        ></mat-icon>
+      </div>
+    }
   </div>
 
   <div class="footer">
