@@ -1,8 +1,13 @@
-import { Categories } from '../../models/categories.model';
+import { Categories, CategoriesByUid } from '../../models/categories.model';
 
 export interface CategoriesState {
-  getAllCategories: Categories[];
+  categories: Categories[];
   isGetAllCategoriesLoading: boolean;
   isGetAllCategoriesSuccessful: boolean;
   getAllCategoriesErrorMessage: string;
+
+  category: CategoriesByUid;
+  isGetCategoryLoading: boolean;
+  isGetCategorySuccessful: boolean;
+  getCategoryErrorMessage: string;
 }
