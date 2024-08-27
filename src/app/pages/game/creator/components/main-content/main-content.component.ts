@@ -45,6 +45,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.changeEvent.subscribe((data) => {
         console.log('Data changed');
+        if (!data) return;
         if (data.type == 'question') {
           this.question.question = data.data;
           this.updateCharCountQuestion();

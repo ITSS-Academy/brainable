@@ -162,10 +162,9 @@
         border: 0.25rem solid rgb(255, 255, 255);
         transition: background 0.2s;
         transform-origin: center bottom;
-        box-shadow:
-          transparent 0px 0px 0px 0.125rem,
-          rgba(0, 0, 0, 0.35) 0px 0.125rem 0.125rem,
-          rgba(0, 0, 0, 0.35) 0px 0px 0px 0.0625rem;
+        box-shadow: transparent 0px 0px 0px 0.125rem,
+        rgba(0, 0, 0, 0.35) 0px 0.125rem 0.125rem,
+        rgba(0, 0, 0, 0.35) 0px 0px 0px 0.0625rem;
         animation: 4.6s linear 2s infinite normal none running animation;
         border-radius: 50%;
         margin-right: 24px;
@@ -201,16 +200,32 @@
         background-color: #d03542;
       }
 
+      &.red span {
+        color: #fff;
+      }
+
       &.blue {
         background-color: #3066c7;
+      }
+
+      &.blue span {
+        color: #fff;
       }
 
       &.yellow {
         background-color: #cfa035;
       }
 
+      &.yellow span {
+        color: #fff;
+      }
+
       &.green {
         background-color: #468729;
+      }
+
+      &.green span {
+        color: #fff;
       }
 
       textarea {

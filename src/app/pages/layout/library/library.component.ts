@@ -15,7 +15,6 @@ import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { Quiz } from '../../../models/quiz.model';
-import { Storage } from '@angular/fire/storage';
 import { Question } from '../../../models/question.model';
 
 @Component({
@@ -56,7 +55,9 @@ export class LibraryComponent implements OnInit, OnDestroy {
       }),
       this.store.select('quiz', 'quizzes').subscribe((quizzes) => {
         this.listQuiz = quizzes as Quiz[];
-        this.listQuestion = this.listQuiz[0].questions;
+        if (this.listQuiz.length > 0) {
+          this.listQuestion = this.listQuiz[0].questions;
+        }
       }),
     );
   }
