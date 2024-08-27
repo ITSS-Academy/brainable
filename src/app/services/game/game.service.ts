@@ -8,14 +8,31 @@ import {
   SendQuestion,
 } from '../../models/game.model';
 
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { GameReport } from '../../models/gameReport.model';
+
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  constructor(
-    private socket: Socket,
-    private router: Router,
-  ) {}
+  constructor(private socket: Socket, private router: Router, private http: HttpClient) {}
+
+  getGamesByUser(idToken: string): Observable<GameReport[]> {
+    return this.http.get<GameReport[]>(`${environment.apiUrl}/game`, {
+      headers: {
+        Authorization: idToken,
+      },
+    });
+  }
+
+  getGameById(idToken: string, gameId: string): Observable<GameReport> {
+    return this.http.get<GameReport>(`${environment.apiUrl}/game/byId?id=${gameId}`, {
+      headers: {
+        Authorization: idToken,
+      },
+    });
+  }
 
   createRoom(pin: string): void {
     this.socket.emit('createRoom', pin);
@@ -147,5 +164,25 @@ export class GameService {
     if (this.socket) {
       this.socket.disconnect();
     }
+  }
+
+  chooseAnswer(data: any): void {
+    this.socket.emit('sendAnswer', data);
+  }
+
+  listenForQuestion() {
+    return new Observable((observer) => {
+      this.socket.on('newQuestion', (question: any) => {
+        observer.next(question);
+      });
+    });
+  }
+
+  listenForAnswer() {
+    return new Observable((observer) => {
+      this.socket.on('answerStatistics', (answer: any) => {
+        observer.next(answer);
+      });
+    });
   }
 }

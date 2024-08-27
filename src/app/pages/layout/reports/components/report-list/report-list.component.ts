@@ -1,11 +1,23 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-
+import { Observable, Subscription } from 'rxjs';
+import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../../../ngrx/auth/auth.state';
+import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
+import { GameReport } from '../../../../../models/gameReport.model';
+import { DatePipe } from '@angular/common';
 export interface UserData {
   id: string;
   name: string;
@@ -48,23 +60,50 @@ const NAMES: string[] = [
 @Component({
   selector: 'app-report-list',
   standalone: true,
-  imports: [MaterialModule, SharedModule],
+  imports: [MaterialModule, SharedModule, DatePipe],
   templateUrl: './report-list.component.html',
   styleUrl: './report-list.component.scss',
 })
-export class ReportListComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<UserData>;
+export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
+  displayedColumns: string[] = ['No.','name', 'joinCode', 'createdAt'];
+  gameReports$: Observable<GameReport[]> = this.store.select(
+    'gameReport',
+    'gameReports'
+  );
+
+  dataSource!: MatTableDataSource<GameReport>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private route: Router) {
-    const users = Array.from({ length: 100 }, (_, k) =>
-      this.createNewUser(k + 1),
-    );
+  subscriptions: Subscription[] = [];
 
-    this.dataSource = new MatTableDataSource(users);
+  constructor(
+    private route: Router,
+    private store: Store<{ auth: AuthState; gameReport: GameReportState }>
+  ) {}
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        if (idToken) {
+          this.store.dispatch(GameReportActions.getAllGameReports({ idToken }));
+          this.gameReports$.subscribe((gameReports) => {
+            if (gameReports) {
+              const users = Array.from({ length: gameReports.length }, (_, k) =>
+                this.createNewReport(gameReports[k],k + 1)
+              );
+              this.dataSource = new MatTableDataSource(users);
+              console.log(users);
+            }
+          });
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   ngAfterViewInit() {
@@ -87,18 +126,10 @@ export class ReportListComponent implements AfterViewInit {
     }
   }
 
-  createNewUser(id: number): UserData {
-    const name =
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-      ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-      '.';
-
+  createNewReport(report: GameReport, index: number): GameReport {
     return {
-      id: id.toString(),
-      name: name,
-      progress: Math.round(Math.random() * 100).toString(),
-      fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
+      ...report,
+      index: index,
     };
   }
 
@@ -115,18 +146,18 @@ export class ReportListComponent implements AfterViewInit {
         case 'id':
           return this.compare(a.id, b.id, isAsc);
         case 'name':
-          return this.compare(a.name, b.name, isAsc);
-        case 'progress':
-          return this.compare(a.progress, b.progress, isAsc);
-        case 'fruit':
-          return this.compare(a.fruit, b.fruit, isAsc);
+          return this.compare(a.quizId.title, b.quizId.title, isAsc);
+        case 'joinCode':
+          return this.compare(a.joinCode, b.joinCode, isAsc);
+        case 'createdAt':
+          return this.compare(a.createdAt.getMilliseconds(), b.createdAt.getMilliseconds(), isAsc);
         default:
           return 0;
       }
     });
 
     console.log(
-      `Sorted by ${sortState.active} in ${sortState.direction} order`,
+      `Sorted by ${sortState.active} in ${sortState.direction} order`
     );
   }
 
@@ -136,6 +167,7 @@ export class ReportListComponent implements AfterViewInit {
 
   onRowClicked(row: any) {
     console.log('Row clicked: ', row);
+
     this.route.navigate([`/reports/${row.id}`]);
   }
 }

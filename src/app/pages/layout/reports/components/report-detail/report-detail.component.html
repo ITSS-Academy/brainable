@@ -4,7 +4,7 @@
     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
 
       <mat-tab label="Participants">
-        <app-players></app-players>
+        <app-players [gameRecord]="this.gameRecords"></app-players>
       </mat-tab>
       <mat-tab label="Questions">
         <div class="questions">
