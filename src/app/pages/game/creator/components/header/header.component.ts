@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,9 @@ import { Subscription } from 'rxjs';
 import { Quiz, QuizDTO } from '../../../../../models/quiz.model';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { Question, QuestionDTO } from '../../../../../models/question.model';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { LoginComponent } from '../../../../../components/login/login.component';
+import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -18,9 +21,13 @@ import { Question, QuestionDTO } from '../../../../../models/question.model';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Input() title: string = 'Untitled Quiz';
+  @Input() isEdit: boolean = false;
+
   subscription: Subscription[] = [];
   quiz!: Quiz;
   idToken!: string;
+
+  dialog = inject(MatDialog);
 
   constructor(
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
@@ -42,7 +49,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.router.navigate(['/library']);
           }
         }),
+      this.store
+        .select('quiz', 'isCreateQuizSuccessful')
+        .subscribe((isCreateQuizSuccessful) => {
+          if (isCreateQuizSuccessful) {
+            this.router.navigate(['/library']);
+          }
+        }),
     );
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '60%';
+    dialogConfig.maxWidth = '85vw';
+    dialogConfig.panelClass = 'custom-dialog-container';
+    this.dialog.open(SettingDialogComponent, dialogConfig);
   }
 
   saveQuiz() {

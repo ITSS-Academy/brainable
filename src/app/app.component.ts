@@ -6,6 +6,7 @@ import { AuthState } from './ngrx/auth/auth.state';
 import { ProfileState } from './ngrx/profile/profile.state';
 import * as AuthActions from './ngrx/auth/auth.actions';
 import * as ProfileActions from './ngrx/profile/profile.actions';
+import { GameService } from './services/game/game.service';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +22,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private auth: Auth,
-    private store: Store<{ auth: AuthState; profile: ProfileState }>,
-  ) {
+    private store: Store<{ auth: AuthState; profile: ProfileState }>,) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken(true);

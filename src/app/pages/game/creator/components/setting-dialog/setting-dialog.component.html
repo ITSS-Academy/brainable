@@ -1,0 +1,52 @@
+<mat-dialog-content class="dialog-container">
+  <div class="dialog-header">
+    <h1>Settings</h1>
+  </div>
+  <div class="dialog-content">
+    <div class="left">
+      <div class="title">
+        <label><b>Title</b></label>
+        <input [(ngModel)]="settings.title" type="text" placeholder="Enter your title..."/>
+      </div>
+      <div class="description">
+        <label><b>Description</b> (optional)</label>
+        <textarea [(ngModel)]="settings.description"></textarea>
+      </div>
+      <div class="visibility">
+        <label><b>Visibility</b></label>
+        <mat-radio-group [(ngModel)]="settings.isPublic" (change)="handleVisibilityChange($event)">
+          <mat-radio-button [value]="true">Public</mat-radio-button>
+          <mat-radio-button [value]="false">Private</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="right">
+      <label class="title-img"><b>Cover image</b></label>
+      <div class="image-input">
+        @if (!selectedImage) {
+          <input id="uploadBtn" type="file" (change)="selectImage($event)"/>
+          <label class="label-upload" for="uploadBtn">
+            <div class="media-library"></div>
+            <button mat-flat-button (click)="triggerFileInput($event)">
+              Change
+            </button>
+          </label>
+        }
+        @if (selectedImage) {
+          <div class="img-container">
+            <img [src]="selectedImage" alt=""/>
+          </div>
+          <button mat-fab class="remove-btn" (click)="removeImage()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+      </div>
+
+    </div>
+  </div>
+
+  <div class="dialog-footer">
+    <button mat-stroked-button (click)="closeDialog()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="closeDialog(); saveChanges()">Done</button>
+  </div>
+</mat-dialog-content>

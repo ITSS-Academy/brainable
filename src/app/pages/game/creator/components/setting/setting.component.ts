@@ -35,11 +35,9 @@ export class SettingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.store
-        .select('categories', 'getAllCategories')
-        .subscribe((categories) => {
-          this.listCategories = categories as Categories[];
-        }),
+      this.store.select('categories', 'categories').subscribe((categories) => {
+        this.listCategories = categories as Categories[];
+      }),
     );
     this.store.dispatch(CategoriesActions.getAllCategories());
   }
