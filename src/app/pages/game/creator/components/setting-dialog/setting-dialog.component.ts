@@ -1,16 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatButton, MatFabButton } from '@angular/material/button';
-import {
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import {
-  MatRadioButton,
-  MatRadioChange,
-  MatRadioGroup,
-} from '@angular/material/radio';
-import { MatIcon } from '@angular/material/icon';
+import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import { MatRadioChange } from '@angular/material/radio';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
@@ -24,25 +14,26 @@ import {
   uploadBytesResumable,
 } from '@angular/fire/storage';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
+import { MaterialModule } from '../../../../../shared/modules/material.module';
+import { Categories } from '../../../../../models/categories.model';
+import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
+import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-setting-dialog',
   standalone: true,
-  imports: [
-    MatButton,
-    MatDialogClose,
-    MatDialogContent,
-    MatRadioGroup,
-    MatRadioButton,
-    MatFabButton,
-    MatIcon,
-    SharedModule,
-  ],
+  imports: [MaterialModule, SharedModule, MatDialogContent],
   templateUrl: './setting-dialog.component.html',
   styleUrl: './setting-dialog.component.scss',
 })
 export class SettingDialogComponent implements OnInit, OnDestroy {
   quiz!: Quiz;
+  listCategories: Categories[] = [];
+  isGettingCategories$ = this.store.select(
+    'categories',
+    'isGetAllCategoriesSuccessful',
+  );
   subscription: Subscription[] = [];
 
   settings = {
@@ -50,14 +41,20 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     description: '',
     isPublic: false,
     imgUrl: '',
+    category: <Categories>{},
   };
 
   uploadedFileURL: string = '';
 
   constructor(
-    private store: Store<{ auth: AuthState; quiz: QuizState }>,
+    private store: Store<{
+      auth: AuthState;
+      quiz: QuizState;
+      categories: CategoriesState;
+    }>,
     private storage: Storage,
     private dialogRef: MatDialogRef<SettingDialogComponent>,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -66,8 +63,13 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
         this.settings.title = quiz.title;
         this.settings.description = quiz.description;
         this.settings.isPublic = quiz.isPublic;
+        this.settings.category = quiz.category;
+      }),
+      this.store.select('categories', 'categories').subscribe((categories) => {
+        this.listCategories = categories as Categories[];
       }),
     );
+    this.store.dispatch(CategoriesActions.getAllCategories());
   }
 
   selectedImage: string | ArrayBuffer = '';
@@ -142,6 +144,10 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       QuizActions.updateSettingByIndex({ setting: { ...this.settings } }),
     );
+  }
+
+  onCategoryChange(event: any) {
+    this.settings.category = { ...this.listCategories[event.value] };
   }
 
   ngOnDestroy() {

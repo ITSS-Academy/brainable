@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
@@ -13,18 +13,25 @@ import * as GameActions from '../../../../../ngrx/game/game.actions';
   templateUrl: './countdown.component.html',
   styleUrl: './countdown.component.scss',
 })
-export class CountdownComponent implements OnInit {
+export class CountdownComponent implements OnInit, OnDestroy {
   countdownNumbers = [3, 2, 1];
   activeNumber = 3;
   showFinalText = false;
   hideSquares = false;
   hiddenNumbers: Set<number> = new Set(); // Track hidden numbers
   pin!: string;
+  isMusicPlaying = true;
 
   constructor(
     private router: Router,
     private store: Store<{ game: GameState }>,
-  ) {}
+  ) {
+    this.playMusic();
+
+    document.addEventListener('click', this.playMusic.bind(this), {
+      once: true,
+    });
+  }
 
   ngOnInit() {
     this.startCountdown();
@@ -63,5 +70,26 @@ export class CountdownComponent implements OnInit {
       hidden: this.hideSquares || this.hiddenNumbers.has(number),
       active: this.activeNumber === number && !this.hiddenNumbers.has(number), // Add active class
     };
+  }
+
+  song = new Audio();
+
+  playMusic() {
+    this.song.src = 'assets/music/countdown.mp3';
+    this.song.load();
+    this.song.play().then();
+    this.song.loop = true;
+    this.isMusicPlaying = true;
+    console.log('playing music in countdown');
+  }
+
+  pauseMusic() {
+    this.song.pause();
+    this.isMusicPlaying = false;
+    console.log('pausing music in countdown');
+  }
+
+  ngOnDestroy() {
+    this.pauseMusic();
   }
 }

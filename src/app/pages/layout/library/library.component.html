@@ -3,27 +3,36 @@
     <app-profile-info></app-profile-info>
   </div>
   <div class="library-container">
-    <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
-      <div class="quiz-list">
-        @for (quiz of listQuiz; track $index) {
-          <app-general-info [quiz]="quiz" (showAnswer)="showAnswer = !showAnswer"
-                            (click)="activeQuiz($index)"></app-general-info>
-        }
+    @if (listQuiz.length === 0) {
+      <div class="empty-box"><img src="assets/images/empty-box.png" alt="">
       </div>
-    </cdk-virtual-scroll-viewport>
-
-    <div style="width: 1px; height: 100%; background-color: #e0e0e0; margin-left: 10px "></div>
-
-
-    <div class="content-container">
-      <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
-        <div class="quiz-content">
-          @for (question of listQuestion; track $index) {
-            <app-quiz-detail [showAnswer]=showAnswer [question]="question" [index]="$index+1"></app-quiz-detail>
+    } @else {
+      <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
+        <div class="quiz-list">
+          @for (quiz of listQuiz; track $index) {
+            <app-general-info [quiz]="quiz" (showAnswer)="showAnswer = !showAnswer"
+                              (click)="activeQuiz($index)"></app-general-info>
           }
         </div>
       </cdk-virtual-scroll-viewport>
-    </div>
+
+      <div style="width: 1px; height: 100%; background-color: #e0e0e0; margin-left: 10px "></div>
+
+
+      <div class="content-container">
+        <div class="quiz-detail__header">
+          <span class="number-question">Question(12)</span>
+          <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
+        </div>
+        <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
+          <div class="quiz-content">
+            @for (question of listQuestion; track $index) {
+              <app-quiz-detail [showAnswer]=showAnswer [question]="question" [index]="$index+1"></app-quiz-detail>
+            }
+          </div>
+        </cdk-virtual-scroll-viewport>
+      </div>
+    }
 
 
   </div>

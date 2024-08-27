@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { Quiz } from '../../../../../models/quiz.model';
@@ -10,6 +17,7 @@ import { GameState } from '../../../../../ngrx/game/game.state';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { GameService } from '../../../../../services/game/game.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-general-info',
@@ -18,16 +26,35 @@ import { GameService } from '../../../../../services/game/game.service';
   templateUrl: './general-info.component.html',
   styleUrl: './general-info.component.scss',
 })
-export class GeneralInfoComponent {
+export class GeneralInfoComponent implements OnInit, OnDestroy {
   @Input() quiz!: Quiz;
   @Output() showAnswer = new EventEmitter<boolean>();
   showAnsStatus = false;
+  idToken!: string;
+  subscription: Subscription[] = [];
 
   constructor(
     private router: Router,
     private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
     private gameService: GameService,
   ) {}
+
+  ngOnInit() {
+    this.subscription.push(
+      this.store.select('auth').subscribe((authState) => {
+        this.idToken = authState.idToken;
+      }),
+      this.store
+        .select('quiz', 'isDeleteQuizSuccessful')
+        .subscribe((isDeleteQuizSuccessful) => {
+          if (isDeleteQuizSuccessful) {
+            this.store.dispatch(
+              QuizActions.getAllQuiz({ idToken: this.idToken }),
+            );
+          }
+        }),
+    );
+  }
 
   toggleAnswer() {
     this.showAnsStatus = !this.showAnsStatus;
@@ -52,5 +79,15 @@ export class GeneralInfoComponent {
 
   editQuiz() {
     this.router.navigate([`/creator/${this.quiz.id}`]);
+  }
+
+  deleteQuiz() {
+    this.store.dispatch(
+      QuizActions.deleteQuiz({ idToken: this.idToken, id: this.quiz.id }),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.forEach((sub) => sub.unsubscribe());
   }
 }

@@ -19,8 +19,6 @@ import { CategoriesByUid } from '../../../../../models/categories.model';
   templateUrl: './card-quiz.component.html',
   styleUrl: './card-quiz.component.scss',
 })
-export class CardQuizComponent implements OnInit {
+export class CardQuizComponent {
   @Input() category!: CategoriesByUid;
-
-  ngOnInit(): void {}
 }

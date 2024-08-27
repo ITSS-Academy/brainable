@@ -25,6 +25,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
   totalQuestions = 0;
   activeNumber!: number;
   pin!: string;
+  isMusicPlaying = true;
 
   numOfUserResponses = 0;
 
@@ -33,7 +34,13 @@ export class AnswerComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private gameService: GameService,
-  ) {}
+  ) {
+    this.playMusic();
+
+    document.addEventListener('click', this.playMusic.bind(this), {
+      once: true,
+    });
+  }
 
   ngOnInit() {
     this.gameService.listenForPlayerSubmittedAnswerAnswer().subscribe(() => {
@@ -88,7 +95,25 @@ export class AnswerComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+  song = new Audio();
+
+  playMusic() {
+    this.song.src = 'assets/music/question.mp3';
+    this.song.load();
+    this.song.play().then();
+    this.song.loop = true;
+    this.isMusicPlaying = true;
+    console.log('playing music in answer');
+  }
+
+  pauseMusic() {
+    this.song.pause();
+    this.isMusicPlaying = false;
+    console.log('pausing music in answer');
+  }
+
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.pauseMusic();
   }
 }

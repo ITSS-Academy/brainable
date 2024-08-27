@@ -71,4 +71,19 @@ export class QuizEffects {
       }),
     );
   });
+
+  deleteQuiz$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(QuizActions.deleteQuiz),
+      switchMap((action) => {
+        return this.quizService.deleteQuiz(action.idToken, action.id);
+      }),
+      map(() => {
+        return QuizActions.deleteQuizSuccess();
+      }),
+      catchError((error) => {
+        return of(QuizActions.deleteQuizFailure({ errorMessage: error }));
+      }),
+    );
+  });
 }

@@ -25,6 +25,10 @@ export const initialState: QuizState = {
   isCreateQuizLoading: false,
   isCreateQuizSuccessful: false,
   createQuizErrorMessage: '',
+
+  isDeleteQuizLoading: false,
+  isDeleteQuizSuccessful: false,
+  deleteQuizErrorMessage: '',
 };
 
 export const quizReducer = createReducer(
@@ -166,7 +170,7 @@ export const quizReducer = createReducer(
         title: setting.title,
         description: setting.description,
         isPublic: setting.isPublic,
-        // category: setting.category,
+        category: setting.category,
         questions: updatedQuestions,
       },
     };
@@ -187,11 +191,61 @@ export const quizReducer = createReducer(
       },
     };
   }),
+  on(QuizActions.deleteQuiz, (state, { type }) => {
+    console.log(type);
+    return {
+      ...state,
+      isDeleteQuizLoading: true,
+    };
+  }),
+  on(QuizActions.deleteQuizSuccess, (state, { type }) => {
+    console.log(type);
+    return {
+      ...state,
+      isDeleteQuizLoading: false,
+      isDeleteQuizSuccessful: true,
+    };
+  }),
+  on(QuizActions.deleteQuizFailure, (state, { errorMessage }) => {
+    console.log(errorMessage);
+    return {
+      ...state,
+      isDeleteQuizLoading: false,
+      isDeleteQuizSuccessful: false,
+      deleteQuizErrorMessage: errorMessage,
+    };
+  }),
 
   on(QuizActions.storeDefaultQuiz, (state, { type, quiz }) => {
     return {
       ...state,
       quiz: quiz,
+    };
+  }),
+  on(QuizActions.clearQuizState, (state, { type }) => {
+    return {
+      ...state,
+      quizzes: [],
+      isGetAllQuizLoading: false,
+      isGetAllQuizSuccessful: false,
+      getAllQuizErrorMessage: '',
+
+      quiz: <Quiz>{},
+      isGetQuizByIdLoading: false,
+      isGetQuizByIdSuccessful: false,
+      getQuizByIdErrorMessage: '',
+
+      isUpdateQuizLoading: false,
+      isUpdateQuizSuccessful: false,
+      updateQuizErrorMessage: '',
+
+      isCreateQuizLoading: false,
+      isCreateQuizSuccessful: false,
+      createQuizErrorMessage: '',
+
+      isDeleteQuizLoading: false,
+      isDeleteQuizSuccessful: false,
+      deleteQuizErrorMessage: '',
     };
   }),
 );

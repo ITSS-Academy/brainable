@@ -7,18 +7,18 @@
     <div id="header-quiz">
       @for (category of listCategories; track $index) {
         <div class="quiz-menu">
-          <img [src]="category.imgUrl" alt="menu Pic" />
+          <img [src]="category.imgUrl" alt="menu Pic"/>
           <p>{{ category.name }}</p>
         </div>
       }
     </div>
-    <div class="popular-quiz">
-      @if (listCategories.length > 0) {
-        <app-card-quiz [category]="iceBreaker"></app-card-quiz>
-        <app-card-quiz [category]="social"></app-card-quiz>
-        <app-card-quiz [category]="languages"></app-card-quiz>
-      }
-    </div>
+    <!--    <div class="popular-quiz">-->
+    <!--      @if (listCategories.length > 0) {-->
+    <!--        <app-card-quiz [category]="iceBreaker"></app-card-quiz>-->
+    <!--        <app-card-quiz [category]="social"></app-card-quiz>-->
+    <!--        <app-card-quiz [category]="languages"></app-card-quiz>-->
+    <!--      }-->
+    <!--    </div>-->
   </cdk-virtual-scroll-viewport>
 </div>
 

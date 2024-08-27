@@ -83,4 +83,16 @@ export const storeDefaultQuiz = createAction(
   props<{ quiz: Quiz }>(),
 );
 
+export const deleteQuiz = createAction(
+  '[Quiz] Delete Quiz',
+  props<{ idToken: string; id: string }>(),
+);
+
+export const deleteQuizSuccess = createAction('[Quiz] Delete Quiz Success');
+
+export const deleteQuizFailure = createAction(
+  '[Quiz] Delete Quiz Failure',
+  props<{ errorMessage: string }>(),
+);
+
 export const clearQuizState = createAction('[Quiz] Clear Quiz State');

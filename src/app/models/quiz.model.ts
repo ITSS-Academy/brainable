@@ -2,7 +2,7 @@ import { Question } from './question.model';
 import { Categories } from './categories.model';
 
 export interface Quiz {
-  id: number;
+  id: string;
   title: string;
   description: string;
   isPublic: boolean;
@@ -15,7 +15,7 @@ export interface Quiz {
 
 export interface QuizDTO {
   quiz: {
-    id: number;
+    id: string;
     title: string;
     description: string;
     isPublic: boolean;
@@ -28,7 +28,7 @@ export interface QuizDTO {
 }
 
 export interface QuizByCategory {
-  id: number;
+  id: string;
   title: string;
   imgUrl: string;
   description: string;

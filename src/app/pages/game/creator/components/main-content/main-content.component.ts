@@ -44,7 +44,6 @@ export class MainContentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.changeEvent.subscribe((data) => {
-        console.log('Data changed');
         if (!data) return;
         if (data.type == 'question') {
           this.question.question = data.data;
@@ -59,6 +58,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
           this.question.option3 = data.data;
           this.updateCharCountAnswer(3);
         }
+
         this.store.dispatch(
           QuizActions.updateQuestionByIndex({
             question: this.question,
@@ -67,6 +67,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
         );
       }),
     );
+    this.checkAnswer();
   }
 
   ngOnDestroy(): void {
@@ -160,11 +161,30 @@ export class MainContentComponent implements OnInit, OnDestroy {
   isCheckAnswer3 = false;
   isCheckAnswer4 = false;
 
+  checkAnswer() {
+    if (this.question.answer === 1) {
+      this.isCheckAnswer1 = true;
+    } else if (this.question.answer === 2) {
+      this.isCheckAnswer2 = true;
+    } else if (this.question.answer === 3) {
+      this.isCheckAnswer3 = true;
+    } else if (this.question.answer === 4) {
+      this.isCheckAnswer4 = true;
+    }
+  }
+
   isAnswer1Correct() {
     this.isCheckAnswer1 = !this.isCheckAnswer1;
     this.isCheckAnswer2 = false;
     this.isCheckAnswer3 = false;
     this.isCheckAnswer4 = false;
+    this.question.answer = 1;
+    this.store.dispatch(
+      QuizActions.updateQuestionByIndex({
+        question: this.question,
+        index: this.index,
+      }),
+    );
   }
 
   isAnswer2Correct() {
@@ -172,6 +192,13 @@ export class MainContentComponent implements OnInit, OnDestroy {
     this.isCheckAnswer1 = false;
     this.isCheckAnswer3 = false;
     this.isCheckAnswer4 = false;
+    this.question.answer = 2;
+    this.store.dispatch(
+      QuizActions.updateQuestionByIndex({
+        question: this.question,
+        index: this.index,
+      }),
+    );
   }
 
   isAnswer3Correct() {
@@ -179,6 +206,13 @@ export class MainContentComponent implements OnInit, OnDestroy {
     this.isCheckAnswer1 = false;
     this.isCheckAnswer2 = false;
     this.isCheckAnswer4 = false;
+    this.question.answer = 3;
+    this.store.dispatch(
+      QuizActions.updateQuestionByIndex({
+        question: this.question,
+        index: this.index,
+      }),
+    );
   }
 
   isAnswer4Correct() {
@@ -186,5 +220,12 @@ export class MainContentComponent implements OnInit, OnDestroy {
     this.isCheckAnswer1 = false;
     this.isCheckAnswer2 = false;
     this.isCheckAnswer3 = false;
+    this.question.answer = 4;
+    this.store.dispatch(
+      QuizActions.updateQuestionByIndex({
+        question: this.question,
+        index: this.index,
+      }),
+    );
   }
 }

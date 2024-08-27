@@ -19,6 +19,18 @@
           <mat-radio-button [value]="false">Private</mat-radio-button>
         </mat-radio-group>
       </div>
+      <div class="category">
+        <mat-form-field>
+          <mat-label>Categories</mat-label>
+          <mat-select (selectionChange)="onCategoryChange($event)" value="0">
+            @if (isGettingCategories$|async) {
+              @for (category of listCategories; track $index) {
+                <mat-option value="{{$index}}">{{ category.name }}</mat-option>
+              }
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
     <div class="right">
       <label class="title-img"><b>Cover image</b></label>

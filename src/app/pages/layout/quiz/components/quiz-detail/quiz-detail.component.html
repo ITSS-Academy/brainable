@@ -21,7 +21,8 @@
             <div class="answer-detail__content">
               <p class="answer">{{ question.option1 }}</p>
             </div>
-            <mat-icon class="answer-icon__wrong">close</mat-icon>
+            <mat-icon *ngIf="question.answer === 1" class="answer-icon__check">check</mat-icon>
+            <mat-icon *ngIf="question.answer !== 1" class="answer-icon__wrong">close</mat-icon>
           </div>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -30,7 +31,8 @@
             <div class="answer-detail__content">
               <p class="answer">{{ question.option2 }}</p>
             </div>
-            <mat-icon class="answer-icon__wrong">close</mat-icon>
+            <mat-icon *ngIf="question.answer === 2" class="answer-icon__check">check</mat-icon>
+            <mat-icon *ngIf="question.answer !== 2" class="answer-icon__wrong">close</mat-icon>
           </div>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -39,7 +41,8 @@
             <div class="answer-detail__content">
               <p class="answer">{{ question.option3 }}</p>
             </div>
-            <mat-icon class="answer-icon__check">check</mat-icon>
+            <mat-icon *ngIf="question.answer === 3" class="answer-icon__check">check</mat-icon>
+            <mat-icon *ngIf="question.answer !== 3" class="answer-icon__wrong">close</mat-icon>
           </div>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -48,7 +51,8 @@
             <div class="answer-detail__content">
               <p class="answer">{{ question.option4 }}</p>
             </div>
-            <mat-icon class="answer-icon__wrong">close</mat-icon>
+            <mat-icon *ngIf="question.answer === 4" class="answer-icon__check">check</mat-icon>
+            <mat-icon *ngIf="question.answer !== 4" class="answer-icon__wrong">close</mat-icon>
           </div>
         </mat-list-item>
       }

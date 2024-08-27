@@ -49,6 +49,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.pauseMusic();
   }
 
   startGame() {
@@ -65,11 +66,13 @@ export class LobbyComponent implements OnInit, OnDestroy {
     this.song.play().then();
     this.song.loop = true;
     this.isMusicPlaying = true;
+    console.log('Music playing lobby');
   }
 
   pauseMusic() {
     this.song.pause();
     this.isMusicPlaying = false;
+    console.log('Music paused lobby');
   }
 
   volume(vl: any) {

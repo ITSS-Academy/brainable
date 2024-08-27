@@ -76,3 +76,5 @@ export const canActivateCreate: CanActivateFn = () => {
       }),
     );
 };
+
+export class authGuard {}

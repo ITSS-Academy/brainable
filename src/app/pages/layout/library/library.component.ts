@@ -57,6 +57,8 @@ export class LibraryComponent implements OnInit, OnDestroy {
         this.listQuiz = quizzes as Quiz[];
         if (this.listQuiz.length > 0) {
           this.listQuestion = this.listQuiz[0].questions;
+        } else {
+          this.listQuestion = [];
         }
       }),
     );
@@ -68,5 +70,9 @@ export class LibraryComponent implements OnInit, OnDestroy {
 
   activeQuiz(index: number): void {
     this.listQuestion = this.listQuiz[index].questions;
+  }
+
+  toggleAnswer() {
+    this.showAnswer = !this.showAnswer;
   }
 }

@@ -9,7 +9,7 @@ import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
-import { Quiz, QuizDTO } from '../../../models/quiz.model';
+import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 
 @Component({
@@ -31,7 +31,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
   isEdit = false;
 
   quizDefault: Quiz = {
-    id: 0,
+    id: '',
     title: 'Untitled Quiz',
     description: '',
     isPublic: false,
@@ -41,8 +41,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
     category: {
       uid: '08c8a3a2-bf52-4033-b294-fa4e685990e4',
       name: 'Ice breaker',
-      imgUrl:
-        'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/ellipse1.png?alt=media&token=7e32d5f3-939b-43fd-be83-6e385799123a',
+      imgUrl: '',
     },
     questions: [
       {

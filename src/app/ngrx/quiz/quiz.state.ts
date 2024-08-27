@@ -23,4 +23,9 @@ export interface QuizState {
   isCreateQuizLoading: boolean;
   isCreateQuizSuccessful: boolean;
   createQuizErrorMessage: string;
+
+  // delete quiz
+  isDeleteQuizLoading: boolean;
+  isDeleteQuizSuccessful: boolean;
+  deleteQuizErrorMessage: string;
 }

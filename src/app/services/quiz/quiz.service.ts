@@ -26,6 +26,14 @@ export class QuizService {
     });
   }
 
+  deleteQuiz(idToken: string, id: string) {
+    return this.http.delete(`${environment.apiUrl}/quiz/${id}`, {
+      headers: {
+        Authorization: `${idToken}`,
+      },
+    });
+  }
+
   getQuiz(idToken: string) {
     return this.http.get(`${environment.apiUrl}/quiz`, {
       headers: {

@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         .subscribe((isUpdateQuizSuccessful) => {
           if (isUpdateQuizSuccessful) {
             this.router.navigate(['/library']);
+            this.store.dispatch(QuizActions.clearQuizState());
           }
         }),
       this.store
@@ -54,6 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         .subscribe((isCreateQuizSuccessful) => {
           if (isCreateQuizSuccessful) {
             this.router.navigate(['/library']);
+            this.store.dispatch(QuizActions.clearQuizState());
           }
         }),
     );

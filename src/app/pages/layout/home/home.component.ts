@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.social = this.listCategories[1] as CategoriesByUid;
           this.languages = this.listCategories[2] as CategoriesByUid;
         }
-        console.log(this.listCategories);
       }),
     );
     this.store.dispatch(CategoriesActions.getAllCategories());
