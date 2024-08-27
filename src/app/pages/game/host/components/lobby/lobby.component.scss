@@ -89,14 +89,27 @@
   padding-right: 10px;
 }
 
-.players {
+.players-container {
   width: 100%;
   height: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--md-sys-color-background);
-  gap: 20px;
+  overflow: hidden;
+  //text-overflow: ellipsis;
+  //white-space: nowrap;
+
+  .players {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: var(--md-sys-color-background);
+    overflow: auto; /* Add a scrollbar when content overflows */
+    max-height: 100%; /* Set a maximum height */
+  }
 }
 
 .waiting {
@@ -138,11 +151,12 @@
   padding: 10px 16px;
   border-radius: 4px;
   cursor: pointer;
-  //  give me some animation
 }
 
 .player {
-  animation: ease-in 2s player-animation infinite;
+  animation:
+    2s player-animation infinite,
+    0.3s jump-in ease-in;
 }
 
 .join-info-respond {
@@ -163,7 +177,21 @@
   }
 
   50% {
-    transform: scale(1.1);
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes jump-in {
+  0% {
+    transform: scale(1.3);
+  }
+
+  50% {
+    transform: scale(0.8);
   }
 
   100% {
@@ -184,5 +212,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .logo {
+    width: 150px;
+  }
+
+  .vertical-range {
+    display: none;
   }
 }
