@@ -65,9 +65,6 @@ export class JoinComponent implements OnInit, OnDestroy {
   joinGame() {
     if (this.pin.length == 0) {
       this.isEmptyInput = !this.isEmptyInput;
-      setTimeout(() => {
-        this.isEmptyInput = false;
-      }, 5000);
     } else {
       this.store.dispatch(GameActions.storePin({ pin: this.pin }));
       this.router.navigate([`/guest/${this.pin}/waiting`]).then(() => {

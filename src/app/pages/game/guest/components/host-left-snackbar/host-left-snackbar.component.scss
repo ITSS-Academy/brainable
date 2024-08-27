@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+}
+
+.example-pizza-party {
+  color: var(--md-sys-color-primary-container);
+}
+
+button {
+  background-color: transparent;
+  box-shadow: none;
+  text-shadow: none;
+  color: var(--md-sys-color-surface-container);
+}

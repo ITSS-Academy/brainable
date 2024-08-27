@@ -114,6 +114,10 @@ input::placeholder {
       width: 100%;
     }
   }
+
+  .empty-input p {
+    width: 70% !important;
+  }
 }
 
 .empty-input {
@@ -127,8 +131,8 @@ input::placeholder {
 
   p {
     width: 420px;
-    font-size: 22px;
-    padding: 8px 12px;
+    font-size: 18px;
+    padding: 4px 12px;
     background-color: #d5546d;
     color: var(--md-sys-color-on-error);
     border-radius: 18px;
