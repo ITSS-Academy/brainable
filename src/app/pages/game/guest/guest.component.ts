@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuestionState } from '../../../ngrx/question/question.state';
@@ -15,6 +15,8 @@ import { GameService } from '../../../services/game/game.service';
 import { GameState } from '../../../ngrx/game/game.state';
 import * as GameActions from '../../../ngrx/game/game.actions';
 import { CountdownToQuestionComponent } from './components/countdown-to-question/countdown-to-question.component';
+import { HostLeftSnackbarComponent } from './components/host-left-snackbar/host-left-snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-guest',
@@ -46,5 +48,17 @@ export class GuestComponent implements OnInit {
     this.gameService.listenForErrors();
     const pin = this.activatedRoute.snapshot.paramMap.get('pin');
     this.store.dispatch(GameActions.storePin({ pin: pin }));
+    this.openSnackBar();
+  }
+
+  //   Snackbar handle
+  private _snackBar = inject(MatSnackBar);
+
+  durationInSeconds = 5;
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(HostLeftSnackbarComponent, {
+      // duration: this.durationInSeconds * 1000,
+    });
   }
 }
