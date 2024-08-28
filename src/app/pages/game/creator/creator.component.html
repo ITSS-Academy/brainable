@@ -1,4 +1,4 @@
-@if (!(isGetQuizByIdSuccessful$ | async) && !isCreateNewQuiz) {
+@if (!isGetQuizByIdSuccessful && !isCreateNewQuiz) {
   <div class="loading-container">
     <app-loading></app-loading>
   </div>
@@ -69,7 +69,7 @@
       </div>
     </div>
     <div class="question">
-      @if ((isGetQuizByIdSuccessful$ | async) || isCreateNewQuiz) {
+      @if (isGetQuizByIdSuccessful || isCreateNewQuiz) {
         <app-main-content
           [question]="deepClone(quiz.questions[currentQuestionIndex])"
           [index]="currentQuestionIndex"

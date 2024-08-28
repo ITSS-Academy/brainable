@@ -12,17 +12,11 @@
         <label><b>Description</b> (optional)</label>
         <textarea [(ngModel)]="settings.description"></textarea>
       </div>
-      <div class="visibility">
-        <label><b>Visibility</b></label>
-        <mat-radio-group [(ngModel)]="settings.isPublic" (change)="handleVisibilityChange($event)">
-          <mat-radio-button [value]="true">Public</mat-radio-button>
-          <mat-radio-button [value]="false">Private</mat-radio-button>
-        </mat-radio-group>
-      </div>
+
       <div class="category">
         <mat-form-field>
           <mat-label>Categories</mat-label>
-          <mat-select (selectionChange)="onCategoryChange($event)" value="0">
+          <mat-select (selectionChange)="onCategoryChange($event)" value="{{categoryValue}}">
             @if (isGettingCategories$|async) {
               @for (category of listCategories; track $index) {
                 <mat-option value="{{$index}}">{{ category.name }}</mat-option>
@@ -35,23 +29,30 @@
     <div class="right">
       <label class="title-img"><b>Cover image</b></label>
       <div class="image-input">
-        @if (!selectedImage) {
-          <input id="uploadBtn" type="file" (change)="selectImage($event)"/>
-          <label class="label-upload" for="uploadBtn">
+        @if (settings.imgUrl == undefined || settings.imgUrl === '') {
+          <input id="uploadBtn-quiz" type="file" (change)="selectImage($event)"/>
+          <label class="label-upload" for="uploadBtn-quiz">
             <div class="media-library"></div>
             <button mat-flat-button (click)="triggerFileInput($event)">
               Change
             </button>
           </label>
-        }
-        @if (selectedImage) {
+        } @else {
           <div class="img-container">
-            <img [src]="selectedImage" alt=""/>
+            <img [src]="settings.imgUrl" alt=""/>
           </div>
           <button mat-fab class="remove-btn" (click)="removeImage()">
             <mat-icon>delete</mat-icon>
           </button>
         }
+
+      </div>
+      <div class="visibility">
+        <label><b>Visibility</b></label>
+        <mat-radio-group [(ngModel)]="settings.isPublic" (change)="handleVisibilityChange($event)">
+          <mat-radio-button [value]="true">Public</mat-radio-button>
+          <mat-radio-button [value]="false">Private</mat-radio-button>
+        </mat-radio-group>
       </div>
 
     </div>

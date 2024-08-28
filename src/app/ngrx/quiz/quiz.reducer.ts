@@ -143,6 +143,7 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
+    console.log(type);
     if (!Array.isArray(state.quiz.questions)) {
       return state;
     }
@@ -157,11 +158,8 @@ export const quizReducer = createReducer(
       },
     };
   }),
-  on(QuizActions.updateSettingByIndex, (state, { setting, type }) => {
-    if (!Array.isArray(state.quiz.questions)) {
-      return state;
-    }
-    const updatedQuestions = [...state.quiz.questions];
+  on(QuizActions.updateSetting, (state, { setting, type }) => {
+    console.log(setting);
 
     return {
       ...state,
@@ -171,7 +169,7 @@ export const quizReducer = createReducer(
         description: setting.description,
         isPublic: setting.isPublic,
         category: setting.category,
-        questions: updatedQuestions,
+        imgUrl: setting.imgUrl,
       },
     };
   }),

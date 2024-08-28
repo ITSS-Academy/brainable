@@ -112,6 +112,12 @@ export class AnswerComponent implements OnInit, OnDestroy {
     console.log('pausing music in answer');
   }
 
+  listenForAnswer() {
+    this.gameService.listenForAnswer().subscribe((answer) => {
+      console.log('Answer received:', answer);
+    });
+  }
+
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
     this.pauseMusic();

@@ -6,7 +6,6 @@
       cdkAutosizeMinRows="1"
       cdkAutosizeMaxRows="3"
       [(ngModel)]="question.question"
-
       (input)="changeEvent.next({type:'question',data:question.question})"
       maxlength="120"
     >
@@ -15,8 +14,8 @@
   </div>
 
   <div class="image-input">
-    @if (!selectedImage) {
-      <input id="uploadBtn" type="file" (change)="selectImage($event)" />
+    @if (question.imgUrl == undefined || question.imgUrl === '') {
+      <input id="uploadBtn" type="file" (change)="selectImage($event)"/>
       <label for="uploadBtn">
         <div class="media-library"></div>
         <button mat-fab (click)="triggerFileInput($event)">
@@ -24,10 +23,9 @@
         </button>
         <span class="add-media-btn">Find and insert media</span>
       </label>
-    }
-    @if (selectedImage) {
+    } @else {
       <div class="img-container">
-        <img [src]="selectedImage" alt="" />
+        <img [src]="question.imgUrl" alt=""/>
       </div>
       <button mat-fab class="remove-btn" (click)="removeImage()">
         <mat-icon>delete</mat-icon>
@@ -36,7 +34,7 @@
   </div>
 
   <div class="answers">
-    <div class="answer" [ngClass]="{ 'red': question.option1 !== ''}">
+    <div class="answer" [ngClass]="{ 'red': (question.option1 != undefined && question.option1 !== '')}">
       <div class="answer-color red">
         <mat-icon
           aria-hidden="false"
@@ -68,7 +66,7 @@
       </div>
     </div>
 
-    <div class="answer" [ngClass]="{ 'blue': question.option2 !== '' }">
+    <div class="answer" [ngClass]="{ 'blue': (question.option2 != undefined && question.option2 !== '') }">
       <div class="answer-color blue">
         <mat-icon
           aria-hidden="false"
@@ -100,7 +98,7 @@
       </div>
     </div>
 
-    <div class="answer" [ngClass]="{ 'yellow': question.option3 !== '' }">
+    <div class="answer" [ngClass]="{ 'yellow': (question.option3 != undefined && question.option3 !== '') }">
       <div class="answer-color yellow">
         <mat-icon
           aria-hidden="false"
@@ -132,7 +130,7 @@
       </div>
     </div>
 
-    <div class="answer" [ngClass]="{ 'green': question.option4 !== '' }">
+    <div class="answer" [ngClass]="{ 'green':(question.option4 != undefined && question.option4 !== '')}">
       <div class="answer-color green">
         <mat-icon
           aria-hidden="false"

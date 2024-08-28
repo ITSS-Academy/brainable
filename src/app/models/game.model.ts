@@ -1,3 +1,6 @@
+import { Quiz } from "./quiz.model";
+
+
 export interface SendQuestion {
   pin: string;
   questionId: string;

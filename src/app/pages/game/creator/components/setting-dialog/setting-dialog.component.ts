@@ -18,7 +18,6 @@ import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Categories } from '../../../../../models/categories.model';
 import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-setting-dialog',
@@ -35,6 +34,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     'isGetAllCategoriesSuccessful',
   );
   subscription: Subscription[] = [];
+  categoryValue: number = 0;
 
   settings = {
     title: '',
@@ -44,7 +44,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     category: <Categories>{},
   };
 
-  uploadedFileURL: string = '';
+  uploadedFileUrl: string = '';
 
   constructor(
     private store: Store<{
@@ -54,27 +54,43 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }>,
     private storage: Storage,
     private dialogRef: MatDialogRef<SettingDialogComponent>,
-    private router: Router,
   ) {}
 
   ngOnInit() {
     this.subscription.push(
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
-        this.settings.title = quiz.title;
-        this.settings.description = quiz.description;
-        this.settings.isPublic = quiz.isPublic;
-        this.settings.category = quiz.category;
+        if (quiz) {
+          this.settings.title = quiz.title;
+          this.settings.description = quiz.description;
+          this.settings.isPublic = quiz.isPublic;
+          this.settings.category = quiz.category;
+          this.settings.imgUrl = quiz.imgUrl;
+        }
       }),
       this.store.select('categories', 'categories').subscribe((categories) => {
         this.listCategories = categories as Categories[];
       }),
+      this.store
+        .select('categories', 'isGetAllCategoriesSuccessful')
+        .subscribe((isGetAllCategoriesSuccessful) => {
+          if (isGetAllCategoriesSuccessful) {
+            if (this.settings.category) {
+              console.log(this.settings.category);
+              this.categoryValue = this.listCategories.findIndex(
+                (category) => category.uid == this.settings.category.uid,
+              );
+              console.log(this.categoryValue);
+            }
+          }
+        }),
     );
     this.store.dispatch(CategoriesActions.getAllCategories());
   }
 
   selectedImage: string | ArrayBuffer = '';
 
-  uploadFile(input: HTMLInputElement) {
+  uploadQuizFile(input: HTMLInputElement) {
+    console.log('Uploading file in quiz setting...');
     if (!input.files) return;
     const files: FileList = input.files;
 
@@ -86,8 +102,14 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
           .then((snapshot) => {
             getDownloadURL(snapshot.ref)
               .then((url) => {
-                this.uploadedFileURL = url;
-                console.log('Uploaded file URL:', this.uploadedFileURL);
+                this.uploadedFileUrl = url;
+                console.log('Uploaded file URL:', this.uploadedFileUrl);
+                this.settings.imgUrl = this.uploadedFileUrl;
+                this.store.dispatch(
+                  QuizActions.updateSetting({
+                    setting: { ...this.settings },
+                  }),
+                );
               })
               .catch((error) => {
                 console.error('Error getting file URL:', error);
@@ -98,7 +120,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
           });
       }
     }
-    this.settings.imgUrl = this.uploadedFileURL;
   }
 
   selectImage(event: any) {
@@ -110,18 +131,23 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
         (this.selectedImage = reader.result as string | ArrayBuffer);
       reader.readAsDataURL(file);
     }
-    this.uploadFile(fileInput);
+    this.uploadQuizFile(fileInput);
+    this.selectedImage = '';
   }
 
   removeImage() {
-    this.selectedImage = '';
-    this.uploadedFileURL = '';
+    this.uploadedFileUrl = '';
     this.settings.imgUrl = '';
+    this.store.dispatch(
+      QuizActions.updateSetting({ setting: { ...this.settings } }),
+    );
   }
 
   triggerFileInput(event: any): void {
     event.preventDefault();
-    const fileInput = document.getElementById('uploadBtn') as HTMLInputElement;
+    const fileInput = document.getElementById(
+      'uploadBtn-quiz',
+    ) as HTMLInputElement;
     if (fileInput) {
       fileInput.click();
     }
@@ -142,12 +168,16 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
 
   saveChanges(): void {
     this.store.dispatch(
-      QuizActions.updateSettingByIndex({ setting: { ...this.settings } }),
+      QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
   }
 
   onCategoryChange(event: any) {
+    console.log(event);
     this.settings.category = { ...this.listCategories[event.value] };
+    this.store.dispatch(
+      QuizActions.updateSetting({ setting: { ...this.settings } }),
+    );
   }
 
   ngOnDestroy() {

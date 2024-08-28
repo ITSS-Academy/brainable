@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import {
@@ -23,7 +30,7 @@ import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
-export class MainContentComponent implements OnInit, OnDestroy {
+export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() question!: Question;
   @Input() index!: number;
 
@@ -58,7 +65,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
           this.question.option3 = data.data;
           this.updateCharCountAnswer(3);
         }
-
+        console.log('Question:');
         this.store.dispatch(
           QuizActions.updateQuestionByIndex({
             question: this.question,
@@ -67,7 +74,12 @@ export class MainContentComponent implements OnInit, OnDestroy {
         );
       }),
     );
-    this.checkAnswer();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['question']) {
+      this.resetCharCount();
+    }
   }
 
   ngOnDestroy(): void {
@@ -82,7 +94,8 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   selectedImage: string | ArrayBuffer = '';
 
-  uploadFile(input: HTMLInputElement) {
+  uploadQuestionFile(input: HTMLInputElement) {
+    console.log('Uploading file in question...');
     if (!input.files) return;
     const files: FileList = input.files;
 
@@ -96,6 +109,13 @@ export class MainContentComponent implements OnInit, OnDestroy {
               .then((url) => {
                 this.uploadedFileURL = url;
                 console.log('Uploaded file URL:', this.uploadedFileURL);
+                this.question.imgUrl = this.uploadedFileURL;
+                this.store.dispatch(
+                  QuizActions.updateQuestionByIndex({
+                    question: this.question,
+                    index: this.index,
+                  }),
+                );
               })
               .catch((error) => {
                 console.error('Error getting file URL:', error);
@@ -106,7 +126,6 @@ export class MainContentComponent implements OnInit, OnDestroy {
           });
       }
     }
-    this.question.imgUrl = this.uploadedFileURL;
   }
 
   updateCharCountQuestion(): void {
@@ -139,13 +158,19 @@ export class MainContentComponent implements OnInit, OnDestroy {
         (this.selectedImage = reader.result as string | ArrayBuffer);
       reader.readAsDataURL(file);
     }
-    this.uploadFile(fileInput);
+    this.uploadQuestionFile(fileInput);
+    this.selectedImage = '';
   }
 
   removeImage() {
-    this.selectedImage = '';
     this.uploadedFileURL = '';
     this.question.imgUrl = '';
+    this.store.dispatch(
+      QuizActions.updateQuestionByIndex({
+        question: this.question,
+        index: this.index,
+      }),
+    );
   }
 
   triggerFileInput(event: any): void {
@@ -227,5 +252,33 @@ export class MainContentComponent implements OnInit, OnDestroy {
         index: this.index,
       }),
     );
+  }
+
+  resetCharCount() {
+    this.isCheckAnswer1 = false;
+    this.isCheckAnswer2 = false;
+    this.isCheckAnswer3 = false;
+    this.isCheckAnswer4 = false;
+    this.checkAnswer();
+    this.charCountQuestion = 120;
+    this.charCountAnswer1 = 75;
+    this.charCountAnswer2 = 75;
+    this.charCountAnswer3 = 75;
+    this.charCountAnswer4 = 75;
+    if (this.question.question !== undefined) {
+      this.updateCharCountQuestion();
+      this.updateCharCountAnswer(1);
+      this.updateCharCountAnswer(2);
+      this.updateCharCountAnswer(3);
+      this.updateCharCountAnswer(4);
+    } else {
+      this.question.question = '';
+      this.question.option1 = '';
+      this.question.option2 = '';
+      this.question.option3 = '';
+      this.question.option4 = '';
+      this.question.imgUrl = '';
+      this.question.answer = 0;
+    }
   }
 }

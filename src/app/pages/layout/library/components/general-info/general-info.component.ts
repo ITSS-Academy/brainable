@@ -48,6 +48,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
         .select('quiz', 'isDeleteQuizSuccessful')
         .subscribe((isDeleteQuizSuccessful) => {
           if (isDeleteQuizSuccessful) {
+            this.store.dispatch(QuizActions.clearQuizState());
             this.store.dispatch(
               QuizActions.getAllQuiz({ idToken: this.idToken }),
             );

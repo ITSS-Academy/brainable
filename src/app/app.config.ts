@@ -22,6 +22,8 @@ import { CategoriesEffects } from './ngrx/categories/categories.effects';
 import { questionReducer } from './ngrx/question/question.reducer';
 import { QuestionEffects } from './ngrx/question/question.effects';
 import { gameReducer } from './ngrx/game/game.reducer';
+import { gameReportReducer } from './ngrx/gameReport/gameReport.reducer';
+import { GameReportEffects } from './ngrx/gameReport/gameReport.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,12 +36,14 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'categories', reducer: categoriesReducer }),
     provideState({ name: 'question', reducer: questionReducer }),
     provideState({ name: 'game', reducer: gameReducer }),
+    provideState({ name: 'gameReport', reducer: gameReportReducer }),
     provideEffects([
       AuthEffects,
       ProfileEffects,
       QuizEffects,
       CategoriesEffects,
       QuestionEffects,
+      GameReportEffects,
     ]),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig as any)),
     provideAuth(() => getAuth()),

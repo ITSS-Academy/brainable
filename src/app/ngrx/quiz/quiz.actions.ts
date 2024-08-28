@@ -61,8 +61,8 @@ export const updateQuestionByIndex = createAction(
   props<{ question: Question; index: number }>(),
 );
 
-export const updateSettingByIndex = createAction(
-  '[Quiz] Update Setting By Index',
+export const updateSetting = createAction(
+  '[Quiz] Update Setting',
   props<{ setting: any }>(),
 );
 

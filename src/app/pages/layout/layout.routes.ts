@@ -30,7 +30,7 @@ export const LAYOUT_ROUTERS: Routes = [
         canActivate: [AuthGuard.canActivateReports],
       },
       {
-        path: 'quiz/:uid',
+        path: 'quiz/:id',
         loadChildren: () =>
           import('./quiz/quiz.routes').then((m) => m.QUIZ_ROUTERS),
       },

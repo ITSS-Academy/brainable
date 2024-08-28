@@ -48,15 +48,15 @@ h1 {
       }
     }
 
-    .visibility {
-      margin-bottom: 8px;
-      display: flex;
-      flex-direction: column;
-    }
+
   }
 
   .right {
     width: 40%;
+
+    .visibility {
+      margin-top: 5px;
+    }
 
     .title-img {
       display: block;

@@ -1,45 +1,53 @@
-<div class="container">
-  <div class="quiz-info">
-    <div class="quiz-info__image">
-      <img src="assets/images/quiz.png" alt="">
-    </div>
-
-    <div class="quiz-info__content">
-      <p class="title">Summer escapade with Up</p>
-      <button mat-flat-button class="btn-action">Host live</button>
-      <p class="description">Explore the wilderness and seek adventure with the characters from Up! ©Disney/Pixar. All
-        rights reserved.</p>
-    </div>
-
-    <div class="quiz-info__creator">
-      <div class="avatar">
-        <img src="assets/images/395745172_1260986104564997_8063042522606081073_n.jpg" alt="">
-      </div>
-      <div class="info">
-        <p class="name">Disney_Official</p>
-        <p class="update-time">Updated 1 month ago</p>
-      </div>
-    </div>
-
+@if (!(isGettingQuizSuccess$ | async)) {
+  <div class="loading-container">
+    <app-loading></app-loading>
   </div>
-  <div class="quiz-detail">
-    <div class="quiz-detail__header">
-      <span class="number-question">Question(12)</span>
-      <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
-    </div>
-    <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
-      <div class="quiz-detail__content">
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
-        <app-quiz-detail [showAnswer]="showAnswer"></app-quiz-detail>
+} @else {
+  <div class="container">
+    <div class="quiz-info">
+      <div class="quiz-info__image">
+        <img [src]="quiz.imgUrl" alt="">
       </div>
-    </cdk-virtual-scroll-viewport>
 
+      <div class="quiz-info__content">
+        <p class="title">{{ quiz.title }}</p>
+        <button mat-flat-button class="btn-action" (click)="playGame()">Host live</button>
+        <p class="description">{{
+            quiz.description
+          }}</p>
+      </div>
 
+      <div class="quiz-info__creator">
+        <div class="avatar">
+          <img [src]="quiz.authorId.photoUrl" alt="">
+        </div>
+        <div class="info">
+          <p class="name">{{ quiz.authorId.fullName }}</p>
+          <p class="update-time">{{ quiz.createdAt | localTime }}</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="quiz-detail">
+      <div class="quiz-detail__header">
+        <span class="number-question">Question({{ quiz.totalQuestions }})</span>
+        <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
+      </div>
+      <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
+        <div class="quiz-detail__content">
+          @for (question of quiz.questions; track $index) {
+            <app-quiz-detail
+              [showAnswer]="showAnswer"
+              [question]="question"
+              [index]="$index + 1"
+            ></app-quiz-detail>
+          }
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
   </div>
-</div>
+
+}
+
+
+

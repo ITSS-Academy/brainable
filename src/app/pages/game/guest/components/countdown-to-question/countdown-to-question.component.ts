@@ -22,10 +22,9 @@ export class CountdownToQuestionComponent implements OnInit {
   showFinalText = false;
   hideCircle = false;
   hiddenNumbers: Set<number> = new Set(); // Track hidden numbers
-
   subscription: Subscription[] = [];
+  pin!: string;
 
-  pin = '';
   playerName = '';
 
   constructor(
@@ -50,6 +49,13 @@ export class CountdownToQuestionComponent implements OnInit {
   ngOnInit() {
     this.gameService.listenForNavigateChooseAnswer(this.pin);
     this.startCountdown();
+    this.subscription.push(
+      this.store.select('game', 'pin').subscribe((pin) => {
+        if (pin) {
+          this.pin = pin;
+        }
+      }),
+    );
   }
 
   startCountdown() {
@@ -65,7 +71,8 @@ export class CountdownToQuestionComponent implements OnInit {
         clearInterval(countdownInterval);
         setTimeout(() => {
           this.showFinalText = true;
-          this.hideCircle = true; // Hide squares after countdown
+          this.hideCircle = true;
+          this.router.navigate([`/guest/${this.pin}/answer`]) // Hide squares after countdown
         }, 1000);
       }
     }, 1000);

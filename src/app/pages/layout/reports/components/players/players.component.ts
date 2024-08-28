@@ -1,10 +1,21 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { GameReport } from '../../../../../models/gameReport.model';
+import { GameRecord } from '../../../../../models/gameRecord.model';
+import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 export interface UserData {
   name: string;
@@ -51,30 +62,51 @@ const NAMES: string[] = [
   templateUrl: './players.component.html',
   styleUrl: './players.component.scss',
 })
-export class PlayersComponent implements AfterViewInit {
+export class PlayersComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = [
     'name',
     'question-correct',
+    'question-incorrect',
+    'no-answer',
     'accuracy',
-    'points',
     'score',
   ];
-  dataSource: MatTableDataSource<UserData>;
+
+  @Input() gameRecord!: GameRecord[] | undefined | null;
+  dataSource!: MatTableDataSource<GameRecord>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private route: Router) {
-    const users = Array.from({ length: 100 }, (_, k) =>
-      this.createNewUser(k + 1),
-    );
+  gameReport$: Observable<GameReport | null> = this.store.select('gameReport', 'gameReport');
 
-    this.dataSource = new MatTableDataSource(users);
+  constructor(private route: Router,
+    private store: Store<{gameReport: GameReportState }>
+
+  ) {
+    const users = Array.from({ length: 100 }, (_, k) =>
+      this.createNewUser(k + 1)
+    );
+    
+
+  }
+
+  ngOnInit(): void {
+    this.gameReport$.subscribe((gameReport) => {
+      if(gameReport){
+        console.log(gameReport);
+        this.dataSource = new MatTableDataSource(gameReport.gameRecords);
+      }
+    })
+  }
+
+  calculatePercentage(num1: number, total: number): string {
+    return ((num1 / total) * 100).toFixed(0) + '%';
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
     this.paginator.page.subscribe(() => {
       console.log(this.paginator.pageSize); // Log the current page size value
     });
@@ -117,18 +149,22 @@ export class PlayersComponent implements AfterViewInit {
       const isAsc = sortState.direction === 'asc';
       switch (sortState.active) {
         case 'name':
-          return this.compare(a.name, b.name, isAsc);
+          return this.compare(a.playerName, b.playerName, isAsc);
         case 'question-correct':
-          return this.compare(a.progress, b.progress, isAsc);
-        case 'accuracy':
-          return this.compare(a.fruit, b.fruit, isAsc);
+          return this.compare(a.correctCount, b.correctCount, isAsc);
+        case 'question-incorrect':
+          return this.compare(a.incorrectCount, b.incorrectCount, isAsc);
+        case 'no-answer':
+          return this.compare(a.noAnswerCount, b.noAnswerCount, isAsc);
+        case 'score':
+            return this.compare(a.score, b.score, isAsc);
         default:
           return 0;
       }
     });
 
     console.log(
-      `Sorted by ${sortState.active} in ${sortState.direction} order`,
+      `Sorted by ${sortState.active} in ${sortState.direction} order`
     );
   }
 

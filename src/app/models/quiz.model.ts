@@ -1,5 +1,6 @@
 import { Question } from './question.model';
 import { Categories } from './categories.model';
+import { Profile } from './profile.model';
 
 export interface Quiz {
   id: string;
@@ -8,6 +9,7 @@ export interface Quiz {
   isPublic: boolean;
   totalQuestions: number;
   imgUrl: string;
+  authorId: Profile;
   createdAt: Date;
   category: Categories;
   questions: Question[];

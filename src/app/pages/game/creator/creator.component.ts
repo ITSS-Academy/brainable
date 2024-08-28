@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
+import { Profile } from '../../../models/profile.model';
 
 @Component({
   selector: 'app-creator',
@@ -38,9 +39,10 @@ export class CreatorComponent implements OnInit, OnDestroy {
     totalQuestions: 0,
     imgUrl: '',
     createdAt: new Date(),
+    authorId: <Profile>{},
     category: {
-      uid: '08c8a3a2-bf52-4033-b294-fa4e685990e4',
-      name: 'Ice breaker',
+      uid: '',
+      name: '',
       imgUrl: '',
     },
     questions: [
@@ -58,10 +60,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
     ],
   };
   isCreateNewQuiz = false;
-  isGetQuizByIdSuccessful$ = this.store.select(
-    'quiz',
-    'isGetQuizByIdSuccessful',
-  );
+  isGetQuizByIdSuccessful = false;
 
   currentQuestionIndex = 0;
 
@@ -85,6 +84,11 @@ export class CreatorComponent implements OnInit, OnDestroy {
             this.quiz = this.deepClone(quiz);
           }
         }),
+        this.store
+          .select('quiz', 'isGetQuizByIdSuccessful')
+          .subscribe((isGetQuizByIdSuccessful) => {
+            this.isGetQuizByIdSuccessful = isGetQuizByIdSuccessful;
+          }),
       );
     } else {
       this.isCreateNewQuiz = true;
