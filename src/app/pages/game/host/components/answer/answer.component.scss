@@ -98,6 +98,10 @@
   border-radius: 4px;
 }
 
+.answer:hover {
+  filter: brightness(0.8);
+}
+
 .answer-text {
   color: var(--md-sys-color-surface-container-low);
 }
@@ -111,7 +115,8 @@
 }
 
 .answer.red {
-  background-color: #d03542;
+  background-color: #e21b3c;
+  box-shadow: #7e0007 0 4px 0 0;
 }
 
 .answer.red mat-icon {
@@ -120,7 +125,8 @@
 }
 
 .answer.blue {
-  background-color: #3066c7;
+  background-color: #1368ce;
+  box-shadow: #1a32ab 0 4px 0 0;
 }
 
 .answer.blue mat-icon {
@@ -129,7 +135,8 @@
 }
 
 .answer.yellow {
-  background-color: #cfa035;
+  background-color: #ffa602;
+  box-shadow: #96490c 0 4px 0 0;
 }
 
 .answer.yellow mat-icon {
@@ -137,7 +144,8 @@
 }
 
 .answer.green {
-  background-color: #468729;
+  background-color: #26890c;
+  box-shadow: #1b352e 0 4px 0 0;
 }
 
 .answer.green mat-icon {

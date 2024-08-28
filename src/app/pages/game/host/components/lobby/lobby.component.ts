@@ -6,11 +6,12 @@ import { Subscription } from 'rxjs';
 import { GameService } from '../../../../../services/game/game.service';
 import { Router } from '@angular/router';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-lobby',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, QRCodeModule],
   templateUrl: './lobby.component.html',
   styleUrl: './lobby.component.scss',
 })
@@ -19,6 +20,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   guests: string[] = [];
   isMusicPlaying = true;
   pin: string = '';
+  qrCodeValue: string = '';
 
   constructor(
     private store: Store<{ game: GameState }>,
@@ -45,6 +47,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
         }
       }),
     );
+
+    this.qrCodeValue = `http://localhost:4200/guest/${this.pin}/waiting`;
   }
 
   ngOnDestroy(): void {
@@ -54,7 +58,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   startGame() {
     console.log('Starting game...');
     this.gameService.startGame(this.pin);
-    this.router.navigate([`/host/${this.pin}/countdown`]);
+    this.router.navigate([` / host /${this.pin}/countdown`]);
   }
 
   song = new Audio();
