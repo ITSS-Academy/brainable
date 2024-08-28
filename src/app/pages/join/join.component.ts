@@ -10,6 +10,7 @@ import { LoadingComponent } from '../loading/loading.component';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { GameState } from '../../ngrx/game/game.state';
 import * as GameActions from '../../ngrx/game/game.actions';
+import { GameService } from '../../services/game/game.service';
 
 @Component({
   selector: 'app-join',
@@ -26,10 +27,12 @@ export class JoinComponent implements OnInit, OnDestroy {
       game: GameState;
     }>,
     private router: Router,
+    private gameService: GameService,
   ) {}
 
   pin: string = '';
   isEmptyInput = false;
+  isCheckRoom = true;
 
   subscriptions: Subscription[] = [];
   dashboard: string = 'My dashboard';
@@ -40,6 +43,12 @@ export class JoinComponent implements OnInit, OnDestroy {
   );
 
   ngOnInit(): void {
+    this.gameService.listenForErrors().subscribe((error) => {
+      if (error === 'Room not found') {
+        this.isCheckRoom = false;
+        alert('Room not found');
+      }
+    });
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((token) => {
         if (token) {
@@ -65,12 +74,11 @@ export class JoinComponent implements OnInit, OnDestroy {
   joinGame() {
     if (this.pin.length == 0) {
       this.isEmptyInput = !this.isEmptyInput;
-    } else {
-      this.store.dispatch(GameActions.storePin({ pin: this.pin }));
-      this.router.navigate([`/guest/${this.pin}/waiting`]).then(() => {
-        this.pin = '';
-      });
+      return;
     }
+    this.gameService.listenForNavigateToEnterName(this.pin);
+
+    this.gameService.checkRoomExist(this.pin);
   }
 
   onKey(event: any) {
@@ -79,5 +87,7 @@ export class JoinComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
 }

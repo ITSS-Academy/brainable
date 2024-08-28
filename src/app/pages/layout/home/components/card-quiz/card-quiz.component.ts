@@ -5,7 +5,11 @@ import {
   CdkFixedSizeVirtualScroll,
   ScrollingModule,
 } from '@angular/cdk/scrolling';
-import { CategoriesByUid } from '../../../../../models/categories.model';
+import {
+  Categories,
+  CategoriesByUid,
+} from '../../../../../models/categories.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-quiz',
@@ -21,4 +25,14 @@ import { CategoriesByUid } from '../../../../../models/categories.model';
 })
 export class CardQuizComponent {
   @Input() category!: CategoriesByUid;
+
+  constructor(private router: Router) {}
+
+  categoryDetail() {
+    this.router.navigate([`/categories/${this.category.uid}`]);
+  }
+
+  quizDetail(id: string) {
+    this.router.navigate([`/quiz/${id}`]);
+  }
 }

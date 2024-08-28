@@ -28,12 +28,3 @@ export interface QuizDTO {
     questions: Question[];
   };
 }
-
-export interface QuizByCategory {
-  id: string;
-  title: string;
-  imgUrl: string;
-  description: string;
-  isPublic: boolean;
-  createdAt: Date;
-}

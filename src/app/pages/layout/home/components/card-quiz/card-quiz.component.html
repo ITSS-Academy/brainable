@@ -3,13 +3,13 @@
     <div class="quiz-title">
       <p>⭐{{ category.name }}</p>
     </div>
-    <button mat-button [routerLink]="['/categories/math']">More...</button>
+    <button mat-button (click)="categoryDetail()">More...</button>
   </div>
 
   <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
     <div class="card-quiz-container">
       @for (card of category.quizzes; track $index) {
-        <div class="card-quiz-card">
+        <div class="card-quiz-card" (click)="quizDetail(card.id)">
           <div class="quiz-content">
             <div class="quiz-top">
               <img [src]="card.imgUrl" alt="Media Pic"/>

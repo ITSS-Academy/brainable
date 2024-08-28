@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as CategoriesActions from './categories.actions';
-import { CategoriesByUid } from '../../models/categories.model';
+import { Categories, CategoriesByUid } from '../../models/categories.model';
 import { CategoriesState } from './categories.state';
 
 export const initialState: CategoriesState = {
