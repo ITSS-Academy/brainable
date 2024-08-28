@@ -21,10 +21,28 @@ export class AnswerComponent implements OnInit, OnDestroy {
   pin = '';
   isChoosing = false;
 
+  timeElapsed: number = 0;
+  intervalId: any;
+
+  score = 0;
+
+  startTimer(): void {
+    this.intervalId = setInterval(() => {
+      this.timeElapsed += 1; // Tăng mỗi 10ms
+    }, 10);
+  }
+
+  stopTimer(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
   constructor(
     private store: Store<{ game: GameState }>,
     private gameService: GameService,
   ) {
+    this.startTimer();
     this.subscription.push(
       this.store.select('game', 'playerName').subscribe((playerName) => {
         this.playerName = playerName;
@@ -49,16 +67,22 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   chooseAnswer(answer: number) {
+    this.stopTimer();
+    console.log(this.timeElapsed);
     this.isChoosing = true;
     this.store.dispatch(GameActions.storePlayerAnswer({ answer }));
     const answerData: SendAnswer = {
       pin: this.pin,
       questionId: this.questionId,
       playerName: this.playerName,
-      answer: answer,
+      answer: answer as number,
+      time: this.timeElapsed,
     };
+    this.store.dispatch(GameActions.storeTime({ time: this.timeElapsed }));
     this.gameService.sendAnswer(answerData);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription.forEach((sub) => sub.unsubscribe());
+  }
 }

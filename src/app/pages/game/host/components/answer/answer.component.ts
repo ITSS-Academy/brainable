@@ -27,11 +27,13 @@ export class AnswerComponent implements OnInit, OnDestroy {
   activeNumber!: number;
   pin!: string;
   isMusicPlaying = true;
+  totalPlayers!: number;
   imgUrl =
     'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/media.png?alt=media&token=b7bc0b71-587d-4dd3-932f-98ccb390bf6e';
   hideImg = false;
 
   numOfUserResponses = 0;
+  countdownInterval: any; // Store interval ID
 
   constructor(
     private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
@@ -40,15 +42,18 @@ export class AnswerComponent implements OnInit, OnDestroy {
     private gameService: GameService,
   ) {
     this.playMusic();
-
-    document.addEventListener('click', this.playMusic.bind(this), {
-      once: true,
-    });
   }
 
   ngOnInit() {
     this.gameService.listenForPlayerSubmittedAnswerAnswer().subscribe(() => {
       this.numOfUserResponses++;
+      if (this.numOfUserResponses === this.totalPlayers) {
+        clearInterval(this.countdownInterval);
+
+        this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
+          this.gameService.nextShowResults(this.pin);
+        });
+      }
     });
     const pin = this.activatedRoute.snapshot.paramMap.get('pin');
     this.store.dispatch(GameActions.storePin({ pin: pin }));
@@ -58,7 +63,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
         this.totalQuestions = quiz.totalQuestions;
         this.activeNumber =
           (quiz.questions[this.currentQuestion].timeLimit as number) + 1;
-        // this.startCountdown(this.activeNumber);
+        this.startCountdown(this.activeNumber);
       }),
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
@@ -72,6 +77,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
         .subscribe((currentQuestion) => {
           this.currentQuestion = currentQuestion as number;
         }),
+      this.store.select('game', 'totalPlayers').subscribe((totalPlayers) => {
+        this.totalPlayers = totalPlayers as number;
+      }),
     );
     //   check pin and currentQuestion !== null
     if (this.pin && this.currentQuestion !== null) {
@@ -82,18 +90,19 @@ export class AnswerComponent implements OnInit, OnDestroy {
       };
       this.gameService.sendQuestion(data);
     }
+    this.imgUrl = this.questions[this.currentQuestion].imgUrl;
 
     this.imgHandler(this.imgUrl);
   }
 
   startCountdown(timeLimit: number) {
     let countTime = timeLimit;
-    const countdownInterval = setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       countTime--;
       this.activeNumber = countTime;
 
       if (countTime < 1) {
-        clearInterval(countdownInterval);
+        clearInterval(this.countdownInterval);
         this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
           this.gameService.nextShowResults(this.pin);
         });
@@ -137,6 +146,8 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    clearInterval(this.countdownInterval);
+    console.log('clearing interval');
     this.pauseMusic();
   }
 }

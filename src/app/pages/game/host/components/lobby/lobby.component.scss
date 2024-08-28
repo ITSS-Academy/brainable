@@ -1,3 +1,12 @@
+:host {
+  --mdc-filled-button-disabled-container-color: #006B58;
+  --mdc-filled-button-disabled-label-text-color: #FFFFFF
+}
+
+.btn-join {
+  filter: brightness(0.8);
+}
+
 #container {
   display: flex;
   flex-direction: column;
@@ -26,11 +35,11 @@
   flex-direction: column;
   padding-left: 20px;
   clip-path: polygon(
-    calc(100% - 2.5vmin) 0px,
-    100% 50%,
-    calc(100% - 2.5vmin) 100%,
-    0px 100%,
-    0px 0px
+      calc(100% - 2.5vmin) 0px,
+      100% 50%,
+      calc(100% - 2.5vmin) 100%,
+      0px 100%,
+      0px 0px
   );
   margin: 0px -1vmin 0px 0px;
   border-radius: 4px 0 0 4px;
@@ -158,9 +167,8 @@ qrcode {
 }
 
 .player {
-  animation:
-    2s player-animation infinite,
-    0.3s jump-in ease-in;
+  animation: 2s player-animation infinite,
+  0.3s jump-in ease-in;
 }
 
 .join-info-respond {

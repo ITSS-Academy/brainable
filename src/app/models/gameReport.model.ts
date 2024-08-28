@@ -1,4 +1,4 @@
-import { GameRecord } from "./gameRecord.model";
+import { PlayerRecord } from "./playerRecord.model";
 import { Quiz } from "./quiz.model";
 
 export interface GameReport {
@@ -6,7 +6,7 @@ export interface GameReport {
     joinCode: string;
     hostId: string;
     quizId: Quiz;
-    gameRecords: GameRecord[];
+    gameRecords: PlayerRecord[];
     createdAt: Date;
     index: number
     totalQuestions: number;

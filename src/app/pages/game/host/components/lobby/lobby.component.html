@@ -32,28 +32,30 @@
   </div>
 
   <div class="buttons">
-    <button class="btn-join" mat-flat-button (click)="startGame()">
+    <button class="btn-join" mat-flat-button (click)="startGame()" [disabled]="isStartGameDisabled()">
       Start Game
     </button>
   </div>
 
   <div class="players-container">
     <div class="players">
-      @if (guests.length > 0) { @for (guest of guests; track $index) {
+      @if (guests.length > 0) {
+        @for (guest of guests; track $index) {
 
-      <div class="player">
-        <div class="player-name">{{ guest }}</div>
-      </div>
-      } } @else {
-      <div class="waiting">
-        <div class="content">Waiting for players...</div>
-      </div>
+          <div class="player">
+            <div class="player-name">{{ guest }}</div>
+          </div>
+        }
+      } @else {
+        <div class="waiting">
+          <div class="content">Waiting for players...</div>
+        </div>
       }
     </div>
   </div>
 
   <div class="footer">
-    <img src="assets/images/logo/brainable-white.png" alt="" class="logo" />
+    <img src="assets/images/logo/brainable-white.png" alt="" class="logo"/>
 
     <div class="game-info">
       <div class="number-of-players">
@@ -63,9 +65,9 @@
 
       <div class="setting">
         @if (isMusicPlaying) {
-        <mat-icon (click)="pauseMusic()">volume_up</mat-icon>
+          <mat-icon (click)="pauseMusic()">volume_up</mat-icon>
         } @else {
-        <mat-icon (click)="playMusic()">volume_off</mat-icon>
+          <mat-icon (click)="playMusic()">volume_off</mat-icon>
         }
         <input
           type="range"

@@ -1,4 +1,6 @@
-import { Quiz } from "./quiz.model";
+import { Quiz } from './quiz.model';
+
+
 
 
 export interface SendQuestion {
@@ -12,6 +14,7 @@ export interface SendAnswer {
   questionId: string;
   playerName: string;
   answer: number;
+  time: number;
 }
 
 export interface AnswerStatistics {

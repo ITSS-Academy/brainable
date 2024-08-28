@@ -56,6 +56,7 @@ export class QuestionResultComponent implements OnInit {
     );
     this.gameService.receiveAnswerStatistics().subscribe((statistics) => {
       this.answerStatistics = statistics;
+      console.log(this.answerStatistics);
     });
     this.correctAnswer = this.questions[this.currentQuestion].answer;
   }
