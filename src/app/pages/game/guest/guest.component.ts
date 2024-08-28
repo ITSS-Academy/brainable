@@ -59,6 +59,8 @@ export class GuestComponent implements OnInit {
   openSnackBar() {
     this._snackBar.openFromComponent(HostLeftSnackbarComponent, {
       // duration: this.durationInSeconds * 1000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
     });
   }
 }

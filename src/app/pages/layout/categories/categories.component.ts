@@ -13,6 +13,7 @@ import { GeneralInfoComponent } from '../library/components/general-info/general
 import { ProfileInfoComponent } from '../library/components/profile-info/profile-info.component';
 import { QuizDetailComponent } from '../quiz/components/quiz-detail/quiz-detail.component';
 import { Quiz } from '../../../models/quiz.model';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-categories',
@@ -24,6 +25,7 @@ import { Quiz } from '../../../models/quiz.model';
     GeneralInfoComponent,
     ProfileInfoComponent,
     QuizDetailComponent,
+    NgIf,
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
