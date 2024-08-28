@@ -25,6 +25,8 @@ import { gameReducer } from './ngrx/game/game.reducer';
 import { gameReportReducer } from './ngrx/gameReport/gameReport.reducer';
 import { GameReportEffects } from './ngrx/gameReport/gameReport.effect';
 import { QRCodeModule } from 'angularx-qrcode';
+import { questionReportReducer } from './ngrx/questionReport/questionReport.reducer';
+import { QuestionReportEffects } from './ngrx/questionReport/questionReport.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,6 +40,7 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'question', reducer: questionReducer }),
     provideState({ name: 'game', reducer: gameReducer }),
     provideState({ name: 'gameReport', reducer: gameReportReducer }),
+    provideState({ name: 'questionReport', reducer: questionReportReducer }),
     provideEffects([
       AuthEffects,
       ProfileEffects,
@@ -45,6 +48,7 @@ export const appConfig: ApplicationConfig = {
       CategoriesEffects,
       QuestionEffects,
       GameReportEffects,
+      QuestionReportEffects,
     ]),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig as any)),
     provideAuth(() => getAuth()),

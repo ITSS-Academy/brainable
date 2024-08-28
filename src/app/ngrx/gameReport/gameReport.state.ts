@@ -10,5 +10,9 @@ export interface GameReportState {
     isGetGameReportLoading: boolean;
     isGetGameReportSuccessful: boolean;
     getGameReportErrorMessage: string;
+
+    isCreateGameReportLoading: boolean;
+    isCreateGameReportSuccessful: boolean;
+    createGameReportErrorMessage: string;
     
 }

@@ -12,7 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { GameReport } from '../../../../../models/gameReport.model';
-import { GameRecord } from '../../../../../models/gameRecord.model';
+import { PlayerRecord } from '../../../../../models/playerRecord.model';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -72,48 +72,48 @@ export class PlayersComponent implements AfterViewInit, OnInit {
     'score',
   ];
 
-  @Input() gameRecord!: GameRecord[] | undefined | null;
-  dataSource!: MatTableDataSource<GameRecord>;
+  @Input() gameRecord!: PlayerRecord[] | undefined | null;
+  dataSource!: MatTableDataSource<PlayerRecord>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  gameReport$: Observable<GameReport | null> = this.store.select('gameReport', 'gameReport');
+  gameReport$: Observable<GameReport | null> = this.store.select(
+    'gameReport',
+    'gameReport'
+  );
 
-  constructor(private route: Router,
-    private store: Store<{gameReport: GameReportState }>
-
+  constructor(
+    private route: Router,
+    private store: Store<{ gameReport: GameReportState }>
   ) {
     const users = Array.from({ length: 100 }, (_, k) =>
       this.createNewUser(k + 1)
     );
-    
-
   }
 
   ngOnInit(): void {
     this.gameReport$.subscribe((gameReport) => {
-      if(gameReport){
+      if (gameReport) {
         console.log(gameReport);
         this.dataSource = new MatTableDataSource(gameReport.gameRecords);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.paginator.page.subscribe(() => {
+          console.log(this.paginator.pageSize); // Log the current page size value
+        });
+        this.sort.sortChange.subscribe((sortState: Sort) => {
+          this.customSort(sortState);
+        });
       }
-    })
+    });
   }
 
   calculatePercentage(num1: number, total: number): string {
     return ((num1 / total) * 100).toFixed(0) + '%';
   }
 
-  ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-    this.paginator.page.subscribe(() => {
-      console.log(this.paginator.pageSize); // Log the current page size value
-    });
-    this.sort.sortChange.subscribe((sortState: Sort) => {
-      this.customSort(sortState);
-    });
-  }
+  ngAfterViewInit() {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -157,7 +157,7 @@ export class PlayersComponent implements AfterViewInit, OnInit {
         case 'no-answer':
           return this.compare(a.noAnswerCount, b.noAnswerCount, isAsc);
         case 'score':
-            return this.compare(a.score, b.score, isAsc);
+          return this.compare(a.score, b.score, isAsc);
         default:
           return 0;
       }
