@@ -13,6 +13,6 @@ export class CategoriesService {
   }
 
   getCategoriesById(uid: string) {
-    return this.http.get(`http://localhost:3000/categories/${uid}`, {});
+    return this.http.get(`${environment.apiUrl}/categories/${uid}`, {});
   }
 }

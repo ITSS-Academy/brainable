@@ -1,7 +1,7 @@
 import { Categories, CategoriesByUid } from '../../models/categories.model';
 
 export interface CategoriesState {
-  categories: Categories[];
+  categories: CategoriesByUid[];
   isGetAllCategoriesLoading: boolean;
   isGetAllCategoriesSuccessful: boolean;
   getAllCategoriesErrorMessage: string;

@@ -8,11 +8,11 @@
 
   <cdk-virtual-scroll-viewport itemSize="50" class="scroll">
     <div class="card-quiz-container">
-      @for (card of category.quizzes.slice(0, 7); track $index) {
+      @for (card of category.quizzes; track $index) {
         <div class="card-quiz-card">
           <div class="quiz-content">
             <div class="quiz-top">
-              <img [src]="card.imgUrl" alt="Media Pic" />
+              <img [src]="card.imgUrl" alt="Media Pic"/>
             </div>
             <div class="quiz-bot">
               <p class="title">

@@ -34,7 +34,7 @@ import { LoadingComponent } from '../../loading/loading.component';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  listCategories: Categories[] = [];
+  listCategories: CategoriesByUid[] = [];
   isGettingCategories$ = this.store.select(
     'categories',
     'isGetAllCategoriesSuccessful',
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   iceBreaker!: CategoriesByUid;
   math!: CategoriesByUid;
-  english!: CategoriesByUid;
+  social!: CategoriesByUid;
 
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
@@ -51,12 +51,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.store.select('categories', 'categories').subscribe((categories) => {
-        this.listCategories = categories as Categories[];
+        this.listCategories = categories as CategoriesByUid[];
         console.log(this.listCategories);
         if (this.listCategories.length > 0) {
-          this.iceBreaker = this.listCategories[0] as CategoriesByUid;
-          this.math = this.listCategories[1] as CategoriesByUid;
-          this.english = this.listCategories[2] as CategoriesByUid;
+          this.iceBreaker = this.listCategories[1] as CategoriesByUid;
+          this.math = this.listCategories[0] as CategoriesByUid;
+          this.social = this.listCategories[2] as CategoriesByUid;
         }
       }),
     );
