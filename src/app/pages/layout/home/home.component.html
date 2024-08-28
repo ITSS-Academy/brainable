@@ -12,13 +12,13 @@
         </div>
       }
     </div>
-    <!--    <div class="popular-quiz">-->
-    <!--      @if (listCategories.length > 0) {-->
-    <!--        <app-card-quiz [category]="iceBreaker"></app-card-quiz>-->
-    <!--        <app-card-quiz [category]="social"></app-card-quiz>-->
-    <!--        <app-card-quiz [category]="languages"></app-card-quiz>-->
-    <!--      }-->
-    <!--    </div>-->
+    <div class="popular-quiz">
+      @if (listCategories.length > 0) {
+        <app-card-quiz [category]="iceBreaker"></app-card-quiz>
+        <app-card-quiz [category]="math"></app-card-quiz>
+        <app-card-quiz [category]="english"></app-card-quiz>
+      }
+    </div>
   </cdk-virtual-scroll-viewport>
 </div>
 

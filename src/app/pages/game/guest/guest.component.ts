@@ -48,7 +48,7 @@ export class GuestComponent implements OnInit {
     this.gameService.listenForErrors();
     const pin = this.activatedRoute.snapshot.paramMap.get('pin');
     this.store.dispatch(GameActions.storePin({ pin: pin }));
-    this.openSnackBar();
+    // this.openSnackBar();
   }
 
   //   Snackbar handle

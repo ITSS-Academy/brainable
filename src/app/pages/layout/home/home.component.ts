@@ -41,8 +41,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   );
 
   iceBreaker!: CategoriesByUid;
-  social!: CategoriesByUid;
-  languages!: CategoriesByUid;
+  math!: CategoriesByUid;
+  english!: CategoriesByUid;
 
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
@@ -52,10 +52,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.store.select('categories', 'categories').subscribe((categories) => {
         this.listCategories = categories as Categories[];
+        console.log(this.listCategories);
         if (this.listCategories.length > 0) {
           this.iceBreaker = this.listCategories[0] as CategoriesByUid;
-          this.social = this.listCategories[1] as CategoriesByUid;
-          this.languages = this.listCategories[2] as CategoriesByUid;
+          this.math = this.listCategories[1] as CategoriesByUid;
+          this.english = this.listCategories[2] as CategoriesByUid;
         }
       }),
     );

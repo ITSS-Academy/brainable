@@ -116,7 +116,8 @@ mat-icon {
 }
 
 .answer.red {
-  background-color: #d03542;
+  background-color: #e21b3c;
+  box-shadow: #7e0007 0 4px 0 0;
   height: 20px;
 }
 
@@ -127,7 +128,8 @@ mat-icon {
 }
 
 .answer.blue {
-  background-color: #3066c7;
+  background-color: #1368ce;
+  box-shadow: #1a32ab 0 4px 0 0;
 }
 
 .answer.blue .ans-icon {
@@ -136,7 +138,8 @@ mat-icon {
 }
 
 .answer.yellow {
-  background-color: #cfa035;
+  background-color: #ffa602;
+  box-shadow: #96490c 0 4px 0 0;
 }
 
 .answer.yellow .ans-icon {
@@ -144,7 +147,8 @@ mat-icon {
 }
 
 .answer.green {
-  background-color: #468729;
+  background-color: #26890c;
+  box-shadow: #1b352e 0 4px 0 0;
 }
 
 .answer.green .ans-icon {

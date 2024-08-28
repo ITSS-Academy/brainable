@@ -5,6 +5,7 @@ import { AnswerComponent } from './components/answer/answer.component';
 import { ResultComponent } from './components/result/result.component';
 import { CountdownComponent } from './components/countdown/countdown.component';
 import { CountdownToQuestionComponent } from './components/countdown-to-question/countdown-to-question.component';
+import { GameResultComponent } from './components/game-result/game-result.component';
 
 export const GUEST_ROUTERS: Routes = [
   {
@@ -30,6 +31,10 @@ export const GUEST_ROUTERS: Routes = [
       {
         path: 'countdown-to-question',
         component: CountdownToQuestionComponent,        
+      },
+      {
+        path: 'game-result',
+        component: GameResultComponent,
       },
     ],
   },
