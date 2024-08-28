@@ -6,6 +6,7 @@ import { GameState } from '../../../../../ngrx/game/game.state';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
+import * as GameActions from '../../../../../ngrx/game/game.actions';
 
 @Component({
   selector: 'app-result',
@@ -21,6 +22,9 @@ export class ResultComponent implements OnInit, OnDestroy {
   correctAnswer!: number;
   isCorrect!: boolean;
   playerName!: string;
+
+  score = 0;
+  time = 0;
 
   constructor(
     private store: Store<{ game: GameState; quiz: QuizState }>,
@@ -38,6 +42,9 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.gameService.receiveCorrectAnswer().subscribe((correctAnswer) => {
       this.correctAnswer = correctAnswer.correctAnswer;
       this.isCorrect = this.playerAnswer === this.correctAnswer;
+      if (this.isCorrect) {
+        this.store.dispatch(GameActions.incrementScore());
+      }
     });
     this.subscription.push(
       this.store

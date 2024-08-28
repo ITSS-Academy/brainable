@@ -204,6 +204,14 @@ app-main-content {
         width: 100%;
         height: 80px !important;
         background-color: var(--md-sys-color-on-primary);
+
+        .content {
+          min-height: 80px;
+
+          .question-type-respond {
+            font-size: 12px;
+          }
+        }
       }
 
       .question {

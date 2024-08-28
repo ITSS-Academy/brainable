@@ -19,7 +19,7 @@
               (click)="activeQuestion($index)"
             >
               <span class="question-type">{{ $index + 1 }} Quiz</span>
-              <span class="question-type-respond">1</span>
+              <span class="question-type-respond">{{ $index + 1 }}</span>
 
               <div class="question-content">
                 <div class="icons">
@@ -73,7 +73,6 @@
         <app-main-content
           [question]="deepClone(quiz.questions[currentQuestionIndex])"
           [index]="currentQuestionIndex"
-
         ></app-main-content>
       }
     </div>
