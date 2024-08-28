@@ -44,6 +44,7 @@ export class HostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.gameService.leftRoom();
+    console.log('HostComponent destroyed');
+    this.gameService.disconnect();
   }
 }

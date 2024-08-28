@@ -44,9 +44,6 @@ export class CountdownToQuestionComponent implements OnInit {
       this.store.select('game', 'playerName').subscribe((playerName) => {
         this.playerName = playerName as string;
       }),
-      this.store.select('game', 'score').subscribe((score) => {
-        this.score = score as number;
-      }),
     );
   }
 

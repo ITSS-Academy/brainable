@@ -118,6 +118,10 @@ qrcode {
     color: var(--md-sys-color-background);
     overflow: auto; /* Add a scrollbar when content overflows */
     max-height: 100%; /* Set a maximum height */
+
+    &::-webkit-scrollbar {
+      display: none; /* For Chrome, Safari and Opera */
+    }
   }
 }
 

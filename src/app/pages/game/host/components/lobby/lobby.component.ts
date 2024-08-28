@@ -87,6 +87,6 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   isStartGameDisabled(): boolean {
-    return this.guests.length < 3;
+    return this.guests.length < 1;
   }
 }

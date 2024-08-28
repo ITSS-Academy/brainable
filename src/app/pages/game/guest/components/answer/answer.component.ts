@@ -56,9 +56,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
           );
         }
       }),
-      this.store.select('game', 'score').subscribe((score) => {
-        this.score = score as number;
-      }),
     );
   }
 

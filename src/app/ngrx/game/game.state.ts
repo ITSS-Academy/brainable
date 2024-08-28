@@ -4,6 +4,4 @@ export interface GameState {
   playerName: string;
   playerAnswer: number;
   totalPlayers: number;
-  timeElapsed: number;
-  score: number;
 }

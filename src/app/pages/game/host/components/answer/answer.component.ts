@@ -10,11 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import { SendQuestion } from '../../../../../models/game.model';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-answer',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, NgClass],
   templateUrl: './answer.component.html',
   styleUrl: './answer.component.scss',
 })
@@ -27,6 +28,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
   pin!: string;
   isMusicPlaying = true;
   totalPlayers!: number;
+  imgUrl =
+    'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/media.png?alt=media&token=b7bc0b71-587d-4dd3-932f-98ccb390bf6e';
+  hideImg = false;
 
   numOfUserResponses = 0;
   countdownInterval: any; // Store interval ID
@@ -38,10 +42,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
     private gameService: GameService,
   ) {
     this.playMusic();
-
-    document.addEventListener('click', this.playMusic.bind(this), {
-      once: true,
-    });
   }
 
   ngOnInit() {
@@ -49,6 +49,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
       this.numOfUserResponses++;
       if (this.numOfUserResponses === this.totalPlayers) {
         clearInterval(this.countdownInterval);
+
         this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
           this.gameService.nextShowResults(this.pin);
         });
@@ -89,6 +90,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
       };
       this.gameService.sendQuestion(data);
     }
+    this.imgUrl = this.questions[this.currentQuestion].imgUrl;
+
+    this.imgHandler(this.imgUrl);
   }
 
   startCountdown(timeLimit: number) {
@@ -129,8 +133,21 @@ export class AnswerComponent implements OnInit, OnDestroy {
     });
   }
 
+  imgHandler(imgUrl: string) {
+    if (
+      this.imgUrl ===
+      'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/media.png?alt=media&token=b7bc0b71-587d-4dd3-932f-98ccb390bf6e'
+    ) {
+      this.hideImg = !this.hideImg;
+    } else {
+      this.hideImg = false;
+    }
+  }
+
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    clearInterval(this.countdownInterval);
+    console.log('clearing interval');
     this.pauseMusic();
   }
 }
