@@ -54,5 +54,17 @@ export const appConfig: ApplicationConfig = {
       SocketIoModule.forRoot(environment.socketIoConfig as SocketIoConfig),
       QRCodeModule,
     ),
+    provideFirebaseApp(() =>
+      initializeApp({
+        projectId: 'brainable-d5919',
+        appId: '1:1040011988423:web:359333ff1101fa7cdc1de2',
+        storageBucket: 'brainable-d5919.appspot.com',
+        apiKey: 'AIzaSyAbWdZ5bTZN_JqBXFGxFig0KlNVVWQXAqI',
+        authDomain: 'brainable-d5919.firebaseapp.com',
+        messagingSenderId: '1040011988423',
+      }),
+    ),
+    provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
   ],
 };

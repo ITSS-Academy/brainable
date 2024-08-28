@@ -27,6 +27,19 @@ export class LobbyComponent implements OnInit, OnDestroy {
     private gameService: GameService,
     private router: Router,
   ) {
+    this.subscriptions.push(
+      this.store.select('game', 'pin').subscribe((pin) => {
+        if (pin) {
+          this.pin = pin as string;
+          this.qrCodeValue = `https://brainable-d5919.web.app/guest/${this.pin}/waiting`;
+
+          this.gameService.listenForGuestJoined().subscribe((guest) => {
+            this.guests.push(guest.username);
+          });
+        }
+      }),
+    );
+
     this.playMusic();
 
     document.addEventListener('click', this.playMusic.bind(this), {
@@ -34,22 +47,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.store.select('game', 'pin').subscribe((pin) => {
-        if (pin) {
-          this.pin = pin as string;
-          this.gameService.listenForGuestJoined().subscribe((guest) => {
-            this.guests.push(guest.username);
-          });
-        } else {
-          this.store.dispatch(GameActions.storePin({ pin: this.pin }));
-        }
-      }),
-    );
-
-    this.qrCodeValue = `http://localhost:4200/guest/${this.pin}/waiting`;
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

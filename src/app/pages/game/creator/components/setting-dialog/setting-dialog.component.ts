@@ -90,7 +90,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   selectedImage: string | ArrayBuffer = '';
 
   uploadQuizFile(input: HTMLInputElement) {
-    console.log('Uploading file in quiz setting...');
     if (!input.files) return;
     const files: FileList = input.files;
 
