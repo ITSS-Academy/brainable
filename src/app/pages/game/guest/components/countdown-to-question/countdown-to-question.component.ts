@@ -26,6 +26,7 @@ export class CountdownToQuestionComponent implements OnInit {
   pin!: string;
 
   playerName = '';
+  score = 0;
 
   constructor(
     private router: Router,
@@ -42,6 +43,9 @@ export class CountdownToQuestionComponent implements OnInit {
       }),
       this.store.select('game', 'playerName').subscribe((playerName) => {
         this.playerName = playerName as string;
+      }),
+      this.store.select('game', 'score').subscribe((score) => {
+        this.score = score as number;
       }),
     );
   }
@@ -72,7 +76,7 @@ export class CountdownToQuestionComponent implements OnInit {
         setTimeout(() => {
           this.showFinalText = true;
           this.hideCircle = true;
-          this.router.navigate([`/guest/${this.pin}/answer`]) // Hide squares after countdown
+          this.router.navigate([`/guest/${this.pin}/answer`]); // Hide squares after countdown
         }, 1000);
       }
     }, 1000);

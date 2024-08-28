@@ -26,8 +26,10 @@ export class AnswerComponent implements OnInit, OnDestroy {
   activeNumber!: number;
   pin!: string;
   isMusicPlaying = true;
+  totalPlayers!: number;
 
   numOfUserResponses = 0;
+  countdownInterval: any; // Store interval ID
 
   constructor(
     private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
@@ -45,6 +47,12 @@ export class AnswerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.gameService.listenForPlayerSubmittedAnswerAnswer().subscribe(() => {
       this.numOfUserResponses++;
+      if (this.numOfUserResponses === this.totalPlayers) {
+        clearInterval(this.countdownInterval);
+        this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
+          this.gameService.nextShowResults(this.pin);
+        });
+      }
     });
     const pin = this.activatedRoute.snapshot.paramMap.get('pin');
     this.store.dispatch(GameActions.storePin({ pin: pin }));
@@ -68,6 +76,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
         .subscribe((currentQuestion) => {
           this.currentQuestion = currentQuestion as number;
         }),
+      this.store.select('game', 'totalPlayers').subscribe((totalPlayers) => {
+        this.totalPlayers = totalPlayers as number;
+      }),
     );
     //   check pin and currentQuestion !== null
     if (this.pin && this.currentQuestion !== null) {
@@ -82,12 +93,12 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
   startCountdown(timeLimit: number) {
     let countTime = timeLimit;
-    const countdownInterval = setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       countTime--;
       this.activeNumber = countTime;
 
       if (countTime < 1) {
-        clearInterval(countdownInterval);
+        clearInterval(this.countdownInterval);
         this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
           this.gameService.nextShowResults(this.pin);
         });

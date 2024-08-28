@@ -7,6 +7,9 @@ export const initialState: GameState = {
   currentQuestion: 0,
   playerName: '',
   playerAnswer: 0,
+  totalPlayers: 0,
+  score: 0,
+  timeElapsed: 0,
 };
 
 export const gameReducer = createReducer(
@@ -33,6 +36,25 @@ export const gameReducer = createReducer(
     return {
       ...state,
       playerAnswer: answer,
+    };
+  }),
+  on(GameActions.storeTotalPlayers, (state, { totalPlayers }) => {
+    return {
+      ...state,
+      totalPlayers: totalPlayers,
+    };
+  }),
+  on(GameActions.incrementScore, (state) => {
+    console.log(state.timeElapsed);
+    return {
+      ...state,
+      score: state.score + state.timeElapsed,
+    };
+  }),
+  on(GameActions.storeTime, (state, { time }) => {
+    return {
+      ...state,
+      timeElapsed: time,
     };
   }),
 );

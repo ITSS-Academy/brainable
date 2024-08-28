@@ -16,3 +16,15 @@ export const storePlayerAnswer = createAction(
   '[Game] Store Player Answer',
   props<{ answer: number }>(),
 );
+
+export const storeTotalPlayers = createAction(
+  '[Game] Store Total Players',
+  props<{ totalPlayers: number }>(),
+);
+
+export const storeTime = createAction(
+  '[Game] Store Time',
+  props<{ time: number }>(),
+);
+
+export const incrementScore = createAction('[Game] Increment Score');

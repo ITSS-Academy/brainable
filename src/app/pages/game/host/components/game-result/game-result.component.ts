@@ -16,9 +16,15 @@ export class GameResultComponent implements OnInit {
     private gameService: GameService,
   ) {}
 
+  result: {
+    playerName: string;
+    score: number;
+  }[] = [];
+
   ngOnInit() {
     this.gameService.receiveLeaderboard().subscribe((data) => {
-      console.log(data);
+      this.result = data;
+      console.log(this.result);
     });
   }
 

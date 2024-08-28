@@ -17,7 +17,7 @@
         ></mat-icon>
       </div>
       <div class="score">
-        <!--        <span>+100</span>-->
+        <span>+{{ time }}</span>
       </div>
     } @else {
       <h2>Incorrect!</h2>
@@ -35,6 +35,6 @@
   </div>
   <div class="footer">
     <span class="player-name">{{ playerName }}</span>
-    <!--    <span class="total-score">923</span>-->
+    <span class="total-score">{{ score }}</span>
   </div>
 </div>
