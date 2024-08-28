@@ -1,4 +1,4 @@
-export interface GameRecord {
+export interface PlayerRecord {
     id: string;
     playerName: string;
     correctCount: number;

@@ -18,7 +18,9 @@ import * as GameActions from '../../../../../ngrx/game/game.actions';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { GameService } from '../../../../../services/game/game.service';
 import { Subscription } from 'rxjs';
-
+import { GameReport } from '../../../../../models/gameReport.model';
+import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
+import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 @Component({
   selector: 'app-general-info',
   standalone: true,
@@ -33,10 +35,17 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
   idToken!: string;
   subscription: Subscription[] = [];
 
+  gameReport$ = this.store.select('gameReport');
+
   constructor(
     private router: Router,
-    private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
-    private gameService: GameService,
+    private store: Store<{
+      quiz: QuizState;
+      auth: AuthState;
+      game: GameState;
+      gameReport: GameReportState;
+    }>,
+    private gameService: GameService
   ) {}
 
   ngOnInit() {
@@ -50,10 +59,10 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
           if (isDeleteQuizSuccessful) {
             this.store.dispatch(QuizActions.clearQuizState());
             this.store.dispatch(
-              QuizActions.getAllQuiz({ idToken: this.idToken }),
+              QuizActions.getAllQuiz({ idToken: this.idToken })
             );
           }
-        }),
+        })
     );
   }
 
@@ -63,11 +72,28 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   playGame() {
-    const pin = this.generatePin();
-    this.store.dispatch(GameActions.storePin({ pin }));
-    this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: this.quiz }));
-    this.gameService.createRoom(pin);
-    this.router.navigate([`/host/${pin}/lobby`]);
+    let newGame: GameReport = {
+      id: '',
+      quizId: this.quiz,
+      createdAt: new Date(),
+      gameRecords: [],
+      hostId: '',
+      index: 0,
+      joinCode: this.generatePin(),
+      totalQuestions: 0,
+    };
+    this.store.dispatch(
+      GameReportActions.createGameReport({
+        idToken: this.idToken,
+        gameReport: newGame,
+      })
+    );
+    // const pin = this.generatePin();
+    // this.store.dispatch(GameActions.storePin({ pin }));
+    // this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: this.quiz }));
+
+    // this.gameService.createRoom(pin);
+    // this.router.navigate([`/host/${pin}/lobby`]);
   }
 
   generatePin(): string {
@@ -84,7 +110,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
 
   deleteQuiz() {
     this.store.dispatch(
-      QuizActions.deleteQuiz({ idToken: this.idToken, id: this.quiz.id }),
+      QuizActions.deleteQuiz({ idToken: this.idToken, id: this.quiz.id })
     );
   }
 

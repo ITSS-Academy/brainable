@@ -40,4 +40,19 @@ export class GameReportEffects {
         }),
         );
     });
+
+    createGameReport$ = createEffect(() => {
+        return this.actions$.pipe(
+        ofType(GameReportActions.createGameReport),
+        switchMap((action) => {
+            return this.gameService.createGame(action.idToken, action.gameReport);
+        }),
+        map(() => {
+            return GameReportActions.createGameReportSuccess();
+        }),
+        catchError((error) => {
+            return of(GameReportActions.createGameReportFailure({ errorMessage: error }));
+        }),
+        );
+    });
 }

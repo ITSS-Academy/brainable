@@ -10,7 +10,7 @@ import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state
 import { GameReport } from '../../../../../models/gameReport.model';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
-import { GameRecord } from '../../../../../models/gameRecord.model';
+import { PlayerRecord } from '../../../../../models/playerRecord.model';
 @Component({
   selector: 'app-report-detail',
   standalone: true,
@@ -27,7 +27,7 @@ import { GameRecord } from '../../../../../models/gameRecord.model';
 export class ReportDetailComponent implements OnInit {
   gameReport$ = this.store.select('gameReport');
   currentReport!: GameReport;
-  gameRecords!: GameRecord[] | undefined
+  gameRecords!: PlayerRecord[] | undefined
   isChecked = false;
 
   constructor(
