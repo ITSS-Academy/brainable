@@ -183,10 +183,8 @@ export class GameService {
     });
   }
 
-  disconnect(): void {
-    if (this.socket) {
-      this.socket.disconnect();
-    }
+  leftRoom(): void {
+    this.socket.emit('leftRoom');
   }
 
   chooseAnswer(data: any): void {
