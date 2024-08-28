@@ -3,8 +3,11 @@
     <div class="question">{{ questions[currentQuestion].question }}</div>
   </div>
 
-  <div class="timer">
+  <div class="content">
     <div class="time">{{ activeNumber }}</div>
+    <div class="img-container">
+      <img [src]="imgUrl" alt="" [ngClass]="{ 'hide-img': hideImg }" />
+    </div>
     <div class="number-of-answers">
       <div class="number">{{ numOfUserResponses }}</div>
       <div class="text">Answers</div>
@@ -13,19 +16,35 @@
 
   <div class="answers">
     <div class="answer red">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="play_arrow"></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="play_arrow"
+      ></mat-icon>
       <div class="answer-text">{{ questions[currentQuestion].option1 }}</div>
     </div>
     <div class="answer blue">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="square"
+      ></mat-icon>
       <div class="answer-text">{{ questions[currentQuestion].option2 }}</div>
     </div>
     <div class="answer yellow">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="circle"></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="circle"
+      ></mat-icon>
       <div class="answer-text">{{ questions[currentQuestion].option3 }}</div>
     </div>
     <div class="answer green">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="square"></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="square"
+      ></mat-icon>
       <div class="answer-text">{{ questions[currentQuestion].option4 }}</div>
     </div>
   </div>

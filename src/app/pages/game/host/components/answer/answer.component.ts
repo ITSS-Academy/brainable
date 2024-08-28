@@ -10,11 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import { SendQuestion } from '../../../../../models/game.model';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-answer',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, NgClass],
   templateUrl: './answer.component.html',
   styleUrl: './answer.component.scss',
 })
@@ -26,6 +27,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
   activeNumber!: number;
   pin!: string;
   isMusicPlaying = true;
+  imgUrl =
+    'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/media.png?alt=media&token=b7bc0b71-587d-4dd3-932f-98ccb390bf6e';
+  hideImg = false;
 
   numOfUserResponses = 0;
 
@@ -54,7 +58,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
         this.totalQuestions = quiz.totalQuestions;
         this.activeNumber =
           (quiz.questions[this.currentQuestion].timeLimit as number) + 1;
-        this.startCountdown(this.activeNumber);
+        // this.startCountdown(this.activeNumber);
       }),
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
@@ -78,6 +82,8 @@ export class AnswerComponent implements OnInit, OnDestroy {
       };
       this.gameService.sendQuestion(data);
     }
+
+    this.imgHandler(this.imgUrl);
   }
 
   startCountdown(timeLimit: number) {
@@ -116,6 +122,17 @@ export class AnswerComponent implements OnInit, OnDestroy {
     this.gameService.listenForAnswer().subscribe((answer) => {
       console.log('Answer received:', answer);
     });
+  }
+
+  imgHandler(imgUrl: string) {
+    if (
+      this.imgUrl ===
+      'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/media.png?alt=media&token=b7bc0b71-587d-4dd3-932f-98ccb390bf6e'
+    ) {
+      this.hideImg = !this.hideImg;
+    } else {
+      this.hideImg = false;
+    }
   }
 
   ngOnDestroy() {
