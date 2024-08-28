@@ -13,27 +13,27 @@
     <div>
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- ID Column -->
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        <ng-container matColumnDef="No.">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+          <td mat-cell *matCellDef="let row">{{ row.index }}</td>
         </ng-container>
 
         <!-- Progress Column -->
-        <ng-container matColumnDef="progress">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress</th>
-          <td mat-cell *matCellDef="let row">{{ row.progress }}%</td>
+        <ng-container matColumnDef="joinCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Join Code</th>
+          <td mat-cell *matCellDef="let row">{{ row.joinCode }}</td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.quizId.title }}</td>
         </ng-container>
 
         <!-- Fruit Column -->
-        <ng-container matColumnDef="fruit">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fruit</th>
-          <td mat-cell *matCellDef="let row">{{ row.fruit }}</td>
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+          <td mat-cell *matCellDef="let row">{{ row.createdAt | date}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -59,7 +59,16 @@
   </cdk-virtual-scroll-viewport>
 
   <div class="card-container">
-    <div class="card-quiz-card">
+    @for (report of (gameReports$ | async); track $index) {
+      <div class="card-quiz-card">
+      <div class="id">1</div>
+      <div class="name">Jasper A.</div>
+      <div class="progress">30%</div>
+      <div class="fruit">Apple</div>
+    </div>
+    }
+    
+    <!-- <div class="card-quiz-card">
       <div class="id">1</div>
       <div class="name">Jasper A.</div>
       <div class="progress">30%</div>
@@ -88,12 +97,6 @@
       <div class="name">Jasper A.</div>
       <div class="progress">30%</div>
       <div class="fruit">Apple</div>
-    </div>
-    <div class="card-quiz-card">
-      <div class="id">1</div>
-      <div class="name">Jasper A.</div>
-      <div class="progress">30%</div>
-      <div class="fruit">Apple</div>
-    </div>
+    </div> -->
   </div>
 </div>

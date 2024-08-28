@@ -88,6 +88,12 @@ export class AnswerComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+  listenForAnswer() {
+    this.gameService.listenForAnswer().subscribe((answer) => {
+      console.log('Answer received:', answer);
+    });
+  }
+
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
   }

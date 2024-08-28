@@ -30,7 +30,7 @@ export const GUEST_ROUTERS: Routes = [
       },
       {
         path: 'countdown-to-question',
-        component: CountdownToQuestionComponent,
+        component: CountdownToQuestionComponent,        
       },
       {
         path: 'game-result',
