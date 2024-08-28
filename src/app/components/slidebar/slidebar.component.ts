@@ -86,4 +86,8 @@ export class SlidebarComponent implements OnInit {
   signOut() {
     this.store.dispatch(AuthActions.logout());
   }
+
+  returnToHome() {
+    this.router.navigateByUrl('/home').then();
+  }
 }

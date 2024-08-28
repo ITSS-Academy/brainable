@@ -59,7 +59,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   startGame() {
     console.log('Starting game...');
     this.gameService.startGame(this.pin);
-    this.router.navigate([` / host /${this.pin}/countdown`]);
+    this.router.navigate([`/host/${this.pin}/countdown`]);
   }
 
   song = new Audio();
