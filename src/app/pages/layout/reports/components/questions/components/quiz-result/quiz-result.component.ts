@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MaterialModule } from '../../../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../../../shared/modules/shared.module';
+import { QuestionRecord } from '../../../../../../../models/questionRecord.model';
+import { GameReportState } from '../../../../../../../ngrx/gameReport/gameReport.state';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-quiz-result',
@@ -9,4 +12,17 @@ import { SharedModule } from '../../../../../../../shared/modules/shared.module'
   templateUrl: './quiz-result.component.html',
   styleUrl: './quiz-result.component.scss',
 })
-export class QuizResultComponent {}
+export class QuizResultComponent {
+
+  gameReport$ = this.store.select('gameReport',"gameReport");
+
+  constructor(private store: Store<{ gameReport: GameReportState }>) {}
+
+  @Input() questionRecord!: QuestionRecord;
+
+  calculatePercentage(numAns: number, totalPlayer: Array<any>): number {
+    console.log(numAns, totalPlayer.length);
+    console.log((numAns / totalPlayer.length) * 100);
+    return (numAns / totalPlayer.length) * 100;
+  }
+}

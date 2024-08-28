@@ -6,11 +6,11 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">5</span>
-          <span class="number">9 answered</span>
+          <span class="ans">{{questionRecord.question.option1}}</span>
+          <span class="number">{{questionRecord.countA}}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" value="10" class="process-bar-correct"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="calculatePercentage(questionRecord.countA, (gameReport$|async)?.gameRecords!)" class="process-bar-correct"></mat-progress-bar>
         </div>
       </div>
     </div>
@@ -20,11 +20,11 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">4</span>
-          <span class="number">10 answered</span>
+          <span class="ans">{{questionRecord.question.option2}}</span>
+          <span class="number">{{questionRecord.countB}}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" value="50" class="process-bar-correct"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="questionRecord.countB" class="process-bar-correct"></mat-progress-bar>
         </div>
       </div>
     </div>
@@ -34,11 +34,11 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">7</span>
-          <span class="number">25 answered</span>
+          <span class="ans">{{questionRecord.question.option3}}</span>
+          <span class="number">{{questionRecord.countC}}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" value="20" class="process-bar-correct"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="questionRecord.countC" class="process-bar-correct"></mat-progress-bar>
         </div>
       </div>
     </div>
@@ -48,11 +48,11 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">5</span>
-          <span class="number">85 answered</span>
+          <span class="ans">{{questionRecord.question.option4}}</span>
+          <span class="number">{{questionRecord.countD}}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" value="20" class="process-bar-wrong"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="questionRecord.countD" class="process-bar-wrong"></mat-progress-bar>
         </div>
       </div>
     </div>

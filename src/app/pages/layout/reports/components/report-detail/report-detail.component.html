@@ -2,21 +2,14 @@
 <div class="container">
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="tab">
     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-
       <mat-tab label="Participants">
         <app-players [gameRecord]="this.gameRecords"></app-players>
       </mat-tab>
       <mat-tab label="Questions">
         <div class="questions">
-
           <app-questions></app-questions>
-          <app-questions></app-questions>
-          <app-questions></app-questions>
-
         </div>
-
       </mat-tab>
     </cdk-virtual-scroll-viewport>
-
   </mat-tab-group>
 </div>

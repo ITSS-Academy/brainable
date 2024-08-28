@@ -65,7 +65,7 @@ const NAMES: string[] = [
   styleUrl: './report-list.component.scss',
 })
 export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
-  displayedColumns: string[] = ['No.','name', 'joinCode', 'createdAt'];
+  displayedColumns: string[] = ['No.', 'name', 'joinCode', 'createdAt'];
   gameReports$: Observable<GameReport[]> = this.store.select(
     'gameReport',
     'gameReports'
@@ -91,10 +91,18 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
           this.gameReports$.subscribe((gameReports) => {
             if (gameReports) {
               const users = Array.from({ length: gameReports.length }, (_, k) =>
-                this.createNewReport(gameReports[k],k + 1)
+                this.createNewReport(gameReports[k], k + 1)
               );
               this.dataSource = new MatTableDataSource(users);
-              console.log(users);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+              this.paginator.page.subscribe(() => {
+                console.log(this.paginator.pageSize); // Log the current page size value
+              });
+              this.sort.sortChange.subscribe((sortState: Sort) => {
+                this.customSort(sortState);
+              });
+              // console.log(users);
             }
           });
         }
@@ -106,16 +114,7 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.paginator.page.subscribe(() => {
-      console.log(this.paginator.pageSize); // Log the current page size value
-    });
-    this.sort.sortChange.subscribe((sortState: Sort) => {
-      this.customSort(sortState);
-    });
-  }
+  ngAfterViewInit() {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -150,7 +149,11 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
         case 'joinCode':
           return this.compare(a.joinCode, b.joinCode, isAsc);
         case 'createdAt':
-          return this.compare(a.createdAt.getMilliseconds(), b.createdAt.getMilliseconds(), isAsc);
+          return this.compare(
+            a.createdAt.getMilliseconds(),
+            b.createdAt.getMilliseconds(),
+            isAsc
+          );
         default:
           return 0;
       }

@@ -23,8 +23,16 @@ export class GameService {
     private socket: Socket,
     private router: Router,
     private http: HttpClient,
-    private store: Store<{ game: GameState }>,
+    private store: Store<{ game: GameState }>
   ) {}
+
+  createGame(idToken: string, gameReport: GameReport) {
+    return this.http.post(`${environment.apiUrl}/game`, {game: gameReport}, {
+      headers: {
+        Authorization: idToken,
+      },
+    });
+  }
 
   getGamesByUser(idToken: string): Observable<GameReport[]> {
     return this.http.get<GameReport[]>(`${environment.apiUrl}/game`, {
@@ -41,7 +49,7 @@ export class GameService {
         headers: {
           Authorization: idToken,
         },
-      },
+      }
     );
   }
 
