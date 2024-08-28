@@ -53,58 +53,61 @@
     width: 100%;
     height: 100%;
     color: var(--md-sys-color-on-primary);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 
     img {
       width: 200px;
       margin-bottom: 20px;
     }
 
-    .enter-nickname {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-evenly;
-      width: 320px;
-      height: 140px;
-      background-color: var(--md-sys-color-surface-container-lowest);
-      border-radius: 12px;
+    .nickname-container {
+      position: relative;
 
-      input {
-        width: 90%;
-        height: 40px;
-        padding: 0 16px;
-        border: 2px solid var(--md-sys-color-outline-variant);
-        border-radius: 20px;
-        outline: none;
-        font-size: 18px;
+      .enter-nickname {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 320px;
+        height: 140px;
+        background-color: var(--md-sys-color-surface-container-lowest);
+        border-radius: 12px;
+
+        input {
+          width: 90%;
+          height: 40px;
+          padding: 0 16px;
+          border: 2px solid var(--md-sys-color-outline-variant);
+          border-radius: 20px;
+          outline: none;
+          font-size: 18px;
+        }
+
+        .btn-join {
+          width: 90%;
+          height: 40px;
+        }
       }
 
-      .btn-join {
-        width: 90%;
-        height: 40px;
+      .empty-input {
+        position: absolute;
+        margin-top: 12px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: ease-in 0.5s shake;
+
+        p {
+          width: 322px;
+          font-size: 22px;
+          padding: 8px 12px;
+          background-color: #d5546d;
+          color: var(--md-sys-color-on-error);
+          border-radius: 18px;
+          text-align: center;
+        }
       }
     }
-  }
-}
-
-.empty-input {
-  position: absolute;
-  top: calc(100% - 240px);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: ease-in 0.5s shake;
-
-  p {
-    width: 322px;
-    font-size: 22px;
-    padding: 8px 12px;
-    background-color: #d5546d;
-    color: var(--md-sys-color-on-error);
-    border-radius: 18px;
-    text-align: center;
   }
 }
 

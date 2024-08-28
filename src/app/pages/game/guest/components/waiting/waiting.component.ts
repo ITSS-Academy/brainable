@@ -44,9 +44,6 @@ export class WaitingComponent implements OnInit, OnDestroy {
   joinGame(): void {
     if (this.nickname.length == 0) {
       this.isEmptyInput = !this.isEmptyInput;
-      setTimeout(() => {
-        this.isEmptyInput = false;
-      }, 5000);
     } else {
       this.gameService.joinRoom(this.pin, this.nickname);
       this.store.dispatch(

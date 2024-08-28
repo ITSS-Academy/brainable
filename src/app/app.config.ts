@@ -22,6 +22,7 @@ import { CategoriesEffects } from './ngrx/categories/categories.effects';
 import { questionReducer } from './ngrx/question/question.reducer';
 import { QuestionEffects } from './ngrx/question/question.effects';
 import { gameReducer } from './ngrx/game/game.reducer';
+import { QRCodeModule } from 'angularx-qrcode';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -47,6 +48,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     importProvidersFrom(
       SocketIoModule.forRoot(environment.socketIoConfig as SocketIoConfig),
+      QRCodeModule,
     ),
   ],
 };

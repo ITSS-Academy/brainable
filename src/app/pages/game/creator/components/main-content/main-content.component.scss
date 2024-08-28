@@ -20,6 +20,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  overflow: auto;
 
   .image-input {
     width: 385px;
@@ -162,9 +163,10 @@
         border: 0.25rem solid rgb(255, 255, 255);
         transition: background 0.2s;
         transform-origin: center bottom;
-        box-shadow: transparent 0px 0px 0px 0.125rem,
-        rgba(0, 0, 0, 0.35) 0px 0.125rem 0.125rem,
-        rgba(0, 0, 0, 0.35) 0px 0px 0px 0.0625rem;
+        box-shadow:
+          transparent 0px 0px 0px 0.125rem,
+          rgba(0, 0, 0, 0.35) 0px 0.125rem 0.125rem,
+          rgba(0, 0, 0, 0.35) 0px 0px 0px 0.0625rem;
         animation: 4.6s linear 2s infinite normal none running animation;
         border-radius: 50%;
         margin-right: 24px;
@@ -197,7 +199,7 @@
       }
 
       &.red {
-        background-color: #d03542;
+        background-color: #c40c0c;
       }
 
       &.red span {
@@ -205,7 +207,7 @@
       }
 
       &.blue {
-        background-color: #3066c7;
+        background-color: #1368ce;
       }
 
       &.blue span {
@@ -213,7 +215,7 @@
       }
 
       &.yellow {
-        background-color: #cfa035;
+        background-color: #ffa602;
       }
 
       &.yellow span {
@@ -221,7 +223,7 @@
       }
 
       &.green {
-        background-color: #468729;
+        background-color: #26890c;
       }
 
       &.green span {
@@ -275,7 +277,7 @@
       }
 
       .red {
-        background-color: #d03542;
+        background-color: #c40c0c;
 
         mat-icon {
           rotate: -90deg;
@@ -284,7 +286,7 @@
       }
 
       .blue {
-        background-color: #3066c7;
+        background-color: #1368ce;
 
         mat-icon {
           rotate: 45deg;
@@ -293,7 +295,7 @@
       }
 
       .yellow {
-        background-color: #cfa035;
+        background-color: #ffa602;
 
         mat-icon {
           font-size: 20px;
@@ -301,7 +303,7 @@
       }
 
       .green {
-        background-color: #468729;
+        background-color: #26890c;
 
         mat-icon {
           font-size: 20px;

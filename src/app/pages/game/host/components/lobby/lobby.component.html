@@ -10,8 +10,13 @@
       <span class="pin">{{ pin }}</span>
     </div>
 
-    <div class="qr-code">
-      <img src="assets/images/qr-test.png" alt="" />
+    <div class="qr-code-container">
+      <qrcode
+        [qrdata]="this.qrCodeValue"
+        [width]="118"
+        [elementType]="'img'"
+        [margin]="2"
+      ></qrcode>
     </div>
   </div>
 
