@@ -10,7 +10,7 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { WaitingComponent } from './components/waiting/waiting.component';
 import { AnswerComponent } from './components/answer/answer.component';
 import { ResultComponent } from './components/result/result.component';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { GameService } from '../../../services/game/game.service';
 import { GameState } from '../../../ngrx/game/game.state';
 import * as GameActions from '../../../ngrx/game/game.actions';
@@ -42,10 +42,16 @@ export class GuestComponent implements OnInit {
       game: GameState;
     }>,
     private gameService: GameService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.gameService.listenForErrors();
+    this.gameService.listenForErrors().subscribe((error) => {
+      if (error === 'Host has left the game') {
+        this.openSnackBar();
+        this.router.navigate(['/join']);
+      }
+    });
     const pin = this.activatedRoute.snapshot.paramMap.get('pin');
     this.store.dispatch(GameActions.storePin({ pin: pin }));
     // this.openSnackBar();
