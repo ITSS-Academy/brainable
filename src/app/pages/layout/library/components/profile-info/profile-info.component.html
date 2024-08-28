@@ -1,17 +1,16 @@
 <div class="container">
   <div class="profile-header">
     <img
-      src="assets/images/395745172_1260986104564997_8063042522606081073_n.jpg"
+      [src]="profile.photoUrl"
       class="profile-picture">
     <div class="profile-info">
-      <span class="name">Tri Vo Minh</span>
-      <span class="mail">vominhtri&commat;gmail.com</span>
-      <span class="gender">Male</span>
+      <span class="name">{{ profile.fullName }}</span>
+      <span class="mail">{{ profile.email }}</span>
     </div>
   </div>
   <div class="profile-stats">
     <div class="stat">
-      <span class="stat-number">1</span>
+      <span class="stat-number">{{ profile.quizzes.length }}</span>
       <span class="stat-label">Quizzes</span>
     </div>
     <div class="stat">

@@ -1,4 +1,4 @@
-import { QuizByCategory } from './quiz.model';
+import { Quiz } from './quiz.model';
 
 export interface Categories {
   uid: string;
@@ -10,5 +10,5 @@ export interface CategoriesByUid {
   uid: string;
   name: string;
   imgUrl: string;
-  quizzes: QuizByCategory[];
+  quizzes: Quiz[];
 }

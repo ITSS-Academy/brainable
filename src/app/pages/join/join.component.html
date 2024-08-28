@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="content">
-    <img src="assets/images/logo/brainable-white.png" alt="Logo" class="logo" />
+    <img src="assets/images/logo/brainable-white.png" alt="Logo" class="logo"/>
     <div class="pin-input">
       <div class="content-body">
         <input
@@ -15,6 +15,7 @@
           placeholder="Enter a join code"
           [(ngModel)]="pin"
           (keydown)="onKey($event)"
+          maxlength="6"
         />
         <button class="btn-join" mat-flat-button (click)="joinGame()">
           Join

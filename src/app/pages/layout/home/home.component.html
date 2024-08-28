@@ -6,7 +6,7 @@
 
     <div id="header-quiz">
       @for (category of listCategories; track $index) {
-        <div class="quiz-menu">
+        <div class="quiz-menu" (click)="categoryDetail(category.uid)">
           <img [src]="category.imgUrl" alt="menu Pic"/>
           <p>{{ category.name }}</p>
         </div>

@@ -11,12 +11,20 @@ import {
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { GameReport } from '../../models/gameReport.model';
+import * as GameActions from '../../ngrx/game/game.actions';
+import { Store } from '@ngrx/store';
+import { GameState } from '../../ngrx/game/game.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  constructor(private socket: Socket, private router: Router, private http: HttpClient) {}
+  constructor(
+    private socket: Socket,
+    private router: Router,
+    private http: HttpClient,
+    private store: Store<{ game: GameState }>,
+  ) {}
 
   getGamesByUser(idToken: string): Observable<GameReport[]> {
     return this.http.get<GameReport[]>(`${environment.apiUrl}/game`, {
@@ -27,11 +35,14 @@ export class GameService {
   }
 
   getGameById(idToken: string, gameId: string): Observable<GameReport> {
-    return this.http.get<GameReport>(`${environment.apiUrl}/game/byId?id=${gameId}`, {
-      headers: {
-        Authorization: idToken,
+    return this.http.get<GameReport>(
+      `${environment.apiUrl}/game/byId?id=${gameId}`,
+      {
+        headers: {
+          Authorization: idToken,
+        },
       },
-    });
+    );
   }
 
   createRoom(pin: string): void {
@@ -40,6 +51,17 @@ export class GameService {
 
   joinRoom(pin: string, username: string): void {
     this.socket.emit('joinRoom', { pin, username });
+  }
+
+  checkRoomExist(pin: string): void {
+    this.socket.emit('checkRoomExist', pin);
+  }
+
+  listenForNavigateToEnterName(pin: string): void {
+    this.socket.on('navigateToEnterName', () => {
+      this.store.dispatch(GameActions.storePin({ pin: pin }));
+      this.router.navigate([`/guest/${pin}/waiting`]);
+    });
   }
 
   listenForGuestJoined(): Observable<{ username: string }> {
@@ -153,10 +175,11 @@ export class GameService {
     });
   }
 
-  listenForErrors(): void {
-    this.socket.on('error', (message: string) => {
-      alert(message);
-      this.router.navigate(['/join']);
+  listenForErrors(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('error', (error: any) => {
+        observer.next(error);
+      });
     });
   }
 
