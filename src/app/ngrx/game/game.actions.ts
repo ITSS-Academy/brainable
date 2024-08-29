@@ -35,3 +35,8 @@ export const storeTotalQuestions = createAction(
   '[Game] Total Questions',
   props<{ totalQuestions: number }>(),
 );
+
+export const storePreviousResult = createAction(
+  '[Game] Store Previous Result',
+  props<{ previousResult: any[] }>(),
+);

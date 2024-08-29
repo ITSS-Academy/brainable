@@ -9,6 +9,8 @@ export const initialState: GameState = {
   playerAnswer: 0,
   totalPlayers: 0,
   totalQuestions: 0,
+
+  previousResult: [],
 };
 
 export const gameReducer = createReducer(
@@ -47,6 +49,12 @@ export const gameReducer = createReducer(
     return {
       ...state,
       totalQuestions: totalQuestions,
+    };
+  }),
+  on(GameActions.storePreviousResult, (state, { previousResult }) => {
+    return {
+      ...state,
+      previousResult: previousResult,
     };
   }),
 );

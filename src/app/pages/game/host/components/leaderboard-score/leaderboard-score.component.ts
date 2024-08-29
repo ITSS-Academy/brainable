@@ -21,6 +21,14 @@ import { SharedModule } from '../../../../../shared/modules/shared.module';
 export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   pin!: string;
+  result: {
+    playerName: string;
+    score: number;
+  }[] = [];
+  prevResult: {
+    playerName: string;
+    score: number;
+  }[] = [];
 
   constructor(
     private store: Store<{ game: GameState; quiz: QuizState }>,
@@ -35,9 +43,15 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.gameService.listenForTop10().subscribe((top10) => {
-      console.log(top10);
+    this.gameService.listenForTop5().subscribe((top5) => {
+      this.result = top5;
     });
+    this.subscription.push(
+      this.store.select('game', 'previousResult').subscribe((prevResult) => {
+        this.prevResult = prevResult as { playerName: string; score: number }[];
+        console.log(this.prevResult);
+      }),
+    );
   }
 
   nextClicked() {
@@ -47,5 +61,8 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.store.dispatch(
+      GameActions.storePreviousResult({ previousResult: this.result }),
+    );
   }
 }

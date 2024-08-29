@@ -67,7 +67,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   chooseAnswer(answer: number) {
-    console.log('Player chose answer:', answer);
     this.stopTimer();
     this.isChoosing = true;
     this.store.dispatch(GameActions.storePlayerAnswer({ answer }));

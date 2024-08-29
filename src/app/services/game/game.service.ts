@@ -130,7 +130,6 @@ export class GameService {
   }
 
   nextShowResults(pin: string): void {
-    console.log('nextShowResults');
     this.socket.emit('nextShowResults', pin);
   }
 
@@ -206,14 +205,14 @@ export class GameService {
     this.socket.emit('sendAnswer', data);
   }
 
-  showTop10(pin: string): void {
-    this.socket.emit('showTop10', pin);
+  showTop5(pin: string): void {
+    this.socket.emit('showTop5', pin);
   }
 
-  listenForTop10(): Observable<any> {
+  listenForTop5(): Observable<any> {
     return new Observable((observer) => {
-      this.socket.on('leaderboardTop10', (top10: any) => {
-        observer.next(top10);
+      this.socket.on('leaderboardTop5', (top5: any) => {
+        observer.next(top5);
       });
     });
   }
