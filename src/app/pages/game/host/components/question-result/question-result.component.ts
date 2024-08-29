@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
@@ -11,6 +17,8 @@ import { Question } from '../../../../../models/question.model';
 import { GameService } from '../../../../../services/game/game.service';
 import { AnswerStatistics } from '../../../../../models/game.model';
 import { NgClass, NgIf } from '@angular/common';
+import { QuestionRecordState } from '../../../../../ngrx/questionRecord/questionRecord.state';
+import { QuestionRecordDTO } from '../../../../../models/questionRecord.model';
 
 @Component({
   selector: 'app-question-result',
@@ -19,7 +27,7 @@ import { NgClass, NgIf } from '@angular/common';
   templateUrl: './question-result.component.html',
   styleUrl: './question-result.component.scss',
 })
-export class QuestionResultComponent implements OnInit {
+export class QuestionResultComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   pin!: string;
   questions: Question[] = [];
@@ -28,8 +36,23 @@ export class QuestionResultComponent implements OnInit {
   answerStatistics!: AnswerStatistics;
   correctAnswer!: number;
 
+  questionRecord: QuestionRecordDTO = {
+    questionRecord: {
+      gameId: '',
+      question: <Question>{},
+      countA: 0,
+      countB: 0,
+      countC: 0,
+      countD: 0,
+    },
+  };
+
   constructor(
-    private store: Store<{ game: GameState; quiz: QuizState }>,
+    private store: Store<{
+      game: GameState;
+      quiz: QuizState;
+      questionRecord: QuestionRecordState;
+    }>,
     private router: Router,
     private gameService: GameService,
   ) {
@@ -45,6 +68,8 @@ export class QuestionResultComponent implements OnInit {
         .select('game', 'currentQuestion')
         .subscribe((currentQuestion) => {
           this.currentQuestion = currentQuestion as number;
+          this.questionRecord.questionRecord.question =
+            this.questions[currentQuestion];
         }),
     );
   }
@@ -84,5 +109,9 @@ export class QuestionResultComponent implements OnInit {
     const baseHeight = 25; // base height in pixels
     const additionalHeightPerAnswer = 10; // additional height per answer in pixels
     return `${baseHeight + answerCount * additionalHeightPerAnswer}px !important`;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => sub.unsubscribe());
   }
 }

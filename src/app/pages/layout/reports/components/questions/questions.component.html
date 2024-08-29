@@ -1,4 +1,4 @@
-@for (item of (questionReport$ | async)?.questionRecords; track $index) {
+@for (item of (questionRecord$ | async); track $index) {
   <mat-card appearance="outlined">
     <mat-card-content>
       <div id="question-head-bar">
@@ -8,10 +8,10 @@
         <span class="question-title">Question</span>
         <div id="question-format">
           <div id="question-display">
-            <p>{{$index+1}}. {{item.question.question}}</p>
+            <p>{{ $index + 1 }}. {{ item.question.question }}</p>
           </div>
         </div>
-  
+
         <div class="option-body">
           <span class="option-title">Options</span>
           <div id="question-data">
@@ -23,7 +23,7 @@
             </div>
           </div>
         </div>
-  
+
       </div>
     </mat-card-content>
   </mat-card>
