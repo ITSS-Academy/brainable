@@ -2,7 +2,7 @@
   <div class="container">
     <div class="category-info">
       <div class="category-img">
-        <img [src]="category.imgUrl" alt=""/>
+        <img [src]="category.imgUrl" alt="" />
       </div>
       <div class="category-name">
         <p>{{ category.name }}</p>
@@ -10,11 +10,10 @@
     </div>
     <div class="library-container">
       @if (quizzes.length === 0) {
-        <div class="empty-box"><img src="assets/images/empty-box.png" alt="">
+        <div class="empty-box">
+          <img src="assets/images/empty-box.png" alt="" />
         </div>
       } @else {
-
-
         <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
           <div class="quiz-list">
             @for (quiz of quizzes; track $index) {
@@ -22,7 +21,7 @@
                 <mat-card-content>
                   <div class="quiz-detail">
                     <div class="quiz-detail__img">
-                      <img [src]="quiz.imgUrl" alt=""/>
+                      <img [src]="quiz.imgUrl" alt="" />
                     </div>
                     <div class="quiz-detail__info">
                       <div class="row-info">
@@ -47,11 +46,12 @@
 
         <div
           style="
-        width: 1px;
-        height: 100%;
-        background-color: #e0e0e0;
-        margin-left: 10px;
-      "
+            width: 1px;
+            height: 100%;
+            background-color: #e0e0e0;
+            margin-left: 10px;
+          "
+          class="straight-line"
         ></div>
 
         <div class="content-container">
@@ -62,7 +62,11 @@
           <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
             <div class="quiz-content">
               @for (question of questions; track $index) {
-                <app-quiz-detail [showAnswer]=showAnswer [question]="question" [index]="$index+1"></app-quiz-detail>
+                <app-quiz-detail
+                  [showAnswer]="showAnswer"
+                  [question]="question"
+                  [index]="$index + 1"
+                ></app-quiz-detail>
               }
             </div>
           </cdk-virtual-scroll-viewport>
@@ -70,5 +74,4 @@
       }
     </div>
   </div>
-
 }

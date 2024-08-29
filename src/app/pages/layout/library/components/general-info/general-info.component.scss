@@ -12,7 +12,6 @@ mat-card:hover {
   filter: brightness(0.9);
 }
 
-
 .quiz-detail {
   width: 100%;
   display: flex;
@@ -75,7 +74,6 @@ mat-card:hover {
 
     .row-button {
       .edit-btn {
-       
         margin-right: 10px;
         cursor: pointer;
         transition: background-color 0.3s;
@@ -94,8 +92,6 @@ mat-card:hover {
         }
       }
     }
-
-
   }
 
   &__img {
@@ -108,19 +104,21 @@ mat-card:hover {
       object-fit: cover;
       border-radius: 8px;
     }
-
   }
 }
 
 @media screen and (max-width: 576px) {
   .quiz-detail {
     &__img {
-      width: 100px;
+      display: none;
+    }
 
-      img {
-        width: 100px;
+    &__info {
+      width: 100%;
+
+      .row-button {
+        width: 35px;
       }
     }
   }
-
 }
