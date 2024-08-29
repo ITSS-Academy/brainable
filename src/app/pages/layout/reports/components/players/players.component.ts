@@ -80,28 +80,25 @@ export class PlayersComponent implements AfterViewInit, OnInit {
 
   gameReport$: Observable<GameReport | null> = this.store.select(
     'gameReport',
-    'gameReport'
+    'gameReport',
   );
 
   constructor(
     private route: Router,
-    private store: Store<{ gameReport: GameReportState }>
+    private store: Store<{ gameReport: GameReportState }>,
   ) {
     const users = Array.from({ length: 100 }, (_, k) =>
-      this.createNewUser(k + 1)
+      this.createNewUser(k + 1),
     );
   }
 
   ngOnInit(): void {
     this.gameReport$.subscribe((gameReport) => {
       if (gameReport) {
-        console.log(gameReport);
         this.dataSource = new MatTableDataSource(gameReport.gameRecords);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.paginator.page.subscribe(() => {
-          console.log(this.paginator.pageSize); // Log the current page size value
-        });
+        this.paginator.page.subscribe(() => {});
         this.sort.sortChange.subscribe((sortState: Sort) => {
           this.customSort(sortState);
         });
@@ -162,10 +159,6 @@ export class PlayersComponent implements AfterViewInit, OnInit {
           return 0;
       }
     });
-
-    console.log(
-      `Sorted by ${sortState.active} in ${sortState.direction} order`
-    );
   }
 
   compare(a: string | number, b: string | number, isAsc: boolean) {

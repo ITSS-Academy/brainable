@@ -10,7 +10,6 @@ export class QuizService {
   constructor(private http: HttpClient) {}
 
   createQuiz(idToken: string, quiz: any) {
-    console.log(quiz);
     return this.http.post(`${environment.apiUrl}/quiz`, quiz, {
       headers: {
         Authorization: `${idToken}`,
@@ -19,7 +18,6 @@ export class QuizService {
   }
 
   updateQuiz(idToken: string, quiz: QuizDTO) {
-    console.log(quiz);
     return this.http.put(`${environment.apiUrl}/quiz`, quiz, {
       headers: {
         Authorization: `${idToken}`,

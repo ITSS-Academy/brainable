@@ -7,7 +7,8 @@
   <div class="right" [ngClass]="{ 'search-click': isSearch }">
     <div class="search-container">
       <mat-icon fontIcon="search" class="search-icon"></mat-icon>
-      <input type="text" placeholder="Search public content" />
+      <input type="text" placeholder="Search public content" [(ngModel)]="searchValue"
+             (keydown.enter)="onEnterPress()"/>
     </div>
     <mat-icon
       fontIcon="search"
@@ -20,7 +21,6 @@
           Login
         </button>
       }
-
       <button mat-flat-button class="btn-enter" [routerLink]="['/join']">
         Enter code
       </button>

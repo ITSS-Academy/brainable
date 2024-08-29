@@ -18,6 +18,8 @@ import { LocalTimePipe } from '../../../shared/pipes/local-time.pipe';
 import { GameState } from '../../../ngrx/game/game.state';
 import * as GameActions from '../../../ngrx/game/game.actions';
 import { GameService } from '../../../services/game/game.service';
+import { GameReport } from '../../../models/gameReport.model';
+import * as GameReportActions from '../../../ngrx/gameReport/gameReport.action';
 
 @Component({
   selector: 'app-quiz',
@@ -39,6 +41,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   showAnswer: boolean = false;
   quizId!: string;
   quiz!: Quiz;
+  idToken!: string;
   isGettingQuizSuccess$ = this.store.select('quiz', 'isGetQuizByIdSuccessful');
 
   constructor(
@@ -54,6 +57,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.store.select('auth', 'idToken').subscribe((idToken) => {
         if (idToken) {
+          this.idToken = idToken;
           this.store.dispatch(
             QuizActions.getQuizById({ idToken: idToken, id: this.quizId }),
           );
@@ -62,7 +66,6 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
           this.quiz = quiz;
-          console.log(this.quiz);
         }
       }),
     );
@@ -76,8 +79,31 @@ export class QuizComponent implements OnInit, OnDestroy {
     const pin = this.generatePin();
     this.store.dispatch(GameActions.storePin({ pin }));
     this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: this.quiz }));
+    this.store.dispatch(
+      GameActions.storeTotalQuestions({
+        totalQuestions: this.quiz.questions.length,
+      }),
+    );
+
     this.gameService.createRoom(pin);
     this.router.navigate([`/host/${pin}/lobby`]);
+
+    let newGame: GameReport = {
+      id: '',
+      quizId: this.quiz,
+      createdAt: new Date(),
+      gameRecords: [],
+      hostId: '',
+      index: 0,
+      joinCode: pin,
+      totalQuestions: 0,
+    };
+    this.store.dispatch(
+      GameReportActions.createGameReport({
+        idToken: this.idToken,
+        gameReport: newGame,
+      }),
+    );
   }
 
   generatePin(): string {

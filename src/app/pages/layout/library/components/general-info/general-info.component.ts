@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 import { GameReport } from '../../../../../models/gameReport.model';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
+
 @Component({
   selector: 'app-general-info',
   standalone: true,
@@ -45,7 +46,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
       game: GameState;
       gameReport: GameReportState;
     }>,
-    private gameService: GameService
+    private gameService: GameService,
   ) {}
 
   ngOnInit() {
@@ -59,10 +60,10 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
           if (isDeleteQuizSuccessful) {
             this.store.dispatch(QuizActions.clearQuizState());
             this.store.dispatch(
-              QuizActions.getAllQuiz({ idToken: this.idToken })
+              QuizActions.getAllQuiz({ idToken: this.idToken }),
             );
           }
-        })
+        }),
     );
   }
 
@@ -72,6 +73,18 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   playGame() {
+    const pin = this.generatePin();
+    this.store.dispatch(GameActions.storePin({ pin }));
+    this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: this.quiz }));
+    this.store.dispatch(
+      GameActions.storeTotalQuestions({
+        totalQuestions: this.quiz.questions.length,
+      }),
+    );
+
+    this.gameService.createRoom(pin);
+    this.router.navigate([`/host/${pin}/lobby`]);
+
     let newGame: GameReport = {
       id: '',
       quizId: this.quiz,
@@ -79,21 +92,15 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
       gameRecords: [],
       hostId: '',
       index: 0,
-      joinCode: this.generatePin(),
+      joinCode: pin,
       totalQuestions: 0,
     };
     this.store.dispatch(
       GameReportActions.createGameReport({
         idToken: this.idToken,
         gameReport: newGame,
-      })
+      }),
     );
-    // const pin = this.generatePin();
-    // this.store.dispatch(GameActions.storePin({ pin }));
-    // this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: this.quiz }));
-
-    // this.gameService.createRoom(pin);
-    // this.router.navigate([`/host/${pin}/lobby`]);
   }
 
   generatePin(): string {
@@ -110,7 +117,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
 
   deleteQuiz() {
     this.store.dispatch(
-      QuizActions.deleteQuiz({ idToken: this.idToken, id: this.quiz.id })
+      QuizActions.deleteQuiz({ idToken: this.idToken, id: this.quiz.id }),
     );
   }
 

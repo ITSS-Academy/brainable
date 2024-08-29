@@ -31,7 +31,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
           this.pin = pin as string;
-          this.qrCodeValue = `https://brainable-d5919.web.app/guest/${this.pin}/waiting`;
+          this.qrCodeValue = `https://brainable.io.vn/guest/${this.pin}/waiting`;
 
           this.gameService.listenForGuestJoined().subscribe((guest) => {
             this.guests.push(guest.username);
@@ -58,7 +58,6 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   startGame() {
-    console.log('Starting game...');
     this.gameService.startGame(this.pin);
     this.router.navigate([`/host/${this.pin}/countdown`]);
   }
@@ -71,13 +70,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
     this.song.play().then();
     this.song.loop = true;
     this.isMusicPlaying = true;
-    console.log('Music playing lobby');
   }
 
   pauseMusic() {
     this.song.pause();
     this.isMusicPlaying = false;
-    console.log('Music paused lobby');
   }
 
   volume(vl: any) {

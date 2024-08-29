@@ -13,16 +13,13 @@ import { Store } from '@ngrx/store';
   styleUrl: './quiz-result.component.scss',
 })
 export class QuizResultComponent {
-
-  gameReport$ = this.store.select('gameReport',"gameReport");
+  gameReport$ = this.store.select('gameReport', 'gameReport');
 
   constructor(private store: Store<{ gameReport: GameReportState }>) {}
 
   @Input() questionRecord!: QuestionRecord;
 
   calculatePercentage(numAns: number, totalPlayer: Array<any>): number {
-    console.log(numAns, totalPlayer.length);
-    console.log((numAns / totalPlayer.length) * 100);
     return (numAns / totalPlayer.length) * 100;
   }
 }

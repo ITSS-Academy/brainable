@@ -18,44 +18,6 @@ import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 import { GameReport } from '../../../../../models/gameReport.model';
 import { DatePipe } from '@angular/common';
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
 
 @Component({
   selector: 'app-report-list',
@@ -68,7 +30,7 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
   displayedColumns: string[] = ['No.', 'name', 'joinCode', 'createdAt'];
   gameReports$: Observable<GameReport[]> = this.store.select(
     'gameReport',
-    'gameReports'
+    'gameReports',
   );
 
   dataSource!: MatTableDataSource<GameReport>;
@@ -80,7 +42,7 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
 
   constructor(
     private route: Router,
-    private store: Store<{ auth: AuthState; gameReport: GameReportState }>
+    private store: Store<{ auth: AuthState; gameReport: GameReportState }>,
   ) {}
 
   ngOnInit(): void {
@@ -91,14 +53,12 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
           this.gameReports$.subscribe((gameReports) => {
             if (gameReports) {
               const users = Array.from({ length: gameReports.length }, (_, k) =>
-                this.createNewReport(gameReports[k], k + 1)
+                this.createNewReport(gameReports[k], k + 1),
               );
               this.dataSource = new MatTableDataSource(users);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              this.paginator.page.subscribe(() => {
-                console.log(this.paginator.pageSize); // Log the current page size value
-              });
+              this.paginator.page.subscribe(() => {});
               this.sort.sortChange.subscribe((sortState: Sort) => {
                 this.customSort(sortState);
               });
@@ -106,7 +66,7 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
             }
           });
         }
-      })
+      }),
     );
   }
 
@@ -152,16 +112,12 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
           return this.compare(
             a.createdAt.getMilliseconds(),
             b.createdAt.getMilliseconds(),
-            isAsc
+            isAsc,
           );
         default:
           return 0;
       }
     });
-
-    console.log(
-      `Sorted by ${sortState.active} in ${sortState.direction} order`
-    );
   }
 
   compare(a: string | number, b: string | number, isAsc: boolean) {
@@ -169,8 +125,6 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   onRowClicked(row: any) {
-    console.log('Row clicked: ', row);
-
     this.route.navigate([`/reports/${row.id}`]);
   }
 }

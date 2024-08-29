@@ -11,6 +11,7 @@ import { GameReport } from '../../../../../models/gameReport.model';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { PlayerRecord } from '../../../../../models/playerRecord.model';
+
 @Component({
   selector: 'app-report-detail',
   standalone: true,
@@ -27,21 +28,20 @@ import { PlayerRecord } from '../../../../../models/playerRecord.model';
 export class ReportDetailComponent implements OnInit {
   gameReport$ = this.store.select('gameReport');
   currentReport!: GameReport;
-  gameRecords!: PlayerRecord[] | undefined
+  gameRecords!: PlayerRecord[] | undefined;
   isChecked = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<{ auth: AuthState; gameReport: GameReportState }>
+    private store: Store<{ auth: AuthState; gameReport: GameReportState }>,
   ) {}
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    console.log(id);
     this.store.select('auth', 'idToken').subscribe((idToken) => {
       if (idToken) {
         this.store.dispatch(
-          GameReportActions.getGameReport({ idToken, gameId: id })
+          GameReportActions.getGameReport({ idToken, gameId: id }),
         );
       }
     });

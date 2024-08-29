@@ -214,11 +214,13 @@ body::-webkit-scrollbar {
 }
 
 .cdk-overlay-pane {
-  background: var(--mat-app-background-color);
+  background: unset !important;
 }
 
 
 .custom-dialog-container {
   border-radius: 28px;
 }
+
+
 

@@ -67,8 +67,8 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   chooseAnswer(answer: number) {
+    console.log('Player chose answer:', answer);
     this.stopTimer();
-    console.log(this.timeElapsed);
     this.isChoosing = true;
     this.store.dispatch(GameActions.storePlayerAnswer({ answer }));
     const answerData: SendAnswer = {
@@ -83,6 +83,11 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (!this.isChoosing) {
+      console.log('Player did not choose an answer');
+      this.chooseAnswer(0);
+    }
+    this.isChoosing = false;
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
 }

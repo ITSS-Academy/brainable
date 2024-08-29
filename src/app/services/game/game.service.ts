@@ -23,15 +23,19 @@ export class GameService {
     private socket: Socket,
     private router: Router,
     private http: HttpClient,
-    private store: Store<{ game: GameState }>
+    private store: Store<{ game: GameState }>,
   ) {}
 
   createGame(idToken: string, gameReport: GameReport) {
-    return this.http.post(`${environment.apiUrl}/game`, {game: gameReport}, {
-      headers: {
-        Authorization: idToken,
+    return this.http.post(
+      `${environment.apiUrl}/game`,
+      { game: gameReport },
+      {
+        headers: {
+          Authorization: idToken,
+        },
       },
-    });
+    );
   }
 
   getGamesByUser(idToken: string): Observable<GameReport[]> {
@@ -49,7 +53,7 @@ export class GameService {
         headers: {
           Authorization: idToken,
         },
-      }
+      },
     );
   }
 
@@ -117,7 +121,7 @@ export class GameService {
     this.socket.emit('sendAnswer', data);
   }
 
-  listenForPlayerSubmittedAnswerAnswer(): Observable<any> {
+  listenForPlayerSubmittedAnswer(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('playerSubmittedAnswer', (answer: any) => {
         observer.next(answer);
@@ -126,6 +130,7 @@ export class GameService {
   }
 
   nextShowResults(pin: string): void {
+    console.log('nextShowResults');
     this.socket.emit('nextShowResults', pin);
   }
 

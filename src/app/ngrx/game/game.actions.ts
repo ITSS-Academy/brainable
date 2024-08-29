@@ -28,3 +28,10 @@ export const storeTime = createAction(
 );
 
 export const incrementScore = createAction('[Game] Increment Score');
+
+export const resetGame = createAction('[Game] Reset Game');
+
+export const storeTotalQuestions = createAction(
+  '[Game] Total Questions',
+  props<{ totalQuestions: number }>(),
+);

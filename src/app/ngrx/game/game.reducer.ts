@@ -8,6 +8,7 @@ export const initialState: GameState = {
   playerName: '',
   playerAnswer: 0,
   totalPlayers: 0,
+  totalQuestions: 0,
 };
 
 export const gameReducer = createReducer(
@@ -40,6 +41,12 @@ export const gameReducer = createReducer(
     return {
       ...state,
       totalPlayers: totalPlayers,
+    };
+  }),
+  on(GameActions.storeTotalQuestions, (state, { totalQuestions }) => {
+    return {
+      ...state,
+      totalQuestions: totalQuestions,
     };
   }),
 );

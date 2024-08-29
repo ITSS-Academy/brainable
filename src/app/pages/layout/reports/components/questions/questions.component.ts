@@ -11,6 +11,7 @@ import * as QuestionReportActions from '../../../../../ngrx/questionReport/quest
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
+
 @Component({
   selector: 'app-questions',
   standalone: true,
@@ -28,13 +29,14 @@ import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state
 })
 export class QuestionsComponent implements OnInit {
   questionReport$ = this.store.select('questionReport');
+
   constructor(
     private store: Store<{
       auth: AuthState;
       questionReport: QuetionReportState;
       gameReport: GameReportState;
     }>,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -45,11 +47,9 @@ export class QuestionsComponent implements OnInit {
           QuestionReportActions.getQuestionReportsByGameId({
             idToken,
             gameId: id,
-          })
+          }),
         );
-        this.questionReport$.subscribe((questionReport) => {
-          console.log(questionReport);
-        });
+        this.questionReport$.subscribe((questionReport) => {});
       }
     });
   }

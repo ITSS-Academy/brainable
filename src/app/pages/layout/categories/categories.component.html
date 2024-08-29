@@ -1,127 +1,74 @@
-<div class="container">
-  <div class="category-info">
-    <div class="category-img">
-      <img [src]="category.imgUrl" alt="" />
+@if (isGettingCategorySuccess$ | async) {
+  <div class="container">
+    <div class="category-info">
+      <div class="category-img">
+        <img [src]="category.imgUrl" alt=""/>
+      </div>
+      <div class="category-name">
+        <p>{{ category.name }}</p>
+      </div>
     </div>
-    <div class="category-name">
-      <p>{{ category.name }}</p>
-    </div>
-  </div>
-  <div class="library-container">
-    <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
-      <div class="quiz-list">
-        @for (quiz of quizzes; track $index) {
-          <mat-card appearance="outlined" (click)="activeQuiz($index)">
-            <mat-card-content>
-              <div class="quiz-detail">
-                <div class="quiz-detail__img">
-                  <img [src]="quiz.imgUrl" alt="" />
-                </div>
-                <div class="quiz-detail__info">
-                  <div class="row-info">
-                    <p class="question">{{ quiz.title }}</p>
-                    <div class="row-info">
-                      <div class="num-questions">
-                        <mat-icon fontIcon="list"></mat-icon>
-                        <span>Question</span>
+    <div class="library-container">
+      @if (quizzes.length === 0) {
+        <div class="empty-box"><img src="assets/images/empty-box.png" alt="">
+        </div>
+      } @else {
+
+
+        <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
+          <div class="quiz-list">
+            @for (quiz of quizzes; track $index) {
+              <mat-card appearance="outlined" (click)="activeQuiz($index)">
+                <mat-card-content>
+                  <div class="quiz-detail">
+                    <div class="quiz-detail__img">
+                      <img [src]="quiz.imgUrl" alt=""/>
+                    </div>
+                    <div class="quiz-detail__info">
+                      <div class="row-info">
+                        <p class="question">{{ quiz.title }}</p>
+                        <div class="row-info">
+                          <div class="num-questions">
+                            <mat-icon fontIcon="list"></mat-icon>
+                            <span>{{ questions.length }} Question</span>
+                          </div>
+                        </div>
+                        <div class="row-creator">
+                          <button mat-flat-button>Play</button>
+                        </div>
                       </div>
                     </div>
-                    <div class="row-creator">
-                      <button mat-flat-button>Play</button>
-                      <!--          <p>-->
-                      <!--            <mat-slide-toggle labelPosition="before" (click)="toggleAnswer()" class="primary-slide-toggle">Show-->
-                      <!--              answer-->
-                      <!--            </mat-slide-toggle>-->
-                      <!--          </p>-->
-                    </div>
                   </div>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
-      </div>
-    </cdk-virtual-scroll-viewport>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </cdk-virtual-scroll-viewport>
 
-    <div
-      style="
+        <div
+          style="
         width: 1px;
         height: 100%;
         background-color: #e0e0e0;
         margin-left: 10px;
       "
-    ></div>
+        ></div>
 
-    <div class="content-container">
-      <div class="quiz-detail__header">
-        <span class="number-question"></span>
-        <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
-      </div>
-      <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
-        <div class="quiz-content">
-          @for (question of questions; track $index) {
-            <mat-card appearance="outlined">
-              <mat-card-content>
-                <mat-list>
-                  <mat-list-item class="content">
-                    <div class="quiz-detail">
-                      <div class="quiz-detail__title">
-                        <span class="order">Multiple Choice</span>
-                        <p class="question">{{ question.question }}</p>
-                      </div>
-                      <div class="quiz-detail__img">
-                        <img [src]="question.imgUrl" alt="" />
-                      </div>
-                    </div>
-                  </mat-list-item>
-                  @if (showAnswer) {
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option1 }}</p>
-                        </div>
-                        <mat-icon class="answer-icon__check">check</mat-icon>
-                        <mat-icon class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option2 }}</p>
-                        </div>
-                        <mat-icon class="answer-icon__check">check</mat-icon>
-                        <mat-icon class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option3 }}</p>
-                        </div>
-                        <mat-icon class="answer-icon__check">check</mat-icon>
-                        <mat-icon class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option4 }}</p>
-                        </div>
-                        <mat-icon class="answer-icon__check">check</mat-icon>
-                        <mat-icon class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                  }
-                </mat-list>
-              </mat-card-content>
-            </mat-card>
-          }
+        <div class="content-container">
+          <div class="quiz-detail__header">
+            <span class="number-question"></span>
+            <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
+          </div>
+          <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
+            <div class="quiz-content">
+              @for (question of questions; track $index) {
+                <app-quiz-detail [showAnswer]=showAnswer [question]="question" [index]="$index+1"></app-quiz-detail>
+              }
+            </div>
+          </cdk-virtual-scroll-viewport>
         </div>
-      </cdk-virtual-scroll-viewport>
+      }
     </div>
   </div>
-</div>
+
+}

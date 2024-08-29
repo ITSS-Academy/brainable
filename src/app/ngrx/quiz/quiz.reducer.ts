@@ -1,11 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import * as QuizActions from './quiz.actions';
 import { QuizState } from './quiz.state';
-import { Quiz, QuizDTO } from '../../models/quiz.model';
-import { questionReducer } from '../question/question.reducer';
+import { Quiz } from '../../models/quiz.model';
 import { Question } from '../../models/question.model';
-import * as QuestionActions from '../question/question.actions';
-import { Q } from '@angular/cdk/keycodes';
 
 export const initialState: QuizState = {
   quizzes: [],
@@ -143,7 +140,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
-    console.log(type);
     if (!Array.isArray(state.quiz.questions)) {
       return state;
     }
@@ -159,8 +155,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.updateSetting, (state, { setting, type }) => {
-    console.log(setting);
-
     return {
       ...state,
       quiz: {
@@ -190,14 +184,12 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.deleteQuiz, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isDeleteQuizLoading: true,
     };
   }),
   on(QuizActions.deleteQuizSuccess, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isDeleteQuizLoading: false,
@@ -205,7 +197,6 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.deleteQuizFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isDeleteQuizLoading: false,

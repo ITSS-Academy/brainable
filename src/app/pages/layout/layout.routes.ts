@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import * as AuthGuard from '../../guards/auth.guard';
+import { SearchComponent } from './search/search.component';
 
 export const LAYOUT_ROUTERS: Routes = [
   {
@@ -40,6 +41,10 @@ export const LAYOUT_ROUTERS: Routes = [
           import('./categories/categories.routes').then(
             (m) => m.CATEGORIES_ROUTERS,
           ),
+      },
+      {
+        path: 'search',
+        component: SearchComponent,
       },
     ],
   },

@@ -34,21 +34,24 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
   numOfUserResponses = 0;
   countdownInterval: any; // Store interval ID
+  isCountdownFinished = false;
 
   constructor(
     private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private gameService: GameService,
-  ) {
-    this.playMusic();
-  }
+  ) {}
 
   ngOnInit() {
-    this.gameService.listenForPlayerSubmittedAnswerAnswer().subscribe(() => {
+    this.gameService.listenForPlayerSubmittedAnswer().subscribe(() => {
       this.numOfUserResponses++;
-      if (this.numOfUserResponses === this.totalPlayers) {
+      if (
+        this.numOfUserResponses === this.totalPlayers &&
+        !this.isCountdownFinished
+      ) {
         clearInterval(this.countdownInterval);
+        console.log('All players have answered');
 
         this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
           this.gameService.nextShowResults(this.pin);
@@ -102,7 +105,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
       this.activeNumber = countTime;
 
       if (countTime < 1) {
+        console.log('Countdown finished');
         clearInterval(this.countdownInterval);
+        this.isCountdownFinished = true;
         this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
           this.gameService.nextShowResults(this.pin);
         });
@@ -118,20 +123,18 @@ export class AnswerComponent implements OnInit, OnDestroy {
     this.song.play().then();
     this.song.loop = true;
     this.isMusicPlaying = true;
-    console.log('playing music in answer');
   }
 
   pauseMusic() {
     this.song.pause();
     this.isMusicPlaying = false;
-    console.log('pausing music in answer');
   }
 
-  listenForAnswer() {
-    this.gameService.listenForAnswer().subscribe((answer) => {
-      console.log('Answer received:', answer);
-    });
-  }
+  // listenForAnswer() {
+  //   this.gameService.listenForAnswer().subscribe((answer) => {
+  //     console.log('Answer received:', answer);
+  //   });
+  // }
 
   imgHandler(imgUrl: string) {
     if (
@@ -147,7 +150,5 @@ export class AnswerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
     clearInterval(this.countdownInterval);
-    console.log('clearing interval');
-    this.pauseMusic();
   }
 }

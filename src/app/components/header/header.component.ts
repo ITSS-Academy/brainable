@@ -1,21 +1,15 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  inject,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import { Store } from '@ngrx/store';
 import { ProfileState } from '../../ngrx/profile/profile.state';
 import { SharedModule } from '../../shared/modules/shared.module';
+import { SearchState } from '../../ngrx/search/search.state';
+import * as SearchActions from '../../ngrx/search/search.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -25,21 +19,40 @@ import { SharedModule } from '../../shared/modules/shared.module';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
+  subscription: Subscription[] = [];
   @Output() menuClick = new EventEmitter<void>();
 
   dialog = inject(MatDialog);
   profile$ = this.store.select('profile', 'isGettingProfileSuccessful');
 
+  searchValue = '';
+
   constructor(
-    private store: Store<{ auth: AuthState; profile: ProfileState }>,
+    private store: Store<{
+      auth: AuthState;
+      profile: ProfileState;
+      search: SearchState;
+    }>,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.store.select('auth', 'isLoginSuccess').subscribe((isLoginSuccess) => {
-      if (isLoginSuccess) {
-        this.dialog.closeAll();
-      }
-    });
+    this.subscription.push(
+      this.store
+        .select('auth', 'isLoginSuccess')
+        .subscribe((isLoginSuccess) => {
+          if (isLoginSuccess) {
+            this.dialog.closeAll();
+          }
+        }),
+      this.store
+        .select('search', 'isSearchingSuccess')
+        .subscribe((isSuccess) => {
+          if (isSuccess) {
+            this.router.navigate(['/search']);
+          }
+        }),
+    );
   }
 
   onMenuClick(): void {
@@ -63,5 +76,9 @@ export class HeaderComponent implements OnInit {
 
   hideSearch() {
     this.isSearch = false;
+  }
+
+  onEnterPress() {
+    this.store.dispatch(SearchActions.search({ query: this.searchValue }));
   }
 }

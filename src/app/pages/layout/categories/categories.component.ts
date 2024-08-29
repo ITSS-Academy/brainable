@@ -56,24 +56,17 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(
-      CategoriesActions.getCategoryById({ uid: this.categoryId }),
-    );
     this.subscription.push(
       this.store.select('categories', 'category').subscribe((data) => {
-        // this.quiz = data.quizzes as Quiz[];
-        // this.category = data as CategoriesByUid;
-        // console.log(this.category);
-        if (Array.isArray(data) && data.length > 0) {
-          const category = data[0];
-          this.category = category as CategoriesByUid;
-          this.quizzes = category.quizzes as Quiz[];
-          this.questions = category.questions as Question[];
-          console.log(this.quizzes);
-        } else {
-          console.log('No category data available');
+        this.category = data as CategoriesByUid;
+        this.quizzes = data.quizzes as Quiz[];
+        if (this.quizzes) {
+          this.questions = this.quizzes[0].questions;
         }
       }),
+    );
+    this.store.dispatch(
+      CategoriesActions.getCategoryById({ uid: this.categoryId }),
     );
   }
 
@@ -82,15 +75,10 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   activeQuiz(index: number): void {
-    if (this.quizzes && this.quizzes[index]) {
-      this.questions = this.quizzes[index].questions || [];
-      console.log(this.questions); // Check if questions are populated
-    }
+    this.questions = this.quizzes[index].questions;
   }
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
-
-  protected readonly getAllCategories = getAllCategories;
 }

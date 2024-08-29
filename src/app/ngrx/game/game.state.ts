@@ -4,4 +4,5 @@ export interface GameState {
   playerName: string;
   playerAnswer: number;
   totalPlayers: number;
+  totalQuestions: number;
 }

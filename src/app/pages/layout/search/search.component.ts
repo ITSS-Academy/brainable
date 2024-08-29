@@ -9,6 +9,8 @@ import { Store } from '@ngrx/store';
 import { CategoriesState } from '../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../ngrx/categories/categories.actions';
 import { MaterialModule } from '../../../shared/modules/material.module';
+import { SearchState } from '../../../ngrx/search/search.state';
+import { SearchModel } from '../../../models/search.model';
 
 @Component({
   selector: 'app-search',
@@ -19,44 +21,23 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
-  categoryId!: string;
-  quizzes!: Quiz[];
-  category!: CategoriesByUid;
+  searchResults: SearchModel[] = [];
   questions!: Question[];
 
   showAnswer: boolean = false;
 
-  isGettingCategorySuccess$ = this.store.select(
-    'categories',
-    'isGetCategorySuccessful',
-  );
-
   constructor(
-    private activatedRoute: ActivatedRoute,
     private store: Store<{
-      categories: CategoriesState;
+      search: SearchState;
     }>,
-  ) {
-    this.categoryId = this.activatedRoute.snapshot.params['id'];
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(
-      CategoriesActions.getCategoryById({ uid: this.categoryId }),
-    );
     this.subscription.push(
-      this.store.select('categories', 'category').subscribe((data) => {
-        // this.quiz = data.quizzes as Quiz[];
-        // this.category = data as CategoriesByUid;
-        // console.log(this.category);
-        if (Array.isArray(data) && data.length > 0) {
-          const category = data[0];
-          this.category = category as CategoriesByUid;
-          this.quizzes = category.quizzes as Quiz[];
-          this.questions = category.questions as Question[];
-          console.log(this.quizzes);
-        } else {
-          console.log('No category data available');
+      this.store.select('search', 'searchResults').subscribe((data) => {
+        this.searchResults = data as SearchModel[];
+        if (this.searchResults.length > 0) {
+          this.activeQuiz(0);
         }
       }),
     );
@@ -67,15 +48,11 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   activeQuiz(index: number): void {
-    if (this.quizzes && this.quizzes[index]) {
-      this.questions = this.quizzes[index].questions || [];
-      console.log(this.questions); // Check if questions are populated
-    }
+    const score = this.searchResults[index]._score;
+    this.questions = this.searchResults[index]._source.questions;
   }
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
-
-  // protected readonly getAllCategories = getAllCategories;
 }

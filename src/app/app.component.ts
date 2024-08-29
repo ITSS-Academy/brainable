@@ -23,12 +23,11 @@ export class AppComponent implements OnInit {
 
   constructor(
     private auth: Auth,
-    private store: Store<{ auth: AuthState; profile: ProfileState }>
+    private store: Store<{ auth: AuthState; profile: ProfileState }>,
   ) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken(true);
-        console.log(idToken);
         this.store.dispatch(AuthActions.storeIdToken({ idToken }));
       }
     });

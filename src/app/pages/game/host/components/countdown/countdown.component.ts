@@ -80,13 +80,11 @@ export class CountdownComponent implements OnInit, OnDestroy {
     this.song.play().then();
     this.song.loop = true;
     this.isMusicPlaying = true;
-    console.log('playing music in countdown');
   }
 
   pauseMusic() {
     this.song.pause();
     this.isMusicPlaying = false;
-    console.log('pausing music in countdown');
   }
 
   ngOnDestroy() {

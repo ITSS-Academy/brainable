@@ -65,7 +65,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
           this.question.option3 = data.data;
           this.updateCharCountAnswer(3);
         }
-        console.log('Question:');
         this.store.dispatch(
           QuizActions.updateQuestionByIndex({
             question: this.question,
@@ -95,7 +94,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   selectedImage: string | ArrayBuffer = '';
 
   uploadQuestionFile(input: HTMLInputElement) {
-    console.log('Uploading file in question...');
     if (!input.files) return;
     const files: FileList = input.files;
 
@@ -108,7 +106,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
             getDownloadURL(snapshot.ref)
               .then((url) => {
                 this.uploadedFileURL = url;
-                console.log('Uploaded file URL:', this.uploadedFileURL);
                 this.question.imgUrl = this.uploadedFileURL;
                 this.store.dispatch(
                   QuizActions.updateQuestionByIndex({
@@ -117,13 +114,9 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
                   }),
                 );
               })
-              .catch((error) => {
-                console.error('Error getting file URL:', error);
-              });
+              .catch((error) => {});
           })
-          .catch((error) => {
-            console.error('Error uploading file:', error);
-          });
+          .catch((error) => {});
       }
     }
   }

@@ -1,9 +1,9 @@
 <div id="container">
   <div class="header">
-    <p class="number-of-questions">1 of 2</p>
+    <p class="number-of-questions">{{ currentQuestion + 1 }} of {{ totalQuestions }}</p>
   </div>
 
-  <img src="assets/images/logo/brainable-white.png" alt="Logo" class="logo" />
+  <img src="assets/images/logo/brainable-white.png" alt="Logo" class="logo"/>
   <div class="question">
     <p class="text">{{ questions[currentQuestion].question }}</p>
   </div>

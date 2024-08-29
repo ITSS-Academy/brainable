@@ -47,7 +47,6 @@ export class GuestComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.listenForErrors().subscribe((error) => {
-      console.log(error);
       if (error === 'Host has left the game') {
         this.openSnackBar();
         this.router.navigate(['/join']);

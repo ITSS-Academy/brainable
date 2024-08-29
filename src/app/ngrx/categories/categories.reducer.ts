@@ -18,7 +18,6 @@ export const initialState: CategoriesState = {
 export const categoriesReducer = createReducer(
   initialState,
   on(CategoriesActions.getAllCategories, (state) => {
-    console.log('Fetching all categories');
     return {
       ...state,
       isGetAllCategoriesLoading: true,
@@ -35,7 +34,6 @@ export const categoriesReducer = createReducer(
     };
   }),
   on(CategoriesActions.getAllCategoriesFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isGetAllCategoriesLoading: false,
@@ -59,7 +57,6 @@ export const categoriesReducer = createReducer(
     };
   }),
   on(CategoriesActions.getCategoryByIdFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isGetCategoryLoading: false,

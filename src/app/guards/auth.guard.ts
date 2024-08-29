@@ -16,7 +16,6 @@ export const canActivateLibrary: CanActivateFn = () => {
           return true;
         } else {
           router.navigate(['/home']).then((r) => {
-            console.log('[Library] user is not signed in');
             const dialogConfig = new MatDialogConfig();
             dialogConfig.width = '40vw';
             dialogConfig.maxWidth = '80vw';
@@ -40,7 +39,6 @@ export const canActivateReports: CanActivateFn = () => {
           return true;
         } else {
           router.navigate(['/home']).then((r) => {
-            console.log('[Reports] user is not signed in');
             const dialogConfig = new MatDialogConfig();
             dialogConfig.width = '40vw';
             dialogConfig.maxWidth = '80vw';
@@ -64,7 +62,6 @@ export const canActivateCreate: CanActivateFn = () => {
           return true;
         } else {
           router.navigate(['/home']).then((r) => {
-            console.log('[Create] user is not signed in');
             const dialogConfig = new MatDialogConfig();
             dialogConfig.width = '40vw';
             dialogConfig.maxWidth = '80vw';

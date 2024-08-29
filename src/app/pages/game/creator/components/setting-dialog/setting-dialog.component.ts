@@ -75,11 +75,9 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
         .subscribe((isGetAllCategoriesSuccessful) => {
           if (isGetAllCategoriesSuccessful) {
             if (this.settings.category) {
-              console.log(this.settings.category);
               this.categoryValue = this.listCategories.findIndex(
                 (category) => category.uid == this.settings.category.uid,
               );
-              console.log(this.categoryValue);
             }
           }
         }),
@@ -102,7 +100,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
             getDownloadURL(snapshot.ref)
               .then((url) => {
                 this.uploadedFileUrl = url;
-                console.log('Uploaded file URL:', this.uploadedFileUrl);
                 this.settings.imgUrl = this.uploadedFileUrl;
                 this.store.dispatch(
                   QuizActions.updateSetting({
@@ -110,13 +107,9 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
                   }),
                 );
               })
-              .catch((error) => {
-                console.error('Error getting file URL:', error);
-              });
+              .catch((error) => {});
           })
-          .catch((error) => {
-            console.error('Error uploading file:', error);
-          });
+          .catch((error) => {});
       }
     }
   }
@@ -172,7 +165,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(event: any) {
-    console.log(event);
     this.settings.category = { ...this.listCategories[event.value] };
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),

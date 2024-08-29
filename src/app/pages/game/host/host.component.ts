@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
@@ -32,6 +32,8 @@ import { GameService } from '../../../services/game/game.service';
   styleUrl: './host.component.scss',
 })
 export class HostComponent implements OnInit, OnDestroy {
+  @ViewChild(QuestionComponent) questionComponent!: QuestionComponent;
+
   constructor(
     private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
     private activatedRoute: ActivatedRoute,
@@ -44,7 +46,6 @@ export class HostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('HostComponent destroyed');
     this.gameService.disconnect();
   }
 }

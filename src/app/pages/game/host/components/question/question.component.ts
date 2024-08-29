@@ -21,7 +21,9 @@ export class QuestionComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   questions: Question[] = [];
   currentQuestion = 0;
+  totalQuestions = 0;
   pin!: string;
+  isMusicPlaying = true;
 
   progressValue = 0;
 
@@ -33,7 +35,24 @@ export class QuestionComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private gameService: GameService,
     private router: Router,
-  ) {}
+  ) {
+    this.playMusic();
+  }
+
+  song = new Audio();
+
+  playMusic() {
+    this.song.src = 'assets/music/question.mp3';
+    this.song.load();
+    this.song.play().then();
+    this.song.loop = true;
+    this.isMusicPlaying = true;
+  }
+
+  pauseMusic() {
+    this.song.pause();
+    this.isMusicPlaying = false;
+  }
 
   ngOnInit() {
     this.animateProgress();
@@ -55,11 +74,17 @@ export class QuestionComponent implements OnInit, OnDestroy {
         .subscribe((currentQuestion) => {
           this.currentQuestion = currentQuestion as number;
         }),
+      this.store
+        .select('game', 'totalQuestions')
+        .subscribe((totalQuestions) => {
+          this.totalQuestions = totalQuestions as number;
+        }),
     );
   }
 
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.pauseMusic();
   }
 
   animateProgress() {

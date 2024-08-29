@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as QuestionReportActions from './questionReport.action';
 import { QuetionReportState } from './questionReport.state';
+
 const initialState: QuetionReportState = {
   questionRecords: [],
   questionRecord: null,
@@ -27,14 +28,13 @@ export const questionReportReducer = createReducer(
   on(
     QuestionReportActions.getQuestionReportsByGameIdSuccess,
     (state, { questionRecords }) => {
-      console.log(questionRecords);
       return {
         ...state,
         questionRecords: questionRecords,
         isGetQuestionReportsLoading: false,
         isGetQuestionReportsSuccessful: true,
       };
-    }
+    },
   ),
   on(
     QuestionReportActions.getQuestionReportsByGameIdFailure,
@@ -45,6 +45,6 @@ export const questionReportReducer = createReducer(
         isGetQuestionReportsSuccessful: false,
         getQuestionReportsErrorMessage: errorMessage,
       };
-    }
-  )
+    },
+  ),
 );

@@ -1,5 +1,9 @@
 :host {
   display: flex;
+
+  .cdk-overlay-pane {
+    background: unset;
+  }
 }
 
 .example-pizza-party {
