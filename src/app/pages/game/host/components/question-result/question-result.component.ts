@@ -68,7 +68,7 @@ export class QuestionResultComponent implements OnInit {
     } else {
       this.store.dispatch(GameActions.nextQuestion());
       this.router.navigate([`/host/${this.pin}/leaderboard-score`]);
-      this.gameService.showTop10(this.pin);
+      this.gameService.showTop5(this.pin);
     }
   }
 

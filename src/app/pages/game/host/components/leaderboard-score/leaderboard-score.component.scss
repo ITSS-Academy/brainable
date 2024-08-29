@@ -9,7 +9,7 @@
 
   .header {
     width: 100%;
-    height: 40%;
+    height: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,24 +26,29 @@
     .logo {
       width: 350px;
     }
-
-    .title {
-      font-size: 2rem;
-      line-height: 2.5rem;
-      font-weight: bold;
-      margin-top: 24px;
-      padding: 8px 12px;
-      background-color: var(--md-sys-color-surface-container-lowest);
-      border-radius: 4px;
-    }
   }
 
-  .leaderboard-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 10px;
+  .leaderboard {
+    width: 40%;
+    height: 70%;
 
+    &__content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 15px;
+
+      .card {
+        width: 100%;
+
+        .card-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+    }
   }
 }
 

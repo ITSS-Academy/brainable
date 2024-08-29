@@ -5,20 +5,17 @@
     <img class="logo" src="assets/images/logo/brainable-white.png" alt=""/>
   </div>
 
-  <div class="content">
-    <div class="leaderboard">
-      <div class="leaderboard-title">
-        <p>Leaderboard</p>
-      </div>
-      <div class="leaderboard-content">
-        <mat-card appearance="outlined">
-          <mat-card-content>Simple card</mat-card-content>
+  <div class="leaderboard">
+    <div class="leaderboard__content">
+      @for (player of result; track $index) {
+        <mat-card appearance="outlined" class="card">
+          <mat-card-content class="card-content">
+            <span>{{ player.playerName }}</span>
+            <span>{{ player.score }}</span>
+          </mat-card-content>
         </mat-card>
-        <mat-card appearance="outlined">
-          <mat-card-content>Simple card</mat-card-content>
-        </mat-card>
+      }
 
-      </div>
     </div>
   </div>
 
