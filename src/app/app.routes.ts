@@ -23,6 +23,7 @@ export const routes: Routes = [
     path: 'host/:pin',
     loadChildren: () =>
       import('./pages/game/host/host.routes').then((m) => m.HOST_ROUTERS),
+    canActivate: [AuthGuard.canActiveHost],
   },
   {
     path: 'guest/:pin',

@@ -78,7 +78,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.store.select('auth', 'idToken').subscribe((idToken) => {
           if (idToken) {
-            this.store.dispatch(QuizActions.getQuizById({ idToken, id }));
+            this.store.dispatch(QuizActions.getQuizById({ id }));
           }
         }),
         this.store.select('quiz', 'quiz').subscribe((quiz) => {

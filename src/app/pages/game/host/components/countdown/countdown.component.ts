@@ -25,13 +25,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<{ game: GameState }>,
-  ) {
-    this.playMusic();
-
-    document.addEventListener('click', this.playMusic.bind(this), {
-      once: true,
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.startCountdown();
@@ -49,8 +43,10 @@ export class CountdownComponent implements OnInit, OnDestroy {
     const countdownInterval = setInterval(() => {
       if (index > 0) {
         this.hiddenNumbers.add(this.countdownNumbers[index - 1]); // Hide the previous number
+        this.pauseMusic(); // Pause music before moving to the next number
       }
       this.activeNumber = this.countdownNumbers[index];
+      this.playMusic(); // Start music at the beginning of each countdown interval
       index++;
 
       if (index === this.countdownNumbers.length) {

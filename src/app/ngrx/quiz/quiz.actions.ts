@@ -19,7 +19,7 @@ export const getAllQuizFailure = createAction(
 
 export const getQuizById = createAction(
   '[Quiz] Get Quiz By Id',
-  props<{ idToken: string; id: string }>(),
+  props<{ id: string }>(),
 );
 
 export const getQuizByIdSuccess = createAction(

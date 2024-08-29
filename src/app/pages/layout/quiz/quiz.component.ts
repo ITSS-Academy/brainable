@@ -55,20 +55,13 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription.push(
-      this.store.select('auth', 'idToken').subscribe((idToken) => {
-        if (idToken) {
-          this.idToken = idToken;
-          this.store.dispatch(
-            QuizActions.getQuizById({ idToken: idToken, id: this.quizId }),
-          );
-        }
-      }),
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
           this.quiz = quiz;
         }
       }),
     );
+    this.store.dispatch(QuizActions.getQuizById({ id: this.quizId }));
   }
 
   toggleAnswer() {

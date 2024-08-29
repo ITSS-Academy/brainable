@@ -6,6 +6,7 @@ import { QuestionComponent } from './components/question/question.component';
 import { QuestionResultComponent } from './components/question-result/question-result.component';
 import { CountdownComponent } from './components/countdown/countdown.component';
 import { GameResultComponent } from './components/game-result/game-result.component';
+import { LeaderboardScoreComponent } from './components/leaderboard-score/leaderboard-score.component';
 
 export const HOST_ROUTERS: Routes = [
   {
@@ -35,6 +36,10 @@ export const HOST_ROUTERS: Routes = [
       {
         path: 'game-result',
         component: GameResultComponent,
+      },
+      {
+        path: 'leaderboard-score',
+        component: LeaderboardScoreComponent,
       },
     ],
   },

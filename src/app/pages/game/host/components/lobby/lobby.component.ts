@@ -42,20 +42,12 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
     this.playMusic();
 
-    document.addEventListener('click', this.playMusic.bind(this), {
-      once: true,
-    });
+    // document.addEventListener('click', this.playMusic.bind(this), {
+    //   once: true,
+    // });
   }
 
   ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.pauseMusic();
-    this.store.dispatch(
-      GameActions.storeTotalPlayers({ totalPlayers: this.guests.length }),
-    );
-  }
 
   startGame() {
     this.gameService.startGame(this.pin);
@@ -83,5 +75,13 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   isStartGameDisabled(): boolean {
     return this.guests.length < 1;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.store.dispatch(
+      GameActions.storeTotalPlayers({ totalPlayers: this.guests.length }),
+    );
+    this.pauseMusic();
   }
 }

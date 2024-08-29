@@ -11,9 +11,6 @@ import { QuestionResultComponent } from './components/question-result/question-r
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { GameState } from '../../../ngrx/game/game.state';
 import * as GameActions from '../../../ngrx/game/game.actions';
-import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
-import { Subscription } from 'rxjs';
-import { Question } from '../../../models/question.model';
 import { GameService } from '../../../services/game/game.service';
 
 @Component({
@@ -32,8 +29,6 @@ import { GameService } from '../../../services/game/game.service';
   styleUrl: './host.component.scss',
 })
 export class HostComponent implements OnInit, OnDestroy {
-  @ViewChild(QuestionComponent) questionComponent!: QuestionComponent;
-
   constructor(
     private store: Store<{ quiz: QuizState; auth: AuthState; game: GameState }>,
     private activatedRoute: ActivatedRoute,

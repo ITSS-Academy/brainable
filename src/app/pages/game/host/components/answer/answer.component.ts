@@ -41,7 +41,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private gameService: GameService,
-  ) {}
+  ) {
+    this.playMusic();
+  }
 
   ngOnInit() {
     this.gameService.listenForPlayerSubmittedAnswer().subscribe(() => {
@@ -118,7 +120,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
   song = new Audio();
 
   playMusic() {
-    this.song.src = 'assets/music/question.mp3';
+    this.song.src = 'assets/music/ingame.mp3';
     this.song.load();
     this.song.play().then();
     this.song.loop = true;
@@ -129,12 +131,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
     this.song.pause();
     this.isMusicPlaying = false;
   }
-
-  // listenForAnswer() {
-  //   this.gameService.listenForAnswer().subscribe((answer) => {
-  //     console.log('Answer received:', answer);
-  //   });
-  // }
 
   imgHandler(imgUrl: string) {
     if (
@@ -150,5 +146,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
     clearInterval(this.countdownInterval);
+    this.pauseMusic();
   }
 }

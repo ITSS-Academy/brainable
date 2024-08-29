@@ -15,13 +15,11 @@ export const canActivateLibrary: CanActivateFn = () => {
         if (isSignedIn) {
           return true;
         } else {
-          router.navigate(['/home']).then((r) => {
-            const dialogConfig = new MatDialogConfig();
-            dialogConfig.width = '40vw';
-            dialogConfig.maxWidth = '80vw';
-            dialogConfig.panelClass = 'custom-dialog-container';
-            dialog.open(LoginComponent, dialogConfig);
-          });
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.width = '40vw';
+          dialogConfig.maxWidth = '80vw';
+          dialogConfig.panelClass = 'custom-dialog-container';
+          dialog.open(LoginComponent, dialogConfig);
           return false;
         }
       }),
@@ -38,13 +36,12 @@ export const canActivateReports: CanActivateFn = () => {
         if (isSignedIn) {
           return true;
         } else {
-          router.navigate(['/home']).then((r) => {
-            const dialogConfig = new MatDialogConfig();
-            dialogConfig.width = '40vw';
-            dialogConfig.maxWidth = '80vw';
-            dialogConfig.panelClass = 'custom-dialog-container';
-            dialog.open(LoginComponent, dialogConfig);
-          });
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.width = '40vw';
+          dialogConfig.maxWidth = '80vw';
+          dialogConfig.panelClass = 'custom-dialog-container';
+          dialog.open(LoginComponent, dialogConfig);
+
           return false;
         }
       }),
@@ -61,13 +58,33 @@ export const canActivateCreate: CanActivateFn = () => {
         if (isSignedIn) {
           return true;
         } else {
-          router.navigate(['/home']).then((r) => {
-            const dialogConfig = new MatDialogConfig();
-            dialogConfig.width = '40vw';
-            dialogConfig.maxWidth = '80vw';
-            dialogConfig.panelClass = 'custom-dialog-container';
-            dialog.open(LoginComponent, dialogConfig);
-          });
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.width = '40vw';
+          dialogConfig.maxWidth = '80vw';
+          dialogConfig.panelClass = 'custom-dialog-container';
+          dialog.open(LoginComponent, dialogConfig);
+          return false;
+        }
+      }),
+    );
+};
+
+export const canActiveHost: CanActivateFn = () => {
+  const router = inject(Router);
+  const dialog = inject(MatDialog);
+  return inject(AuthService)
+    .isSignedIn()
+    .pipe(
+      map((isSignedIn) => {
+        if (isSignedIn) {
+          return true;
+        } else {
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.width = '40vw';
+          dialogConfig.maxWidth = '80vw';
+          dialogConfig.panelClass = 'custom-dialog-container';
+          dialog.open(LoginComponent, dialogConfig);
+
           return false;
         }
       }),

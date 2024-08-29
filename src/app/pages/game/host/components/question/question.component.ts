@@ -35,14 +35,12 @@ export class QuestionComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private gameService: GameService,
     private router: Router,
-  ) {
-    this.playMusic();
-  }
+  ) {}
 
   song = new Audio();
 
   playMusic() {
-    this.song.src = 'assets/music/question.mp3';
+    this.song.src = 'assets/music/ingame.mp3';
     this.song.load();
     this.song.play().then();
     this.song.loop = true;
@@ -84,7 +82,6 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
-    this.pauseMusic();
   }
 
   animateProgress() {
