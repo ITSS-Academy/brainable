@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { CategoriesState } from '../../../ngrx/categories/categories.state';
@@ -16,13 +16,6 @@ import { Quiz } from '../../../models/quiz.model';
 import { NgIf } from '@angular/common';
 import { getAllCategories } from '../../../ngrx/categories/categories.actions';
 import { Question } from '../../../models/question.model';
-import * as GameActions from '../../../ngrx/game/game.actions';
-import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
-import { GameReport } from '../../../models/gameReport.model';
-import * as GameReportActions from '../../../ngrx/gameReport/gameReport.action';
-import { GameService } from '../../../services/game/game.service';
-import { QuizState } from '../../../ngrx/quiz/quiz.state';
-import { GameState } from '../../../ngrx/game/game.state';
 
 @Component({
   selector: 'app-categories',
@@ -45,8 +38,6 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   quizzes!: Quiz[];
   category!: CategoriesByUid;
   questions!: Question[];
-  idToken!: string;
-  @Input() quiz!: Quiz;
 
   showAnswer: boolean = false;
 
@@ -59,12 +50,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private store: Store<{
       categories: CategoriesState;
-      quiz: QuizState;
-      auth: AuthState;
-      game: GameState;
     }>,
-    private router: Router,
-    private gameService: GameService,
   ) {
     this.categoryId = this.activatedRoute.snapshot.params['id'];
   }
@@ -82,47 +68,6 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       CategoriesActions.getCategoryById({ uid: this.categoryId }),
     );
-  }
-
-  playGame() {
-    const pin = this.generatePin();
-    this.store.dispatch(GameActions.storePin({ pin }));
-    this.store.dispatch(
-      QuizActions.storeCurrentQuiz({ quiz: this.quizzes[0] }),
-    );
-    this.store.dispatch(
-      GameActions.storeTotalQuestions({
-        totalQuestions: this.quizzes[0].questions.length,
-      }),
-    );
-
-    this.gameService.createRoom(pin);
-    this.router.navigate([`/host/${pin}/lobby`]);
-
-    let newGame: GameReport = {
-      id: '',
-      quizId: this.quiz,
-      createdAt: new Date(),
-      gameRecords: [],
-      hostId: '',
-      index: 0,
-      joinCode: pin,
-      totalQuestions: 0,
-    };
-    this.store.dispatch(
-      GameReportActions.createGameReport({
-        idToken: this.idToken,
-        gameReport: newGame,
-      }),
-    );
-  }
-
-  generatePin(): string {
-    let pin = '';
-    for (let i = 0; i < 6; i++) {
-      pin += Math.floor(Math.random() * 10).toString();
-    }
-    return pin;
   }
 
   toggleAnswer() {
