@@ -61,7 +61,7 @@ export class QuizEffects {
     return this.actions$.pipe(
       ofType(QuizActions.getQuizById),
       switchMap((action) => {
-        return this.quizService.getQuizById(action.idToken, action.id);
+        return this.quizService.getQuizById(action.id);
       }),
       map((quiz: any) => {
         return QuizActions.getQuizByIdSuccess({ quiz });

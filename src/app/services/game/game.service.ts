@@ -206,6 +206,18 @@ export class GameService {
     this.socket.emit('sendAnswer', data);
   }
 
+  showTop10(pin: string): void {
+    this.socket.emit('showTop10', pin);
+  }
+
+  listenForTop10(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('leaderboardTop10', (top10: any) => {
+        observer.next(top10);
+      });
+    });
+  }
+
   listenForQuestion() {
     return new Observable((observer) => {
       this.socket.on('newQuestion', (question: any) => {

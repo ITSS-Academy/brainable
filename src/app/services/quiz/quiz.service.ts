@@ -41,11 +41,7 @@ export class QuizService {
     });
   }
 
-  getQuizById(idToken: string, id: string) {
-    return this.http.get(`${environment.apiUrl}/quiz/${id}`, {
-      headers: {
-        Authorization: `${idToken}`,
-      },
-    });
+  getQuizById(id: string) {
+    return this.http.get(`${environment.apiUrl}/quiz/${id}`, {});
   }
 }

@@ -67,8 +67,8 @@ export class QuestionResultComponent implements OnInit {
       this.gameService.endGame(this.pin);
     } else {
       this.store.dispatch(GameActions.nextQuestion());
-      this.router.navigate([`/host/${this.pin}/question`]);
-      this.gameService.nextQuestion(this.pin);
+      this.router.navigate([`/host/${this.pin}/leaderboard-score`]);
+      this.gameService.showTop10(this.pin);
     }
   }
 
