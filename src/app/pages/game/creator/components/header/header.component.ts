@@ -11,6 +11,7 @@ import { Question, QuestionDTO } from '../../../../../models/question.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../../../../../components/login/login.component';
 import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -67,6 +68,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     dialogConfig.maxWidth = '85vw';
     dialogConfig.panelClass = 'custom-dialog-container';
     this.dialog.open(SettingDialogComponent, dialogConfig);
+  }
+
+  openNotiDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '40%';
+    dialogConfig.maxWidth = '85vw';
+    dialogConfig.panelClass = 'custom-dialog-container';
+    this.dialog.open(DialogComponent, dialogConfig);
   }
 
   saveQuiz() {
