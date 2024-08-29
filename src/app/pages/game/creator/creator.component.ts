@@ -12,6 +12,7 @@ import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
+import {DialogComponent} from "./components/dialog/dialog.component";
 
 @Component({
   selector: 'app-creator',
@@ -22,6 +23,7 @@ import { Profile } from '../../../models/profile.model';
     HeaderComponent,
     MainContentComponent,
     LoadingComponent,
+    DialogComponent,
   ],
   templateUrl: './creator.component.html',
   styleUrl: './creator.component.scss',
