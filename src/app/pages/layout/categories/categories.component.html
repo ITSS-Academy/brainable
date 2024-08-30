@@ -10,11 +10,10 @@
     </div>
     <div class="library-container">
       @if (quizzes.length === 0) {
-        <div class="empty-box"><img src="assets/images/empty-box.png" alt="">
+        <div class="empty-box">
+          <img src="assets/images/empty-box.png" alt=""/>
         </div>
       } @else {
-
-
         <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
           <div class="quiz-list">
             @for (quiz of quizzes; track $index) {
@@ -34,7 +33,7 @@
                           </div>
                         </div>
                         <div class="row-creator">
-                          <button mat-flat-button>Play</button>
+                          <button mat-flat-button (click)="playGame(quiz)">Play</button>
                         </div>
                       </div>
                     </div>
@@ -47,11 +46,12 @@
 
         <div
           style="
-        width: 1px;
-        height: 100%;
-        background-color: #e0e0e0;
-        margin-left: 10px;
-      "
+            width: 1px;
+            height: 100%;
+            background-color: #e0e0e0;
+            margin-left: 10px;
+          "
+          class="straight-line"
         ></div>
 
         <div class="content-container">
@@ -62,7 +62,11 @@
           <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
             <div class="quiz-content">
               @for (question of questions; track $index) {
-                <app-quiz-detail [showAnswer]=showAnswer [question]="question" [index]="$index+1"></app-quiz-detail>
+                <app-quiz-detail
+                  [showAnswer]="showAnswer"
+                  [question]="question"
+                  [index]="$index + 1"
+                ></app-quiz-detail>
               }
             </div>
           </cdk-virtual-scroll-viewport>
@@ -70,5 +74,4 @@
       }
     </div>
   </div>
-
 }

@@ -42,6 +42,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
     private store: Store<{ game: GameState }>,
     private gameService: GameService,
   ) {
+    console.log('Answer component created');
     this.startTimer();
     this.subscription.push(
       this.store.select('game', 'playerName').subscribe((playerName) => {
@@ -64,6 +65,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
       this.questionId = questionId;
     });
     this.gameService.listenForNavigateToResults(this.pin);
+    this.gameService.stopListeningForNavigateToNextQuestion();
   }
 
   chooseAnswer(answer: number) {
@@ -86,7 +88,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
       console.log('Player did not choose an answer');
       this.chooseAnswer(0);
     }
-    this.isChoosing = false;
+    console.log('Answer component destroyed');
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
 }

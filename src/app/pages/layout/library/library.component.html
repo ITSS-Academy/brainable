@@ -4,20 +4,31 @@
   </div>
   <div class="library-container">
     @if (listQuiz.length === 0) {
-      <div class="empty-box"><img src="assets/images/empty-box.png" alt="">
+      <div class="empty-box">
+        <img src="assets/images/empty-box.png" alt="" />
       </div>
     } @else {
       <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
         <div class="quiz-list">
           @for (quiz of listQuiz; track $index) {
-            <app-general-info [quiz]="quiz" (showAnswer)="showAnswer = !showAnswer"
-                              (click)="activeQuiz($index)"></app-general-info>
+            <app-general-info
+              [quiz]="quiz"
+              (showAnswer)="showAnswer = !showAnswer"
+              (click)="activeQuiz($index)"
+            ></app-general-info>
           }
         </div>
       </cdk-virtual-scroll-viewport>
 
-      <div style="width: 1px; height: 100%; background-color: #e0e0e0; margin-left: 10px "></div>
-
+      <div
+        style="
+          width: 1px;
+          height: 100%;
+          background-color: #e0e0e0;
+          margin-left: 10px;
+        "
+        class="straight-line"
+      ></div>
 
       <div class="content-container">
         <div class="quiz-detail__header">
@@ -27,7 +38,11 @@
         <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
           <div class="quiz-content">
             @for (question of listQuestion; track $index) {
-              <app-quiz-detail [showAnswer]=showAnswer [question]="question" [index]="$index+1"></app-quiz-detail>
+              <app-quiz-detail
+                [showAnswer]="showAnswer"
+                [question]="question"
+                [index]="$index + 1"
+              ></app-quiz-detail>
             }
           </div>
         </cdk-virtual-scroll-viewport>

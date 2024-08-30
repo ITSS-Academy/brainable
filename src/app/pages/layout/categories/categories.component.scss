@@ -285,7 +285,8 @@ mat-card:hover {
 
     .library-container {
       width: 100%;
-      height: calc(100% - 270px);
+      height: calc(100% - 110px);
+      padding: 8px 0;
 
       .library-scroll {
         width: 100%;
@@ -299,18 +300,25 @@ mat-card:hover {
       .content-container {
         display: none;
       }
+
+      .straight-line {
+        display: none;
+      }
     }
   }
 }
 
 @media screen and (max-width: 576px) {
   .quiz-detail {
-    &__img {
-      width: 100px;
+    width: 100%;
 
-      img {
-        width: 100px;
-      }
+    &__img {
+      display: none;
+    }
+
+    &__info {
+      width: 100% !important;
+      padding: 12px 4px;
     }
   }
 }

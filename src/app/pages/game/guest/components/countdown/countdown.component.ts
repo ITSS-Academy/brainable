@@ -49,13 +49,11 @@ export class CountdownComponent implements OnInit {
       this.activeNumber = this.countdownNumbers[index];
       index++;
 
-      if (index === this.countdownNumbers.length) {
+      if (index > this.countdownNumbers.length) {
         clearInterval(countdownInterval);
-        setTimeout(() => {
-          this.showFinalText = true;
-          this.hideSquares = true; // Hide squares after countdown
-          this.router.navigate([`/guest/${this.pin}/countdown-to-question`]);
-        }, 1000);
+        this.showFinalText = true;
+        this.hideSquares = true; // Hide squares after countdown
+        this.router.navigate([`/guest/${this.pin}/countdown-to-question`]);
       }
     }, 1000);
   }
