@@ -131,23 +131,16 @@
     border-radius: 12px;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    height: fit-content;
 
     &__image {
-      width: 100%;
-      height: 300px;
-      border-radius: 12px 12px 0 0;
-
-      img {
-        width: 100%;
-        height: 100%;
-        border-radius: 12px 12px 0 0;
-        object-fit: cover;
-      }
+      display: none;
     }
   }
 
   .quiz-detail {
     width: 100%;
+    height: 100%;
     margin-left: 0;
   }
 }

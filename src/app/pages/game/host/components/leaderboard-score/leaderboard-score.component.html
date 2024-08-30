@@ -1,23 +1,24 @@
 <div id="container">
   <div class="header">
-    <button mat-flat-button class="btn-home" (click)="nextClicked()">Next</button>
+    <button mat-flat-button class="btn-home" (click)="nextClicked()">
+      Next
+    </button>
 
-    <img class="logo" src="assets/images/logo/brainable-white.png" alt=""/>
+    <img class="logo" src="assets/images/logo/brainable-white.png" alt="" />
   </div>
 
-  <div class="leaderboard">
-    <div class="leaderboard__content">
-      @for (player of result; track $index) {
-        <mat-card appearance="outlined" class="card">
-          <mat-card-content class="card-content">
-            <span>{{ player.playerName }}</span>
-            <span>{{ player.score }}</span>
-          </mat-card-content>
-        </mat-card>
-      }
+  <div #rootElement></div>
 
-    </div>
-  </div>
-
-
+  <!--  <div class="leaderboard">-->
+  <!--    <div class="leaderboard__content">-->
+  <!--      @for (player of result; track $index) {-->
+  <!--        <mat-card appearance="outlined" class="card">-->
+  <!--          <mat-card-content class="card-content">-->
+  <!--            <span>{{ player.playerName }}</span>-->
+  <!--            <span>{{ player.score }}</span>-->
+  <!--          </mat-card-content>-->
+  <!--        </mat-card>-->
+  <!--      }-->
+  <!--    </div>-->
+  <!--  </div>-->
 </div>

@@ -6,27 +6,26 @@
   <div class="container">
     <div class="quiz-info">
       <div class="quiz-info__image">
-        <img [src]="quiz.imgUrl" alt="">
+        <img [src]="quiz.imgUrl" alt="" />
       </div>
 
       <div class="quiz-info__content">
         <p class="title">{{ quiz.title }}</p>
-        <button mat-flat-button class="btn-action" (click)="playGame()">Host live</button>
-        <p class="description">{{
-            quiz.description
-          }}</p>
+        <button mat-flat-button class="btn-action" (click)="playGame()">
+          Host live
+        </button>
+        <p class="description">{{ quiz.description }}</p>
       </div>
 
       <div class="quiz-info__creator">
         <div class="avatar">
-          <img [src]="quiz.authorId.photoUrl" alt="">
+          <img [src]="quiz.authorId.photoUrl" alt="" />
         </div>
         <div class="info">
           <p class="name">{{ quiz.authorId.fullName }}</p>
           <p class="update-time">{{ quiz.createdAt | localTime }}</p>
         </div>
       </div>
-
     </div>
     <div class="quiz-detail">
       <div class="quiz-detail__header">
@@ -46,8 +45,4 @@
       </cdk-virtual-scroll-viewport>
     </div>
   </div>
-
 }
-
-
-
