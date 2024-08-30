@@ -23,7 +23,8 @@
 
   &__img {
     width: 140px;
-    height: auto;
+    height: fit-content;
+    display: flex;
 
     img {
       width: 140px;
@@ -46,10 +47,15 @@
   &__content {
     font-size: 14px;
     font-weight: 500;
+    width: 90%;
   }
 
   p {
     margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: unset;
+    width: 100%;
   }
 }
 
