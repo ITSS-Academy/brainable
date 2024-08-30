@@ -11,11 +11,12 @@ import * as CategoriesActions from '../../../ngrx/categories/categories.actions'
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SearchState } from '../../../ngrx/search/search.state';
 import { SearchModel } from '../../../models/search.model';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CdkFixedSizeVirtualScroll, MaterialModule],
+  imports: [CdkFixedSizeVirtualScroll, MaterialModule, NgIf],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })

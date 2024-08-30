@@ -29,6 +29,8 @@ import { SearchEffects } from './ngrx/search/search.effects';
 import { searchReducer } from './ngrx/search/search.reducer';
 import { questionRecordReducer } from './ngrx/questionRecord/questionRecord.reducer';
 import { QuestionRecordEffects } from './ngrx/questionRecord/questionRecord.effects';
+import { playerRecordReducer } from './ngrx/playerRecord/playerRecord.reducer';
+import { PlayerRecordEffect } from './ngrx/playerRecord/playerRecord.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,6 +46,7 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'gameReport', reducer: gameReportReducer }),
     provideState({ name: 'questionRecord', reducer: questionRecordReducer }),
     provideState({ name: 'search', reducer: searchReducer }),
+    provideState({ name: 'playerRecord', reducer: playerRecordReducer }),
     provideEffects([
       AuthEffects,
       ProfileEffects,
@@ -53,6 +56,7 @@ export const appConfig: ApplicationConfig = {
       GameReportEffects,
       QuestionRecordEffects,
       SearchEffects,
+      PlayerRecordEffect,
     ]),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig as any)),
     provideAuth(() => getAuth()),

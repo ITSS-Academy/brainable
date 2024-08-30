@@ -9,15 +9,15 @@ import { HttpClient } from '@angular/common/http';
 export class PlayerRecordService {
   constructor(private http: HttpClient) {}
 
-  createPlayerRecord(idToken: string, playerRecord: PlayerRecord) {
+  createPlayerRecord(idToken: string, playerRecord: PlayerRecord[]) {
     return this.http.post(
       `${environment.apiUrl}/game-record`,
-      { playerRecord: playerRecord },
+      { gameRecord: playerRecord },
       {
         headers: {
           Authorization: `${idToken}`,
         },
-      }
+      },
     );
   }
 }

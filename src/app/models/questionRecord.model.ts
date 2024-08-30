@@ -11,12 +11,10 @@ export interface QuestionRecord {
 }
 
 export interface QuestionRecordDTO {
-  questionRecord: {
-    gameId: string;
-    question: Question;
-    countA: number;
-    countB: number;
-    countC: number;
-    countD: number;
-  };
+  gameId: string;
+  question: Question;
+  countA: number;
+  countB: number;
+  countC: number;
+  countD: number;
 }

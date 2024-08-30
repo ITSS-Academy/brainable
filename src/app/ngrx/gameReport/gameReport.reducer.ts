@@ -70,22 +70,20 @@ export const gameReportReducer = createReducer(
   }),
 
   on(GameReportActions.createGameReport, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isCreateGameReportLoading: true,
     };
   }),
-  on(GameReportActions.createGameReportSuccess, (state, { type }) => {
-    console.log(type);
+  on(GameReportActions.createGameReportSuccess, (state, { type, gameId }) => {
     return {
       ...state,
+      gameId: gameId,
       isCreateGameReportLoading: false,
       isCreateGameReportSuccessful: true,
     };
   }),
   on(GameReportActions.createGameReportFailure, (state, { errorMessage }) => {
-    console.log(errorMessage);
     return {
       ...state,
       isCreateGameReportLoading: false,

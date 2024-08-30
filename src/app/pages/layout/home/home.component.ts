@@ -15,6 +15,7 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 import * as CategoriesActions from '../../../ngrx/categories/categories.actions';
 import { CategoriesState } from '../../../ngrx/categories/categories.state';
 import { LoadingComponent } from '../../loading/loading.component';
+import { GameService } from '../../../services/game/game.service';
 
 @Component({
   selector: 'app-home',
@@ -47,6 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
     private router: Router,
+    private gameService: GameService,
   ) {}
 
   ngOnInit(): void {

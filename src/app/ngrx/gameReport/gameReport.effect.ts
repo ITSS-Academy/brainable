@@ -52,7 +52,6 @@ export class GameReportEffects {
         return this.gameService.createGame(action.idToken, action.gameReport);
       }),
       map((data: any) => {
-        console.log(data);
         return GameReportActions.createGameReportSuccess({
           gameId: data.gameId,
         });

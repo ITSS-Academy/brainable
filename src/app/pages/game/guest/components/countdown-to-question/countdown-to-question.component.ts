@@ -82,6 +82,5 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.forEach((s) => s.unsubscribe());
     clearInterval(this.countdownInterval);
-    console.log('clearing');
   }
 }

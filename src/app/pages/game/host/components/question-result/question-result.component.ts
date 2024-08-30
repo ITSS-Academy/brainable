@@ -19,6 +19,11 @@ import { AnswerStatistics } from '../../../../../models/game.model';
 import { NgClass, NgIf } from '@angular/common';
 import { QuestionRecordState } from '../../../../../ngrx/questionRecord/questionRecord.state';
 import { QuestionRecordDTO } from '../../../../../models/questionRecord.model';
+import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
+import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
+import { AuthState } from '../../../../../ngrx/auth/auth.state';
+import * as QuestionRecordActions from '../../../../../ngrx/questionRecord/questionRecord.actions';
+import { PlayerRecord } from '../../../../../models/playerRecord.model';
 
 @Component({
   selector: 'app-question-result',
@@ -35,16 +40,16 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
   totalQuestions!: number;
   answerStatistics!: AnswerStatistics;
   correctAnswer!: number;
+  gameId!: string;
+  idToken!: string;
 
   questionRecord: QuestionRecordDTO = {
-    questionRecord: {
-      gameId: '',
-      question: <Question>{},
-      countA: 0,
-      countB: 0,
-      countC: 0,
-      countD: 0,
-    },
+    gameId: '',
+    question: <Question>{},
+    countA: 0,
+    countB: 0,
+    countC: 0,
+    countD: 0,
   };
 
   constructor(
@@ -52,6 +57,8 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
       game: GameState;
       quiz: QuizState;
       questionRecord: QuestionRecordState;
+      gameReport: GameReportState;
+      auth: AuthState;
     }>,
     private router: Router,
     private gameService: GameService,
@@ -68,9 +75,15 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
         .select('game', 'currentQuestion')
         .subscribe((currentQuestion) => {
           this.currentQuestion = currentQuestion as number;
-          this.questionRecord.questionRecord.question =
-            this.questions[currentQuestion];
+          this.questionRecord.question = this.questions[currentQuestion];
         }),
+      this.store.select('gameReport', 'gameId').subscribe((gameId) => {
+        this.gameId = gameId as string;
+        this.questionRecord.gameId = gameId as string;
+      }),
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        this.idToken = idToken as string;
+      }),
     );
   }
 
@@ -79,9 +92,13 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
       this.pin,
       this.questions[this.currentQuestion].id,
     );
+    this.questionRecord.question = this.questions[this.currentQuestion];
     this.gameService.receiveAnswerStatistics().subscribe((statistics) => {
       this.answerStatistics = statistics;
-      console.log(this.answerStatistics);
+      this.questionRecord.countA = this.answerStatistics.answerStatistics['1'];
+      this.questionRecord.countB = this.answerStatistics.answerStatistics['2'];
+      this.questionRecord.countC = this.answerStatistics.answerStatistics['3'];
+      this.questionRecord.countD = this.answerStatistics.answerStatistics['4'];
     });
     this.correctAnswer = this.questions[this.currentQuestion].answer;
   }
@@ -89,6 +106,7 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
   nextQuestionClicked() {
     if (this.currentQuestion === this.totalQuestions - 1) {
       this.router.navigate([`/host/${this.pin}/game-result`]);
+      this.gameService.getLastQuestionScore(this.pin, this.gameId);
       this.gameService.endGame(this.pin);
     } else {
       this.store.dispatch(GameActions.nextQuestion());
@@ -113,5 +131,19 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.store.dispatch(
+      QuestionRecordActions.createQuestionRecord({
+        idToken: this.idToken,
+        questionRecord: this.questionRecord,
+      }),
+    );
+    this.questionRecord = {
+      gameId: '',
+      question: <Question>{},
+      countA: 0,
+      countB: 0,
+      countC: 0,
+      countD: 0,
+    };
   }
 }

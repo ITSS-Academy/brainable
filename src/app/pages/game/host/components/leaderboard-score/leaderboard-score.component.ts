@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
-import { Question } from '../../../../../models/question.model';
 import { Subscription } from 'rxjs';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
@@ -40,6 +38,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
         .select('game', 'pin')
         .subscribe((pin) => (this.pin = pin as string)),
     );
+    this.playMusic();
   }
 
   ngOnInit(): void {
@@ -49,9 +48,21 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.store.select('game', 'previousResult').subscribe((prevResult) => {
         this.prevResult = prevResult as { playerName: string; score: number }[];
-        console.log(this.prevResult);
       }),
     );
+  }
+
+  song = new Audio();
+
+  playMusic() {
+    this.song.src = 'assets/music/top5.mp3';
+    this.song.load();
+    this.song.play().then();
+    this.song.loop = true;
+  }
+
+  pauseMusic() {
+    this.song.pause();
   }
 
   nextClicked() {
@@ -64,5 +75,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       GameActions.storePreviousResult({ previousResult: this.result }),
     );
+    this.pauseMusic();
   }
 }

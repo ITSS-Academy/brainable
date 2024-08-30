@@ -9,9 +9,9 @@ import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
-import { QuestionRecord } from '../../../../../models/questionRecord.model';
 import * as QuestionRecordActions from '../../../../../ngrx/questionRecord/questionRecord.actions';
 import { QuestionRecordState } from '../../../../../ngrx/questionRecord/questionRecord.state';
+import { QuestionRecord } from '../../../../../models/questionRecord.model';
 
 @Component({
   selector: 'app-questions',
@@ -50,7 +50,9 @@ export class QuestionsComponent implements OnInit {
             gameId: id,
           }),
         );
-        this.questionRecord$.subscribe((questionRecord) => {});
+        this.questionRecord$.subscribe(
+          (questionRecords: QuestionRecord[]) => {},
+        );
       }
     });
   }

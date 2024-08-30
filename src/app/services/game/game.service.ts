@@ -100,7 +100,6 @@ export class GameService {
   }
 
   listenForNavigateChooseAnswer(pin: string) {
-    console.log('listenForNavigateChooseAnswer');
     this.socket.on('chooseAnswer', () => {
       this.router.navigate([`/guest/${pin}/answer`]);
     });
@@ -165,7 +164,6 @@ export class GameService {
   }
 
   listenForNavigateToNextQuestion(pin: string): void {
-    console.log('listenForNavigateToNextQuestion');
     this.socket.on('navigateToNextQuestion', () => {
       this.router.navigate([`/guest/${pin}/countdown-to-question`]);
     });
@@ -213,19 +211,17 @@ export class GameService {
     });
   }
 
-  // listenForQuestion() {
-  //   return new Observable((observer) => {
-  //     this.socket.on('newQuestion', (question: any) => {
-  //       observer.next(question);
-  //     });
-  //   });
-  // }
-  //
-  // listenForAnswer() {
-  //   return new Observable((observer) => {
-  //     this.socket.on('answerStatistics', (answer: any) => {
-  //       observer.next(answer);
-  //     });
-  //   });
-  // }
+  getLastQuestionScore(pin: string, gameId: string) {
+    console.log('getLastQuestionScore');
+    this.socket.emit('getLastQuestionScore', { pin, gameId });
+  }
+
+  receiveLastQuestionScore(): Observable<any> {
+    console.log('receiveLastQuestionScore');
+    return new Observable((observer) => {
+      this.socket.on('lastQuestionScore', (lastQuestionScore: any) => {
+        observer.next(lastQuestionScore);
+      });
+    });
+  }
 }

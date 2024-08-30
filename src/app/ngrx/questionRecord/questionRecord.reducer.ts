@@ -43,23 +43,32 @@ export const questionRecordReducer = createReducer(
     }),
   ),
 
-  on(QuestionRecordActions.createQuestionRecord, (state) => ({
-    ...state,
-    isCreateQuestionRecordLoading: true,
-    isCreateQuestionRecordSuccessful: false,
-    createQuestionRecordErrorMessage: '',
-  })),
-  on(QuestionRecordActions.createQuestionRecordSuccess, (state) => ({
-    ...state,
-    isCreateQuestionRecordLoading: false,
-    isCreateQuestionRecordSuccessful: true,
-  })),
-  on(
-    QuestionRecordActions.createQuestionRecordFailure,
-    (state, { errorMessage }) => ({
+  on(QuestionRecordActions.createQuestionRecord, (state, { type }) => {
+    console.log(type);
+    return {
+      ...state,
+      isCreateQuestionRecordLoading: true,
+      isCreateQuestionRecordSuccessful: false,
+      createQuestionRecordErrorMessage: '',
+    };
+  }),
+  on(QuestionRecordActions.createQuestionRecordSuccess, (state, { type }) => {
+    console.log(type);
+    return {
       ...state,
       isCreateQuestionRecordLoading: false,
-      createQuestionRecordErrorMessage: errorMessage,
-    }),
+      isCreateQuestionRecordSuccessful: true,
+    };
+  }),
+  on(
+    QuestionRecordActions.createQuestionRecordFailure,
+    (state, { errorMessage }) => {
+      console.log(errorMessage);
+      return {
+        ...state,
+        isCreateQuestionRecordLoading: false,
+        createQuestionRecordErrorMessage: errorMessage,
+      };
+    },
   ),
 );
