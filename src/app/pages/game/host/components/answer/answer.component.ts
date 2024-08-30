@@ -53,7 +53,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
         !this.isCountdownFinished
       ) {
         clearInterval(this.countdownInterval);
-        console.log('All players have answered');
 
         this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {
           this.gameService.nextShowResults(this.pin);
@@ -107,7 +106,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
       this.activeNumber = countTime;
 
       if (countTime < 1) {
-        console.log('Countdown finished');
         clearInterval(this.countdownInterval);
         this.isCountdownFinished = true;
         this.router.navigate([`/host/${this.pin}/question-result`]).then(() => {

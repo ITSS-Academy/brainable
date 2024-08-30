@@ -1,3 +1,13 @@
+:host {
+  --mdc-outlined-card-container-color: #ffffff
+}
+
+#container-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -18,6 +28,7 @@
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
+  margin-top: 4px;
 }
 
 #question-options-left {
@@ -90,9 +101,10 @@ mat-chip {
   margin-bottom: 10px;
 }
 
-.question-title {
-  font-size: 12px;
+.question-title, .option-title {
+  font-size: 14px;
   font-weight: bold;
+  margin-bottom: 4px;
 }
 
 #question-format {

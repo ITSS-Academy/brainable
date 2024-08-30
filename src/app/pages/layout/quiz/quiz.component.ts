@@ -20,6 +20,7 @@ import * as GameActions from '../../../ngrx/game/game.actions';
 import { GameService } from '../../../services/game/game.service';
 import { GameReport } from '../../../models/gameReport.model';
 import * as GameReportActions from '../../../ngrx/gameReport/gameReport.action';
+import { GameReportState } from '../../../ngrx/gameReport/gameReport.state';
 
 @Component({
   selector: 'app-quiz',
@@ -46,7 +47,12 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<{ auth: AuthState; quiz: QuizState; game: GameState }>,
+    private store: Store<{
+      auth: AuthState;
+      quiz: QuizState;
+      game: GameState;
+      gameReport: GameReportState;
+    }>,
     private gameService: GameService,
     private router: Router,
   ) {
@@ -58,6 +64,14 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
           this.quiz = quiz;
+        }
+      }),
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        this.idToken = idToken;
+      }),
+      this.store.select('gameReport', 'gameId').subscribe((gameId) => {
+        if (gameId) {
+          console.log(gameId);
         }
       }),
     );

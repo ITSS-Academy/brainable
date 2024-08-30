@@ -2,9 +2,12 @@ import { GameReportState } from './gameReport.state';
 import * as GameReportActions from './gameReport.action';
 import { createReducer, on } from '@ngrx/store';
 import { GameReport } from '../../models/gameReport.model';
+
 const initialState: GameReportState = {
   gameReports: [],
   gameReport: null,
+  gameId: '',
+
   isGetGameReportsLoading: false,
   isGetGameReportsSuccessful: false,
   getGameReportsErrorMessage: '',
@@ -66,15 +69,16 @@ export const gameReportReducer = createReducer(
     };
   }),
 
-  on(GameReportActions.createGameReport, (state) => {
+  on(GameReportActions.createGameReport, (state, { type }) => {
     return {
       ...state,
       isCreateGameReportLoading: true,
     };
   }),
-  on(GameReportActions.createGameReportSuccess, (state) => {
+  on(GameReportActions.createGameReportSuccess, (state, { type, gameId }) => {
     return {
       ...state,
+      gameId: gameId,
       isCreateGameReportLoading: false,
       isCreateGameReportSuccessful: true,
     };
@@ -86,5 +90,5 @@ export const gameReportReducer = createReducer(
       isCreateGameReportSuccessful: false,
       createGameReportErrorMessage: errorMessage,
     };
-  })
+  }),
 );

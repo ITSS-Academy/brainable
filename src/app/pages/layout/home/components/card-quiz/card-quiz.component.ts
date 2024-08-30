@@ -23,10 +23,12 @@ import { Router } from '@angular/router';
   templateUrl: './card-quiz.component.html',
   styleUrl: './card-quiz.component.scss',
 })
-export class CardQuizComponent {
+export class CardQuizComponent implements OnInit {
   @Input() category!: CategoriesByUid;
 
   constructor(private router: Router) {}
+
+  ngOnInit(): void {}
 
   categoryDetail() {
     this.router.navigate([`/categories/${this.category.uid}`]);

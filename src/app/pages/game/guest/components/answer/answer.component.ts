@@ -64,6 +64,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
       this.questionId = questionId;
     });
     this.gameService.listenForNavigateToResults(this.pin);
+    this.gameService.stopListeningForNavigateToNextQuestion();
   }
 
   chooseAnswer(answer: number) {
@@ -83,10 +84,8 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (!this.isChoosing) {
-      console.log('Player did not choose an answer');
       this.chooseAnswer(0);
     }
-    this.isChoosing = false;
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
 }

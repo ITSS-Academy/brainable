@@ -4,30 +4,38 @@
     <div class="status-item">
       <div class="status-info">
         <span class="status-label">Correct</span>
-        <span class="status-count">44 students</span>
+        <span class="status-count">{{ correctCount }} students</span>
       </div>
       <div class="status-progress">
-        <mat-progress-bar mode="determinate" value="20" class="correct"></mat-progress-bar>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="calculatePercentage(correctCount, totalCount)"
+          class="correct">
+        </mat-progress-bar>
       </div>
     </div>
     <div class="status-item">
       <div class="status-info">
         <span class="status-label">Incorrect</span>
-        <span class="status-count">10 students</span>
+        <span class="status-count">{{ inCorrectCount }} students</span>
       </div>
       <div class="status-progress">
-        <mat-progress-bar mode="determinate" value="40" class="inCorrect"></mat-progress-bar>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="calculatePercentage(inCorrectCount, totalCount)"
+          class="inCorrect">
+        </mat-progress-bar>
       </div>
     </div>
-    <div class="status-item">
-      <div class="status-info">
-        <span class="status-label">Unattempted</span>
-        <span class="status-count">23 students</span>
-      </div>
-      <div class="status-progress">
-        <mat-progress-bar mode="determinate" value="70" class="unAttempted"></mat-progress-bar>
-      </div>
-    </div>
+    <!--    <div class="status-item">-->
+    <!--      <div class="status-info">-->
+    <!--        <span class="status-label">Unattempted</span>-->
+    <!--        <span class="status-count">23 students</span>-->
+    <!--      </div>-->
+    <!--      <div class="status-progress">-->
+    <!--        <mat-progress-bar mode="determinate" value="70" class="unAttempted"></mat-progress-bar>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 
 

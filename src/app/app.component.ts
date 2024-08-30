@@ -6,8 +6,6 @@ import { AuthState } from './ngrx/auth/auth.state';
 import { ProfileState } from './ngrx/profile/profile.state';
 import * as AuthActions from './ngrx/auth/auth.actions';
 import * as ProfileActions from './ngrx/profile/profile.actions';
-import { GameService } from './services/game/game.service';
-import { QuestionReportService } from './services/question-report/question-report.service';
 
 @Component({
   selector: 'app-root',

@@ -4,13 +4,14 @@ import { AnswerStatusBarComponent } from './components/answer-status-bar/answer-
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { QuizResultComponent } from './components/quiz-result/quiz-result.component';
 import { QuestionHeadComponent } from './components/question-head/question-head.component';
-import { QuetionReportState } from '../../../../../ngrx/questionReport/questionReport.state';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
-import * as QuestionReportActions from '../../../../../ngrx/questionReport/questionReport.action';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
+import * as QuestionRecordActions from '../../../../../ngrx/questionRecord/questionRecord.actions';
+import { QuestionRecordState } from '../../../../../ngrx/questionRecord/questionRecord.state';
+import { QuestionRecord } from '../../../../../models/questionRecord.model';
 
 @Component({
   selector: 'app-questions',
@@ -28,12 +29,12 @@ import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state
   styleUrl: './questions.component.scss',
 })
 export class QuestionsComponent implements OnInit {
-  questionReport$ = this.store.select('questionReport');
+  questionRecord$ = this.store.select('questionRecord', 'questionRecords');
 
   constructor(
     private store: Store<{
       auth: AuthState;
-      questionReport: QuetionReportState;
+      questionRecord: QuestionRecordState;
       gameReport: GameReportState;
     }>,
     private activatedRoute: ActivatedRoute,
@@ -44,12 +45,14 @@ export class QuestionsComponent implements OnInit {
     this.store.select('auth', 'idToken').subscribe((idToken) => {
       if (idToken) {
         this.store.dispatch(
-          QuestionReportActions.getQuestionReportsByGameId({
+          QuestionRecordActions.getQuestionRecordByGameId({
             idToken,
             gameId: id,
           }),
         );
-        this.questionReport$.subscribe((questionReport) => {});
+        this.questionRecord$.subscribe(
+          (questionRecords: QuestionRecord[]) => {},
+        );
       }
     });
   }

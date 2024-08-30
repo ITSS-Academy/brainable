@@ -2,7 +2,7 @@
   <div class="container">
     <div class="category-info">
       <div class="category-img">
-        <img [src]="category.imgUrl" alt="" />
+        <img [src]="category.imgUrl" alt=""/>
       </div>
       <div class="category-name">
         <p>{{ category.name }}</p>
@@ -11,7 +11,7 @@
     <div class="library-container">
       @if (quizzes.length === 0) {
         <div class="empty-box">
-          <img src="assets/images/empty-box.png" alt="" />
+          <img src="assets/images/empty-box.png" alt=""/>
         </div>
       } @else {
         <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
@@ -21,7 +21,7 @@
                 <mat-card-content>
                   <div class="quiz-detail">
                     <div class="quiz-detail__img">
-                      <img [src]="quiz.imgUrl" alt="" />
+                      <img [src]="quiz.imgUrl" alt=""/>
                     </div>
                     <div class="quiz-detail__info">
                       <div class="row-info">
@@ -29,11 +29,11 @@
                         <div class="row-info">
                           <div class="num-questions">
                             <mat-icon fontIcon="list"></mat-icon>
-                            <span>{{ questions.length }} Question</span>
+                            <span>{{ quiz.questions.length }} Question</span>
                           </div>
                         </div>
                         <div class="row-creator">
-                          <button mat-flat-button>Play</button>
+                          <button mat-flat-button (click)="playGame(quiz)">Play</button>
                         </div>
                       </div>
                     </div>

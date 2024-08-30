@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { NgClass, NgIf } from '@angular/common';
@@ -16,7 +16,7 @@ import * as GameActions from '../../../../../ngrx/game/game.actions';
   templateUrl: './countdown-to-question.component.html',
   styleUrl: './countdown-to-question.component.scss',
 })
-export class CountdownToQuestionComponent implements OnInit {
+export class CountdownToQuestionComponent implements OnInit, OnDestroy {
   countdownNumbers = [3, 2, 1, 0];
   activeNumber = 4;
   showFinalText = false;
@@ -27,6 +27,7 @@ export class CountdownToQuestionComponent implements OnInit {
 
   playerName = '';
   score = 0;
+  countdownInterval: any;
 
   constructor(
     private router: Router,
@@ -61,7 +62,7 @@ export class CountdownToQuestionComponent implements OnInit {
 
   startCountdown() {
     let index = 0;
-    const countdownInterval = setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       if (index > 0) {
         this.hiddenNumbers.add(this.countdownNumbers[index - 1]); // Hide the previous number
       }
@@ -69,7 +70,6 @@ export class CountdownToQuestionComponent implements OnInit {
       index++;
 
       if (index === this.countdownNumbers.length) {
-        clearInterval(countdownInterval);
         setTimeout(() => {
           this.showFinalText = true;
           this.hideCircle = true;
@@ -77,5 +77,10 @@ export class CountdownToQuestionComponent implements OnInit {
         }, 1000);
       }
     }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((s) => s.unsubscribe());
+    clearInterval(this.countdownInterval);
   }
 }

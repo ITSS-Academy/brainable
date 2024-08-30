@@ -1,33 +1,35 @@
-@for (item of (questionReport$ | async)?.questionRecords; track $index) {
-  <mat-card appearance="outlined">
-    <mat-card-content>
-      <div id="question-head-bar">
-        <app-question-head></app-question-head>
-      </div>
-      <div id="question-body">
-        <span class="question-title">Question</span>
-        <div id="question-format">
-          <div id="question-display">
-            <p>{{$index+1}}. {{item.question.question}}</p>
-          </div>
+<div id="container-main">
+  @for (item of (questionRecord$ | async); track $index) {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div id="question-head-bar">
+          <!--        <app-question-head></app-question-head>-->
         </div>
-  
-        <div class="option-body">
-          <span class="option-title">Options</span>
-          <div id="question-data">
-            <div id="question-options-left">
-              <app-quiz-result [questionRecord]="item"></app-quiz-result>
-            </div>
-            <div id="question-statistics-right">
-              <app-answer-status-bar></app-answer-status-bar>
+        <div id="question-body">
+          <span class="question-title">Question</span>
+          <div id="question-format">
+            <div id="question-display">
+              <p>{{ $index + 1 }}. {{ item.question.question }}</p>
             </div>
           </div>
+
+          <div class="option-body">
+            <span class="option-title">Options</span>
+            <div id="question-data">
+              <div id="question-options-left">
+                <app-quiz-result [questionRecord]="item"></app-quiz-result>
+              </div>
+              <div id="question-statistics-right">
+                <app-answer-status-bar [questionRecord]="item"></app-answer-status-bar>
+              </div>
+            </div>
+          </div>
+
         </div>
-  
-      </div>
-    </mat-card-content>
-  </mat-card>
-}
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
 
 
 

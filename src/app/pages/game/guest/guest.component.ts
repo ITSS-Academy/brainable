@@ -49,9 +49,11 @@ export class GuestComponent implements OnInit {
     this.gameService.listenForErrors().subscribe((error) => {
       if (error === 'Host has left the game') {
         this.openSnackBar();
+        this.gameService.stopListeningForNavigateToNextQuestion();
+
         setTimeout(() => {
           this._snackBar.dismiss();
-        }, 3000);
+        }, 2000);
         this.router.navigate(['/join']);
       }
     });

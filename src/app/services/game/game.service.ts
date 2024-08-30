@@ -181,12 +181,6 @@ export class GameService {
     });
   }
 
-  listenForNavigateToEndGame(pin: string): void {
-    this.socket.on('navigateToEndGame', () => {
-      this.router.navigate([`/guest/${pin}/result`]);
-    });
-  }
-
   listenForErrors(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('error', (error: any) => {
@@ -195,14 +189,14 @@ export class GameService {
     });
   }
 
+  stopListeningForNavigateToNextQuestion(): void {
+    this.socket.off('navigateToNextQuestion');
+  }
+
   disconnect(): void {
     if (this.socket) {
       this.socket.disconnect();
     }
-  }
-
-  chooseAnswer(data: any): void {
-    this.socket.emit('sendAnswer', data);
   }
 
   showTop5(pin: string): void {
@@ -217,18 +211,16 @@ export class GameService {
     });
   }
 
-  listenForQuestion() {
-    return new Observable((observer) => {
-      this.socket.on('newQuestion', (question: any) => {
-        observer.next(question);
-      });
-    });
+  getLastQuestionScore(pin: string, gameId: string) {
+    console.log('getLastQuestionScore');
+    this.socket.emit('getLastQuestionScore', { pin, gameId });
   }
 
-  listenForAnswer() {
+  receiveLastQuestionScore(): Observable<any> {
+    console.log('receiveLastQuestionScore');
     return new Observable((observer) => {
-      this.socket.on('answerStatistics', (answer: any) => {
-        observer.next(answer);
+      this.socket.on('lastQuestionScore', (lastQuestionScore: any) => {
+        observer.next(lastQuestionScore);
       });
     });
   }
