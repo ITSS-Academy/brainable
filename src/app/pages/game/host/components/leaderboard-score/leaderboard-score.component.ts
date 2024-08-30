@@ -32,15 +32,6 @@ interface LeaderboardEntry {
 export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   pin!: string;
-  // result: {
-  //   playerName: string;
-  //   score: number;
-  // }[] = [];
-  // prevResult: {
-  //   playerName: string;
-  //   score: number;
-  // }[] = [];
-
   result: LeaderboardEntry[] = [];
   prevResult: LeaderboardEntry[] = [];
 
@@ -59,6 +50,11 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.gameService.listenForTop5().subscribe((top5) => {
       this.result = top5;
+      console.log('result: ', this.result);
+      this.createLeaderboard('rootElement');
+      this.renderLeaderboard(this.prevResult, this.result);
+      (async () =>
+        await this.updateLeaderboard(this.prevResult, this.result))();
     });
     this.subscription.push(
       this.store.select('game', 'previousResult').subscribe((prevResult) => {
@@ -66,10 +62,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
         console.log(this.prevResult);
       }),
     );
-    this.createLeaderboard('rootElement');
-    this.renderLeaderboard(this.prevResult);
-    (async () => await this.updateLeaderboard(this.prevResult, this.result))();
-    console.log('result: ', this.result);
   }
 
   nextClicked() {
@@ -86,10 +78,10 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
 
   @ViewChild('rootElement', { static: true }) rootElement!: ElementRef;
 
-  leaderboardWidth = 300; // Example width
-  leaderboardHeight = 200; // Example height
-  rowWidth = 300; // Example row width
-  rowHeight = 40; // Example row height
+  leaderboardWidth = 500; // Example width
+  leaderboardHeight = 310; // Example height
+  rowWidth = 500; // Example row width
+  rowHeight = 50; // Example row height
 
   createLeaderboard(rootElementId: string) {
     const root = this.rootElement.nativeElement;
@@ -107,7 +99,8 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     rowElement.style.width = `${this.rowWidth}px`;
     rowElement.style.height = `${this.rowHeight}px`;
     rowElement.style.position = 'absolute';
-    rowElement.style.border = '1px solid black';
+    rowElement.style.backgroundColor = 'white';
+    rowElement.style.borderRadius = '8px';
     rowElement.style.display = 'flex';
     rowElement.style.justifyContent = 'space-between';
     rowElement.style.alignItems = 'center';
@@ -119,18 +112,26 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     return rowElement;
   }
 
-  renderLeaderboard(leaderboardRender: LeaderboardEntry[]) {
+  renderLeaderboard(
+    leaderboardRender: LeaderboardEntry[],
+    currentLeaderboard?: LeaderboardEntry[],
+  ) {
     const leaderboardElement = document.getElementById('leaderboard');
     if (leaderboardElement) {
       leaderboardElement.innerHTML = ''; // Clear any existing content
-
-      for (let i = 0; i < leaderboardRender.length; i++) {
-        const rowElement = this.createRowElement(
-          leaderboardRender[i].playerName,
-          leaderboardRender[i].score,
-          i * this.rowHeight,
-        );
-        leaderboardElement.appendChild(rowElement);
+      if (currentLeaderboard) {
+        for (let i = 0; i < leaderboardRender.length; i++) {
+          const rowElement = this.createRowElement(
+            leaderboardRender[i].playerName,
+            currentLeaderboard[
+              currentLeaderboard.findIndex(
+                (item) => item.playerName === leaderboardRender[i].playerName,
+              )
+            ].score,
+            i * 62,
+          );
+          leaderboardElement.appendChild(rowElement);
+        }
       }
     }
   }
@@ -155,28 +156,58 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     return changes;
   }
 
-  // // Async function to update the leaderboard with animations
-  private async updateLeaderboard(
-    prevLeaderboard: LeaderboardEntry[],
+  async updateLeaderboard(
+    prevLeaderboard: LeaderboardEntry[] | undefined,
     leaderboard: LeaderboardEntry[],
   ): Promise<void> {
-    const changes = this.calcChange(leaderboard, prevLeaderboard);
-    console.log('change: ', changes); // Log changes for debugging
-    console.log('prevLeaderboard: ', prevLeaderboard); // Log changes for debugging
+    if (!prevLeaderboard || prevLeaderboard.length === 0) {
+      this.renderLeaderboard(leaderboard, leaderboard);
+      return;
+    }
+
+    const changes = this.calcChange(prevLeaderboard, leaderboard);
+    console.log('changes: ', changes); // Log changes for debugging
 
     // Wait for 1 second before starting the animation
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const leaderboardElement = document.getElementById('leaderboard');
     if (leaderboardElement) {
-      const childrenArray = Array.from(leaderboardElement.children); // Convert HTMLCollection to Array
-      let i = 0;
-      for (const child of childrenArray) {
-        if (child instanceof HTMLElement) {
-          child.style.top = `${parseInt(child.style.top.replace('px', ''), 10) + changes[i]['rankChange'] * this.rowHeight}px`;
-          i++;
-        }
+      const childrenArray = Array.from(
+        leaderboardElement.children,
+      ) as HTMLElement[];
+
+      if (childrenArray.length !== changes.length) {
+        console.error(
+          'Mismatch between number of rows and changes. Check data consistency.',
+        );
+        return;
       }
+
+      // Clear any existing styles to avoid cumulative effects
+      childrenArray.forEach((child) => {
+        child.style.transition = 'none'; // Disable transition temporarily
+        child.style.top = ''; // Reset top position
+      });
+
+      // Apply new styles
+      childrenArray.forEach((child, index) => {
+        const change = changes[index];
+        if (change) {
+          // Set initial top position if not already set
+          if (child.style.top === '') {
+            child.style.top = `${index * 62}px`;
+          }
+
+          // Debug output for each row being updated
+          console.log(`Updating row ${index}:`, change);
+
+          // Update position based on rankChange
+          const currentTop = parseInt(child.style.top.replace('px', ''), 10);
+          child.style.transition = 'top 1s'; // Re-enable transition
+          child.style.top = `${currentTop + change.rankChange * 62}px`;
+        }
+      });
     }
   }
 }
