@@ -28,28 +28,28 @@
     }
   }
 
-  .leaderboard {
-    width: 40%;
-    height: 70%;
-
-    &__content {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      gap: 15px;
-
-      .card {
-        width: 100%;
-
-        .card-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-      }
-    }
-  }
+  //.leaderboard {
+  //  width: 40%;
+  //  height: 70%;
+  //
+  //  &__content {
+  //    width: 100%;
+  //    display: flex;
+  //    flex-direction: column;
+  //    align-items: start;
+  //    gap: 15px;
+  //
+  //    .card {
+  //      width: 100%;
+  //
+  //      .card-content {
+  //        display: flex;
+  //        justify-content: space-between;
+  //        align-items: center;
+  //      }
+  //    }
+  //  }
+  //}
 }
 
 //@media screen and (max-width: 576px) {
