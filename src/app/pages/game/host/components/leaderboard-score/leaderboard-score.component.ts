@@ -156,6 +156,63 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     return changes;
   }
 
+  // async updateLeaderboard(
+  //   prevLeaderboard: LeaderboardEntry[] | undefined,
+  //   leaderboard: LeaderboardEntry[],
+  // ): Promise<void> {
+  //   if (!prevLeaderboard || prevLeaderboard.length === 0) {
+  //     this.renderLeaderboard(leaderboard, leaderboard);
+  //     return;
+  //   }
+  //
+  //   const changes = this.calcChange(prevLeaderboard, leaderboard);
+  //   console.log('changes: ', changes); // Log changes for debugging
+  //
+  //   // Wait for 1 second before starting the animation
+  //   await new Promise((resolve) => setTimeout(resolve, 1000));
+  //
+  //   const leaderboardElement = document.getElementById('leaderboard');
+  //   if (leaderboardElement) {
+  //     const childrenArray = Array.from(
+  //       leaderboardElement.children,
+  //     ) as HTMLElement[];
+  //
+  //     if (childrenArray.length !== changes.length) {
+  //       console.error(
+  //         'Mismatch between number of rows and changes. Check data consistency.',
+  //       );
+  //       return;
+  //     }
+  //
+  //     // Clear any existing styles to avoid cumulative effects
+  //     childrenArray.forEach((child) => {
+  //       child.style.transition = 'none'; // Disable transition temporarily
+  //       child.style.top = ''; // Reset top position
+  //     });
+  //
+  //     // Apply new styles
+  //     childrenArray.forEach((child, index) => {
+  //       const change = changes[index];
+  //       if (change) {
+  //         // Set initial top position if not already set
+  //         if (child.style.top === '') {
+  //           let preIndex = this.prevResult.findIndex(
+  //             (item) => item.playerName === change.name,
+  //           );
+  //           child.style.top = `${preIndex * 62}px`;
+  //           console.log('pre top: ', child.style.top);
+  //         }
+  //
+  //         // Update position based on rankChange
+  //         const currentTop = parseInt(child.style.top.replace('px', ''), 10);
+  //         child.style.transition = 'top 1s'; // Re-enable transition
+  //         child.style.top = `${currentTop - change.rankChange * 62}px`;
+  //         console.log('current top: ', child.style.top);
+  //       }
+  //     });
+  //   }
+  // }
+
   async updateLeaderboard(
     prevLeaderboard: LeaderboardEntry[] | undefined,
     leaderboard: LeaderboardEntry[],
@@ -190,24 +247,42 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
         child.style.top = ''; // Reset top position
       });
 
-      // Apply new styles
+      // Set initial positions for transition
       childrenArray.forEach((child, index) => {
         const change = changes[index];
         if (change) {
-          // Set initial top position if not already set
+          let preIndex = prevLeaderboard.findIndex(
+            (item) => item.playerName === change.name,
+          );
+
+          // Set initial top position based on preIndex
           if (child.style.top === '') {
-            child.style.top = `${index * 62}px`;
+            child.style.top = `${preIndex * 62}px`;
+            // Force reflow to ensure the initial position is registered
+            child.getBoundingClientRect();
           }
-
-          // Debug output for each row being updated
-          console.log(`Updating row ${index}:`, change);
-
-          // Update position based on rankChange
-          const currentTop = parseInt(child.style.top.replace('px', ''), 10);
-          child.style.transition = 'top 1s'; // Re-enable transition
-          child.style.top = `${currentTop + change.rankChange * 62}px`;
         }
       });
+
+      // Apply transitions and update positions
+      setTimeout(() => {
+        childrenArray.forEach((child, index) => {
+          const change = changes[index];
+          if (change) {
+            const preIndex = prevLeaderboard.findIndex(
+              (item) => item.playerName === change.name,
+            );
+
+            // Calculate the new position
+            const newTop = preIndex * 62 - change.rankChange * 62;
+
+            // Apply transition to move to new position
+            child.style.transition = 'top 1s ease'; // Enable transition
+            child.style.top = `${newTop}px`; // Set new position
+            console.log('new top: ', child.style.top);
+          }
+        });
+      }, 0); // Short delay to ensure that DOM updates are applied
     }
   }
 }
