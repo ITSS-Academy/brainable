@@ -28,7 +28,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
 
   startTimer(): void {
     this.intervalId = setInterval(() => {
-      this.timeElapsed += 1; // Tăng mỗi 10ms
+      this.timeElapsed += 10; // Tăng mỗi 10ms
     }, 10);
   }
 

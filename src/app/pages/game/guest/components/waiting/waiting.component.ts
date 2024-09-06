@@ -49,8 +49,17 @@ export class WaitingComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         GameActions.storePlayerName({ playerName: this.nickname }),
       );
-      this.isJoining = true;
-    }
+      this.gameService.listenForErrors().subscribe((error) => {
+        if (error === 'Username already exists in the room') {
+          alert("Username already exists in the room");
+        }
+      })
+      }
+    this.gameService.listenForClientGuessJoined().subscribe(data=>{
+      if (data == "Guest joined room"){
+        this.isJoining = true;
+      }
+    })
   }
 
   onKey(event: any) {
