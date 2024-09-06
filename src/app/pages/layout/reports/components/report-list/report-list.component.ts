@@ -17,12 +17,12 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 import { GameReport } from '../../../../../models/gameReport.model';
-import { DatePipe } from '@angular/common';
+import {DatePipe, SlicePipe} from '@angular/common';
 
 @Component({
   selector: 'app-report-list',
   standalone: true,
-  imports: [MaterialModule, SharedModule, DatePipe],
+  imports: [MaterialModule, SharedModule, DatePipe, SlicePipe],
   templateUrl: './report-list.component.html',
   styleUrl: './report-list.component.scss',
 })
