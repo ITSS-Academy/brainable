@@ -28,12 +28,13 @@
     </div>
     <div class="right">
       <label class="title-img"><b>Cover image</b></label>
-      <div class="image-input">
+      <div #imageContainer class="image-input">
         @if (settings.imgUrl == undefined || settings.imgUrl === '') {
-          <input id="uploadBtn-quiz" type="file" (change)="selectImage($event)"/>
-          <label class="label-upload" for="uploadBtn-quiz">
+          <input id="uploadBtn-quiz" type="file" (change)="selectImage($event)"/>          <label class="label-upload" for="uploadBtn-quiz">
             <div class="media-library"></div>
-            <button mat-flat-button (click)="triggerFileInput($event)">
+            <button mat-flat-button
+                    (click)="triggerFileInput($event)"
+            >
               Change
             </button>
           </label>
@@ -41,7 +42,9 @@
           <div class="img-container">
             <img [src]="settings.imgUrl" alt=""/>
           </div>
-          <button mat-fab class="remove-btn" (click)="removeImage()">
+          <button mat-fab class="remove-btn">
+<!--                  (click)="removeImage()"-->
+
             <mat-icon>delete</mat-icon>
           </button>
         }

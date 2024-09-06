@@ -48,6 +48,10 @@ export class JoinComponent implements OnInit, OnDestroy {
         this.isCheckRoom = false;
         alert('Room not found');
       }
+      if (error === 'Game has already started') {
+        this.isCheckRoom = false;
+        alert('Game has already started');
+      }
     });
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((token) => {
