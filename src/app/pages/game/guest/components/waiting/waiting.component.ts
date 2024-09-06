@@ -49,6 +49,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         GameActions.storePlayerName({ playerName: this.nickname }),
       );
+
       this.isJoining = true;
     }
   }

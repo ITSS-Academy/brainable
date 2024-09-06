@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { Router } from '@angular/router';
 import {
+
   AnswerStatistics,
   SendAnswer,
   SendQuestion,
@@ -50,6 +51,7 @@ export class GameService {
     return this.http.get<GameReport>(
       `${environment.apiUrl}/game/byId?id=${gameId}`,
       {
+
         headers: {
           Authorization: idToken,
         },
@@ -63,6 +65,7 @@ export class GameService {
 
   joinRoom(pin: string, username: string): void {
     this.socket.emit('joinRoom', { pin, username });
+
   }
 
   checkRoomExist(pin: string): void {
@@ -189,6 +192,10 @@ export class GameService {
     });
   }
 
+  //create host leave rooms
+  handleDisconnect(pin: string): void {
+    this.socket.emit('Host has left the game', pin);
+  }
   stopListeningForNavigateToNextQuestion(): void {
     this.socket.off('navigateToNextQuestion');
   }
