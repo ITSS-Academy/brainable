@@ -63,10 +63,12 @@ export class GameService {
 
   joinRoom(pin: string, username: string): void {
     this.socket.emit('joinRoom', { pin, username });
+
   }
 
   checkRoomExist(pin: string): void {
     this.socket.emit('checkRoomExist', pin);
+
   }
 
   listenForNavigateToEnterName(pin: string): void {
@@ -79,6 +81,14 @@ export class GameService {
   listenForGuestJoined(): Observable<{ username: string }> {
     return new Observable((observer) => {
       this.socket.on('guestJoined', (guest: any) => {
+        observer.next(guest);
+      });
+    });
+  }
+
+  listenForClientGuessJoined(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('clientGuessJoined', (guest: any) => {
         observer.next(guest);
       });
     });
@@ -184,7 +194,7 @@ export class GameService {
   listenForErrors(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('error', (error: any) => {
-        observer.next(error);
+        observer.next(error)
       });
     });
   }
