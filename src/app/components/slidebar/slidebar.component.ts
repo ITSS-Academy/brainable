@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -8,6 +8,9 @@ import { AuthState } from '../../ngrx/auth/auth.state';
 import { SharedModule } from '../../shared/modules/shared.module';
 import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { Profile } from '../../models/profile.model';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SettingDialogComponent } from '../../pages/game/creator/components/setting-dialog/setting-dialog.component';
+import { DialogCreateComponent } from '../../pages/game/creator/components/dialog-create/dialog-create.component';
 
 @Component({
   selector: 'app-slidebar',
@@ -38,6 +41,8 @@ export class SlidebarComponent implements OnInit {
   subscriptions: Subscription[] = [];
   activeLink = this.navLinks[0];
   profile!: Profile;
+
+  dialog = inject(MatDialog);
 
   constructor(
     private router: Router,
@@ -89,5 +94,13 @@ export class SlidebarComponent implements OnInit {
 
   returnToHome() {
     this.router.navigateByUrl('/home').then();
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '60%';
+    dialogConfig.maxWidth = '85vw';
+    dialogConfig.panelClass = 'custom-dialog-container';
+    this.dialog.open(DialogCreateComponent, dialogConfig);
   }
 }

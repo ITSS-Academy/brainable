@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,7 +12,10 @@ import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
-import {DialogComponent} from "./components/dialog/dialog.component";
+import { DialogComponent } from './components/dialog/dialog.component';
+import { JsonPipe, NgIf } from '@angular/common';
+import { MainContentImportComponent } from './components/main-content-import/main-content-import.component';
+import { DialogCreateComponent } from './components/dialog-create/dialog-create.component';
 
 @Component({
   selector: 'app-creator',
@@ -24,6 +27,10 @@ import {DialogComponent} from "./components/dialog/dialog.component";
     MainContentComponent,
     LoadingComponent,
     DialogComponent,
+    JsonPipe,
+    NgIf,
+    MainContentImportComponent,
+    DialogCreateComponent,
   ],
   templateUrl: './creator.component.html',
   styleUrl: './creator.component.scss',
@@ -121,6 +128,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
     this.store.dispatch(QuizActions.addNewQuestion());
     this.activeQuestion(this.quiz.questions.length - 1);
     this.scrollToBottom();
+    console.log(this.quiz);
   }
 
   deleteQuestion(index: number) {
@@ -139,5 +147,12 @@ export class CreatorComponent implements OnInit, OnDestroy {
     if (questionList) {
       questionList.scrollTop = questionList.scrollHeight;
     }
+  }
+
+  ExcelData: any;
+
+  handleExcelDataLoaded(data: any) {
+    this.ExcelData = data;
+    console.log('Data passed to another component:', this.ExcelData);
   }
 }
