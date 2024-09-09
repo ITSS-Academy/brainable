@@ -27,6 +27,7 @@ export class GameService {
     private store: Store<{ game: GameState }>,
   ) {}
 
+
   createGame(idToken: string, gameReport: GameReport) {
     return this.http.post(
       `${environment.apiUrl}/game`,
@@ -148,7 +149,9 @@ export class GameService {
   listenForNavigateToResults(pin: string): void {
     this.socket.on('navigateToResults', () => {
       this.router.navigate([`/guest/${pin}/result`]);
+
     });
+
   }
 
   showResults(pin: string, questionId: string): void {
@@ -239,5 +242,8 @@ export class GameService {
         observer.next(lastQuestionScore);
       });
     });
+  }
+  logout(): void {
+    this.socket.emit('logout');
   }
 }

@@ -8,6 +8,7 @@ import { AuthState } from '../../ngrx/auth/auth.state';
 import { SharedModule } from '../../shared/modules/shared.module';
 import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { Profile } from '../../models/profile.model';
+import {GameService} from "../../services/game/game.service";
 
 @Component({
   selector: 'app-slidebar',
@@ -42,6 +43,7 @@ export class SlidebarComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<{ profile: ProfileState; auth: AuthState }>,
+    private gameService: GameService,
   ) {
     if (this.router.url.includes('home')) {
       this.activeLink = this.navLinks[0];
@@ -85,6 +87,7 @@ export class SlidebarComponent implements OnInit {
 
   signOut() {
     this.store.dispatch(AuthActions.logout());
+    this.gameService.logout();
   }
 
   returnToHome() {
