@@ -19,6 +19,7 @@
             placeholder="Enter nickname..."
             [(ngModel)]="nickname"
             (keydown)="onKey($event)"
+            maxlength="15"
           />
           <button class="btn-join" mat-flat-button (click)="joinGame()">
             Join
