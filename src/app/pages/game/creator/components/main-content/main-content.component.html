@@ -1,16 +1,29 @@
 <div id="container">
-  <div class="question-input">
-    <textarea
-      placeholder="Start typing your question"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="3"
-      [(ngModel)]="question.question"
-      (input)="changeEvent.next({ type: 'question', data: question.question })"
-      maxlength="120"
+  <div class="question-input-container">
+    <div class="question-input">
+      <textarea
+        placeholder="Start typing your question"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="3"
+        [(ngModel)]="question.question"
+        (input)="
+          changeEvent.next({ type: 'question', data: question.question })
+        "
+        maxlength="120"
+      >
+      </textarea>
+      <span class="char-count">{{ charCountQuestion }}</span>
+    </div>
+
+    <button
+      mat-icon-button
+      aria-label="Example icon button with a vertical three dot icon"
+      class="menu-button"
+      (click)="openDialog()"
     >
-    </textarea>
-    <span class="char-count">{{ charCountQuestion }}</span>
+      <mat-icon class="menu-icon">more_vert</mat-icon>
+    </button>
   </div>
 
   <div class="image-input">
@@ -54,7 +67,6 @@
         cdkAutosizeMaxRows="3"
         [(ngModel)]="question.option1"
         (input)="changeEvent.next({ type: 'option1', data: question.option1 })"
-        value="{{ question.option1 }}"
         maxlength="75"
       >
       </textarea>
@@ -71,7 +83,7 @@
         ></mat-icon>
       </div>
     </div>
-    <!--    <input type="file" (change)="readExcel($event)" />-->
+
     <div
       class="answer"
       [ngClass]="{
@@ -85,9 +97,6 @@
           fontIcon="square"
         ></mat-icon>
       </div>
-      <!--      @for (data of ExcelData; track $index) {-->
-      <!--        <div>{{ data.Option1 }}</div>-->
-      <!--      }-->
       <textarea
         placeholder="Add answer 2"
         cdkTextareaAutosize
@@ -98,7 +107,6 @@
         maxlength="75"
       >
       </textarea>
-
       <span class="char-count-ans">{{ charCountAnswer2 }}</span>
       <div
         class="circle"

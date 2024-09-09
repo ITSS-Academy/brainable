@@ -18,14 +18,19 @@
 
     .question {
       display: flex;
-      width: 100%;
+      width: calc(100% - 200px);
       height: 100%;
     }
   }
 }
 
+app-setting-bar {
+  width: 240px;
+  height: 100%;
+}
+
 app-main-content {
-  width: 100%;
+  width: calc(100% - 200px);
 }
 
 #question-list {
@@ -187,8 +192,8 @@ app-main-content {
 }
 
 @media screen and (max-width: 992px) {
-  app-setting {
-    display: none !important;
+  app-setting-bar {
+    display: none;
   }
 
   app-main-content {

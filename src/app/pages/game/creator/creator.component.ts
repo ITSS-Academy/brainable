@@ -13,9 +13,10 @@ import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { JsonPipe, NgIf } from '@angular/common';
 import { DialogCreateComponent } from './components/dialog-create/dialog-create.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SettingBarComponent } from './components/setting-bar/setting-bar.component';
+import { JsonPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-creator',
@@ -30,6 +31,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
     JsonPipe,
     NgIf,
     DialogCreateComponent,
+    SettingBarComponent,
   ],
   templateUrl: './creator.component.html',
   styleUrl: './creator.component.scss',
