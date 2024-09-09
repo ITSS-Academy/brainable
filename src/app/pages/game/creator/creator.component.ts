@@ -13,6 +13,7 @@ import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
 import {DialogComponent} from "./components/dialog/dialog.component";
+import {SettingBarComponent} from "./components/setting-bar/setting-bar.component";
 
 @Component({
   selector: 'app-creator',
@@ -24,6 +25,7 @@ import {DialogComponent} from "./components/dialog/dialog.component";
     MainContentComponent,
     LoadingComponent,
     DialogComponent,
+    SettingBarComponent,
   ],
   templateUrl: './creator.component.html',
   styleUrl: './creator.component.scss',

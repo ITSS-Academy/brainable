@@ -47,8 +47,6 @@ h1 {
         resize: none;
       }
     }
-
-
   }
 
   .right {
@@ -56,6 +54,8 @@ h1 {
 
     .visibility {
       margin-top: 5px;
+      display: flex;
+      flex-direction: column;
     }
 
     .title-img {

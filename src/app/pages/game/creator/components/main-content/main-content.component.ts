@@ -1,5 +1,6 @@
 import {
   Component,
+  inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -22,6 +23,9 @@ import { Question } from '../../../../../models/question.model';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { BehaviorSubject } from 'rxjs';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
+import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 
 @Component({
   selector: 'app-main-content',
@@ -36,6 +40,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
 
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
+  dialog = inject(MatDialog);
 
   changeEvent = new BehaviorSubject<any>(null);
 
@@ -273,5 +278,15 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       this.question.imgUrl = '';
       this.question.answer = 0;
     }
+  }
+
+  onSettingClick() {
+    console.log('Setting clicked');
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = 'custom-dialog-container';
+    this.dialog.open(SettingBarComponent, dialogConfig);
   }
 }
