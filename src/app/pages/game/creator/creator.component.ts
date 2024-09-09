@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
@@ -14,8 +14,8 @@ import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { JsonPipe, NgIf } from '@angular/common';
-import { MainContentImportComponent } from './components/main-content-import/main-content-import.component';
 import { DialogCreateComponent } from './components/dialog-create/dialog-create.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-creator',
@@ -29,7 +29,6 @@ import { DialogCreateComponent } from './components/dialog-create/dialog-create.
     DialogComponent,
     JsonPipe,
     NgIf,
-    MainContentImportComponent,
     DialogCreateComponent,
   ],
   templateUrl: './creator.component.html',
@@ -39,6 +38,8 @@ export class CreatorComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   quiz!: Quiz;
   isEdit = false;
+
+  dialog = inject(MatDialog);
 
   quizDefault: Quiz = {
     id: '',
@@ -80,6 +81,12 @@ export class CreatorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
+    this.store.select('quiz', 'quiz').subscribe((quiz) => {
+      console.log(quiz);
+      if (quiz) {
+        this.quiz = this.deepClone(quiz);
+      }
+    });
     if (id) {
       this.isEdit = true;
       this.subscriptions.push(
@@ -88,11 +95,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
             this.store.dispatch(QuizActions.getQuizById({ id }));
           }
         }),
-        this.store.select('quiz', 'quiz').subscribe((quiz) => {
-          if (quiz) {
-            this.quiz = this.deepClone(quiz);
-          }
-        }),
+
         this.store
           .select('quiz', 'isGetQuizByIdSuccessful')
           .subscribe((isGetQuizByIdSuccessful) => {
@@ -101,16 +104,18 @@ export class CreatorComponent implements OnInit, OnDestroy {
       );
     } else {
       this.isCreateNewQuiz = true;
+
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = '60%';
+      dialogConfig.maxWidth = '85vw';
+      dialogConfig.panelClass = 'custom-dialog-container';
+      this.dialog.open(DialogCreateComponent, dialogConfig);
+
       this.store.dispatch(
         QuizActions.storeDefaultQuiz({
           quiz: this.deepClone(this.quizDefault),
         }),
       );
-      this.store.select('quiz', 'quiz').subscribe((quiz) => {
-        if (quiz) {
-          this.quiz = this.deepClone(quiz);
-        }
-      });
     }
   }
 
@@ -147,12 +152,5 @@ export class CreatorComponent implements OnInit, OnDestroy {
     if (questionList) {
       questionList.scrollTop = questionList.scrollHeight;
     }
-  }
-
-  ExcelData: any;
-
-  handleExcelDataLoaded(data: any) {
-    this.ExcelData = data;
-    console.log('Data passed to another component:', this.ExcelData);
   }
 }

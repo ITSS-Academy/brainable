@@ -1,93 +1,39 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MatButton, MatFabButton } from '@angular/material/button';
-import {
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
-import { AsyncPipe } from '@angular/common';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
-import { MatSelect } from '@angular/material/select';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { Store } from '@ngrx/store';
-
-import { MatCard, MatCardImage } from '@angular/material/card';
-import { RouterLink } from '@angular/router';
+import { Component, EventEmitter, NgZone, Output } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import * as XLSX from 'xlsx';
+import { MaterialModule } from '../../../../../shared/modules/material.module';
+import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { Question } from '../../../../../models/question.model';
+import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
+import { Store } from '@ngrx/store';
+import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
+import mammoth from 'mammoth';
 
 @Component({
   selector: 'app-dialog-create',
   standalone: true,
-  imports: [
-    MatButton,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogContent,
-    MatDialogTitle,
-    AsyncPipe,
-    MatFabButton,
-    MatFormField,
-    MatIcon,
-    MatLabel,
-    MatOption,
-    MatRadioButton,
-    MatRadioGroup,
-    MatSelect,
-    ReactiveFormsModule,
-    FormsModule,
-    MatCard,
-    RouterLink,
-    MatCardImage,
-  ],
+  imports: [MaterialModule, SharedModule],
   templateUrl: './dialog-create.component.html',
   styleUrl: './dialog-create.component.scss',
 })
 export class DialogCreateComponent {
-  @Output() excelDataLoaded = new EventEmitter<any>(); // Emit Excel data
-  ExcelData: any;
-
   constructor(
-    private store: Store<{}>,
     private dialogRef: MatDialogRef<DialogCreateComponent>,
+    private store: Store<{ quiz: QuizState }>,
   ) {}
 
-  // ngOnInit() {
-  //   this.subscription.push(
-  //     this.store.select('quiz', 'quiz').subscribe((quiz) => {
-  //       if (quiz) {
-  //         this.settings.title = quiz.title;
-  //         this.settings.description = quiz.description;
-  //         this.settings.isPublic = quiz.isPublic;
-  //         this.settings.category = quiz.category;
-  //         this.settings.imgUrl = quiz.imgUrl;
-  //       }
-  //     }),
-  //     this.store.select('categories', 'categories').subscribe((categories) => {
-  //       this.listCategories = categories as Categories[];
-  //     }),
-  //     this.store
-  //       .select('categories', 'isGetAllCategoriesSuccessful')
-  //       .subscribe((isGetAllCategoriesSuccessful) => {
-  //         if (isGetAllCategoriesSuccessful) {
-  //           if (this.settings.category) {
-  //             this.categoryValue = this.listCategories.findIndex(
-  //               (category) => category.uid == this.settings.category.uid,
-  //             );
-  //           }
-  //         }
-  //       }),
-  //   );
-  //   this.store.dispatch(CategoriesActions.getAllCategories());
-  // }
-
-  closeDialog(): void {
-    this.dialogRef.close();
+  handleFileInput(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const fileName = file.name.toLowerCase();
+      if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+        this.readExcel(event);
+      } else if (fileName.endsWith('.docx')) {
+        this.readWord(event);
+      } else {
+        console.error('Unsupported file type');
+      }
+    }
   }
 
   readExcel(event: any) {
@@ -97,17 +43,104 @@ export class DialogCreateComponent {
 
     fileReader.onload = (e) => {
       const workBook = XLSX.read(fileReader.result, { type: 'binary' });
-      const sheetName = workBook.SheetNames;
-      this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName[0]]);
+      const sheetName = workBook.SheetNames[0]; // Get the first sheet
+      const worksheet = workBook.Sheets[sheetName];
 
-      // Emit the Excel data to the parent component
-      this.excelDataLoaded.emit(this.ExcelData);
+      // Convert the entire sheet to JSON while using the first row as headers
+      const excelData = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1,
+      }) as any[][];
 
-      console.log(this.ExcelData);
+      // Extract headers (the first row)
+      const headers = excelData[0]; // ["Question", "Option1", "Option2", "Option3", "Option4", "Answer"]
+
+      // Extract rows starting from the second row (skipping the headers)
+      const rows = excelData.slice(1);
+
+      // Process rows
+      const formattedData: Question[] = rows.map((row: any[]) => {
+        // const numbers = row[5].map(cell => (typeof cell === 'number' ? cell : NaN));
+        return {
+          id: '',
+          imgUrl: '',
+          question: row[0],
+          option1: row[1],
+          option2: row[2],
+          option3: row[3],
+          option4: row[4],
+          answer: row['5'],
+          timeLimit: 10,
+        };
+      });
+
+      // Update the excelData array and trigger change detection
+
+      console.log(formattedData);
+      this.store.dispatch(
+        QuizActions.updateQuestionByImport({ questions: formattedData }),
+      );
+      this.closeDialog();
     };
   }
 
-  // ngOnDestroy() {
-  //   this.subscription.forEach((sub) => sub.unsubscribe());
-  // }
+  questions: Question[] = [];
+
+  readWord(event: any) {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const arrayBuffer = e.target.result;
+
+        mammoth
+          .extractRawText({ arrayBuffer: arrayBuffer })
+          .then((result) => {
+            const extractedText = result.value;
+            this.parseText(extractedText);
+          })
+          .catch((err) => console.error('Error reading Word file:', err));
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  parseText(text: string) {
+    const lines = text.split('\n'); // Split text by line breaks
+    let questionObj: Partial<Question> = {};
+    lines.forEach((line) => {
+      if (line.startsWith('Question:')) {
+        if (questionObj.question) {
+          // Add previous question object to array
+          this.questions.push(questionObj as Question);
+        }
+        questionObj = { question: line.replace('Question:', '').trim() };
+      } else if (line.startsWith('Option1:')) {
+        questionObj.option1 = line.replace('Option1:', '').trim();
+      } else if (line.startsWith('Option2:')) {
+        questionObj.option2 = line.replace('Option2:', '').trim();
+      } else if (line.startsWith('Option3:')) {
+        questionObj.option3 = line.replace('Option3:', '').trim();
+      } else if (line.startsWith('Option4:')) {
+        questionObj.option4 = line.replace('Option4:', '').trim();
+      } else if (line.startsWith('Answer:')) {
+        questionObj.answer = Number(line.replace('Answer:', '').trim());
+      }
+    });
+
+    // Add the last question object to array
+    if (questionObj.question) {
+      this.questions.push(questionObj as Question);
+    }
+    this.closeDialog();
+    console.log(this.questions);
+    this.store.dispatch(
+      QuizActions.updateQuestionByImportWord({ questions: this.questions }),
+    );
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }

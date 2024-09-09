@@ -70,13 +70,10 @@
     </div>
     <div class="question">
       @if (isGetQuizByIdSuccessful || isCreateNewQuiz) {
-        <!--        <app-main-content-import></app-main-content-import>-->
-        <app-dialog-create
-          (excelDataLoaded)="handleExcelDataLoaded($event)"
-        ></app-dialog-create>
-        <app-main-content-import
-          [ExcelData]="ExcelData"
-        ></app-main-content-import>
+        <app-main-content
+          [question]="deepClone(quiz.questions[currentQuestionIndex])"
+          [index]="currentQuestionIndex"
+        ></app-main-content>
       }
     </div>
   </div>

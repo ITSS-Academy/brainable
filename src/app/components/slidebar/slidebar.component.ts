@@ -95,12 +95,4 @@ export class SlidebarComponent implements OnInit {
   returnToHome() {
     this.router.navigateByUrl('/home').then();
   }
-
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '60%';
-    dialogConfig.maxWidth = '85vw';
-    dialogConfig.panelClass = 'custom-dialog-container';
-    this.dialog.open(DialogCreateComponent, dialogConfig);
-  }
 }

@@ -27,6 +27,7 @@
     "angularx-qrcode": "^18.0.1",
     "date-fns": "^3.6.0",
     "date-fns-tz": "^3.1.3",
+    "mammoth": "^1.8.0",
     "ngx-socket-io": "^4.7.0",
     "rxjs": "~7.8.0",
     "snowflake-id": "^1.1.0",

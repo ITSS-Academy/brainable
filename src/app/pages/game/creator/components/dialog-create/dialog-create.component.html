@@ -4,12 +4,7 @@
       <h4>Create from sratch</h4>
       <p>From researching, by hand</p>
     </div>
-    <button
-      (click)="closeDialog()"
-      [routerLink]="['/creator']"
-      class="btn-create"
-      mat-flat-button
-    >
+    <button (click)="closeDialog()" class="btn-create" mat-flat-button>
       <mat-icon fontIcon="add"></mat-icon>
       Create
     </button>
@@ -22,12 +17,11 @@
       <p>Safe your time by using spreedsheet</p>
     </div>
 
-    <div [routerLink]="['/creator']" (click)="fileInput.click()">
+    <div (click)="fileInput.click()">
       <input
         type="file"
         #fileInput
-        (click)="closeDialog()"
-        (change)="readExcel($event)"
+        (change)="handleFileInput($event)"
         style="display: none"
       />
       <button mat-flat-button>
