@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { Subscription } from 'rxjs';
@@ -18,6 +18,8 @@ import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Categories } from '../../../../../models/categories.model';
 import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
+import {SnowflakeId} from '@akashrajpurohit/snowflake-id'
+
 
 @Component({
   selector: 'app-setting-dialog',
@@ -27,6 +29,8 @@ import * as CategoriesActions from '../../../../../ngrx/categories/categories.ac
   styleUrl: './setting-dialog.component.scss',
 })
 export class SettingDialogComponent implements OnInit, OnDestroy {
+  @ViewChild('imageContainer') imageContainer!: ElementRef;
+
   quiz!: Quiz;
   listCategories: Categories[] = [];
   isGettingCategories$ = this.store.select(
@@ -54,7 +58,9 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }>,
     private storage: Storage,
     private dialogRef: MatDialogRef<SettingDialogComponent>,
-  ) {}
+  ) {
+
+  }
 
   ngOnInit() {
     this.subscription.push(
@@ -87,14 +93,51 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
 
   selectedImage: string | ArrayBuffer = '';
 
+  // selectedImage!: File | null;
+  //
+  // selectImage(event: any): void {
+  //   const fileInput = event.target as HTMLInputElement;
+  //
+  //   if (fileInput.files && fileInput.files.length > 0) {
+  //     this.selectedImage = fileInput.files[0];
+  //     console.log(this.selectedImage);
+  //     this.processFiles(fileInput.files[0]);
+  //   }
+  // }
+  //
+  // processFiles(file: File): void {
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e: any) => {
+  //       const imageSrc = e.target.result;
+  //       this.insertImageIntoContainer(imageSrc);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
+  //
+  // insertImageIntoContainer(imageSrc: string): void {
+  //   const container = this.imageContainer.nativeElement;
+  //   const containerWidth = container.clientWidth;
+  //   const imgElement = document.createElement('div');
+  //   imgElement.innerHTML = `<img style="height: 36vh; width: ${containerWidth}px; object-fit: scale-down" src="${imageSrc}" class="post-image" alt="Selected Image" />`;
+  //   container.appendChild(imgElement);
+  // }
+
   uploadQuizFile(input: HTMLInputElement) {
+    const snowflake = SnowflakeId({
+      workerId: 1,
+      epoch: 1597017600000,
+    });
     if (!input.files) return;
     const files: FileList = input.files;
 
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
       if (file) {
-        const storageRef = ref(this.storage, file.name);
+        let newId = snowflake.generate();
+        console.log(newId)
+        const storageRef = ref(this.storage, newId);
         uploadBytesResumable(storageRef, file)
           .then((snapshot) => {
             getDownloadURL(snapshot.ref)
@@ -107,7 +150,9 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
                   }),
                 );
               })
-              .catch((error) => {});
+              .catch((error) => {
+
+              });
           })
           .catch((error) => {});
       }
@@ -134,6 +179,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
   }
+
 
   triggerFileInput(event: any): void {
     event.preventDefault();
