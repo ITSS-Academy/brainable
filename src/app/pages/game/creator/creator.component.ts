@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,9 +12,11 @@ import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
-import {DialogComponent} from "./components/dialog/dialog.component";
-import {SettingBarComponent} from "./components/setting-bar/setting-bar.component";
-import {FormArray, FormBuilder, Validators} from "@angular/forms";
+import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogCreateComponent } from './components/dialog-create/dialog-create.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SettingBarComponent } from './components/setting-bar/setting-bar.component';
+import { JsonPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-creator',
@@ -26,6 +28,9 @@ import {FormArray, FormBuilder, Validators} from "@angular/forms";
     MainContentComponent,
     LoadingComponent,
     DialogComponent,
+    JsonPipe,
+    NgIf,
+    DialogCreateComponent,
     SettingBarComponent,
   ],
   templateUrl: './creator.component.html',
@@ -36,6 +41,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
   quiz!: Quiz;
   isEdit = false;
 
+  dialog = inject(MatDialog);
 
   quizDefault: Quiz = {
     id: '',
@@ -79,6 +85,12 @@ export class CreatorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
+    this.store.select('quiz', 'quiz').subscribe((quiz) => {
+      console.log(quiz);
+      if (quiz) {
+        this.quiz = this.deepClone(quiz);
+      }
+    });
     if (id) {
       this.isEdit = true;
       this.subscriptions.push(
@@ -87,11 +99,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
             this.store.dispatch(QuizActions.getQuizById({ id }));
           }
         }),
-        this.store.select('quiz', 'quiz').subscribe((quiz) => {
-          if (quiz) {
-            this.quiz = this.deepClone(quiz);
-          }
-        }),
+
         this.store
           .select('quiz', 'isGetQuizByIdSuccessful')
           .subscribe((isGetQuizByIdSuccessful) => {
@@ -100,16 +108,18 @@ export class CreatorComponent implements OnInit, OnDestroy {
       );
     } else {
       this.isCreateNewQuiz = true;
+
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = '60%';
+      dialogConfig.maxWidth = '85vw';
+      dialogConfig.panelClass = 'custom-dialog-container';
+      this.dialog.open(DialogCreateComponent, dialogConfig);
+
       this.store.dispatch(
         QuizActions.storeDefaultQuiz({
           quiz: this.deepClone(this.quizDefault),
         }),
       );
-      this.store.select('quiz', 'quiz').subscribe((quiz) => {
-        if (quiz) {
-          this.quiz = this.deepClone(quiz);
-        }
-      });
     }
   }
 
@@ -128,6 +138,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
     this.store.dispatch(QuizActions.addNewQuestion());
     this.activeQuestion(this.quiz.questions.length - 1);
     this.scrollToBottom();
+    console.log(this.quiz);
   }
 
   deleteQuestion(index: number) {
