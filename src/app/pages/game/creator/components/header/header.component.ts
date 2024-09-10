@@ -1,4 +1,12 @@
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -12,23 +20,29 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../../../../../components/login/login.component';
 import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import { DialogCreateComponent } from '../dialog-create/dialog-create.component';
+import * as XLSX from 'xlsx';
+import { MainContentComponent } from '../main-content/main-content.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MaterialModule, RouterLink],
+  imports: [MaterialModule, RouterLink, MainContentComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Input() title: string = 'Untitled Quiz';
   @Input() isEdit: boolean = false;
+  @Output() excelDataEvent = new EventEmitter<any>();
 
   subscription: Subscription[] = [];
   quiz!: Quiz;
   idToken!: string;
 
   dialog = inject(MatDialog);
+
+  ExcelData: any;
 
   constructor(
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
@@ -68,6 +82,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     dialogConfig.maxWidth = '85vw';
     dialogConfig.panelClass = 'custom-dialog-container';
     this.dialog.open(SettingDialogComponent, dialogConfig);
+  }
+
+  openDialogCreate() {
+    const dialogCreateConfig = new MatDialogConfig();
+    dialogCreateConfig.width = '60%';
+    dialogCreateConfig.maxWidth = '85vw';
+    dialogCreateConfig.panelClass = 'custom-dialog-container';
+    this.dialog.open(DialogCreateComponent, dialogCreateConfig);
   }
 
   openNotiDialog() {
@@ -111,6 +133,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
       QuizActions.createQuiz({ idToken: this.idToken, quiz: quizAdd }),
     );
   }
+
+  // readExcel(event: any) {
+  //   let file = event.target.files[0];
+  //   let fileReader = new FileReader();
+  //   fileReader.readAsBinaryString(file);
+  //
+  //   fileReader.onload = (e) => {
+  //     const workBook = XLSX.read(fileReader.result, { type: 'binary' });
+  //     const sheetName = workBook.SheetNames;
+  //     this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName[0]]);
+  //     console.log(this.ExcelData);
+  //   };
+  // }
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());

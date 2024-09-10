@@ -18,7 +18,7 @@ import {
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { QuestionState } from '../../../../../ngrx/question/question.state';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, of, Subscription } from 'rxjs';
 import { Question } from '../../../../../models/question.model';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { BehaviorSubject } from 'rxjs';
@@ -37,6 +37,7 @@ import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() question!: Question;
   @Input() index!: number;
+  //@Input() ReadExcel?: any;
 
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
@@ -51,7 +52,9 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       question: QuestionState;
       quiz: QuizState;
     }>,
-  ) {}
+  ) {
+    //console.log(this.ReadExcel);
+  }
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -78,12 +81,17 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
         );
       }),
     );
+    //console.log(this.ReadExcel);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['question']) {
       this.resetCharCount();
     }
+    // if (changes['ReadExcel']) {
+    //   console.log('Excel data received:', this.ReadExcel);
+    //   // Handle the Excel data here
+    // }
   }
 
   ngOnDestroy(): void {

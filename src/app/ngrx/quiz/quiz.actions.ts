@@ -61,6 +61,16 @@ export const updateQuestionByIndex = createAction(
   props<{ question: Question; index: number }>(),
 );
 
+export const updateQuestionByImport = createAction(
+  '[Quiz] Update Question By Import',
+  props<{ questions: Question[] }>(),
+);
+
+export const updateQuestionByImportWord = createAction(
+  '[Quiz] Update Question By Import Word',
+  props<{ questions: Question[] }>(),
+);
+
 export const updateSetting = createAction(
   '[Quiz] Update Setting',
   props<{ setting: any }>(),

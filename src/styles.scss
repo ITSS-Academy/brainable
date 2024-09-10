@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @use "sass:map";
 
 @include mat.core();
@@ -7,92 +7,92 @@ $_palettes: (
   primary: (
     0: #000000,
     10: #002019,
-    20: #00382C,
+    20: #00382c,
     25: #004437,
     30: #005141,
-    35: #005E4C,
-    40: #006B58,
-    50: #00876F,
-    60: #00A487,
-    70: #24C0A0,
-    80: #4EDDBB,
-    90: #97F4D9,
-    95: #B8FFE9,
-    98: #E6FFF5,
-    99: #F3FFF9,
-    100: #FFFFFF
+    35: #005e4c,
+    40: #006b58,
+    50: #00876f,
+    60: #00a487,
+    70: #24c0a0,
+    80: #4eddbb,
+    90: #97f4d9,
+    95: #b8ffe9,
+    98: #e6fff5,
+    99: #f3fff9,
+    100: #ffffff,
   ),
   secondary: (
     0: #000000,
     10: #052019,
-    20: #1B352E,
+    20: #1b352e,
     25: #264039,
-    30: #324C44,
-    35: #3D584F,
-    40: #49645B,
-    50: #617D73,
-    60: #7B978D,
-    70: #95B1A7,
-    80: #B0CDC2,
-    90: #CBE9DE,
-    95: #DAF7EC,
-    98: #E6FFF5,
-    99: #F3FFF9,
-    100: #FFFFFF
+    30: #324c44,
+    35: #3d584f,
+    40: #49645b,
+    50: #617d73,
+    60: #7b978d,
+    70: #95b1a7,
+    80: #b0cdc2,
+    90: #cbe9de,
+    95: #daf7ec,
+    98: #e6fff5,
+    99: #f3fff9,
+    100: #ffffff,
   ),
   tertiary: (
     0: #000000,
-    10: #001E2D,
+    10: #001e2d,
     20: #083448,
-    25: #183F54,
-    30: #254B60,
-    35: #32576C,
-    40: #3E6379,
-    50: #577B93,
-    60: #7195AD,
-    70: #8BB0C9,
-    80: #A6CBE5,
-    90: #C5E7FF,
-    95: #E4F3FF,
-    98: #F5FAFF,
-    99: #FBFCFF,
-    100: #FFFFFF
+    25: #183f54,
+    30: #254b60,
+    35: #32576c,
+    40: #3e6379,
+    50: #577b93,
+    60: #7195ad,
+    70: #8bb0c9,
+    80: #a6cbe5,
+    90: #c5e7ff,
+    95: #e4f3ff,
+    98: #f5faff,
+    99: #fbfcff,
+    100: #ffffff,
   ),
   neutral: (
     0: #000000,
-    10: #191C1B,
-    20: #2E312F,
-    25: #393C3A,
+    10: #191c1b,
+    20: #2e312f,
+    25: #393c3a,
     30: #444846,
     35: #505351,
-    40: #5C5F5D,
+    40: #5c5f5d,
     50: #747876,
-    60: #8E918F,
-    70: #A9ACA9,
-    80: #C4C7C4,
-    90: #E1E3E0,
-    95: #EFF1EE,
-    98: #F8FAF7,
-    99: #FBFDFA,
-    100: #FFFFFF
+    60: #8e918f,
+    70: #a9aca9,
+    80: #c4c7c4,
+    90: #e1e3e0,
+    95: #eff1ee,
+    98: #f8faf7,
+    99: #fbfdfa,
+    100: #ffffff,
   ),
   neutral-variant: (
     0: #000000,
-    10: #141D1A,
-    20: #29322F,
-    25: #343D3A,
-    30: #3F4945,
-    35: #4B5551,
-    40: #57605D,
-    50: #6F7975,
-    60: #89938E,
-    70: #A3ADA9,
-    80: #BFC9C4,
-    90: #DBE5E0,
-    95: #E9F3EE,
-    98: #F2FCF6,
-    99: #F5FFF9,
-    100: #FFFFFF
+    10: #141d1a,
+    20: #29322f,
+    25: #343d3a,
+    30: #3f4945,
+    35: #4b5551,
+    40: #57605d,
+    50: #6f7975,
+    60: #89938e,
+    70: #a3ada9,
+    80: #bfc9c4,
+    90: #dbe5e0,
+    95: #e9f3ee,
+    98: #f2fcf6,
+    99: #f5fff9,
+    100: #ffffff,
   ),
   error: (
     0: #000000,
@@ -124,20 +124,22 @@ $_rest: (
 $_primary: map.merge(map.get($_palettes, primary), $_rest);
 $_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
 
-$light-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: $_primary,
-    tertiary: $_tertiary,
-  ),
-  typography: (
-    brand-family: "Open Sans",
-    plain-family: "Open Sans",
-  ),
-  density: (
-    scale: 0,
+$light-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: $_primary,
+      tertiary: $_tertiary,
+    ),
+    typography: (
+      brand-family: "Open Sans",
+      plain-family: "Open Sans",
+    ),
+    density: (
+      scale: 0,
+    ),
   )
-));
+);
 
 :root {
   @include mat.all-component-themes($light-theme);
@@ -217,16 +219,10 @@ body::-webkit-scrollbar {
   background: unset !important;
 }
 
-
 .custom-dialog-container {
   border-radius: 28px;
 }
 
 .mat-mdc-select-panel {
-  background-color: #FFFFFF !important;
+  background-color: #ffffff !important;
 }
-
-
-
-
-

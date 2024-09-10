@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-card class="card-create" appearance="outlined">
+    <div class="card-content">
+      <h4>Create from sratch</h4>
+      <p>From researching, by hand</p>
+    </div>
+    <button (click)="closeDialog()" class="btn-create" mat-flat-button>
+      <mat-icon fontIcon="add"></mat-icon>
+      Create
+    </button>
+  </mat-card>
+
+  <mat-card class="card-create" appearance="outlined">
+    <!--    <img mat-card-image src="assets/images/sheet.png" alt="sheet.png" />-->
+    <div class="card-content">
+      <h4>Create with import</h4>
+      <p>Safe your time by using spreedsheet</p>
+    </div>
+
+    <div (click)="fileInput.click()">
+      <input
+        type="file"
+        #fileInput
+        (change)="handleFileInput($event)"
+        style="display: none"
+      />
+      <button mat-flat-button>
+        <mat-icon fontIcon="add"></mat-icon>
+        Import sheet
+      </button>
+    </div>
+  </mat-card>
+</div>
+
+<!--    <button-->
+<!--      (click)="closeDialog()"-->
+<!--      [routerLink]="['/creator']"-->
+<!--      class="btn-create"-->
+<!--      mat-flat-button-->
+<!--    >-->
+<!--      <mat-icon fontIcon="add"></mat-icon>-->
+<!--      Import sheet-->
+<!--    </button>-->
