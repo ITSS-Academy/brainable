@@ -25,6 +25,7 @@ export class ResultComponent implements OnInit, OnDestroy {
 
   score = 0;
   time = 0;
+  showScore1: number = 0;
 
   constructor(
     private store: Store<{ game: GameState; quiz: QuizState }>,
@@ -38,15 +39,20 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('ResultComponent');
     this.gameService.listenForNavigateToNextQuestion(this.pin);
-    this.gameService.receiveCorrectAnswer().subscribe((correctAnswer) => {
-      this.correctAnswer = correctAnswer.correctAnswer;
-      this.isCorrect = this.playerAnswer === this.correctAnswer;
-      if (this.isCorrect) {
-        this.store.dispatch(GameActions.incrementScore());
-      }
-    });
     this.subscription.push(
+      this.gameService.receiveCorrectAnswer().subscribe((correctAnswer) => {
+        this.correctAnswer = correctAnswer.correctAnswer;
+        this.isCorrect = this.playerAnswer === this.correctAnswer;
+        if (this.isCorrect) {
+          this.store.dispatch(GameActions.incrementScore());
+        }
+      }),
+      this.gameService.receiveScore().subscribe((score) => {
+        this.showScore1 = Math.round(score);
+      }),
+
       this.store
         .select('game', 'playerAnswer')
         .subscribe(
@@ -59,6 +65,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('re des');
     this.subscription.forEach((s) => s.unsubscribe());
   }
 }

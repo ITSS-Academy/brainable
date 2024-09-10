@@ -8,6 +8,7 @@ import { AuthState } from '../../ngrx/auth/auth.state';
 import { SharedModule } from '../../shared/modules/shared.module';
 import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { Profile } from '../../models/profile.model';
+import * as ProfileActions from '../../ngrx/profile/profile.actions';
 
 @Component({
   selector: 'app-slidebar',
@@ -35,6 +36,7 @@ export class SlidebarComponent implements OnInit {
     },
   ];
 
+  isLogoutSuccess$ = this.store.select('auth', 'isLogoutSuccess');
   subscriptions: Subscription[] = [];
   activeLink = this.navLinks[0];
   profile!: Profile;
@@ -85,6 +87,23 @@ export class SlidebarComponent implements OnInit {
 
   signOut() {
     this.store.dispatch(AuthActions.logout());
+    // this.isLogoutSuccess$.subscribe((isLogoutSuccess) => {
+    //   if (isLogoutSuccess) {
+    //     window.location.reload();
+    //   }
+    // })
+    this.profile = {
+      photoUrl: '',
+      email: '',
+      uid: '',
+      fullName: '',
+      quizzes: [],
+    }
+    this.isLogoutSuccess$.subscribe((isLogoutSuccess) => {
+      if (isLogoutSuccess) {
+        this.store.dispatch(ProfileActions.clearState());
+      }
+    })
   }
 
   returnToHome() {

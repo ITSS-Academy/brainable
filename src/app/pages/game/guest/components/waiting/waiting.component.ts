@@ -27,14 +27,12 @@ export class WaitingComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.gameService.listenForNavigationCountDown(this.pin);
     this.subscriptions.push(
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
           if (pin) {
             this.pin = pin as string;
-          } else {
-            this.store.dispatch(GameActions.storePin({ pin: this.pin }));
+            this.gameService.listenForNavigationCountDown(this.pin);
           }
         }
       }),
@@ -50,16 +48,17 @@ export class WaitingComponent implements OnInit, OnDestroy {
         GameActions.storePlayerName({ playerName: this.nickname }),
       );
       this.gameService.listenForErrors().subscribe((error) => {
+        console.log(error);
         if (error === 'Username already exists in the room') {
-          alert("Username already exists in the room");
+          alert('Username already exists in the room');
         }
-      })
-      }
-    this.gameService.listenForClientGuessJoined().subscribe(data=>{
-      if (data == "Guest joined room"){
+      });
+    }
+    this.gameService.listenForClientGuessJoined().subscribe((data) => {
+      if (data == 'Guest joined room') {
         this.isJoining = true;
       }
-    })
+    });
   }
 
   onKey(event: any) {

@@ -25,6 +25,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
   intervalId: any;
 
   score = 0;
+  currentQuestion$ = this.store.select('game', 'currentQuestion');
 
   startTimer(): void {
     this.intervalId = setInterval(() => {
@@ -43,6 +44,11 @@ export class AnswerComponent implements OnInit, OnDestroy {
     private gameService: GameService,
   ) {
     this.startTimer();
+  }
+
+  ngOnInit() {
+    console.log('AnswerComponent');
+
     this.subscription.push(
       this.store.select('game', 'playerName').subscribe((playerName) => {
         this.playerName = playerName;
@@ -56,18 +62,18 @@ export class AnswerComponent implements OnInit, OnDestroy {
           );
         }
       }),
+      this.gameService.listenForReceiveQuestion().subscribe((questionId) => {
+        this.questionId = questionId;
+        console.log(this.questionId);
+      }),
     );
-  }
 
-  ngOnInit() {
-    this.gameService.listenForReceiveQuestion().subscribe((questionId) => {
-      this.questionId = questionId;
-    });
+    console.log(this.pin);
     this.gameService.listenForNavigateToResults(this.pin);
-    this.gameService.stopListeningForNavigateToNextQuestion();
   }
 
   chooseAnswer(answer: number) {
+    console.log('chooseAnswer');
     this.stopTimer();
     this.isChoosing = true;
     this.store.dispatch(GameActions.storePlayerAnswer({ answer }));
@@ -83,6 +89,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('AnswerComponent destroyed');
     if (!this.isChoosing) {
       this.chooseAnswer(0);
     }

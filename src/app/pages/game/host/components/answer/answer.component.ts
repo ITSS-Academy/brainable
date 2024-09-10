@@ -66,7 +66,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
         this.questions = quiz.questions;
         this.totalQuestions = quiz.totalQuestions;
         this.activeNumber =
-          (quiz.questions[this.currentQuestion].timeLimit as number) + 1;
+          (quiz.questions[this.currentQuestion].timeLimit as number);
         this.startCountdown(this.activeNumber);
       }),
       this.store.select('game', 'pin').subscribe((pin) => {
@@ -91,7 +91,10 @@ export class AnswerComponent implements OnInit, OnDestroy {
         pin: this.pin,
         questionId: this.questions[this.currentQuestion].id,
         correctAnswer: this.questions[this.currentQuestion].answer,
+        points: this.questions[this.currentQuestion].points,
+        timeLimit: this.questions[this.currentQuestion].timeLimit,
       };
+      console.log(data)
       this.gameService.sendQuestion(data);
     }
     this.imgUrl = this.questions[this.currentQuestion].imgUrl;

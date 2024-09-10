@@ -1,4 +1,7 @@
 <div id="container">
+  {{question.points}}
+  {{question.timeLimit}}
+
   <div class="setting-bar">
     <mat-form-field>
       <mat-label>Time limit</mat-label>
@@ -28,7 +31,7 @@
     <div class="dialog-content">
       <mat-form-field>
         <mat-label>Time limit</mat-label>
-        <mat-select (selectionChange)="onTimeLimitChange($event)" value="5">
+        <mat-select (selectionChange)="onTimeLimitChange($event)" [(ngModel)]="question.timeLimit" value="5">
           <mat-option value="5">5 seconds</mat-option>
           <mat-option value="10">10 seconds</mat-option>
           <mat-option value="15">15 seconds</mat-option>
@@ -37,7 +40,7 @@
 
       <mat-form-field>
         <mat-label>Points</mat-label>
-        <mat-select (selectionChange)="onPointsChange($event)" value="100">
+        <mat-select (selectionChange)="onPointsChange($event)" [(ngModel)]="question.points" value="100">
           <mat-option value="100">100</mat-option>
           <mat-option value="200">200</mat-option>
           <mat-option value="300">300</mat-option>

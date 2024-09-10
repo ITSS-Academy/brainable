@@ -60,6 +60,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
         option4: '',
         imgUrl: '',
         timeLimit: 0,
+        points: 1,
       },
     ],
   };
