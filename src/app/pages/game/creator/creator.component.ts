@@ -68,6 +68,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
         option4: '',
         imgUrl: '',
         timeLimit: 0,
+        points: 0,
       },
     ],
   };
@@ -79,7 +80,8 @@ export class CreatorComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
@@ -126,6 +128,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
       subscription.unsubscribe();
     });
   }
+
 
   activeQuestion(index: number): void {
     this.currentQuestionIndex = index;

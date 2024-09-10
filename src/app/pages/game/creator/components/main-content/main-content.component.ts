@@ -80,6 +80,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
           }),
         );
       }),
+
     );
     //console.log(this.ReadExcel);
   }
