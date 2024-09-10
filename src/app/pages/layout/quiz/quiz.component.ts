@@ -21,6 +21,7 @@ import { GameService } from '../../../services/game/game.service';
 import { GameReport } from '../../../models/gameReport.model';
 import * as GameReportActions from '../../../ngrx/gameReport/gameReport.action';
 import { GameReportState } from '../../../ngrx/gameReport/gameReport.state';
+import {Socket} from "ngx-socket-io";
 
 @Component({
   selector: 'app-quiz',
@@ -55,6 +56,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }>,
     private gameService: GameService,
     private router: Router,
+    private socket: Socket
   ) {
     this.quizId = this.activatedRoute.snapshot.params['id'];
   }
@@ -84,6 +86,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   playGame() {
     const pin = this.generatePin();
+    this.socket.connect();
     this.store.dispatch(GameActions.storePin({ pin }));
     this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: this.quiz }));
     this.store.dispatch(

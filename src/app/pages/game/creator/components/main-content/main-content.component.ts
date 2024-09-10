@@ -27,6 +27,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from '../setting-bar/setting-bar.component';
+import {SnowflakeId} from "@akashrajpurohit/snowflake-id";
 
 @Component({
   selector: 'app-main-content',
@@ -52,6 +53,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       auth: AuthState;
       question: QuestionState;
       quiz: QuizState;
+
     }>,
   ) {
     //console.log(this.ReadExcel);
@@ -109,13 +111,19 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   selectedImage: string | ArrayBuffer = '';
 
   uploadQuestionFile(input: HTMLInputElement) {
+    const snowflake = SnowflakeId({
+      workerId: 1,
+      epoch: 1597017600000,
+    });
     if (!input.files) return;
     const files: FileList = input.files;
 
     for (let i = 0; i < files.length; i++) {
+      let newId = snowflake.generate()
+      console.log(newId)
       const file = files.item(i);
       if (file) {
-        const storageRef = ref(this.storage, file.name);
+        const storageRef = ref(this.storage, newId);
         uploadBytesResumable(storageRef, file)
           .then((snapshot) => {
             getDownloadURL(snapshot.ref)

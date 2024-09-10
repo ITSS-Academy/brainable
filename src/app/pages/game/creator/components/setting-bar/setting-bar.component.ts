@@ -47,14 +47,10 @@ export class SettingBarComponent implements OnInit, OnDestroy {
   }
 
   onPointsChange(event: any) {
-    console.log('Selected points:', event.value);
     this.question = {...this.question, points: event.value};
-    this.store.dispatch(
-      QuizActions.updateQuestionByIndex({
-        question: this.question,
-        index: this.index,
-      }))
+    this.store.dispatch(QuizActions.updateQuestionByIndex({question: this.question,index: this.index}));
   }
+
 
   onTimeLimitChange(event: any) {
     console.log('Selected time limit:', event.value);
@@ -73,4 +69,5 @@ export class SettingBarComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
+
 }

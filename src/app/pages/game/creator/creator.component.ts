@@ -74,7 +74,7 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
         option4: '',
         imgUrl: '',
         timeLimit: 0,
-        points: 0,
+        points: 1,
       },
     ],
   };
