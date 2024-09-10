@@ -139,10 +139,22 @@ export const quizReducer = createReducer(
       },
     };
   }),
-  on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
+  on(QuizActions.duplicateQuestionByIndex, (state, { index, type }) => {
     if (!Array.isArray(state.quiz.questions)) {
       return state;
     }
+    const updatedQuestions = [...state.quiz.questions];
+    updatedQuestions.splice(index, 0, state.quiz.questions[index]);
+
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        questions: updatedQuestions,
+      },
+    };
+  }),
+  on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
     const updatedQuestions = [...state.quiz.questions];
     updatedQuestions[index] = question;
 
@@ -151,6 +163,24 @@ export const quizReducer = createReducer(
       quiz: {
         ...state.quiz,
         questions: updatedQuestions,
+      },
+    };
+  }),
+  on(QuizActions.updateQuestionByImport, (state, { questions, type }) => {
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        questions: questions,
+      },
+    };
+  }),
+  on(QuizActions.updateQuestionByImportWord, (state, { questions, type }) => {
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        questions: questions,
       },
     };
   }),

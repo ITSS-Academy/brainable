@@ -81,7 +81,6 @@ export class JoinComponent implements OnInit, OnDestroy {
       return;
     }
     this.gameService.listenForNavigateToEnterName(this.pin);
-
     this.gameService.checkRoomExist(this.pin);
   }
 

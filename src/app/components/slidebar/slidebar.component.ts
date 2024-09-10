@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -9,6 +9,8 @@ import { SharedModule } from '../../shared/modules/shared.module';
 import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { Profile } from '../../models/profile.model';
 import * as ProfileActions from '../../ngrx/profile/profile.actions';
+import { GameService } from '../../services/game/game.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-slidebar',
@@ -41,9 +43,12 @@ export class SlidebarComponent implements OnInit {
   activeLink = this.navLinks[0];
   profile!: Profile;
 
+  dialog = inject(MatDialog);
+
   constructor(
     private router: Router,
     private store: Store<{ profile: ProfileState; auth: AuthState }>,
+    private gameService: GameService,
   ) {
     if (this.router.url.includes('home')) {
       this.activeLink = this.navLinks[0];
@@ -98,12 +103,12 @@ export class SlidebarComponent implements OnInit {
       uid: '',
       fullName: '',
       quizzes: [],
-    }
+    };
     this.isLogoutSuccess$.subscribe((isLogoutSuccess) => {
       if (isLogoutSuccess) {
         this.store.dispatch(ProfileActions.clearState());
       }
-    })
+    });
   }
 
   returnToHome() {

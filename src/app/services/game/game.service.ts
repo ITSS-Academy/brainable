@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { Router } from '@angular/router';
 import {
+
   AnswerStatistics,
   SendAnswer,
   SendQuestion,
@@ -25,6 +26,7 @@ export class GameService {
     private http: HttpClient,
     private store: Store<{ game: GameState }>,
   ) {}
+
 
   createGame(idToken: string, gameReport: GameReport) {
     return this.http.post(
@@ -50,6 +52,7 @@ export class GameService {
     return this.http.get<GameReport>(
       `${environment.apiUrl}/game/byId?id=${gameId}`,
       {
+
         headers: {
           Authorization: idToken,
         },
@@ -250,5 +253,8 @@ export class GameService {
         observer.next(lastQuestionScore);
       });
     });
+  }
+  logout(): void {
+    this.socket.emit('logout');
   }
 }

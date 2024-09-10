@@ -58,7 +58,17 @@ export const updateQuizFailure = createAction(
 
 export const updateQuestionByIndex = createAction(
   '[Quiz] Update Question By Index',
-  props<{ question: Question; index: number }>(),
+  props<{ question: Question; index: number}>(),
+);
+
+export const updateQuestionByImport = createAction(
+  '[Quiz] Update Question By Import',
+  props<{ questions: Question[] }>(),
+);
+
+export const updateQuestionByImportWord = createAction(
+  '[Quiz] Update Question By Import Word',
+  props<{ questions: Question[] }>(),
 );
 
 export const updateSetting = createAction(
@@ -72,6 +82,11 @@ export const storeCurrentQuiz = createAction(
 );
 
 export const addNewQuestion = createAction('[Quiz] Add New Question');
+
+export const duplicateQuestionByIndex = createAction(
+  '[Quiz] Duplicate Question By Index',
+  props<{ index: number }>(),
+);
 
 export const deleteQuestionByIndex = createAction(
   '[Quiz] Delete Question By Index',

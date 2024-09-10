@@ -2,31 +2,31 @@
   <div class="header">
     <button mat-flat-button class="btn-home" (click)="homePage()">Home</button>
 
-    <img class="logo" src="assets/images/logo/brainable-white.png" alt=""/>
+    <img class="logo" src="assets/images/logo/brainable-white.png" alt="" />
     <!--    <h1 class="title">Title</h1>-->
   </div>
 
   <div class="content">
     <div class="first-place">
-      <div class="name">{{ result[0].playerName }}</div>
+      <div class="name first-place-name">{{ result[0].playerName }}</div>
       <div class="result">
-        <img src="assets/images/first-place.png" alt="" class="rank"/>
+        <img src="assets/images/first-place.png" alt="" class="rank" />
         <div class="score">{{ result[0].score }}</div>
       </div>
     </div>
 
     <div class="second-place">
-      <div class="name">{{ result[1].playerName }}</div>
+      <div class="name second-place-name">{{ result[1].playerName }}</div>
       <div class="result">
-        <img src="assets/images/second-place.png" alt="" class="rank"/>
+        <img src="assets/images/second-place.png" alt="" class="rank" />
         <div class="score">{{ result[1].score }}</div>
       </div>
     </div>
 
     <div class="third-place">
-      <div class="name">{{ result[2].playerName }}</div>
+      <div class="name third-place-name">{{ result[2].playerName }}</div>
       <div class="result">
-        <img src="assets/images/third-place.png" alt="" class="rank"/>
+        <img src="assets/images/third-place.png" alt="" class="rank" />
         <div class="score">{{ result[2].score }}</div>
       </div>
     </div>

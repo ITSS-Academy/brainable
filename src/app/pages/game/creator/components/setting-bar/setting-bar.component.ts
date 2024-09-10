@@ -29,19 +29,21 @@ export class SettingBarComponent implements OnInit, OnDestroy {
     'categories',
     'isGetAllCategoriesSuccessful',
   );
+  changeEvent = new BehaviorSubject<any>(null);
+
+
 
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
-  ) {
-  }
+
+  ) {}
+
 
   ngOnInit() {
     this.subscriptions.push(
       this.store.select('categories', 'categories').subscribe((categories) => {
         this.listCategories = categories as Categories[];
-      }),
-    );
-    this.store.dispatch(CategoriesActions.getAllCategories());
+      }))
   }
 
   onPointsChange(event: any) {
@@ -49,9 +51,15 @@ export class SettingBarComponent implements OnInit, OnDestroy {
     this.store.dispatch(QuizActions.updateQuestionByIndex({question: this.question,index: this.index}));
   }
 
+
   onTimeLimitChange(event: any) {
+    console.log('Selected time limit:', event.value);
     this.question = {...this.question, timeLimit: event.value};
-    this.store.dispatch(QuizActions.updateQuestionByIndex({question: this.question,index: this.index}));
+    this.store.dispatch(
+      QuizActions.updateQuestionByIndex({
+        question: this.question,
+        index: this.index,
+      }));
   }
 
   // closeDialog(): void {
