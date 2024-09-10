@@ -62,13 +62,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
 
-  // openDialog() {
-  //   const dialogConfig = new MatDialogConfig();
-  //   dialogConfig.width = '60%';
-  //   dialogConfig.maxWidth = '85vw';
-  //   dialogConfig.panelClass = 'custom-dialog-container';
-  //   this.dialog.open(SettingDialogComponent, dialogConfig);
-  // }
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '60%';
+    dialogConfig.maxWidth = '85vw';
+    dialogConfig.panelClass = 'custom-dialog-container';
+    this.dialog.open(SettingDialogComponent, dialogConfig);
+  }
 
   openNotiDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -114,22 +114,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
-  }
-
-  isEmpty: boolean = false;
-
-  handleSave(isFieldsEmpty: boolean) {
-    this.isEmpty = isFieldsEmpty;
-    if (isFieldsEmpty) {
-      this.openDialog();
-    } else {
-      // Proceed with saving logic if needed
-      console.log('All fields are filled');
-    }
-  }
-
-  openDialog() {
-    // Your dialog opening logic here
-    console.log('Open dialog for empty fields');
   }
 }

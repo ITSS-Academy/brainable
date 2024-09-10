@@ -20,13 +20,12 @@ import {
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { QuestionState } from '../../../../../ngrx/question/question.state';
-import { debounceTime, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Question } from '../../../../../models/question.model';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { BehaviorSubject } from 'rxjs';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 
 @Component({
@@ -39,7 +38,6 @@ import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() question!: Question;
   @Input() index!: number;
-  @Output() save = new EventEmitter<boolean>();
 
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
@@ -291,22 +289,5 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = 'custom-dialog-container';
     this.dialog.open(SettingBarComponent, dialogConfig);
-  }
-
-  checkForEmptyFields(): boolean {
-    return (
-      !this.question.question ||
-      !this.question.option1 ||
-      !this.question.option2 ||
-      !this.question.option3 ||
-      !this.question.option4 ||
-      !this.question.imgUrl
-    );
-  }
-
-  // Triggered when the save button is clicked
-  onSave() {
-    const isEmpty = this.checkForEmptyFields();
-    this.save.emit(isEmpty);
   }
 }
