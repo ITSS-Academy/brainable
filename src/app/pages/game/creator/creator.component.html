@@ -73,6 +73,7 @@
         <app-main-content
           [question]="deepClone(quiz.questions[currentQuestionIndex])"
           [index]="currentQuestionIndex"
+          (save)="handleSave($event)"
         ></app-main-content>
 
         <app-setting-bar

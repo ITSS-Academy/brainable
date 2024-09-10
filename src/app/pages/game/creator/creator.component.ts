@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,8 +12,8 @@ import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
-import {DialogComponent} from "./components/dialog/dialog.component";
-import {SettingBarComponent} from "./components/setting-bar/setting-bar.component";
+import { DialogComponent } from './components/dialog/dialog.component';
+import { SettingBarComponent } from './components/setting-bar/setting-bar.component';
 
 @Component({
   selector: 'app-creator',
@@ -140,6 +140,19 @@ export class CreatorComponent implements OnInit, OnDestroy {
     const questionList = document.getElementById('content-container');
     if (questionList) {
       questionList.scrollTop = questionList.scrollHeight;
+    }
+  }
+
+  @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
+  @ViewChild(MainContentComponent) mainContentComponent!: MainContentComponent;
+
+  handleSave(isFieldsEmpty: boolean) {
+    if (isFieldsEmpty) {
+      // Trigger method in HeaderComponent to open dialog
+      this.headerComponent.openDialog();
+    } else {
+      // Proceed with save logic if needed
+      console.log('All fields are filled. Proceeding with save.');
     }
   }
 }

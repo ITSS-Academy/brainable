@@ -1,10 +1,12 @@
 import {
   Component,
+  EventEmitter,
   inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
@@ -37,6 +39,7 @@ import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() question!: Question;
   @Input() index!: number;
+  @Output() save = new EventEmitter<boolean>();
 
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
@@ -288,5 +291,22 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = 'custom-dialog-container';
     this.dialog.open(SettingBarComponent, dialogConfig);
+  }
+
+  checkForEmptyFields(): boolean {
+    return (
+      !this.question.question ||
+      !this.question.option1 ||
+      !this.question.option2 ||
+      !this.question.option3 ||
+      !this.question.option4 ||
+      !this.question.imgUrl
+    );
+  }
+
+  // Triggered when the save button is clicked
+  onSave() {
+    const isEmpty = this.checkForEmptyFields();
+    this.save.emit(isEmpty);
   }
 }

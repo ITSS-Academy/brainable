@@ -1,4 +1,10 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { Subscription } from 'rxjs';
@@ -18,8 +24,7 @@ import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Categories } from '../../../../../models/categories.model';
 import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
-import {SnowflakeId} from '@akashrajpurohit/snowflake-id'
-
+import { SnowflakeId } from '@akashrajpurohit/snowflake-id';
 
 @Component({
   selector: 'app-setting-dialog',
@@ -58,9 +63,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }>,
     private storage: Storage,
     private dialogRef: MatDialogRef<SettingDialogComponent>,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.subscription.push(
@@ -136,7 +139,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       const file = files.item(i);
       if (file) {
         let newId = snowflake.generate();
-        console.log(newId)
+        console.log(newId);
         const storageRef = ref(this.storage, newId);
         uploadBytesResumable(storageRef, file)
           .then((snapshot) => {
@@ -150,9 +153,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
                   }),
                 );
               })
-              .catch((error) => {
-
-              });
+              .catch((error) => {});
           })
           .catch((error) => {});
       }
@@ -179,7 +180,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
   }
-
 
   triggerFileInput(event: any): void {
     event.preventDefault();

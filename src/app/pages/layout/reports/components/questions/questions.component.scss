@@ -48,6 +48,18 @@
   width: 25%;
 }
 
+@media screen and (max-width: 660px) {
+  #question-statistics-right {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 562px) {
+  #question-statistics-right {
+    width: 30%;
+  }
+}
+
 #question-hb-left {
   display: flex;
   align-items: center;
