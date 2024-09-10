@@ -1,21 +1,34 @@
 <div id="container">
-  <div class="question-input">
-    <textarea
-      placeholder="Start typing your question"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="3"
-      [(ngModel)]="question.question"
-      (input)="changeEvent.next({type:'question',data:question.question})"
-      maxlength="120"
+  <div class="question-input-container">
+    <div class="question-input">
+      <textarea
+        placeholder="Start typing your question"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="3"
+        [(ngModel)]="question.question"
+        (input)="
+          changeEvent.next({ type: 'question', data: question.question })
+        "
+        maxlength="120"
+      >
+      </textarea>
+      <span class="char-count">{{ charCountQuestion }}</span>
+    </div>
+
+    <button
+      mat-icon-button
+      aria-label="Example icon button with a vertical three dot icon"
+      class="menu-button"
+      (click)="openDialog()"
     >
-    </textarea>
-    <span class="char-count">{{ charCountQuestion }}</span>
+      <mat-icon class="menu-icon">more_vert</mat-icon>
+    </button>
   </div>
 
   <div class="image-input">
-    @if (question.imgUrl == undefined || question.imgUrl === '') {
-      <input id="uploadBtn" type="file" (change)="selectImage($event)"/>
+    @if (question.imgUrl == undefined || question.imgUrl === "") {
+      <input id="uploadBtn" type="file" (change)="selectImage($event)" />
       <label for="uploadBtn">
         <div class="media-library"></div>
         <button mat-fab (click)="triggerFileInput($event)">
@@ -25,7 +38,7 @@
       </label>
     } @else {
       <div class="img-container">
-        <img [src]="question.imgUrl" alt=""/>
+        <img [src]="question.imgUrl" alt="" />
       </div>
       <button mat-fab class="remove-btn" (click)="removeImage()">
         <mat-icon>delete</mat-icon>
@@ -34,7 +47,12 @@
   </div>
 
   <div class="answers">
-    <div class="answer" [ngClass]="{ 'red': (question.option1 != undefined && question.option1 !== '')}">
+    <div
+      class="answer"
+      [ngClass]="{
+        red: question.option1 != undefined && question.option1 !== '',
+      }"
+    >
       <div class="answer-color red">
         <mat-icon
           aria-hidden="false"
@@ -48,7 +66,7 @@
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
         [(ngModel)]="question.option1"
-        (input)="changeEvent.next({type:'option1',data:question.option1})"
+        (input)="changeEvent.next({ type: 'option1', data: question.option1 })"
         maxlength="75"
       >
       </textarea>
@@ -66,7 +84,12 @@
       </div>
     </div>
 
-    <div class="answer" [ngClass]="{ 'blue': (question.option2 != undefined && question.option2 !== '') }">
+    <div
+      class="answer"
+      [ngClass]="{
+        blue: question.option2 != undefined && question.option2 !== '',
+      }"
+    >
       <div class="answer-color blue">
         <mat-icon
           aria-hidden="false"
@@ -80,7 +103,7 @@
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
         [(ngModel)]="question.option2"
-        (input)="changeEvent.next({type:'option2',data:question.option2})"
+        (input)="changeEvent.next({ type: 'option2', data: question.option2 })"
         maxlength="75"
       >
       </textarea>
@@ -98,7 +121,12 @@
       </div>
     </div>
 
-    <div class="answer" [ngClass]="{ 'yellow': (question.option3 != undefined && question.option3 !== '') }">
+    <div
+      class="answer"
+      [ngClass]="{
+        yellow: question.option3 != undefined && question.option3 !== '',
+      }"
+    >
       <div class="answer-color yellow">
         <mat-icon
           aria-hidden="false"
@@ -112,7 +140,7 @@
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
         [(ngModel)]="question.option3"
-        (input)="changeEvent.next({type:'option3',data:question.option3})"
+        (input)="changeEvent.next({ type: 'option3', data: question.option3 })"
         maxlength="75"
       >
       </textarea>
@@ -130,7 +158,12 @@
       </div>
     </div>
 
-    <div class="answer" [ngClass]="{ 'green':(question.option4 != undefined && question.option4 !== '')}">
+    <div
+      class="answer"
+      [ngClass]="{
+        green: question.option4 != undefined && question.option4 !== '',
+      }"
+    >
       <div class="answer-color green">
         <mat-icon
           aria-hidden="false"
@@ -144,7 +177,7 @@
         cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="3"
         [(ngModel)]="question.option4"
-        (input)="changeEvent.next({type:'option4',data:question.option4})"
+        (input)="changeEvent.next({ type: 'option4', data: question.option4 })"
         maxlength="75"
       >
       </textarea>

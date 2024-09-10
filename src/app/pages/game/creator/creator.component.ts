@@ -13,6 +13,8 @@ import { Quiz } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
 import {DialogComponent} from "./components/dialog/dialog.component";
+import {SettingBarComponent} from "./components/setting-bar/setting-bar.component";
+import {FormArray, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-creator',
@@ -24,6 +26,7 @@ import {DialogComponent} from "./components/dialog/dialog.component";
     MainContentComponent,
     LoadingComponent,
     DialogComponent,
+    SettingBarComponent,
   ],
   templateUrl: './creator.component.html',
   styleUrl: './creator.component.scss',
@@ -32,6 +35,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   quiz!: Quiz;
   isEdit = false;
+
 
   quizDefault: Quiz = {
     id: '',
@@ -58,6 +62,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
         option4: '',
         imgUrl: '',
         timeLimit: 0,
+        points: 0,
       },
     ],
   };
@@ -69,7 +74,8 @@ export class CreatorComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
@@ -112,6 +118,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
       subscription.unsubscribe();
     });
   }
+
 
   activeQuestion(index: number): void {
     this.currentQuestionIndex = index;

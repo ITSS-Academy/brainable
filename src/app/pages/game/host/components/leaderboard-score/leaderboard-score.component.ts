@@ -5,15 +5,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
-import { Question } from '../../../../../models/question.model';
-import { Subscription } from 'rxjs';
+import { combineLatest, map, Subscription, tap } from 'rxjs';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 
@@ -52,14 +50,14 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
       this.result = top5;
       console.log('result: ', this.result);
       this.createLeaderboard('rootElement');
-      this.renderLeaderboard(this.prevResult, this.result);
+      this.renderLeaderboard(this.result);
       (async () =>
         await this.updateLeaderboard(this.prevResult, this.result))();
     });
     this.subscription.push(
       this.store.select('game', 'previousResult').subscribe((prevResult) => {
         this.prevResult = prevResult as LeaderboardEntry[];
-        console.log(this.prevResult);
+        console.log('prevresult', this.prevResult);
       }),
     );
   }
@@ -112,22 +110,15 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     return rowElement;
   }
 
-  renderLeaderboard(
-    leaderboardRender: LeaderboardEntry[],
-    currentLeaderboard?: LeaderboardEntry[],
-  ) {
+  renderLeaderboard(leaderboardRender: LeaderboardEntry[]) {
     const leaderboardElement = document.getElementById('leaderboard');
     if (leaderboardElement) {
       leaderboardElement.innerHTML = ''; // Clear any existing content
-      if (currentLeaderboard) {
+      if (leaderboardRender) {
         for (let i = 0; i < leaderboardRender.length; i++) {
           const rowElement = this.createRowElement(
             leaderboardRender[i].playerName,
-            currentLeaderboard[
-              currentLeaderboard.findIndex(
-                (item) => item.playerName === leaderboardRender[i].playerName,
-              )
-            ].score,
+            leaderboardRender[i].score,
             i * 62,
           );
           leaderboardElement.appendChild(rowElement);
@@ -157,11 +148,11 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   }
 
   async updateLeaderboard(
-    prevLeaderboard: LeaderboardEntry[] | undefined,
+    prevLeaderboard: LeaderboardEntry[],
     leaderboard: LeaderboardEntry[],
   ): Promise<void> {
     if (!prevLeaderboard || prevLeaderboard.length === 0) {
-      this.renderLeaderboard(leaderboard, leaderboard);
+      this.renderLeaderboard(leaderboard);
       return;
     }
 
@@ -190,22 +181,25 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
         child.style.top = ''; // Reset top position
       });
 
-      // Apply new styles
+      // Set initial positions for transition
       childrenArray.forEach((child, index) => {
         const change = changes[index];
         if (change) {
-          // Set initial top position if not already set
-          if (child.style.top === '') {
-            child.style.top = `${index * 62}px`;
-          }
+          // Determine the previous index and the new top position
+          const preIndex = prevLeaderboard.findIndex(
+            (item) => item.playerName === change.name,
+          );
+          const newTop = preIndex * 62 - change.rankChange * 62;
 
-          // Debug output for each row being updated
-          console.log(`Updating row ${index}:`, change);
+          // Set the initial top position
+          child.style.top = `${preIndex * 62}px`;
+          console.log(`old top ${change.name}: `, child.style.top);
 
-          // Update position based on rankChange
-          const currentTop = parseInt(child.style.top.replace('px', ''), 10);
-          child.style.transition = 'top 1s'; // Re-enable transition
-          child.style.top = `${currentTop + change.rankChange * 62}px`;
+          setTimeout(() => {
+            child.style.transition = 'top 1s ease';
+            child.style.top = `${newTop}px`;
+            console.log('new top: ', child.style.top);
+          }, 0);
         }
       });
     }

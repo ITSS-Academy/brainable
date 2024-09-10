@@ -30,7 +30,8 @@
       <label class="title-img"><b>Cover image</b></label>
       <div #imageContainer class="image-input">
         @if (settings.imgUrl == undefined || settings.imgUrl === '') {
-          <input id="uploadBtn-quiz" type="file" (change)="selectImage($event)"/>          <label class="label-upload" for="uploadBtn-quiz">
+          <input id="uploadBtn-quiz" type="file" (change)="selectImage($event)"/>
+          <label class="label-upload" for="uploadBtn-quiz">
             <div class="media-library"></div>
             <button mat-flat-button
                     (click)="triggerFileInput($event)"
