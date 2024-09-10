@@ -83,6 +83,11 @@ export const storeCurrentQuiz = createAction(
 
 export const addNewQuestion = createAction('[Quiz] Add New Question');
 
+export const duplicateQuestionByIndex = createAction(
+  '[Quiz] Duplicate Question By Index',
+  props<{ index: number }>(),
+);
+
 export const deleteQuestionByIndex = createAction(
   '[Quiz] Delete Question By Index',
   props<{ index: number }>(),

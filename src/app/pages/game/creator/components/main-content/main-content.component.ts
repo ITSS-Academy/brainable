@@ -1,10 +1,12 @@
 import {
   Component,
+  EventEmitter,
   inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
@@ -24,7 +26,6 @@ import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { BehaviorSubject } from 'rxjs';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 
 @Component({
