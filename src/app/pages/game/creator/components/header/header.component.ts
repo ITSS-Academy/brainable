@@ -150,4 +150,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
+
+  isFormInvalid = true;
+
+  submitQuestion(): void {
+    if (!this.isFormInvalid) {
+      // Your submission logic here
+    }
+  }
 }

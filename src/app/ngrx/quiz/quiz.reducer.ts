@@ -169,6 +169,24 @@ export const quizReducer = createReducer(
       },
     };
   }),
+  on(QuizActions.updateQuestionByImportCSV, (state, { questions, type }) => {
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        questions: questions,
+      },
+    };
+  }),
+  on(QuizActions.saveDraft, (state, { questions, type }) => {
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        question: [...state.quiz.questions, questions],
+      },
+    };
+  }),
   on(QuizActions.updateSetting, (state, { setting, type }) => {
     return {
       ...state,
