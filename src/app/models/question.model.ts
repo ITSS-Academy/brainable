@@ -8,6 +8,7 @@ export interface Question {
   option4: string;
   imgUrl: string;
   timeLimit: number;
+  points: number;
 }
 
 export interface QuestionDTO {
@@ -19,4 +20,5 @@ export interface QuestionDTO {
   option4: string;
   imgUrl: string;
   timeLimit: number;
+  points: number;
 }

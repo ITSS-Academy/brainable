@@ -63,12 +63,10 @@ export class GameService {
 
   joinRoom(pin: string, username: string): void {
     this.socket.emit('joinRoom', { pin, username });
-
   }
 
   checkRoomExist(pin: string): void {
     this.socket.emit('checkRoomExist', pin);
-
   }
 
   listenForNavigateToEnterName(pin: string): void {
@@ -100,19 +98,41 @@ export class GameService {
 
   listenForNavigationCountDown(pin: string): void {
     this.socket.on('navigateToCountDown', () => {
-      this.router.navigate([`/guest/${pin}/countdown`]);
+      this.router.navigate([`/guest/${pin}/countdown`]).then(() => {
+        this.socket.off('navigateToCountDown');
+      });
+    });
+  }
+
+  listenForNavigateChooseAnswer(pin: string) {
+    this.socket.on('chooseAnswer', () => {
+      console.log('chooseAnswerdmmmmmmmmmmmmmmmmmmmmmmmmm');
+      this.router.navigate([`/guest/${pin}/answer`]).then(() => {
+        this.socket.off('chooseAnswer');
+      });
+    });
+  }
+
+  listenForNavigateToResults(pin: string): void {
+    this.socket.on('navigateToResults', () => {
+      this.router.navigate([`/guest/${pin}/result`]).then(() => {
+        this.socket.off('navigateToResults');
+      });
+    });
+  }
+
+  listenForNavigateToNextQuestion(pin: string): void {
+    this.socket.on('navigateToNextQuestion', () => {
+      console.log('nav to countdownnnnnn');
+      this.router.navigate([`/guest/${pin}/countdown-to-question`]).then(() => {
+        this.socket.off('navigateToNextQuestion');
+      });
     });
   }
 
   showAnswer(pin: string): void {
     this.socket.emit('showAnswer', pin);
     this.router.navigate([`/host/${pin}/answer`]);
-  }
-
-  listenForNavigateChooseAnswer(pin: string) {
-    this.socket.on('chooseAnswer', () => {
-      this.router.navigate([`/guest/${pin}/answer`]);
-    });
   }
 
   sendQuestion(data: SendQuestion): void {
@@ -123,6 +143,7 @@ export class GameService {
     return new Observable((observer) => {
       this.socket.on('receiveQuestion', (questionId: string) => {
         observer.next(questionId);
+        observer.complete();
       });
     });
   }
@@ -134,6 +155,7 @@ export class GameService {
   listenForPlayerSubmittedAnswer(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('playerSubmittedAnswer', (answer: any) => {
+        console.log('playerSubmittedAnswer');
         observer.next(answer);
       });
     });
@@ -141,12 +163,6 @@ export class GameService {
 
   nextShowResults(pin: string): void {
     this.socket.emit('nextShowResults', pin);
-  }
-
-  listenForNavigateToResults(pin: string): void {
-    this.socket.on('navigateToResults', () => {
-      this.router.navigate([`/guest/${pin}/result`]);
-    });
   }
 
   showResults(pin: string, questionId: string): void {
@@ -169,14 +185,16 @@ export class GameService {
     });
   }
 
-  nextQuestion(pin: string): void {
-    this.socket.emit('nextQuestion', pin);
+  receiveScore(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('showScore', (score: any) => {
+        observer.next(score);
+      });
+    });
   }
 
-  listenForNavigateToNextQuestion(pin: string): void {
-    this.socket.on('navigateToNextQuestion', () => {
-      this.router.navigate([`/guest/${pin}/countdown-to-question`]);
-    });
+  nextQuestion(pin: string): void {
+    this.socket.emit('nextQuestion', pin);
   }
 
   endGame(pin: string): void {
@@ -191,16 +209,13 @@ export class GameService {
     });
   }
 
-  listenForErrors(): Observable<any> {
+  listenForErrors(): Observable<string> {
     return new Observable((observer) => {
       this.socket.on('error', (error: any) => {
-        observer.next(error)
+        observer.next(error);
+        observer.complete();
       });
     });
-  }
-
-  stopListeningForNavigateToNextQuestion(): void {
-    this.socket.off('navigateToNextQuestion');
   }
 
   disconnect(): void {
@@ -233,5 +248,9 @@ export class GameService {
         observer.next(lastQuestionScore);
       });
     });
+  }
+
+  logout(): void {
+    this.socket.emit('logout');
   }
 }

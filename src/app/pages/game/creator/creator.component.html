@@ -17,6 +17,7 @@
               class="content"
               [ngClass]="{ active: $index == currentQuestionIndex }"
               (click)="activeQuestion($index)"
+              [id]="'question-' + $index"
             >
               <span class="question-type">{{ $index + 1 }} Quiz</span>
               <span class="question-type-respond">{{ $index + 1 }}</span>
@@ -27,6 +28,7 @@
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="content_copy"
+                    (click)="duplicateQuestion($index)"
                   ></mat-icon>
                   <mat-icon
                     aria-hidden="false"
@@ -70,6 +72,7 @@
     </div>
     <div class="question">
       @if (isGetQuizByIdSuccessful || isCreateNewQuiz) {
+        {{currentQuestionIndex}}
         <app-main-content
           [question]="deepClone(quiz.questions[currentQuestionIndex])"
           [index]="currentQuestionIndex"

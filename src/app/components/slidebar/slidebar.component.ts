@@ -8,9 +8,9 @@ import { AuthState } from '../../ngrx/auth/auth.state';
 import { SharedModule } from '../../shared/modules/shared.module';
 import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { Profile } from '../../models/profile.model';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SettingDialogComponent } from '../../pages/game/creator/components/setting-dialog/setting-dialog.component';
-import { DialogCreateComponent } from '../../pages/game/creator/components/dialog-create/dialog-create.component';
+import * as ProfileActions from '../../ngrx/profile/profile.actions';
+import { GameService } from '../../services/game/game.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-slidebar',
@@ -38,6 +38,7 @@ export class SlidebarComponent implements OnInit {
     },
   ];
 
+  isLogoutSuccess$ = this.store.select('auth', 'isLogoutSuccess');
   subscriptions: Subscription[] = [];
   activeLink = this.navLinks[0];
   profile!: Profile;
@@ -47,6 +48,7 @@ export class SlidebarComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<{ profile: ProfileState; auth: AuthState }>,
+    private gameService: GameService,
   ) {
     if (this.router.url.includes('home')) {
       this.activeLink = this.navLinks[0];
@@ -90,6 +92,23 @@ export class SlidebarComponent implements OnInit {
 
   signOut() {
     this.store.dispatch(AuthActions.logout());
+    // this.isLogoutSuccess$.subscribe((isLogoutSuccess) => {
+    //   if (isLogoutSuccess) {
+    //     window.location.reload();
+    //   }
+    // })
+    this.profile = {
+      photoUrl: '',
+      email: '',
+      uid: '',
+      fullName: '',
+      quizzes: [],
+    };
+    this.isLogoutSuccess$.subscribe((isLogoutSuccess) => {
+      if (isLogoutSuccess) {
+        this.store.dispatch(ProfileActions.clearState());
+      }
+    });
   }
 
   returnToHome() {

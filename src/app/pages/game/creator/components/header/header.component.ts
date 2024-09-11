@@ -119,6 +119,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       option4: question.option4,
       imgUrl: question.imgUrl,
       timeLimit: question.timeLimit,
+      points: question.points,
     };
   }
 

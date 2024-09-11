@@ -82,6 +82,7 @@ export class GameResultComponent implements OnInit, OnDestroy {
   }
 
   homePage() {
+
     this.router.navigate(['/home']);
   }
 

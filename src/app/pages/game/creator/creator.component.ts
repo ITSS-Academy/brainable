@@ -1,4 +1,10 @@
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
@@ -36,7 +42,7 @@ import { JsonPipe, NgIf } from '@angular/common';
   templateUrl: './creator.component.html',
   styleUrl: './creator.component.scss',
 })
-export class CreatorComponent implements OnInit, OnDestroy {
+export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   subscriptions: Subscription[] = [];
   quiz!: Quiz;
   isEdit = false;
@@ -68,6 +74,7 @@ export class CreatorComponent implements OnInit, OnDestroy {
         option4: '',
         imgUrl: '',
         timeLimit: 0,
+        points: 1,
       },
     ],
   };
@@ -134,8 +141,9 @@ export class CreatorComponent implements OnInit, OnDestroy {
   addQuestion(): void {
     this.store.dispatch(QuizActions.addNewQuestion());
     this.activeQuestion(this.quiz.questions.length - 1);
-    this.scrollToBottom();
-    console.log(this.quiz);
+    setTimeout(() => {
+      this.scrollToActiveQuestion();
+    }, 0);
   }
 
   deleteQuestion(index: number) {
@@ -149,10 +157,26 @@ export class CreatorComponent implements OnInit, OnDestroy {
     return JSON.parse(JSON.stringify(obj));
   }
 
-  scrollToBottom() {
-    const questionList = document.getElementById('content-container');
-    if (questionList) {
-      questionList.scrollTop = questionList.scrollHeight;
+  duplicateQuestion(index: number) {
+    this.store.dispatch(QuizActions.duplicateQuestionByIndex({ index: index }));
+    setTimeout(() => {
+      this.currentQuestionIndex = index + 1;
+      if (this.currentQuestionIndex + 1 == this.quiz.questions.length) {
+        this.scrollToActiveQuestion();
+      }
+      this.activeQuestion(this.currentQuestionIndex);
+    }, 0);
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToActiveQuestion();
+  }
+
+  scrollToActiveQuestion() {
+    const activeQuestionId = 'question-' + this.currentQuestionIndex;
+    const activeElement = document.getElementById(activeQuestionId);
+    if (activeElement) {
+      activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 }

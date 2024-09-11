@@ -72,6 +72,7 @@ export class DialogCreateComponent {
           option4: row[4],
           answer: row['5'],
           timeLimit: 10,
+          points:0,
         };
       });
 
