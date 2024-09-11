@@ -39,6 +39,31 @@
   gap: 20px;
 }
 
+.example-files {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.example-files .header {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
+.example-files img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.btns {
+  display: flex;
+  gap: 8px;
+}
+
 //img {
 //  width: 550px;
 //  height: 221px;
