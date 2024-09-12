@@ -56,6 +56,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
       this.store.select('quiz', 'quizzes').subscribe((quizzes) => {
         this.listQuiz = quizzes as Quiz[];
         if (this.listQuiz.length > 0) {
+          this.listQuiz = this.listQuiz.filter((quiz) => !quiz.isDraft);
           this.listQuestion = this.listQuiz[0].questions;
         } else {
           this.listQuestion = [];
