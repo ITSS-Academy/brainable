@@ -70,7 +70,10 @@ export const updateQuestionByImportWord = createAction(
   '[Quiz] Update Question By Import Word',
   props<{ questions: Question[] }>(),
 );
-
+export const updateQuestionByImportCSV = createAction(
+  '[Quiz] Update Question By Import CSV',
+  props<{ questions: Question[] }>(),
+);
 export const updateSetting = createAction(
   '[Quiz] Update Setting',
   props<{ setting: any }>(),
@@ -111,3 +114,8 @@ export const deleteQuizFailure = createAction(
 );
 
 export const clearQuizState = createAction('[Quiz] Clear Quiz State');
+
+export const saveDraft = createAction(
+  '[Quiz] Save Draft',
+  props<{ questions: Question }>(),
+);
