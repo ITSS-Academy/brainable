@@ -72,7 +72,7 @@ export class DialogCreateComponent {
           option4: row[4],
           answer: row['5'],
           timeLimit: 10,
-          points:0,
+          points: 0,
         };
       });
 
@@ -183,5 +183,32 @@ export class DialogCreateComponent {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  downloadFile(event: MouseEvent, type: 'docx' | 'xlsx' | 'csv'): void {
+    // Define the path to the file
+    const wordFile = '../../../../assets/example-file/Question.docx';
+    const excelFile = '../../../../assets/example-file/test.xlsx';
+    const csvFile = '../../../../assets/example-file/Question.csv';
+    const exampleFiles = [
+      { type: 'docx', path: wordFile },
+      { type: 'xlsx', path: excelFile },
+      { type: 'csv', path: csvFile },
+    ];
+    const fileNames = ['example.docx', 'example.xlsx', 'example.csv'];
+
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = exampleFiles.find((file) => file.type === type)?.path || '';
+    link.download = fileNames.find((file) => file.endsWith(type)) || '';
+
+    // Append the link to the body (required for Firefox)
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Remove the link from the document
+    document.body.removeChild(link);
   }
 }
