@@ -22,3 +22,9 @@ export interface QuestionDTO {
   timeLimit: number;
   points: number;
 }
+
+export interface MissingField {
+  questionIndex: number;
+  question: Question;
+  missingFields: string[];
+}
