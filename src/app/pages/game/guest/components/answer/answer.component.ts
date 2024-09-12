@@ -17,7 +17,9 @@ import * as GameActions from '../../../../../ngrx/game/game.actions';
 export class AnswerComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   questionId = '';
+
   playerName = '';
+  playerId = '';
   pin = '';
   isChoosing = false;
 
@@ -25,11 +27,13 @@ export class AnswerComponent implements OnInit, OnDestroy {
   intervalId: any;
 
   score = 0;
+  isCheckTime = 0;
   currentQuestion$ = this.store.select('game', 'currentQuestion');
 
   startTimer(): void {
     this.intervalId = setInterval(() => {
       this.timeElapsed += 10; // Tăng mỗi 10ms
+      this.isCheckTime += 10;
     }, 10);
   }
 
@@ -42,16 +46,18 @@ export class AnswerComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{ game: GameState }>,
     private gameService: GameService,
-  ) {
-    this.startTimer();
-  }
+  ) {}
 
   ngOnInit() {
     console.log('AnswerComponent');
+    this.startTimer();
 
     this.subscription.push(
       this.store.select('game', 'playerName').subscribe((playerName) => {
         this.playerName = playerName;
+      }),
+      this.store.select('game', 'clientId').subscribe((playerId) => {
+        this.playerId = playerId;
       }),
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
@@ -73,19 +79,23 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   chooseAnswer(answer: number) {
-    console.log('chooseAnswer');
-    this.stopTimer();
     this.isChoosing = true;
+    this.stopTimer();
     this.store.dispatch(GameActions.storePlayerAnswer({ answer }));
     const answerData: SendAnswer = {
       pin: this.pin,
       questionId: this.questionId,
-      playerName: this.playerName,
+      playerName: this.playerId,
       answer: answer as number,
       time: this.timeElapsed,
     };
-    this.store.dispatch(GameActions.storeTime({ time: this.timeElapsed }));
-    this.gameService.sendAnswer(answerData);
+    if (this.isCheckTime < 1000) {
+      setTimeout(() => {
+        this.gameService.sendAnswer(answerData);
+      }, 1000 - this.isCheckTime);
+    } else {
+      this.gameService.sendAnswer(answerData);
+    }
   }
 
   ngOnDestroy() {

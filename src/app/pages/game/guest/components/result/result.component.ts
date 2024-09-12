@@ -43,10 +43,13 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.gameService.listenForNavigateToNextQuestion(this.pin);
     this.subscription.push(
       this.gameService.receiveCorrectAnswer().subscribe((correctAnswer) => {
-        this.correctAnswer = correctAnswer.correctAnswer;
-        this.isCorrect = this.playerAnswer === this.correctAnswer;
-        if (this.isCorrect) {
-          this.store.dispatch(GameActions.incrementScore());
+        if (correctAnswer !== null || correctAnswer !== '') {
+          console.log('correctAnswer', correctAnswer);
+          this.correctAnswer = correctAnswer.correctAnswer;
+          this.isCorrect = this.playerAnswer === this.correctAnswer;
+          if (this.isCorrect) {
+            this.store.dispatch(GameActions.incrementScore());
+          }
         }
       }),
       this.gameService.receiveScore().subscribe((score) => {
