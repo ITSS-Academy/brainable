@@ -35,6 +35,7 @@ export const quizReducer = createReducer(
       ...state,
       isGetAllQuizLoading: true,
     };
+
   }),
   on(QuizActions.getAllQuizSuccess, (state, { quiz }) => {
     return {

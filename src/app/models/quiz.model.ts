@@ -13,6 +13,7 @@ export interface Quiz {
   createdAt: Date;
   category: Categories;
   questions: Question[];
+  isDraft?: boolean;
 }
 
 export interface QuizDTO {
@@ -26,5 +27,6 @@ export interface QuizDTO {
     createdAt: Date;
     category: Categories;
     questions: Question[];
+    isDraft?: boolean;
   };
 }

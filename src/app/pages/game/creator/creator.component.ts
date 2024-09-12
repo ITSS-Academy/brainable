@@ -9,7 +9,7 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
@@ -23,6 +23,7 @@ import { DialogCreateComponent } from './components/dialog-create/dialog-create.
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from './components/setting-bar/setting-bar.component';
 import { JsonPipe, NgIf } from '@angular/common';
+import {GameService} from "../../../services/game/game.service";
 
 @Component({
   selector: 'app-creator',
@@ -46,7 +47,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   subscriptions: Subscription[] = [];
   quiz!: Quiz;
   isEdit = false;
-
   dialog = inject(MatDialog);
 
   quizDefault: Quiz = {
@@ -80,12 +80,14 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   };
   isCreateNewQuiz = false;
   isGetQuizByIdSuccessful = false;
+  isEmptyInput = false;
 
   currentQuestionIndex = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
+
   ) {}
 
   ngOnInit(): void {
@@ -131,14 +133,48 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();
+
+      if (this.quiz && this.isCreateNewQuiz) {
+        localStorage.setItem('unsavedQuiz', JSON.stringify(this.quiz));
+      }
     });
   }
+
+  isEmpty(): boolean {
+    if (!this.quiz.title.trim()) {
+      return true;
+    }
+
+    if (!Array.isArray(this.quiz.questions)) {
+      return true;
+    }
+
+    for (const question of this.quiz.questions) {
+      if (
+        !question.question.trim() ||
+        !question.option1.trim() ||
+        !question.option2.trim() ||
+        !question.option3.trim() ||
+        !question.option4.trim()
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+
 
   activeQuestion(index: number): void {
     this.currentQuestionIndex = index;
   }
 
   addQuestion(): void {
+    if (this.isEmpty()) {
+      this.isEmptyInput = true;
+      return;
+    }
     this.store.dispatch(QuizActions.addNewQuestion());
     this.activeQuestion(this.quiz.questions.length - 1);
     setTimeout(() => {

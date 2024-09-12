@@ -111,3 +111,8 @@ export const deleteQuizFailure = createAction(
 );
 
 export const clearQuizState = createAction('[Quiz] Clear Quiz State');
+
+export const saveQuizAsDraft = createAction(
+  '[Quiz] Save Quiz As Draft',
+  props<{ quiz: Quiz }>()
+);

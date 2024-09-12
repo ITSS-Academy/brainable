@@ -62,6 +62,7 @@ export class SettingBarComponent implements OnInit, OnDestroy {
       }));
   }
 
+
   // closeDialog(): void {
   //   this.dialogRef.close();
   // }

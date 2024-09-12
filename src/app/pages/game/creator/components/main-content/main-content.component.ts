@@ -28,6 +28,7 @@ import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 import {SnowflakeId} from "@akashrajpurohit/snowflake-id";
+import {MissingField} from "../../../../../models/question.model";
 
 @Component({
   selector: 'app-main-content',
@@ -40,6 +41,9 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() question!: Question;
   @Input() index!: number;
   //@Input() ReadExcel?: any;
+  @Output() missingFieldsEvent = new EventEmitter<MissingField[]>();
+
+
 
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
@@ -100,6 +104,64 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+
+
+  checkForMissingFields() {
+    // Khởi tạo mảng chứa các đối tượng thông báo thiếu trường
+    let missingFields: MissingField[] = [];
+
+    // Nếu câu hỏi không tồn tại, thêm thông báo vào mảng missingFields
+    if (!this.question) {
+      missingFields.push({
+        questionIndex: this.index,
+        question: this.question,
+        missingFields: ['Empty Question']
+      });
+    } else {
+      // Tạo mảng để chứa các thông báo thiếu trường cho câu hỏi hiện tại
+      let currentQuestionMissingFields: string[] = [];
+
+      // Kiểm tra các trường của câu hỏi
+      if (!this.question.question?.trim()) {
+        currentQuestionMissingFields.push('Missing question text');
+      }
+      if (!this.question.option1?.trim()) {
+        currentQuestionMissingFields.push('Missing option 1');
+      }
+      if (!this.question.option2?.trim()) {
+        currentQuestionMissingFields.push('Missing option 2');
+      }
+      if (!this.question.option3?.trim()) {
+        currentQuestionMissingFields.push('Missing option 3');
+      }
+      if (!this.question.option4?.trim()) {
+        currentQuestionMissingFields.push('Missing option 4');
+      }
+      if (!this.question.answer?.toString().trim()) {
+        currentQuestionMissingFields.push('No correct answer selected');
+      }
+
+      // Nếu có thông báo thiếu trường cho câu hỏi này, thêm vào mảng missingFields
+      if (currentQuestionMissingFields.length > 0) {
+        missingFields.push({
+          questionIndex: this.index,
+          question: this.question,
+          missingFields: currentQuestionMissingFields
+        });
+      }
+    }
+
+    // In các đối tượng MissingField ra console
+    missingFields.forEach(missingField => {
+      console.log(`Question Index: ${missingField.questionIndex}`);
+      console.log(`Question:`, missingField.question);
+      console.log(`Missing Fields: ${missingField.missingFields.join(', ')}`);
+    });
+
+    // Phát sự kiện với danh sách các trường bị thiếu
+    this.missingFieldsEvent.emit(missingFields);
   }
 
   charCountQuestion: number = 120;
