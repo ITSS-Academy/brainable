@@ -30,3 +30,12 @@
   align-items: center;
   margin-right: 4px;
 }
+
+.empty-input {
+  position: absolute;
+  margin-top: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ease-in 0.5s shake;}
