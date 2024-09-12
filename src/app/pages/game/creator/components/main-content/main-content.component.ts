@@ -89,17 +89,12 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       }),
 
     );
-    //console.log(this.ReadExcel);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['question']) {
       this.resetCharCount();
     }
-    // if (changes['ReadExcel']) {
-    //   console.log('Excel data received:', this.ReadExcel);
-    //   // Handle the Excel data here
-    // }
   }
 
   ngOnDestroy(): void {
