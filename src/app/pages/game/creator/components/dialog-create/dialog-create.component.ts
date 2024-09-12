@@ -8,7 +8,7 @@ import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { Store } from '@ngrx/store';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import mammoth from 'mammoth';
-
+import * as Papa from 'papaparse';
 @Component({
   selector: 'app-dialog-create',
   standalone: true,
@@ -30,6 +30,8 @@ export class DialogCreateComponent {
         this.readExcel(event);
       } else if (fileName.endsWith('.docx')) {
         this.readWord(event);
+      } else if (fileName.endsWith('.csv')) {
+        this.onFileSelectedCSV(event);
       } else {
         console.error('Unsupported file type');
       }
@@ -139,6 +141,44 @@ export class DialogCreateComponent {
     this.store.dispatch(
       QuizActions.updateQuestionByImportWord({ questions: this.questions }),
     );
+  }
+
+  parsedData: any[] = []; // Declare parsedData to store the CSV data
+
+  onFileSelectedCSV(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.parseCSV(file);
+    }
+  }
+
+  parseCSV(file: File): void {
+    Papa.parse(file, {
+      header: true, // Parse with headers
+      complete: (result) => {
+        console.log('Parsed CSV data:', result.data);
+        this.parsedData = result.data.map((row: any) => {
+          return {
+            id: '',
+            imgUrl: '',
+            question: row['question'],
+            option1: row['option1'],
+            option2: row['option2'],
+            option3: row['option3'],
+            option4: row['option4'],
+            answer: Number(row.answer),
+            timeLimit: 10,
+          };
+        }); // Store the parsed data in the parsedData variable
+        this.store.dispatch(
+          QuizActions.updateQuestionByImportCSV({ questions: this.parsedData }),
+        );
+        this.closeDialog();
+      },
+      error: (error) => {
+        console.error('Error parsing CSV:', error);
+      },
+    });
   }
 
   closeDialog(): void {
