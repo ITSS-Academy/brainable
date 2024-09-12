@@ -72,6 +72,7 @@
     </div>
     <div class="question">
       @if (isGetQuizByIdSuccessful || isCreateNewQuiz) {
+        {{currentQuestionIndex}}
         <app-main-content
           [question]="deepClone(quiz.questions[currentQuestionIndex])"
           [index]="currentQuestionIndex"

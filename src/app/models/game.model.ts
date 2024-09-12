@@ -4,6 +4,8 @@ export interface SendQuestion {
   pin: string;
   questionId: string;
   correctAnswer: number;
+  points: number;
+  timeLimit: number;
 }
 
 export interface SendAnswer {
