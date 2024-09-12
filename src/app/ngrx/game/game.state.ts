@@ -5,6 +5,7 @@ export interface GameState {
   playerAnswer: number;
   totalPlayers: number;
   totalQuestions: number;
+  clientId: string;
 
   previousResult: {
     playerName: string;

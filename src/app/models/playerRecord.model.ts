@@ -1,5 +1,5 @@
 export interface PlayerRecord {
-  id: string;
+  gameId: string;
   playerName: string;
   correctCount: number;
   incorrectCount: number;

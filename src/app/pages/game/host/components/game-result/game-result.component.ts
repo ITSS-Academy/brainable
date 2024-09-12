@@ -55,7 +55,8 @@ export class GameResultComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.gameService.receiveLastQuestionScore().subscribe((data) => {
-      this.playerRecords = data;
+      this.playerRecords = data as PlayerRecord[];
+      console.log(this.playerRecords);
       this.store.dispatch(
         PlayerRecordActions.createPlayerRecord({
           idToken: this.idToken,
@@ -82,7 +83,6 @@ export class GameResultComponent implements OnInit, OnDestroy {
   }
 
   homePage() {
-
     this.router.navigate(['/home']);
   }
 

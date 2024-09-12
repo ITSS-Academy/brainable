@@ -12,6 +12,11 @@ export const storePlayerName = createAction(
   props<{ playerName: string }>(),
 );
 
+export const storeClientId = createAction(
+  '[Game] Store Client Id',
+  props<{ clientId: string }>(),
+);
+
 export const storePlayerAnswer = createAction(
   '[Game] Store Player Answer',
   props<{ answer: number }>(),
@@ -40,3 +45,5 @@ export const storePreviousResult = createAction(
   '[Game] Store Previous Result',
   props<{ previousResult: any[] }>(),
 );
+
+export const clearState = createAction('[Game] Clear State');

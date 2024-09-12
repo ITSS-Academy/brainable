@@ -70,7 +70,11 @@ export class GameService {
   }
 
   listenForNavigateToEnterName(pin: string): void {
-    this.socket.on('navigateToEnterName', () => {
+    this.socket.on('navigateToEnterName', (clientId: string) => {
+      this.store.dispatch(GameActions.storeClientId({ clientId: clientId }));
+      this.store.select('game', 'clientId').subscribe((clientId) => {
+        console.log('clientId', clientId);
+      });
       this.store.dispatch(GameActions.storePin({ pin: pin }));
       this.router.navigate([`/guest/${pin}/waiting`]);
     });
@@ -181,6 +185,7 @@ export class GameService {
     return new Observable((observer) => {
       this.socket.on('correctAnswer', (correctAnswer: any) => {
         observer.next(correctAnswer);
+        observer.complete();
       });
     });
   }

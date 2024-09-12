@@ -9,6 +9,7 @@ export const initialState: GameState = {
   playerAnswer: 0,
   totalPlayers: 0,
   totalQuestions: 0,
+  clientId: '',
 
   previousResult: [],
 };
@@ -55,6 +56,15 @@ export const gameReducer = createReducer(
     return {
       ...state,
       previousResult: previousResult,
+    };
+  }),
+  on(GameActions.clearState, (state) => {
+    return initialState;
+  }),
+  on(GameActions.storeClientId, (state, { clientId }) => {
+    return {
+      ...state,
+      clientId: clientId,
     };
   }),
 );
