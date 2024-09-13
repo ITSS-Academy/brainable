@@ -58,7 +58,7 @@ export const updateQuizFailure = createAction(
 
 export const updateQuestionByIndex = createAction(
   '[Quiz] Update Question By Index',
-  props<{ question: Question; index: number}>(),
+  props<{ question: Question; index: number }>(),
 );
 
 export const updateQuestionByImport = createAction(
