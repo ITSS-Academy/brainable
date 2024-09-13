@@ -107,26 +107,20 @@ export class DialogCreateComponent {
       };
       reader.readAsArrayBuffer(file);
     }
-    return {
-      question: '',
-      option1: '',
-      option2: '',
-      option3: '',
-      option4: '',
-      answer: 0,
-      timeLimit: 10,
-      points: 1,
-    };
+
   }
 
   parseText(text: string) {
     const lines = text.split('\n'); // Split text by line breaks
     let questionObj: Partial<Question> = {};
+
     lines.forEach((line) => {
       if (line.startsWith('Question:')) {
         if (questionObj.question) {
-          // Add previous question object to array
-          this.questions.push(questionObj as Question);
+          // Ensure default values for missing timeLimit and points
+          questionObj.timeLimit = questionObj.timeLimit ?? 10;  // Default to 10 if undefined
+          questionObj.points = questionObj.points ?? 1;  // Default to 1 if undefined
+          this.questions.push(questionObj as Question); // Add the previous question object to array
         }
         questionObj = { question: line.replace('Question:', '').trim() };
       } else if (line.startsWith('Option1:')) {
@@ -144,19 +138,20 @@ export class DialogCreateComponent {
       } else if (line.startsWith('Points:')) {
         questionObj.points = Number(line.replace('Points:', '').trim());
       }
-
     });
 
-    // Add the last question object to array
+    // Ensure the last question object is also pushed to the array
     if (questionObj.question) {
+      questionObj.timeLimit = questionObj.timeLimit ?? 10;  // Default to 10 if undefined
+      questionObj.points = questionObj.points ?? 1;  // Default to 1 if undefined
       this.questions.push(questionObj as Question);
-
     }
-    this.closeDialog();
+
     console.log(this.questions);
     this.store.dispatch(
       QuizActions.updateQuestionByImportWord({ questions: this.questions }),
     );
+    this.closeDialog();
   }
 
   parsedData: any[] = []; // Declare parsedData to store the CSV data
