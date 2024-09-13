@@ -58,11 +58,9 @@
           (selectionChange)="onPointsChange($event)"
           value="{{ this.question.points }}"
         >
-          <mat-option value="100">100</mat-option>
-          <mat-option value="200">200</mat-option>
-          <mat-option value="300">300</mat-option>
-          <mat-option value="400">400</mat-option>
-          <mat-option value="500">500</mat-option>
+          <mat-option value="0">No points</mat-option>
+          <mat-option value="1">Standard</mat-option>
+          <mat-option value="2">Double points</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

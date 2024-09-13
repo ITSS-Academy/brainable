@@ -61,7 +61,7 @@ export class DialogCreateComponent {
 
       // Process rows
       const formattedData: Question[] = rows.map((row: any[]) => {
-        // const numbers = row[5].map(cell => (typeof cell === 'number' ? cell : NaN));
+        // const numbers = row[5].map(cell => (typeof cell === 'number' ? cell : Number(cell)));
         return {
           id: '',
           imgUrl: '',
@@ -72,7 +72,7 @@ export class DialogCreateComponent {
           option4: row[4],
           answer: row['5'],
           timeLimit: 10,
-          points: 0,
+          points: 1,
         };
       });
 
@@ -104,9 +104,18 @@ export class DialogCreateComponent {
           })
           .catch((err) => console.error('Error reading Word file:', err));
       };
-
       reader.readAsArrayBuffer(file);
     }
+    return {
+      question: '',
+      option1: '',
+      option2: '',
+      option3: '',
+      option4: '',
+      answer: 0,
+      timeLimit: 10,
+      points: 1,
+    };
   }
 
   parseText(text: string) {
@@ -129,12 +138,18 @@ export class DialogCreateComponent {
         questionObj.option4 = line.replace('Option4:', '').trim();
       } else if (line.startsWith('Answer:')) {
         questionObj.answer = Number(line.replace('Answer:', '').trim());
+      } else if (line.startsWith('Time Limit:')) {
+        questionObj.timeLimit = Number(line.replace('Time Limit:', '').trim());
+      } else if (line.startsWith('Points:')) {
+        questionObj.points = Number(line.replace('Points:', '').trim());
       }
+
     });
 
     // Add the last question object to array
     if (questionObj.question) {
       this.questions.push(questionObj as Question);
+
     }
     this.closeDialog();
     console.log(this.questions);
@@ -168,6 +183,7 @@ export class DialogCreateComponent {
             option4: row['option4'],
             answer: Number(row.answer),
             timeLimit: 10,
+            points: 1,
           };
         }); // Store the parsed data in the parsedData variable
         this.store.dispatch(
