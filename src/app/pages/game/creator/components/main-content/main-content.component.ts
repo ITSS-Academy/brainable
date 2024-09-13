@@ -21,7 +21,7 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { QuestionState } from '../../../../../ngrx/question/question.state';
 import { debounceTime, of, Subscription } from 'rxjs';
-import { Question } from '../../../../../models/question.model';
+import { Question, QuestionCheck } from '../../../../../models/question.model';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { BehaviorSubject } from 'rxjs';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
@@ -57,6 +57,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       auth: AuthState;
       question: QuestionState;
       quiz: QuizState;
+      quizCheck: QuestionCheck[];
     }>,
   ) {
     //console.log(this.ReadExcel);

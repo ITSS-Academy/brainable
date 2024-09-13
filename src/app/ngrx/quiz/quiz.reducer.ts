@@ -152,7 +152,18 @@ export const quizReducer = createReducer(
       ...state,
       quiz: {
         ...state.quiz,
-        questions: [...state.quiz.questions, {} as Question],
+        questions: [...state.quiz.questions, {
+          id: '',
+          question: '',
+          answer: 0,
+          option1: '',
+          option2: '',
+          option3: '',
+          option4: '',
+          imgUrl: '',
+          timeLimit: 10,
+          points: 1,
+        } as Question],
       },
       quizCheck: [...state.quizCheck, {
         question: false,
@@ -188,12 +199,12 @@ export const quizReducer = createReducer(
     updatedQuestions[index] = question;
     const updatedQuizCheck = [...state.quizCheck];
     updatedQuizCheck[index] = {
-      question: question.question.trim() !== '',
+      question: (question.question || "").trim() !== "",
       answer: question.answer !== 0,
-      option1: question.option1.trim() !== '',
-      option2: question.option2.trim() !== '',
-      option3: question.option3.trim() !== '',
-      option4: question.option4.trim() !== '',
+      option1: (question.option1 || "").trim() !== "",
+      option2: (question.option2 || "").trim() !== "",
+      option3: (question.option3 || "").trim() !== "",
+      option4: (question.option4 || "").trim() !== "",
     };
 console.log(state.quizCheck);
     return {
@@ -203,9 +214,9 @@ console.log(state.quizCheck);
         questions: updatedQuestions,
       },
       quizCheck: updatedQuizCheck,
-
     };
   }),
+
   on(QuizActions.updateQuestionByImport, (state, { questions, type }) => {
     return {
       ...state,
@@ -221,6 +232,8 @@ console.log(state.quizCheck);
           option2: true,
           option3: true,
           option4: true,
+          points: true,
+          timeLimit: true,
         };
       })
     };
@@ -240,6 +253,8 @@ console.log(state.quizCheck);
           option2: true,
           option3: true,
           option4: true,
+          points: true,
+          timeLimit: true,
         };
       })
     };
@@ -259,6 +274,8 @@ console.log(state.quizCheck);
           option2: true,
           option3: true,
           option4: true,
+          points: true,
+          timeLimit: true,
         };
       })
     };
