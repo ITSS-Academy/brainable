@@ -100,7 +100,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
       console.log(quiz);
       if (quiz) {
-        console.log(quiz.id);
         this.quiz = this.deepClone(quiz);
       }
     });

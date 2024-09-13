@@ -12,3 +12,8 @@ export interface CategoriesByUid {
   imgUrl: string;
   quizzes: Quiz[];
 }
+
+export interface checkDialog {
+  categories: Categories[];
+  description: string;
+}

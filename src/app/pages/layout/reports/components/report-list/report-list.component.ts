@@ -50,6 +50,7 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.select('auth', 'idToken').subscribe((idToken) => {
         if (idToken) {
           this.store.dispatch(GameReportActions.getAllGameReports({ idToken }));
+
           this.gameReports$.subscribe((gameReports) => {
             if (gameReports) {
               const users = Array.from({ length: gameReports.length }, (_, k) =>
