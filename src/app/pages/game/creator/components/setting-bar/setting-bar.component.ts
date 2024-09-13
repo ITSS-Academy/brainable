@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Question } from '../../../../../models/question.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -8,10 +8,15 @@ import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
 import { AsyncPipe } from '@angular/common';
-import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogContent,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
+import { SettingBarResponsiveDialogComponent } from '../setting-bar-responsive-dialog/setting-bar-responsive-dialog.component';
 
 @Component({
   selector: 'app-setting-bar',
@@ -31,6 +36,8 @@ export class SettingBarComponent implements OnInit, OnDestroy {
   @Input() index!: number;
   subscriptions: Subscription[] = [];
   listCategories: Categories[] = [];
+
+  dialog = inject(MatDialog);
 
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
