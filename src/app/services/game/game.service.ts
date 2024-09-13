@@ -26,6 +26,8 @@ export class GameService {
     private store: Store<{ game: GameState }>,
   ) {}
 
+  rank!: any;
+
   createGame(idToken: string, gameReport: GameReport) {
     return this.http.post(
       `${environment.apiUrl}/game`,
@@ -252,8 +254,6 @@ export class GameService {
 
   listenForNavigateToRanking(pin: string) {
     this.socket.on('sendRanking', (rank: any) => {
-      console.log('sendRanking');
-      console.log(rank);
       this.router.navigate([`/guest/${pin}/game-result`]).then(() => {
         console.log('Off socket Rank');
       });

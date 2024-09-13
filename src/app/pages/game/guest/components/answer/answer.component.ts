@@ -89,6 +89,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
       answer: answer as number,
       time: this.timeElapsed,
     };
+    console.log(answerData);
     if (this.isCheckTime < 1000) {
       setTimeout(() => {
         this.gameService.sendAnswer(answerData);

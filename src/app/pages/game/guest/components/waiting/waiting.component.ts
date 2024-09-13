@@ -31,8 +31,11 @@ export class WaitingComponent implements OnInit, OnDestroy {
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
           if (pin) {
+            console.log('123123');
             this.pin = pin as string;
             this.gameService.listenForNavigationCountDown(this.pin);
+            this.gameService.checkRoomExist(this.pin);
+            this.gameService.listenForNavigateToEnterName(this.pin);
           }
         }
       }),
