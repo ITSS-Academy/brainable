@@ -10,11 +10,15 @@
       src="https://lottie.host/embed/e5f8ce7e-a6a6-4c73-b848-57390c019aec/ByKATft4Wn.json"
     ></iframe>
     <div class="rank">
-      <img src="assets/images/rainbow-diamond.png" alt="" />
-      <span>1</span>
+      @if (this.rank.rank < 10) {
+        <img [src]="rankImg[this.rank.rank - 1]" alt="" />
+      } @else {
+        <img [src]="rankImg[9]" alt="" />
+      }
+      <span>{{ this.rank.rank }}</span>
     </div>
     <div class="total-score">
-      <span>100</span>
+      <span>{{ this.rank.score }}</span>
     </div>
   </div>
 </div>
