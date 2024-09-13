@@ -12,10 +12,11 @@ import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Store } from '@ngrx/store';
 import { ProfileState } from '../../../ngrx/profile/profile.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { Quiz } from '../../../models/quiz.model';
 import { Question } from '../../../models/question.model';
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-library',
@@ -27,6 +28,7 @@ import { Question } from '../../../models/question.model';
     CdkFixedSizeVirtualScroll,
     ScrollingModule,
     QuizDetailComponent,
+    AsyncPipe,
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
@@ -36,6 +38,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
   listQuiz: Quiz[] = [];
   listQuestion: Question[] = [];
   subscriptions: Subscription[] = [];
+  getListQuizSuccess$: Observable<boolean>;
 
   constructor(
     private store: Store<{
@@ -43,7 +46,9 @@ export class LibraryComponent implements OnInit, OnDestroy {
       profile: ProfileState;
       quiz: QuizState;
     }>,
-  ) {}
+  ) {
+    this.getListQuizSuccess$ = this.store.select('quiz','isGetAllQuizSuccessful')
+  }
 
   ngOnInit(): void {
     this.subscriptions.push(

@@ -1,5 +1,4 @@
 <div id="container">
-
   <div class="setting-bar">
     <mat-form-field>
       <mat-label>Time limit</mat-label>
@@ -19,9 +18,9 @@
         (selectionChange)="onPointsChange($event)"
         value="{{ this.question.points }}"
       >
-        <mat-option value="0">0</mat-option>
-        <mat-option value="1">1</mat-option>
-        <mat-option value="2">2</mat-option>
+        <mat-option value="0">No points</mat-option>
+        <mat-option value="1">Standard</mat-option>
+        <mat-option value="2">Double points</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -42,6 +41,16 @@
           <mat-option value="15">15 seconds</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-label>Points</mat-label>
+      <mat-select
+        (selectionChange)="onPointsChange($event)"
+        value="{{ this.question.points }}"
+      >
+        <mat-option value="0">No points</mat-option>
+        <mat-option value="1">Standard</mat-option>
+        <mat-option value="2">Double points</mat-option>
+      </mat-select>
 
       <mat-form-field>
         <mat-label>Points</mat-label>

@@ -15,7 +15,7 @@ import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
-import { Quiz } from '../../../models/quiz.model';
+import { Quiz, QuizDTO } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -23,7 +23,8 @@ import { DialogCreateComponent } from './components/dialog-create/dialog-create.
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from './components/setting-bar/setting-bar.component';
 import { JsonPipe, NgIf } from '@angular/common';
-import { GameService } from '../../../services/game/game.service';
+import {GameService} from "../../../services/game/game.service";
+import {Categories} from "../../../models/categories.model";
 
 @Component({
   selector: 'app-creator',
@@ -53,16 +54,12 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     id: '',
     title: 'Untitled Quiz',
     description: '',
-    isPublic: false,
+    isPublic: true,
     totalQuestions: 0,
     imgUrl: '',
     createdAt: new Date(),
     authorId: <Profile>{},
-    category: {
-      uid: '',
-      name: '',
-      imgUrl: '',
-    },
+    category: <Categories>{},
     questions: [
       {
         id: '',
@@ -73,27 +70,37 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
         option3: '',
         option4: '',
         imgUrl: '',
-        timeLimit: 0,
+        timeLimit: 10,
         points: 1,
       },
     ],
   };
   isCreateNewQuiz = false;
   isGetQuizByIdSuccessful = false;
-  isEmptyInput = false;
+  idToken = '';
 
   currentQuestionIndex = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<{ auth: AuthState; quiz: QuizState }>,
+    private store: Store<{
+      auth: AuthState;
+      quiz: QuizState;
+      profile: Profile;
+    }>,
   ) {}
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
+
+    this.store.select('auth', 'idToken').subscribe((idToken) => {
+      this.idToken = idToken;
+    });
+
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
       //console.log(quiz);
       if (quiz) {
+        console.log(quiz.id);
         this.quiz = this.deepClone(quiz);
       }
     });
@@ -114,7 +121,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       );
     } else {
       this.isCreateNewQuiz = true;
-
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '60%';
       dialogConfig.maxWidth = '85vw';
@@ -133,9 +139,7 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();
 
-      if (this.quiz && this.isCreateNewQuiz) {
-        localStorage.setItem('unsavedQuiz', JSON.stringify(this.quiz));
-      }
+
     });
   }
 
@@ -163,15 +167,13 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     return false;
   }
 
+
+
   activeQuestion(index: number): void {
     this.currentQuestionIndex = index;
   }
 
   addQuestion(): void {
-    if (this.isEmpty()) {
-      this.isEmptyInput = true;
-      return;
-    }
     this.store.dispatch(QuizActions.addNewQuestion());
     this.activeQuestion(this.quiz.questions.length - 1);
     setTimeout(() => {

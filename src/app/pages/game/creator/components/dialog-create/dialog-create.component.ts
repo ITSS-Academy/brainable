@@ -1,5 +1,9 @@
-import { Component, EventEmitter, NgZone, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, inject, NgZone, Output } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import * as XLSX from 'xlsx';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
@@ -9,6 +13,8 @@ import { Store } from '@ngrx/store';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import mammoth from 'mammoth';
 import * as Papa from 'papaparse';
+import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
+import { DialogImportNotificationComponent } from '../dialog-import-notification/dialog-import-notification.component';
 @Component({
   selector: 'app-dialog-create',
   standalone: true,
@@ -218,9 +224,8 @@ export class DialogCreateComponent {
 
     // If there are missing fields, notify the user and log them
     if (missingFields.length > 0) {
-      const missingFieldsMessage = `Missing fields: ${missingFields.join(', ')}`;
-      this.notifyUser(missingFieldsMessage); // Notify user
-      console.error(missingFieldsMessage); // Log the missing fields
+      this.openDialog(missingFields); // Open the dialog with missing fields
+      console.error('Missing fields:', missingFields.join(', ')); // Log the missing fields
       return false; // Invalid question
     }
 
@@ -300,6 +305,19 @@ export class DialogCreateComponent {
         alert('Error parsing CSV file. Please try again.');
       },
     });
+  }
+
+  dialog = inject(MatDialog);
+
+  openDialog(missingFields: string[]) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '60%';
+    dialogConfig.maxWidth = '85vw';
+    dialogConfig.panelClass = 'custom-dialog-container';
+
+    dialogConfig.data = { missingFields };
+
+    this.dialog.open(DialogImportNotificationComponent, dialogConfig);
   }
 
   closeDialog(): void {

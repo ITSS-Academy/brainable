@@ -1,1 +1,10 @@
-<p>dialog-import-notification works!</p>
+<h2 mat-dialog-title>Import Errors</h2>
+<div mat-dialog-content>
+  <p>The following fields are missing in the imported file:</p>
+  <ul>
+    <li *ngFor="let field of missingFields">{{ field }}</li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

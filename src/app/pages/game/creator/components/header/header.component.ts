@@ -28,7 +28,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { DialogCreateComponent } from '../dialog-create/dialog-create.component';
 import * as XLSX from 'xlsx';
 import { MainContentComponent } from '../main-content/main-content.component';
-import { log } from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
+import {Categories} from "../../../../../models/categories.model";
 
 @Component({
   selector: 'app-header',
@@ -48,7 +48,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   dialog = inject(MatDialog);
 
-  ExcelData: any;
+  settings = {
+    title: '',
+    description: '',
+    isPublic: false,
+    imgUrl: '',
+    category: <Categories>{},
+  };
 
   constructor(
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
@@ -81,6 +87,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         }),
     );
+    console.log(this.isEdit);
   }
 
   openDialog() {
@@ -122,7 +129,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     };
   }
 
-  // Method to check if any required field in the quiz or its questions is empty
+
+// Method to check if any required field in the quiz or its questions is empty
   isEmpty(): boolean {
     let missingFields: MissingField[] = []; // To track missing fields
 
@@ -131,7 +139,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       missingFields.push({
         questionIndex: -1, // Use -1 or another value to indicate that this is a general quiz level issue
         question: {} as Question,
-        missingFields: ['Quiz title is missing.'],
+        missingFields: ['Quiz title is missing.']
       });
     }
 
@@ -144,7 +152,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (!question.question.trim()) {
           currentQuestionMissingFields.push('Question text is missing.');
         }
-
         // Check each option for the question
         if (!question.option1.trim()) {
           currentQuestionMissingFields.push('Option 1 is empty.');
@@ -159,8 +166,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           currentQuestionMissingFields.push('Option 4 is empty.');
         }
         // Check if the question image URL is missing (if applicable)
-        if (!question.imgUrl.trim()) {
-          currentQuestionMissingFields.push('Image is missing.');
+        if (typeof question.imgUrl !== 'string' || !question.imgUrl.trim()) {
+          currentQuestionMissingFields.push('Image URL is missing.');
         }
         // Check if a correct answer has been selected
         if (question.answer === 0) {
@@ -168,9 +175,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         // Check if the time limit is missing or set to 0
         if (question.timeLimit === 0) {
-          currentQuestionMissingFields.push(
-            'Time limit is missing or set to 0.',
-          );
+          currentQuestionMissingFields.push('Time limit is missing or set to 0.');
         }
         // Check if the points are missing or set to 0
         if (question.points === 0) {
@@ -182,7 +187,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           missingFields.push({
             questionIndex: index,
             question: question,
-            missingFields: currentQuestionMissingFields,
+            missingFields: currentQuestionMissingFields
           });
         }
       });
@@ -190,25 +195,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
       missingFields.push({
         questionIndex: -1,
         question: {} as Question,
-        missingFields: ['No questions found in the quiz.'],
+        missingFields: ['No questions found in the quiz.']
       });
     }
 
     // Check if any fields are missing
     if (missingFields.length > 0) {
       // Log out the array of missing fields in the console
-      missingFields.forEach((missingField) => {
+      missingFields.forEach(missingField => {
         console.log(`Question Index: ${missingField.questionIndex}`);
         console.log(`Question:`, missingField.question);
         console.log(`Missing Fields: ${missingField.missingFields.join(', ')}`);
       });
-      return true; // Return true if any required field is missing
+      return true;  // Return true if any required field is missing
     }
 
-    return false; // Return false if no fields are missing
+    return false;  // Return false if no fields are missing
   }
 
+
   addQuiz() {
+
     if (this.isEmpty()) {
       this.isEmptyInput = true;
       console.log('Please fill out all required fields!');
@@ -216,18 +223,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
       return;
     }
 
+
     const quizAdd = {
       quiz: {
         ...this.quiz,
         questions: this.quiz.questions.map(this.convertToQuestionDTO),
-
-        isDraft: this.quiz.isDraft || false,
       },
     };
     this.store.dispatch(
       QuizActions.createQuiz({ idToken: this.idToken, quiz: quizAdd }),
     );
   }
+
 
   // readExcel(event: any) {
   //   let file = event.target.files[0];
@@ -244,13 +251,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
-  }
-
-  isFormInvalid = true;
-
-  submitQuestion(): void {
-    if (!this.isFormInvalid) {
-      // Your submission logic here
-    }
   }
 }

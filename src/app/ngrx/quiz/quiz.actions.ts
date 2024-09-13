@@ -58,7 +58,7 @@ export const updateQuizFailure = createAction(
 
 export const updateQuestionByIndex = createAction(
   '[Quiz] Update Question By Index',
-  props<{ question: Question; index: number}>(),
+  props<{ question: Question; index: number }>(),
 );
 
 export const updateQuestionByImport = createAction(
@@ -74,6 +74,7 @@ export const updateQuestionByImportCSV = createAction(
   '[Quiz] Update Question By Import CSV',
   props<{ questions: Question[] }>(),
 );
+
 export const updateSetting = createAction(
   '[Quiz] Update Setting',
   props<{ setting: any }>(),

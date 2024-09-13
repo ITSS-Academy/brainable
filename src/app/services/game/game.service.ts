@@ -246,6 +246,29 @@ export class GameService {
     this.socket.emit('getLastQuestionScore', { pin, gameId });
   }
 
+  sendRanking(pin: string): void {
+    this.socket.emit('sendRanking', pin);
+  }
+
+  listenForNavigateToRanking(pin: string) {
+    this.socket.on('sendRanking', (rank: any) => {
+      console.log('sendRanking');
+      console.log(rank);
+      this.router.navigate([`/guest/${pin}/game-result`]).then(() => {
+        console.log('Off socket Rank');
+      });
+    });
+  }
+
+  receiveRanking(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('sendRanking', (rank: any) => {
+        observer.next(rank);
+        observer.complete();
+      });
+    });
+  }
+
   receiveLastQuestionScore(): Observable<any> {
     console.log('receiveLastQuestionScore');
     return new Observable((observer) => {
