@@ -78,7 +78,9 @@ export class GameService {
         console.log('clientId', clientId);
       });
       this.store.dispatch(GameActions.storePin({ pin: pin }));
-      this.router.navigate([`/guest/${pin}/waiting`]);
+      this.router.navigate([`/guest/${pin}/waiting`]).then(() => {
+        this.socket.off('navigateToEnterName');
+      });
     });
   }
 
