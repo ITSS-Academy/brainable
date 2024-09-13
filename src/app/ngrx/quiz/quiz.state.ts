@@ -1,5 +1,5 @@
 import { Quiz, QuizDTO } from '../../models/quiz.model';
-import { Question } from '../../models/question.model';
+import {Question, QuestionCheck} from '../../models/question.model';
 
 export interface QuizState {
   // get all quiz
@@ -10,6 +10,7 @@ export interface QuizState {
 
   // get quiz by id
   quiz: Quiz;
+  quizCheck: QuestionCheck[];
   isGetQuizByIdLoading: boolean;
   isGetQuizByIdSuccessful: boolean;
   getQuizByIdErrorMessage: string;
