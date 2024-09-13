@@ -9,7 +9,7 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
@@ -142,7 +142,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     });
   }
-
 
 
   activeQuestion(index: number): void {
