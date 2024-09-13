@@ -28,4 +28,6 @@ export interface QuizState {
   isDeleteQuizLoading: boolean;
   isDeleteQuizSuccessful: boolean;
   deleteQuizErrorMessage: string;
+
+
 }

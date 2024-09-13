@@ -29,6 +29,12 @@
         <mat-icon>save</mat-icon>
         Save
       </button>
+      @if (isEmptyInput) {
+        <div class="empty-input">
+          <p class="text">Please enter information!</p>
+        </div>
+      }
+
       <!--      <button mat-fab extended class="save-btn" (change)="ReadExcel()">-->
       <!--        <mat-icon>add</mat-icon>-->
       <!--        Import-->
