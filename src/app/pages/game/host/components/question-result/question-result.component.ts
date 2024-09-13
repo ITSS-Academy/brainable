@@ -108,6 +108,7 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
       this.router.navigate([`/host/${this.pin}/game-result`]);
       this.gameService.getLastQuestionScore(this.pin, this.gameId);
       this.gameService.endGame(this.pin);
+      this.gameService.sendRanking(this.pin);
     } else {
       this.store.dispatch(GameActions.nextQuestion());
       this.router.navigate([`/host/${this.pin}/leaderboard-score`]);
