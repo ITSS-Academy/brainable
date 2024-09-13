@@ -193,12 +193,10 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
 
           // Set the initial top position
           child.style.top = `${preIndex * 62}px`;
-          console.log(`old top ${change.name}: `, child.style.top);
 
           setTimeout(() => {
             child.style.transition = 'top 1s ease';
             child.style.top = `${newTop}px`;
-            console.log('new top: ', child.style.top);
           }, 0);
         }
       });

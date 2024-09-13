@@ -53,6 +53,8 @@ export class GameResultComponent implements OnInit, OnDestroy {
     score: number;
   }[] = [];
 
+  showConfetti = false;
+
   ngOnInit() {
     this.gameService.receiveLastQuestionScore().subscribe((data) => {
       this.playerRecords = data as PlayerRecord[];
@@ -67,12 +69,15 @@ export class GameResultComponent implements OnInit, OnDestroy {
     this.gameService.receiveLeaderboard().subscribe((data) => {
       this.result = data;
     });
+    setTimeout(() => {
+      this.showConfetti = true;
+    }, 14000);
   }
 
   song = new Audio();
 
   playMusic() {
-    this.song.src = 'assets/music/top3.mp3';
+    this.song.src = 'assets/music/top3-leaderboard.mp3';
     this.song.load();
     this.song.play().then();
     this.song.loop = true;

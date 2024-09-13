@@ -53,31 +53,34 @@
 }
 
 iframe {
-  width: 35%;
-  height: 35%;
+  width: 250px;
+  height: 250px;
   border: none;
   outline: none;
 }
 
 .rank {
   position: absolute;
-  width: 85px;
-  height: 75px;
+  //width: 85px;
+  //height: 75px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f7c116;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  clip-path: polygon(50% 100%, 100% 62%, 82% 0%, 18% 0%, 0% 62%);
   margin-top: 12px;
-}
 
-.rank span {
-  font-size: 34px;
-  font-weight: 700;
-  color: var(--md-sys-color-on-primary);
-  margin-bottom: 12px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  img {
+    position: absolute;
+    width: 85px;
+  }
+
+  span {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-primary);
+    margin-bottom: 12px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    position: absolute;
+  }
 }
 
 .total-score {
