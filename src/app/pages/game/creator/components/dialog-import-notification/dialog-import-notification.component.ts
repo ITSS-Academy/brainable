@@ -24,9 +24,9 @@ import { NgForOf } from '@angular/common';
   styleUrl: './dialog-import-notification.component.scss',
 })
 export class DialogImportNotificationComponent {
-  missingFields: string[] = [];
+  messages: string[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.missingFields = data.missingFields;
+    this.messages = data.messages;
   }
 }

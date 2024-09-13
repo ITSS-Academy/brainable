@@ -71,21 +71,23 @@ export class DialogCreateComponent {
       ];
 
       // Validate if headers match expected format
-      const isValid =
+      const isValidHeaders =
         headers.length === expectedHeaders.length &&
         headers.every((header, index) => header === expectedHeaders[index]);
 
-      if (!isValid) {
+      if (!isValidHeaders) {
+        // Open the dialog to notify about header mismatch
+        this.openDialog([
+          'The file headers do not match the expected format. Expected: ' +
+            expectedHeaders.join(', ') +
+            ', but received: ' +
+            headers.join(', '),
+        ]);
         console.log(
           'Invalid file format. Expected headers:',
           expectedHeaders,
           'but received:',
           headers,
-        );
-        // Notify the user with a message (replace with your preferred notification method)
-        alert(
-          'The file format is incorrect. Please make sure the file has the correct headers: ' +
-            expectedHeaders.join(', '),
         );
         return;
       }
@@ -93,21 +95,48 @@ export class DialogCreateComponent {
       // Extract rows starting from the second row (skipping the headers)
       const rows = excelData.slice(1);
 
-      // Process rows
-      const formattedData: Question[] = rows.map((row: any[]) => {
-        return {
-          id: '',
-          imgUrl: '',
+      // Validate and process rows
+      const formattedData: Question[] = [];
+      const missingFieldsMessages: string[] = [];
+
+      rows.forEach((row, index) => {
+        const questionObj: Partial<Question> = {
           question: row[0],
           option1: row[1],
           option2: row[2],
           option3: row[3],
           option4: row[4],
           answer: row[5],
-          timeLimit: 10,
-          points: 0,
         };
+
+        // Validate each row for missing fields
+        const missingFields = this.getMissingFields(questionObj);
+        if (missingFields.length > 0) {
+          missingFieldsMessages.push(
+            `Row ${index + 2}: Missing fields: ${missingFields.join(', ')}`,
+          );
+        } else {
+          formattedData.push({
+            id: '',
+            imgUrl: '',
+            question: questionObj.question!,
+            option1: questionObj.option1!,
+            option2: questionObj.option2!,
+            option3: questionObj.option3!,
+            option4: questionObj.option4!,
+            answer: questionObj.answer!,
+            timeLimit: 10,
+            points: 0,
+          });
+        }
       });
+
+      // If there are missing fields, open the dialog
+      if (missingFieldsMessages.length > 0) {
+        this.openDialog(missingFieldsMessages);
+        console.log('Missing fields:', missingFieldsMessages);
+        return;
+      }
 
       // Log the valid formatted data for debugging
       console.log('Formatted data:', formattedData);
@@ -226,16 +255,10 @@ export class DialogCreateComponent {
     if (missingFields.length > 0) {
       this.openDialog(missingFields); // Open the dialog with missing fields
       console.error('Missing fields:', missingFields.join(', ')); // Log the missing fields
-      return false; // Invalid question
+      //return false; // Invalid question
     }
 
     return true; // Valid question
-  }
-
-  // Function to notify the user about missing fields
-  notifyUser(message: string) {
-    // You can use your preferred notification library or simply alert the user
-    alert(message); // This can be replaced with a custom notification logic
   }
 
   parsedData: any[] = []; // Declare parsedData to store the CSV data
@@ -284,12 +307,10 @@ export class DialogCreateComponent {
           };
         });
 
-        // Notify the user if there are missing fields
+        // Notify the user via dialog if there are missing fields
         if (missingDataMessages.length > 0) {
-          alert(
-            'The following issues were found:\n' +
-              missingDataMessages.join('\n'),
-          );
+          this.openDialog(missingDataMessages); // Open dialog with missing fields
+          console.log('Missing fields:', missingDataMessages);
         } else {
           // Dispatch the action if no issues are found
           this.store.dispatch(
@@ -302,22 +323,48 @@ export class DialogCreateComponent {
       },
       error: (error) => {
         console.error('Error parsing CSV:', error);
-        alert('Error parsing CSV file. Please try again.');
+        this.openDialog(['Error parsing CSV file. Please try again.']); // Notify user of error in dialog
       },
     });
   }
 
   dialog = inject(MatDialog);
 
-  openDialog(missingFields: string[]) {
+  openDialog(messages: string[]) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '60%';
     dialogConfig.maxWidth = '85vw';
     dialogConfig.panelClass = 'custom-dialog-container';
 
-    dialogConfig.data = { missingFields };
+    dialogConfig.data = { messages };
 
     this.dialog.open(DialogImportNotificationComponent, dialogConfig);
+  }
+
+  // Function to get missing fields from a question object
+  getMissingFields(questionObj: Partial<Question>): string[] {
+    const missingFields: string[] = [];
+
+    if (!questionObj.question || questionObj.question.trim() === '') {
+      missingFields.push('Question');
+    }
+    if (!questionObj.option1 || questionObj.option1.trim() === '') {
+      missingFields.push('Option1');
+    }
+    if (!questionObj.option2 || questionObj.option2.trim() === '') {
+      missingFields.push('Option2');
+    }
+    if (!questionObj.option3 || questionObj.option3.trim() === '') {
+      missingFields.push('Option3');
+    }
+    if (!questionObj.option4 || questionObj.option4.trim() === '') {
+      missingFields.push('Option4');
+    }
+    if (typeof questionObj.answer !== 'number') {
+      missingFields.push('Answer');
+    }
+
+    return missingFields;
   }
 
   closeDialog(): void {
