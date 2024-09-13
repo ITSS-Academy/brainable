@@ -120,3 +120,10 @@ export const saveDraft = createAction(
   '[Quiz] Save Draft',
   props<{ questions: Question }>(),
 );
+
+export const storeQuestionErrorIndex = createAction(
+  '[Quiz] Store Question Error Index',
+  props<{ index: number }>(),
+);
+
+export const clearQuizCheck = createAction('[Quiz] Clear Quiz Check');

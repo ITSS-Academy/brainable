@@ -1,29 +1,33 @@
 <h2 mat-dialog-title>This quiz can't be save</h2>
 <mat-dialog-content
   >Please fill in all information fields.
-  <div class="missing-content">
-    <div class="question-number">3 Quiz</div>
-    <div class="missing-fields">
-      <div class="missing-field">Question missing</div>
-      <div class="missing-field">2 answers missing</div>
-    </div>
-  </div>
-
-  <div class="missing-content">
-    <div class="question-number">3 Quiz</div>
-    <div class="missing-fields">
-      <div class="missing-field">Question missing</div>
-      <div class="missing-field">2 answers missing</div>
-    </div>
-  </div>
-
-  <div class="missing-content">
-    <div class="question-number">3 Quiz</div>
-    <div class="missing-fields">
-      <div class="missing-field">Question missing</div>
-      <div class="missing-field">2 answers missing</div>
-    </div>
-  </div>
+  @for (quiz of quizCheck; track $index) {
+    @if (
+      !quiz.question ||
+      !quiz.answer ||
+      !quiz.option1 ||
+      !quiz.option2 ||
+      !quiz.option3 ||
+      !quiz.option4
+    ) {
+      <div class="missing-content" (click)="changActiveQuestion($index)">
+        <div class="question-number">{{ $index + 1 }} Quiz</div>
+        <div class="missing-fields">
+          @if (!quiz.question) {
+            <div class="missing-field">Question missing</div>
+          }
+          @if (!quiz.answer) {
+            <div class="missing-field">Right answer missing</div>
+          }
+          @if (emptyQuestions[$index] > 0) {
+            <div class="missing-field">
+              {{ emptyQuestions[$index] }} options missing
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
