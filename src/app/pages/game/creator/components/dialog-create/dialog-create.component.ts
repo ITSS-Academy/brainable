@@ -126,7 +126,7 @@ export class DialogCreateComponent {
             option4: questionObj.option4!,
             answer: questionObj.answer!,
             timeLimit: 10,
-            points: 0,
+            points: 1,
           });
         }
       });
@@ -184,7 +184,9 @@ export class DialogCreateComponent {
           // Add previous valid question object to array
           this.questions.push(questionObj as Question);
         }
-        questionObj = { question: line.replace('Question:', '').trim() };
+        questionObj = { question: line.replace('Question:', '').trim(),
+        timeLimit: 10,
+        points: 1, };
       } else if (line.startsWith('Option1:')) {
         questionObj.option1 = line.replace('Option1:', '').trim();
       } else if (line.startsWith('Option2:')) {

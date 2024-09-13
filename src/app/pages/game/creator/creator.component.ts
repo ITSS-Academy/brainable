@@ -105,7 +105,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       console.log(quiz);
       this.quiz = { ...this.quiz, category: this.quizDefault.category };
       if (quiz) {
-        console.log(quiz.id);
         this.quiz = this.deepClone(quiz);
       }
     });
