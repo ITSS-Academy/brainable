@@ -15,15 +15,16 @@ import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import { Quiz, QuizDTO } from '../../../../../models/quiz.model';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
-import {MissingField, Question, QuestionCheck, QuestionDTO} from '../../../../../models/question.model';
+import {
+  Question,
+  QuestionCheck,
+  QuestionDTO,
+} from '../../../../../models/question.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { LoginComponent } from '../../../../../components/login/login.component';
 import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialogCreateComponent } from '../dialog-create/dialog-create.component';
-import * as XLSX from 'xlsx';
 import { MainContentComponent } from '../main-content/main-content.component';
-import {Categories} from "../../../../../models/categories.model";
 
 @Component({
   selector: 'app-header',
@@ -79,6 +80,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         }),
     );
+
+    this.store.dispatch(QuizActions.clearQuizCheck());
   }
 
   openDialog() {
@@ -95,7 +98,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     dialogCreateConfig.maxWidth = '85vw';
     dialogCreateConfig.panelClass = 'custom-dialog-container';
     this.dialog.open(DialogCreateComponent, dialogCreateConfig);
-
   }
 
   openNotiDialog() {
@@ -107,12 +109,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   saveQuiz() {
-    const quizUpdate: QuizDTO = {
-      quiz: this.quiz,
-    };
-    this.store.dispatch(
-      QuizActions.updateQuiz({ idToken: this.idToken, quiz: quizUpdate }),
-    );
+    let isEmptyInput = false;
+    let subscription2: Subscription;
+    subscription2 = this.store.select('quiz', 'quizCheck').subscribe((quiz) => {
+      for (let question of quiz) {
+        if (
+          !question.question ||
+          !question.option4 ||
+          !question.option3 ||
+          !question.option2 ||
+          !question.option1 ||
+          !question.answer
+        ) {
+          isEmptyInput = true;
+          this.openNotiDialog();
+          break;
+        }
+      }
+    });
+    subscription2.unsubscribe();
+    if (!isEmptyInput) {
+      const quizUpdate: QuizDTO = {
+        quiz: this.quiz,
+      };
+      this.store.dispatch(
+        QuizActions.updateQuiz({ idToken: this.idToken, quiz: quizUpdate }),
+      );
+    }
   }
 
   convertToQuestionDTO(question: Question): QuestionDTO {
@@ -130,15 +153,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   addQuiz() {
-    const quizAdd = {
-      quiz: {
-        ...this.quiz,
-        questions: this.quiz.questions.map(this.convertToQuestionDTO),
-      },
-    };
-    this.store.dispatch(
-      QuizActions.createQuiz({ idToken: this.idToken, quiz: quizAdd }),
-    );
+    let isEmptyInput = false;
+    let subscription2: Subscription;
+    subscription2 = this.store.select('quiz', 'quizCheck').subscribe((quiz) => {
+      for (let question of quiz) {
+        if (
+          !question.question ||
+          !question.option4 ||
+          !question.option3 ||
+          !question.option2 ||
+          !question.option1 ||
+          !question.answer
+        ) {
+          isEmptyInput = true;
+          this.openNotiDialog();
+          break;
+        }
+      }
+    });
+    subscription2.unsubscribe();
+    if (!isEmptyInput) {
+      const quizAdd = {
+        quiz: {
+          ...this.quiz,
+          questions: this.quiz.questions.map(this.convertToQuestionDTO),
+        },
+      };
+      this.store.dispatch(
+        QuizActions.createQuiz({ idToken: this.idToken, quiz: quizAdd }),
+      );
+    }
   }
 
   ngOnDestroy(): void {

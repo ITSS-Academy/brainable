@@ -11,12 +11,22 @@ import { GameService } from '../../../../../services/game/game.service';
 })
 export class GameResultComponent {
   rank!: any;
+  // create array of img url
+  rankImg = [
+    'assets/images/rainbow-diamond.png',
+    'assets/images/pearl.png',
+    'assets/images/amethyst.png',
+    'assets/images/emerald.png',
+    'assets/images/ruby.png',
+    'assets/images/sapphire.png',
+    'assets/images/obsidian.png',
+    'assets/images/gold.png',
+    'assets/images/silver.png',
+    'assets/images/bronze.png',
+  ];
 
   constructor(private gameService: GameService) {
     console.log('GameResultComponent');
-    this.gameService.receiveRanking().subscribe((rank) => {
-      this.rank = rank;
-      console.log('rank', this.rank);
-    });
+    this.rank = this.gameService.rank;
   }
 }

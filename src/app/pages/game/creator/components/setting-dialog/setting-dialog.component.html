@@ -6,20 +6,29 @@
     <div class="left">
       <div class="title">
         <label><b>Title</b></label>
-        <input [(ngModel)]="settings.title" type="text" placeholder="Enter your title..."/>
+        <input
+          [(ngModel)]="settings.title"
+          type="text"
+          placeholder="Enter your title..."
+        />
       </div>
       <div class="description">
-        <label><b>Description</b> (optional)</label>
+        <label><b>Description</b></label>
         <textarea [(ngModel)]="settings.description"></textarea>
       </div>
 
       <div class="category">
         <mat-form-field>
           <mat-label>Categories</mat-label>
-          <mat-select (selectionChange)="onCategoryChange($event)" value="{{categoryValue}}">
-            @if (isGettingCategories$|async) {
+          <mat-select
+            (selectionChange)="onCategoryChange($event)"
+            value="{{ categoryValue }}"
+          >
+            @if (isGettingCategories$ | async) {
               @for (category of listCategories; track $index) {
-                <mat-option value="{{$index}}">{{ category.name }}</mat-option>
+                <mat-option value="{{ $index }}">{{
+                  category.name
+                }}</mat-option>
               }
             }
           </mat-select>
@@ -29,41 +38,50 @@
     <div class="right">
       <label class="title-img"><b>Cover image</b></label>
       <div #imageContainer class="image-input">
-        @if (settings.imgUrl == undefined || settings.imgUrl === '') {
-          <input id="uploadBtn-quiz" type="file" (change)="selectImage($event)"/>
+        @if (settings.imgUrl == undefined || settings.imgUrl === "") {
+          <input
+            id="uploadBtn-quiz"
+            type="file"
+            (change)="selectImage($event)"
+          />
           <label class="label-upload" for="uploadBtn-quiz">
             <div class="media-library"></div>
-            <button mat-flat-button
-                    (click)="triggerFileInput($event)"
-            >
+            <button mat-flat-button (click)="triggerFileInput($event)">
               Change
             </button>
           </label>
         } @else {
           <div class="img-container">
-            <img [src]="settings.imgUrl" alt=""/>
+            <img [src]="settings.imgUrl" alt="" />
           </div>
           <button mat-fab class="remove-btn">
-<!--                  (click)="removeImage()"-->
+            <!--                  (click)="removeImage()"-->
 
             <mat-icon>delete</mat-icon>
           </button>
         }
-
       </div>
       <div class="visibility">
         <label><b>Visibility</b></label>
-        <mat-radio-group [(ngModel)]="settings.isPublic" (change)="handleVisibilityChange($event)">
+        <mat-radio-group
+          [(ngModel)]="settings.isPublic"
+          (change)="handleVisibilityChange($event)"
+        >
           <mat-radio-button [value]="true">Public</mat-radio-button>
           <mat-radio-button [value]="false">Private</mat-radio-button>
         </mat-radio-group>
       </div>
-
     </div>
   </div>
 
   <div class="dialog-footer">
     <button mat-stroked-button (click)="closeDialog()">Cancel</button>
-    <button mat-flat-button color="primary" (click)="closeDialog(); saveChanges()">Done</button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="closeDialog(); saveChanges()"
+    >
+      Done
+    </button>
   </div>
 </mat-dialog-content>
