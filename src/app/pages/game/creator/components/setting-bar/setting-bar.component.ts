@@ -72,6 +72,8 @@ export class SettingBarComponent implements OnInit, OnDestroy {
     );
   }
 
+
+
   saveChanges() {
     this.store.dispatch(
       QuizActions.updateQuestionByIndex({
