@@ -139,6 +139,7 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '60%';
       dialogConfig.maxWidth = '85vw';
+      dialogConfig.disableClose = true;
       dialogConfig.panelClass = 'custom-dialog-container';
       this.dialog.open(DialogCreateComponent, dialogConfig);
 

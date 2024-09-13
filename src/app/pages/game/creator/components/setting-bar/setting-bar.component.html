@@ -32,44 +32,98 @@
     <div class="dialog-content">
       <mat-form-field>
         <mat-label>Time limit</mat-label>
-        <mat-select
-          (selectionChange)="onTimeLimitChange($event)"
-          value="{{ this.question.timeLimit }}"
-        >
+        <mat-select>
           <mat-option value="5">5 seconds</mat-option>
           <mat-option value="10">10 seconds</mat-option>
           <mat-option value="15">15 seconds</mat-option>
         </mat-select>
       </mat-form-field>
-
-      <mat-label>Points</mat-label>
-      <mat-select
-        (selectionChange)="onPointsChange($event)"
-        value="{{ this.question.points }}"
-      >
-        <mat-option value="0">No points</mat-option>
-        <mat-option value="1">Standard</mat-option>
-        <mat-option value="2">Double points</mat-option>
-      </mat-select>
-
-      <mat-form-field>
-        <mat-label>Points</mat-label>
-        <mat-select
-          (selectionChange)="onPointsChange($event)"
-          value="{{ this.question.points }}"
-        >
-          <mat-option value="100">100</mat-option>
-          <mat-option value="200">200</mat-option>
-          <mat-option value="300">300</mat-option>
-          <mat-option value="400">400</mat-option>
-          <mat-option value="500">500</mat-option>
-        </mat-select>
-      </mat-form-field>
     </div>
 
-    <div class="dialog-footer">
-      <button mat-stroked-button>Cancel</button>
-      <button mat-flat-button color="primary">Done</button>
-    </div>
+    <!--          <mat-label>Points</mat-label>-->
+    <!--          <mat-select-->
+    <!--            (selectionChange)="onPointsChange($event)"-->
+    <!--            value="{{ this.question.points }}"-->
+    <!--          >-->
+    <!--            <mat-option value="0">No points</mat-option>-->
+    <!--            <mat-option value="1">Standard</mat-option>-->
+    <!--            <mat-option value="2">Double points</mat-option>-->
+    <!--          </mat-select>-->
+
+    <!--          <mat-form-field>-->
+    <!--        <mat-label>Points</mat-label>-->
+    <!--        <mat-select-->
+    <!--          (selectionChange)="onPointsChange($event)"-->
+    <!--          value="{{ this.question.points }}"-->
+    <!--        >-->
+    <!--          <mat-option value="100">100</mat-option>-->
+    <!--          <mat-option value="200">200</mat-option>-->
+    <!--          <mat-option value="300">300</mat-option>-->
+    <!--          <mat-option value="400">400</mat-option>-->
+    <!--          <mat-option value="500">500</mat-option>-->
+    <!--        </mat-select>-->
+    <!--      </mat-form-field>-->
+    <!--    </div>-->
+
+    <!--    <div class="dialog-footer">-->
+    <!--      <button mat-stroked-button>Cancel</button>-->
+    <!--      <button mat-flat-button color="primary">Done</button>-->
+    <!--    </div>-->
   </mat-dialog-content>
 </div>
+
+<!--<div id="container">-->
+<!--  <div class="setting-bar">-->
+<!--    <mat-form-field>-->
+<!--      <mat-label>Time limit</mat-label>-->
+<!--      <mat-select (selectionChange)="onTimeLimitChange($event)" >-->
+<!--        <mat-option value="5">5 seconds</mat-option>-->
+<!--        <mat-option value="10">10 seconds</mat-option>-->
+<!--        <mat-option value="15">15 seconds</mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+
+<!--    <mat-form-field>-->
+<!--      <mat-label>Points</mat-label>-->
+<!--      <mat-select (selectionChange)="onPointsChange($event)" value="100">-->
+<!--        <mat-option value="100">100</mat-option>-->
+<!--        <mat-option value="200">200</mat-option>-->
+<!--        <mat-option value="300">300</mat-option>-->
+<!--        <mat-option value="400">400</mat-option>-->
+<!--        <mat-option value="500">500</mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+<!--  </div>-->
+
+<!--  <mat-dialog-content class="dialog-container">-->
+<!--    <div class="dialog-header">-->
+<!--      <h1>Settings</h1>-->
+<!--    </div>-->
+<!--    <div class="dialog-content">-->
+<!--      <mat-form-field>-->
+<!--        <mat-label>Time limit</mat-label>-->
+<!--        <mat-select (selectionChange)="onTimeLimitChange($event)" value="5">-->
+<!--          <mat-option value="5">5 seconds</mat-option>-->
+<!--          <mat-option value="10">10 seconds</mat-option>-->
+<!--          <mat-option value="15">15 seconds</mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field>-->
+<!--        <mat-label>Points</mat-label>-->
+<!--        <mat-select (selectionChange)="onPointsChange($event)" value="100">-->
+<!--          <mat-option value="100">100</mat-option>-->
+<!--          <mat-option value="200">200</mat-option>-->
+<!--          <mat-option value="300">300</mat-option>-->
+<!--          <mat-option value="400">400</mat-option>-->
+<!--          <mat-option value="500">500</mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+
+<!--    <div class="dialog-footer">-->
+<!--      <button mat-stroked-button>Cancel</button>-->
+<!--      <button mat-flat-button color="primary">Done</button>-->
+<!--    </div>-->
+<!--  </mat-dialog-content>-->
+<!--</div>-->
