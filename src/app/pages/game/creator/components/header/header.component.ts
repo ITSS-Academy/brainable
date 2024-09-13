@@ -15,7 +15,7 @@ import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import { Quiz, QuizDTO } from '../../../../../models/quiz.model';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
-import {MissingField, Question, QuestionDTO} from '../../../../../models/question.model';
+import {MissingField, Question, QuestionCheck, QuestionDTO} from '../../../../../models/question.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../../../../../components/login/login.component';
 import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
@@ -39,18 +39,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   subscription: Subscription[] = [];
   quiz!: Quiz;
+  quizCheck!: QuestionCheck[];
   idToken!: string;
   isEmptyInput = false;
 
   dialog = inject(MatDialog);
-
-  settings = {
-    title: '',
-    description: '',
-    isPublic: false,
-    imgUrl: '',
-    category: <Categories>{},
-  };
 
   constructor(
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
@@ -64,6 +57,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }),
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         this.quiz = quiz;
+      }),
+      this.store.select('quiz', 'quizCheck').subscribe((quizCheck) => {
+        this.quizCheck = quizCheck;
+        console.log(this.quizCheck);
       }),
       this.store
         .select('quiz', 'isUpdateQuizSuccessful')
@@ -82,7 +79,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         }),
     );
-    console.log(this.isEdit);
   }
 
   openDialog() {

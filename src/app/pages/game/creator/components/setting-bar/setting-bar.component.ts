@@ -25,13 +25,6 @@ export class SettingBarComponent implements OnInit, OnDestroy {
   @Input() index!: number;
   subscriptions: Subscription[] = [];
   listCategories: Categories[] = [];
-  isGettingCategories$ = this.store.select(
-    'categories',
-    'isGetAllCategoriesSuccessful',
-  );
-  changeEvent = new BehaviorSubject<any>(null);
-
-
 
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
@@ -61,6 +54,12 @@ export class SettingBarComponent implements OnInit, OnDestroy {
         index: this.index,
       }));
   }
+
+  saveChanges() {
+    this.store.dispatch(QuizActions.updateQuestionByIndex({question: this.question, index: this.index}));
+  }
+
+
 
 
   // closeDialog(): void {

@@ -210,6 +210,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
+
   }
 
   onCategoryChange(event: any) {
@@ -217,6 +218,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
+
   }
 
   ngOnDestroy() {

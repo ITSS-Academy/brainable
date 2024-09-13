@@ -1,7 +1,7 @@
 import { Quiz } from './quiz.model';
 
 export interface Categories {
-  uid: string;
+  uid: string ;
   name: string;
   imgUrl: string;
 }
