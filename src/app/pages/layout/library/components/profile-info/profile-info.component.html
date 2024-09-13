@@ -8,20 +8,25 @@
       <span class="mail">{{ profile.email }}</span>
     </div>
   </div>
-  <div class="profile-stats">
-    <div class="stat">
-      <span class="stat-number">{{ profile.quizzes.length }}</span>
-      <span class="stat-label">Quizzes</span>
+  @if (isGettingProfileSuccessful$ | async)
+  {
+    <div class="profile-stats">
+      <div class="stat">
+        <span class="stat-number">{{ profile.quizzes.length }}</span>
+        <span class="stat-label">Quizzes</span>
+      </div>
+
+      <!--    <div class="stat">-->
+      <!--      <span class="stat-number">23</span>-->
+      <!--      <span class="stat-label">Plays</span>-->
+      <!--    </div>-->
+      <!--    <div class="stat">-->
+      <!--      <span class="stat-number">49</span>-->
+      <!--      <span class="stat-label">Players</span>-->
+      <!--    </div>-->
     </div>
-    <!--    <div class="stat">-->
-    <!--      <span class="stat-number">23</span>-->
-    <!--      <span class="stat-label">Plays</span>-->
-    <!--    </div>-->
-    <!--    <div class="stat">-->
-    <!--      <span class="stat-number">49</span>-->
-    <!--      <span class="stat-label">Players</span>-->
-    <!--    </div>-->
-  </div>
+
+  }
 </div>
 
 

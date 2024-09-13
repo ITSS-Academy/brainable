@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as QuizActions from './quiz.actions';
 import { QuizState } from './quiz.state';
 import { Quiz } from '../../models/quiz.model';
-import { Question } from '../../models/question.model';
+import {Question, QuestionCheck} from '../../models/question.model';
 
 export const initialState: QuizState = {
   quizzes: [],
@@ -11,6 +11,7 @@ export const initialState: QuizState = {
   getAllQuizErrorMessage: '',
 
   quiz: <Quiz>{},
+  quizCheck: [],
   isGetQuizByIdLoading: false,
   isGetQuizByIdSuccessful: false,
   getQuizByIdErrorMessage: '',
@@ -79,15 +80,27 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.getQuizById, (state, action) => {
+
     return {
       ...state,
       isGetQuizByIdLoading: true,
     };
   }),
   on(QuizActions.getQuizByIdSuccess, (state, { quiz, type }) => {
+
     return {
       ...state,
       quiz: quiz,
+      quizCheck: quiz.questions.map(() => {
+        return {
+          question: true,
+          answer: true,
+          option1: true,
+          option2: true,
+          option3: true,
+          option4: true,
+        };
+      },),
       isGetQuizByIdLoading: false,
       isGetQuizByIdSuccessful: true,
     };
@@ -138,6 +151,14 @@ export const quizReducer = createReducer(
         ...state.quiz,
         questions: [...state.quiz.questions, {} as Question],
       },
+      quizCheck: [...state.quizCheck, {
+        question: false,
+        answer: false,
+        option1: false,
+        option2: false,
+        option3: false,
+        option4: false,
+      } as QuestionCheck],
     };
   }),
   on(QuizActions.duplicateQuestionByIndex, (state, { index, type }) => {
@@ -147,17 +168,8 @@ export const quizReducer = createReducer(
     const updatedQuestions = [...state.quiz.questions];
     updatedQuestions.splice(index, 0, state.quiz.questions[index]);
 
-    return {
-      ...state,
-      quiz: {
-        ...state.quiz,
-        questions: updatedQuestions,
-      },
-    };
-  }),
-  on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
-    const updatedQuestions = [...state.quiz.questions];
-    updatedQuestions[index] = question;
+    const updatedQuizCheck = [...state.quizCheck];
+    updatedQuizCheck.splice(index, 0, state.quizCheck[index]);
 
     return {
       ...state,
@@ -165,6 +177,30 @@ export const quizReducer = createReducer(
         ...state.quiz,
         questions: updatedQuestions,
       },
+      quizCheck: updatedQuizCheck,
+    };
+  }),
+  on(QuizActions.updateQuestionByIndex, (state, { question, index, type }) => {
+    const updatedQuestions = [...state.quiz.questions];
+    updatedQuestions[index] = question;
+    const updatedQuizCheck = [...state.quizCheck];
+    updatedQuizCheck[index] = {
+      question: question.question.trim() !== '',
+      answer: question.answer !== 0,
+      option1: question.option1.trim() !== '',
+      option2: question.option2.trim() !== '',
+      option3: question.option3.trim() !== '',
+      option4: question.option4.trim() !== '',
+    };
+console.log(state.quizCheck);
+    return {
+      ...state,
+      quiz: {
+        ...state.quiz,
+        questions: updatedQuestions,
+      },
+      quizCheck: updatedQuizCheck,
+
     };
   }),
   on(QuizActions.updateQuestionByImport, (state, { questions, type }) => {
@@ -174,6 +210,16 @@ export const quizReducer = createReducer(
         ...state.quiz,
         questions: questions,
       },
+      quizCheck: questions.map(() => {
+        return {
+          question: true,
+          answer: true,
+          option1: true,
+          option2: true,
+          option3: true,
+          option4: true,
+        };
+      })
     };
   }),
   on(QuizActions.updateQuestionByImportWord, (state, { questions, type }) => {
@@ -183,6 +229,16 @@ export const quizReducer = createReducer(
         ...state.quiz,
         questions: questions,
       },
+      quizCheck: questions.map(() => {
+        return {
+          question: true,
+          answer: true,
+          option1: true,
+          option2: true,
+          option3: true,
+          option4: true,
+        };
+      })
     };
   }),
   on(QuizActions.updateQuestionByImportCSV, (state, { questions, type }) => {
@@ -192,6 +248,16 @@ export const quizReducer = createReducer(
         ...state.quiz,
         questions: questions,
       },
+      quizCheck: questions.map(() => {
+        return {
+          question: true,
+          answer: true,
+          option1: true,
+          option2: true,
+          option3: true,
+          option4: true,
+        };
+      })
     };
   }),
   on(QuizActions.saveDraft, (state, { questions, type }) => {
@@ -223,6 +289,9 @@ export const quizReducer = createReducer(
     const updatedQuestions = state.quiz.questions.filter(
       (question, questionIndex) => questionIndex !== index,
     );
+    const updatedQuizCheck = state.quizCheck.filter(
+      (question, questionIndex) => questionIndex !== index,
+    );
 
     return {
       ...state,
@@ -230,6 +299,7 @@ export const quizReducer = createReducer(
         ...state.quiz,
         questions: updatedQuestions,
       },
+      quizCheck: updatedQuizCheck,
     };
   }),
   on(QuizActions.deleteQuiz, (state, { type }) => {

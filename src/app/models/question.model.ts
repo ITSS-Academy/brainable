@@ -1,5 +1,5 @@
 export interface Question {
-  id: string;
+  id: string ;
   question: string;
   answer: number;
   option1: string;
@@ -9,6 +9,15 @@ export interface Question {
   imgUrl: string;
   timeLimit: number;
   points: number;
+}
+
+export interface QuestionCheck {
+  question: boolean ;
+  answer: boolean ;
+  option1: boolean ;
+  option2: boolean ;
+  option3: boolean ;
+  option4: boolean ;
 }
 
 export interface QuestionDTO {

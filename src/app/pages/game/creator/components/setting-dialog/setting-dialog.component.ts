@@ -204,6 +204,8 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   saveChanges(): void {
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
