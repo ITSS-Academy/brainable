@@ -27,8 +27,8 @@ import { BehaviorSubject } from 'rxjs';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from '../setting-bar/setting-bar.component';
-import {SnowflakeId} from "@akashrajpurohit/snowflake-id";
-import {MissingField} from "../../../../../models/question.model";
+import { SnowflakeId } from '@akashrajpurohit/snowflake-id';
+import { MissingField } from '../../../../../models/question.model';
 
 @Component({
   selector: 'app-main-content',
@@ -43,8 +43,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   //@Input() ReadExcel?: any;
   @Output() missingFieldsEvent = new EventEmitter<MissingField[]>();
 
-
-
   subscriptions: Subscription[] = [];
   uploadedFileURL: string = '';
   dialog = inject(MatDialog);
@@ -57,7 +55,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       auth: AuthState;
       question: QuestionState;
       quiz: QuizState;
-
     }>,
   ) {
     //console.log(this.ReadExcel);
@@ -87,7 +84,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
           }),
         );
       }),
-
     );
   }
 
@@ -100,9 +96,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
-
-
-
 
   charCountQuestion: number = 120;
   charCountAnswer1: number = 75;
@@ -121,8 +114,8 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
     const files: FileList = input.files;
 
     for (let i = 0; i < files.length; i++) {
-      let newId = snowflake.generate()
-      console.log(newId)
+      let newId = snowflake.generate();
+      console.log(newId);
       const file = files.item(i);
       if (file) {
         const storageRef = ref(this.storage, newId);

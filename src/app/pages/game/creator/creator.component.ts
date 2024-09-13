@@ -15,7 +15,7 @@ import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { Subscription } from 'rxjs';
 import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
-import { Quiz } from '../../../models/quiz.model';
+import { Quiz, QuizDTO } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
 import { Profile } from '../../../models/profile.model';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -77,21 +77,30 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   };
   isCreateNewQuiz = false;
   isGetQuizByIdSuccessful = false;
-  isEmptyInput = false;
+  idToken = '';
 
   currentQuestionIndex = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<{ auth: AuthState; quiz: QuizState }>,
-
+    private store: Store<{
+      auth: AuthState;
+      quiz: QuizState;
+      profile: Profile;
+    }>,
   ) {}
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
+
+    this.store.select('auth', 'idToken').subscribe((idToken) => {
+      this.idToken = idToken;
+    });
+
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
       console.log(quiz);
       if (quiz) {
+        console.log(quiz.id);
         this.quiz = this.deepClone(quiz);
       }
     });

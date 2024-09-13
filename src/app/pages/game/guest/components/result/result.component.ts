@@ -41,6 +41,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('ResultComponent');
     this.gameService.listenForNavigateToNextQuestion(this.pin);
+    this.gameService.listenForNavigateToRanking(this.pin);
     this.subscription.push(
       this.gameService.receiveCorrectAnswer().subscribe((correctAnswer) => {
         if (correctAnswer !== null || correctAnswer !== '') {

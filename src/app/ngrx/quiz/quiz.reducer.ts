@@ -1,8 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import * as QuizActions from './quiz.actions';
 import { QuizState } from './quiz.state';
-import { Quiz } from '../../models/quiz.model';
-import {Question, QuestionCheck} from '../../models/question.model';
+import { Quiz, QuizDTO } from '../../models/quiz.model';
+import { Question, QuestionCheck } from '../../models/question.model';
+import { Profile } from '../../models/profile.model';
+import { Categories } from '../../models/categories.model';
+
 
 export const initialState: QuizState = {
   quizzes: [],
