@@ -29,6 +29,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 import { SnowflakeId } from '@akashrajpurohit/snowflake-id';
 import { MissingField } from '../../../../../models/question.model';
+import { SettingBarResponsiveDialogComponent } from '../setting-bar-responsive-dialog/setting-bar-responsive-dialog.component';
 
 @Component({
   selector: 'app-main-content',
@@ -298,8 +299,22 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   openDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = 'custom-dialog-container';
-    this.dialog.open(SettingBarComponent, dialogConfig);
+    const dialogRef = this.dialog.open(SettingBarResponsiveDialogComponent, {
+      data: {
+        question: this.question,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.question = result;
+        this.store.dispatch(
+          QuizActions.updateQuestionByIndex({
+            question: this.question,
+            index: this.index,
+          }),
+        );
+      }
+    });
   }
 }

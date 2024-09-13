@@ -112,9 +112,7 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.store
       .select('quiz', 'questionErrorIndex')
       .subscribe((questionErrorIndex) => {
-        console.log('questionErrorIndex', questionErrorIndex);
         if (questionErrorIndex !== null) {
-          console.log('questionErrorIndex', questionErrorIndex);
           this.currentQuestionIndex = questionErrorIndex;
           this.activeQuestion(questionErrorIndex);
         }
