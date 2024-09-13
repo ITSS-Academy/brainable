@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import mammoth from 'mammoth';
 import * as Papa from 'papaparse';
+
 @Component({
   selector: 'app-dialog-create',
   standalone: true,
@@ -65,11 +66,11 @@ export class DialogCreateComponent {
         return {
           id: '',
           imgUrl: '',
-          question: row[0],
-          option1: row[1],
-          option2: row[2],
-          option3: row[3],
-          option4: row[4],
+          question: String(row[0]),
+          option1: String(row[1]),
+          option2: String(row[2]),
+          option3: String(row[3]),
+          option4: String(row[4]),
           answer: row['5'],
           timeLimit: 10,
           points: 1,
@@ -138,8 +139,8 @@ export class DialogCreateComponent {
         questionObj.option4 = line.replace('Option4:', '').trim();
       } else if (line.startsWith('Answer:')) {
         questionObj.answer = Number(line.replace('Answer:', '').trim());
-      } else if (line.startsWith('Time Limit:')) {
-        questionObj.timeLimit = Number(line.replace('Time Limit:', '').trim());
+      } else if (line.startsWith('Time limit:')) {
+        questionObj.timeLimit = Number(line.replace('Time limit:', '').trim());
       } else if (line.startsWith('Points:')) {
         questionObj.points = Number(line.replace('Points:', '').trim());
       }
