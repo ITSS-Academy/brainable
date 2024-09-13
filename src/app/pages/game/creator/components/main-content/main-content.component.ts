@@ -47,6 +47,8 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   uploadedFileURL: string = '';
   dialog = inject(MatDialog);
 
+  isEmtyInput = false;
+
   changeEvent = new BehaviorSubject<any>(null);
 
   constructor(

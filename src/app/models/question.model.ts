@@ -9,6 +9,7 @@ export interface Question {
   imgUrl: string;
   timeLimit: number;
   points: number;
+  //[key: string]: string | number; // Add this line
 }
 
 export interface QuestionDTO {

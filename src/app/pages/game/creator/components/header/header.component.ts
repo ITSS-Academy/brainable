@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  output,
   Output,
 } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
@@ -27,6 +28,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { DialogCreateComponent } from '../dialog-create/dialog-create.component';
 import * as XLSX from 'xlsx';
 import { MainContentComponent } from '../main-content/main-content.component';
+import { log } from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 @Component({
   selector: 'app-header',
@@ -38,7 +40,6 @@ import { MainContentComponent } from '../main-content/main-content.component';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Input() title: string = 'Untitled Quiz';
   @Input() isEdit: boolean = false;
-  @Output() excelDataEvent = new EventEmitter<any>();
 
   subscription: Subscription[] = [];
   quiz!: Quiz;
@@ -62,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         this.quiz = quiz;
       }),
+
       this.store
         .select('quiz', 'isUpdateQuizSuccessful')
         .subscribe((isUpdateQuizSuccessful) => {
@@ -142,6 +144,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (!question.question.trim()) {
           currentQuestionMissingFields.push('Question text is missing.');
         }
+
         // Check each option for the question
         if (!question.option1.trim()) {
           currentQuestionMissingFields.push('Option 1 is empty.');
@@ -156,7 +159,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           currentQuestionMissingFields.push('Option 4 is empty.');
         }
         // Check if the question image URL is missing (if applicable)
-        if (typeof question.imgUrl !== 'string' || !question.imgUrl.trim()) {
+        if (!question.imgUrl.trim()) {
           currentQuestionMissingFields.push('Image is missing.');
         }
         // Check if a correct answer has been selected

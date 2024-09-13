@@ -55,13 +55,40 @@ export class DialogCreateComponent {
 
       // Extract headers (the first row)
       const headers = excelData[0]; // ["Question", "Option1", "Option2", "Option3", "Option4", "Answer"]
+      const expectedHeaders = [
+        'Question',
+        'Option1',
+        'Option2',
+        'Option3',
+        'Option4',
+        'Answer',
+      ];
+
+      // Validate if headers match expected format
+      const isValid =
+        headers.length === expectedHeaders.length &&
+        headers.every((header, index) => header === expectedHeaders[index]);
+
+      if (!isValid) {
+        console.log(
+          'Invalid file format. Expected headers:',
+          expectedHeaders,
+          'but received:',
+          headers,
+        );
+        // Notify the user with a message (replace with your preferred notification method)
+        alert(
+          'The file format is incorrect. Please make sure the file has the correct headers: ' +
+            expectedHeaders.join(', '),
+        );
+        return;
+      }
 
       // Extract rows starting from the second row (skipping the headers)
       const rows = excelData.slice(1);
 
       // Process rows
       const formattedData: Question[] = rows.map((row: any[]) => {
-        // const numbers = row[5].map(cell => (typeof cell === 'number' ? cell : NaN));
         return {
           id: '',
           imgUrl: '',
@@ -70,15 +97,16 @@ export class DialogCreateComponent {
           option2: row[2],
           option3: row[3],
           option4: row[4],
-          answer: row['5'],
+          answer: row[5],
           timeLimit: 10,
-          points:0,
+          points: 0,
         };
       });
 
-      // Update the excelData array and trigger change detection
+      // Log the valid formatted data for debugging
+      console.log('Formatted data:', formattedData);
 
-      console.log(formattedData);
+      // Dispatch the formatted data to the store
       this.store.dispatch(
         QuizActions.updateQuestionByImport({ questions: formattedData }),
       );
@@ -109,13 +137,16 @@ export class DialogCreateComponent {
     }
   }
 
+  // Import Word file with validation
   parseText(text: string) {
     const lines = text.split('\n'); // Split text by line breaks
     let questionObj: Partial<Question> = {};
+    let isValid = true;
+
     lines.forEach((line) => {
       if (line.startsWith('Question:')) {
-        if (questionObj.question) {
-          // Add previous question object to array
+        if (questionObj.question && this.isValidQuestion(questionObj)) {
+          // Add previous valid question object to array
           this.questions.push(questionObj as Question);
         }
         questionObj = { question: line.replace('Question:', '').trim() };
@@ -132,15 +163,74 @@ export class DialogCreateComponent {
       }
     });
 
-    // Add the last question object to array
-    if (questionObj.question) {
+    // Validate the last question object
+    if (questionObj.question && this.isValidQuestion(questionObj)) {
       this.questions.push(questionObj as Question);
+    } else if (!this.isValidQuestion(questionObj)) {
+      console.error('Invalid question structure in the Word file.');
     }
+
     this.closeDialog();
     console.log(this.questions);
     this.store.dispatch(
       QuizActions.updateQuestionByImportWord({ questions: this.questions }),
     );
+  }
+
+  // Function to validate the question object and notify user of missing fields
+  isValidQuestion(questionObj: Partial<Question>): boolean {
+    const missingFields: string[] = [];
+
+    // Check each required field and log if missing
+    if (
+      typeof questionObj.question !== 'string' ||
+      questionObj.question.trim() === ''
+    ) {
+      missingFields.push('Question');
+    }
+    if (
+      typeof questionObj.option1 !== 'string' ||
+      questionObj.option1.trim() === ''
+    ) {
+      missingFields.push('Option1');
+    }
+    if (
+      typeof questionObj.option2 !== 'string' ||
+      questionObj.option2.trim() === ''
+    ) {
+      missingFields.push('Option2');
+    }
+    if (
+      typeof questionObj.option3 !== 'string' ||
+      questionObj.option3.trim() === ''
+    ) {
+      missingFields.push('Option3');
+    }
+    if (
+      typeof questionObj.option4 !== 'string' ||
+      questionObj.option4.trim() === ''
+    ) {
+      missingFields.push('Option4');
+    }
+    if (typeof questionObj.answer !== 'number') {
+      missingFields.push('Answer');
+    }
+
+    // If there are missing fields, notify the user and log them
+    if (missingFields.length > 0) {
+      const missingFieldsMessage = `Missing fields: ${missingFields.join(', ')}`;
+      this.notifyUser(missingFieldsMessage); // Notify user
+      console.error(missingFieldsMessage); // Log the missing fields
+      return false; // Invalid question
+    }
+
+    return true; // Valid question
+  }
+
+  // Function to notify the user about missing fields
+  notifyUser(message: string) {
+    // You can use your preferred notification library or simply alert the user
+    alert(message); // This can be replaced with a custom notification logic
   }
 
   parsedData: any[] = []; // Declare parsedData to store the CSV data
@@ -157,7 +247,25 @@ export class DialogCreateComponent {
       header: true, // Parse with headers
       complete: (result) => {
         console.log('Parsed CSV data:', result.data);
-        this.parsedData = result.data.map((row: any) => {
+        const missingDataMessages: string[] = [];
+
+        this.parsedData = result.data.map((row: any, index: number) => {
+          const missingFields: string[] = [];
+
+          if (!row['question']) missingFields.push('question');
+          if (!row['option1']) missingFields.push('option1');
+          if (!row['option2']) missingFields.push('option2');
+          if (!row['option3']) missingFields.push('option3');
+          if (!row['option4']) missingFields.push('option4');
+          if (!row['answer']) missingFields.push('answer');
+
+          // If missing fields, add a message for the user
+          if (missingFields.length > 0) {
+            missingDataMessages.push(
+              `Row ${index + 1} is missing: ${missingFields.join(', ')}`,
+            );
+          }
+
           return {
             id: '',
             imgUrl: '',
@@ -169,19 +277,59 @@ export class DialogCreateComponent {
             answer: Number(row.answer),
             timeLimit: 10,
           };
-        }); // Store the parsed data in the parsedData variable
-        this.store.dispatch(
-          QuizActions.updateQuestionByImportCSV({ questions: this.parsedData }),
-        );
-        this.closeDialog();
+        });
+
+        // Notify the user if there are missing fields
+        if (missingDataMessages.length > 0) {
+          alert(
+            'The following issues were found:\n' +
+              missingDataMessages.join('\n'),
+          );
+        } else {
+          // Dispatch the action if no issues are found
+          this.store.dispatch(
+            QuizActions.updateQuestionByImportCSV({
+              questions: this.parsedData,
+            }),
+          );
+          this.closeDialog();
+        }
       },
       error: (error) => {
         console.error('Error parsing CSV:', error);
+        alert('Error parsing CSV file. Please try again.');
       },
     });
   }
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  downloadFile(event: MouseEvent, type: 'docx' | 'xlsx' | 'csv'): void {
+    // Define the path to the file
+    const wordFile = '../../../../assets/example-file/Question.docx';
+    const excelFile = '../../../../assets/example-file/test.xlsx';
+    const csvFile = '../../../../assets/example-file/Question.csv';
+    const exampleFiles = [
+      { type: 'docx', path: wordFile },
+      { type: 'xlsx', path: excelFile },
+      { type: 'csv', path: csvFile },
+    ];
+    const fileNames = ['example.docx', 'example.xlsx', 'example.csv'];
+
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = exampleFiles.find((file) => file.type === type)?.path || '';
+    link.download = fileNames.find((file) => file.endsWith(type)) || '';
+
+    // Append the link to the body (required for Firefox)
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Remove the link from the document
+    document.body.removeChild(link);
   }
 }

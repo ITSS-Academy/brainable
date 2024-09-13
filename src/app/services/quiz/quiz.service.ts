@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Quiz, QuizDTO } from '../../models/quiz.model';
 import { environment } from '../../../environments/environment';
+import { MissingField, Question } from '../../models/question.model';
 
 @Injectable({
   providedIn: 'root',

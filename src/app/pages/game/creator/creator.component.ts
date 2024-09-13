@@ -9,7 +9,7 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
@@ -23,7 +23,7 @@ import { DialogCreateComponent } from './components/dialog-create/dialog-create.
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from './components/setting-bar/setting-bar.component';
 import { JsonPipe, NgIf } from '@angular/common';
-import {GameService} from "../../../services/game/game.service";
+import { GameService } from '../../../services/game/game.service';
 
 @Component({
   selector: 'app-creator',
@@ -87,13 +87,12 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
-
   ) {}
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
-      console.log(quiz);
+      //console.log(quiz);
       if (quiz) {
         this.quiz = this.deepClone(quiz);
       }
@@ -163,8 +162,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     return false;
   }
-
-
 
   activeQuestion(index: number): void {
     this.currentQuestionIndex = index;
