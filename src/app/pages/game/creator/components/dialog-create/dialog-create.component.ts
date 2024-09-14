@@ -101,12 +101,12 @@ export class DialogCreateComponent {
 
       rows.forEach((row, index) => {
         const questionObj: Partial<Question> = {
-          question: row[0],
-          option1: row[1],
-          option2: row[2],
-          option3: row[3],
-          option4: row[4],
-          answer: row[5],
+          question: row[0] !== undefined && row[0] !== null ? String(row[0]) : '',
+          option1: row[1] !== undefined && row[1] !== null ? String(row[1]) : '',
+          option2: row[2] !== undefined && row[2] !== null ? String(row[2]) : '',
+          option3: row[3] !== undefined && row[3] !== null ? String(row[3]) : '',
+          option4: row[4] !== undefined && row[4] !== null ? String(row[4]) : '',
+          answer: row[5] !== undefined && row[5] !== null ? Number(row[5]) : NaN, // Convert answer to number
         };
 
         // Validate each row for missing fields
@@ -135,6 +135,7 @@ export class DialogCreateComponent {
       if (missingFieldsMessages.length > 0) {
         this.openDialog(missingFieldsMessages);
         console.log('Missing fields:', missingFieldsMessages);
+        (event.target as HTMLInputElement).value = '';
         return;
       }
 
@@ -145,25 +146,37 @@ export class DialogCreateComponent {
       this.store.dispatch(
         QuizActions.updateQuestionByImport({ questions: formattedData }),
       );
+
       this.closeDialog();
     };
   }
 
-  questions: Question[] = [];
+
+  questions: Question[] = []; // Declare questions array to store parsed data
 
   readWord(event: any) {
+    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+      console.error("No file selected.");
+      return;
+    }
+
     const file = event.target.files[0];
 
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
+        if (!e || !e.target || !e.target.result) {
+          console.error("File reader encountered an error.");
+          return;
+        }
+
         const arrayBuffer = e.target.result;
 
         mammoth
           .extractRawText({ arrayBuffer: arrayBuffer })
           .then((result) => {
             const extractedText = result.value;
-            this.parseText(extractedText);
+            this.parseText(extractedText, event); // Ensure event is passed to parseText
           })
           .catch((err) => console.error('Error reading Word file:', err));
       };
@@ -172,21 +185,32 @@ export class DialogCreateComponent {
     }
   }
 
-  // Import Word file with validation
-  parseText(text: string) {
+  parseText(text: string, event: any) {
+    // Clear the questions array before parsing a new file
+    this.questions = [];
+
     const lines = text.split('\n'); // Split text by line breaks
     let questionObj: Partial<Question> = {};
-    let isValid = true;
+    let isValid = true; // Variable to track overall validity
+    const missingFields: string[] = []; // Accumulate all missing fields
 
     lines.forEach((line) => {
       if (line.startsWith('Question:')) {
-        if (questionObj.question && this.isValidQuestion(questionObj)) {
-          // Add previous valid question object to array
+        // Validate and push the previous question before starting a new one
+        if (questionObj.question) {
+          const tempMissingFields: string[] = []; // Temp array for missing fields of the current question
+          if (!this.isValidQuestion(questionObj, tempMissingFields)) {
+            isValid = false; // Mark the entire file as invalid if any question fails validation
+            missingFields.push(...tempMissingFields); // Collect missing fields for dialog
+          }
           this.questions.push(questionObj as Question);
         }
-        questionObj = { question: line.replace('Question:', '').trim(),
-        timeLimit: 10,
-        points: 1, };
+        // Initialize a new question object
+        questionObj = {
+          question: line.replace('Question:', '').trim(),
+          timeLimit: 10,
+          points: 1,
+        };
       } else if (line.startsWith('Option1:')) {
         questionObj.option1 = line.replace('Option1:', '').trim();
       } else if (line.startsWith('Option2:')) {
@@ -205,22 +229,48 @@ export class DialogCreateComponent {
     });
 
     // Validate the last question object
-    if (questionObj.question && this.isValidQuestion(questionObj)) {
-      this.questions.push(questionObj as Question);
-    } else if (!this.isValidQuestion(questionObj)) {
-      console.error('Invalid question structure in the Word file.');
+    if (questionObj.question) {
+      const tempMissingFields: string[] = [];
+      if (!this.isValidQuestion(questionObj, tempMissingFields)) {
+        isValid = false;
+        missingFields.push(...tempMissingFields);
+      } else {
+        this.questions.push(questionObj as Question);
+      }
     }
 
+    // If the file contains any invalid questions, show the dialog and stop the import
+    if (!isValid) {
+      this.openDialog(missingFields); // Show the dialog with missing fields
+      console.error('Invalid questions detected. Import canceled.');
+
+      // Reset the file input element after an error
+      this.resetFileInput(event);
+      return; // Stop further processing
+    }
+
+    // Process valid questions if all passed validation
     this.closeDialog();
     console.log(this.questions);
     this.store.dispatch(
       QuizActions.updateQuestionByImportWord({ questions: this.questions }),
     );
+
+    // Reset the file input element after successful import
+    this.resetFileInput(event);
   }
 
-  // Function to validate the question object and notify user of missing fields
-  isValidQuestion(questionObj: Partial<Question>): boolean {
-    const missingFields: string[] = [];
+// Function to reset the file input field to allow re-importing
+  resetFileInput(event: any) {
+    if (event.target) {
+      (event.target as HTMLInputElement).value = ''; // Reset the input element
+    }
+  }
+
+// Function to validate the question object and notify user of missing fields
+  isValidQuestion(questionObj: Partial<Question>, missingFields: string[]): boolean {
+    // Clear the missing fields for this validation
+    missingFields.length = 0;
 
     // Check each required field and log if missing
     if (
@@ -257,26 +307,25 @@ export class DialogCreateComponent {
       missingFields.push('Answer');
     }
 
-    // If there are missing fields, notify the user and log them
-    if (missingFields.length > 0) {
-      this.openDialog(missingFields); // Open the dialog with missing fields
-      console.error('Missing fields:', missingFields.join(', ')); // Log the missing fields
-      //return false; // Invalid question
-    }
-
-    return true; // Valid question
+    // If any missing fields are detected, mark the question as invalid
+    return missingFields.length === 0;
   }
+
+
+
 
   parsedData: any[] = []; // Declare parsedData to store the CSV data
 
   onFileSelectedCSV(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
-      this.parseCSV(file);
+      this.parseCSV(file, event); // Ensure event is passed to parseCSV
     }
   }
 
-  parseCSV(file: File): void {
+  parseCSV(file: File, event: any): void {
+    if (!event) return; // Safety check to ensure event is defined
+
     Papa.parse(file, {
       header: true, // Parse with headers
       complete: (result) => {
@@ -286,6 +335,7 @@ export class DialogCreateComponent {
         this.parsedData = result.data.map((row: any, index: number) => {
           const missingFields: string[] = [];
 
+          // Check for missing fields
           if (!row['question']) missingFields.push('question');
           if (!row['option1']) missingFields.push('option1');
           if (!row['option2']) missingFields.push('option2');
@@ -300,24 +350,30 @@ export class DialogCreateComponent {
             );
           }
 
+          // Return formatted question object
           return {
             id: '',
             imgUrl: '',
-            question: row['question'],
-            option1: row['option1'],
-            option2: row['option2'],
-            option3: row['option3'],
-            option4: row['option4'],
-            answer: Number(row.answer),
+            question: String(row['question']),  // Ensure question is a string
+            option1: String(row['option1']),    // Ensure option1 is a string
+            option2: String(row['option2']),    // Ensure option2 is a string
+            option3: String(row['option3']),    // Ensure option3 is a string
+            option4: String(row['option4']),    // Ensure option4 is a string
+            answer: Number(row.answer),         // Ensure answer is a number
             timeLimit: 10,
             points: 1,
           };
         });
 
-        // Notify the user via dialog if there are missing fields
+        // Notify the user if there are missing fields
         if (missingDataMessages.length > 0) {
           this.openDialog(missingDataMessages); // Open dialog with missing fields
           console.log('Missing fields:', missingDataMessages);
+
+          // Reset the file input element after an error
+          if (event.target) {
+            (event.target as HTMLInputElement).value = '';
+          }
         } else {
           // Dispatch the action if no issues are found
           this.store.dispatch(
@@ -325,15 +381,26 @@ export class DialogCreateComponent {
               questions: this.parsedData,
             }),
           );
+
+          // Reset the file input element after successful import
+          if (event.target) {
+            (event.target as HTMLInputElement).value = '';
+          }
           this.closeDialog();
         }
       },
       error: (error) => {
         console.error('Error parsing CSV:', error);
         this.openDialog(['Error parsing CSV file. Please try again.']); // Notify user of error in dialog
+
+        // Reset the file input element in case of error
+        if (event.target) {
+          (event.target as HTMLInputElement).value = '';
+        }
       },
     });
   }
+
 
   dialog = inject(MatDialog);
 
