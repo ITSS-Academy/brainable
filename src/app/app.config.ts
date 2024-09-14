@@ -31,6 +31,7 @@ import { questionRecordReducer } from './ngrx/questionRecord/questionRecord.redu
 import { QuestionRecordEffects } from './ngrx/questionRecord/questionRecord.effects';
 import { playerRecordReducer } from './ngrx/playerRecord/playerRecord.reducer';
 import { PlayerRecordEffect } from './ngrx/playerRecord/playerRecord.effect';
+import { storageReducer } from './ngrx/storage/storage.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -47,6 +48,7 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'questionRecord', reducer: questionRecordReducer }),
     provideState({ name: 'search', reducer: searchReducer }),
     provideState({ name: 'playerRecord', reducer: playerRecordReducer }),
+    provideState({ name: 'storage', reducer: storageReducer }),
     provideEffects([
       AuthEffects,
       ProfileEffects,
@@ -77,6 +79,7 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     provideAuth(() => getAuth()),
-    provideStorage(() => getStorage()), provideAnimationsAsync(),
+    provideStorage(() => getStorage()),
+    provideAnimationsAsync(),
   ],
 };
