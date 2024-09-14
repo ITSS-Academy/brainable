@@ -26,9 +26,9 @@
           >
             @if (isGettingCategories$ | async) {
               @for (category of listCategories; track $index) {
-                <mat-option value="{{ $index }}">{{
-                  category.name
-                }}</mat-option>
+                <mat-option value="{{ $index }}"
+                  >{{ category.name }}
+                </mat-option>
               }
             }
           </mat-select>
@@ -54,9 +54,7 @@
           <div class="img-container">
             <img [src]="settings.imgUrl" alt="" />
           </div>
-          <button mat-fab class="remove-btn">
-            <!--                  (click)="removeImage()"-->
-
+          <button mat-fab class="remove-btn" (click)="removeImage()">
             <mat-icon>delete</mat-icon>
           </button>
         }
