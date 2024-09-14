@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Import Errors</h2>
+<div mat-dialog-content>
+  <p>The following fields are missing in the imported file:</p>
+  <ul>
+    <li *ngFor="let field of messages">{{ field }}</li>
+  </ul>
+  <p>Make sure you following example and make sure to fill all field in the file</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

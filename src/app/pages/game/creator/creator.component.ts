@@ -26,6 +26,8 @@ import { SettingBarComponent } from './components/setting-bar/setting-bar.compon
 import { JsonPipe, NgIf } from '@angular/common';
 import { GameService } from '../../../services/game/game.service';
 import { Categories } from '../../../models/categories.model';
+import {QuestionState} from "../../../ngrx/question/question.state";
+import * as QuestionActions from '../../../ngrx/question/question.actions';
 
 @Component({
   selector: 'app-creator',
@@ -92,6 +94,7 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       auth: AuthState;
       quiz: QuizState;
       profile: Profile;
+      question: QuestionState
     }>,
   ) {}
 
@@ -103,7 +106,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
       console.log(quiz);
-      this.quiz = { ...this.quiz, category: this.quizDefault.category };
       if (quiz) {
         this.quiz = this.deepClone(quiz);
       }
@@ -139,7 +141,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       dialogConfig.disableClose = true;
       dialogConfig.panelClass = 'custom-dialog-container';
       this.dialog.open(DialogCreateComponent, dialogConfig);
-
       this.store.dispatch(
         QuizActions.storeDefaultQuiz({
           quiz: this.deepClone(this.quizDefault),
@@ -172,8 +173,10 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     }, 0);
   }
 
-  deleteQuestion(index: number) {
+  deleteQuestion(index: number, id: string) {
+    console.log(index);
     this.store.dispatch(QuizActions.deleteQuestionByIndex({ index: index }));
+    this.store.dispatch(QuestionActions.deleteQuestion({ idToken: this.idToken, questionId: id }));
     if (this.currentQuestionIndex === index && this.quiz.questions.length > 0) {
       this.activeQuestion(this.currentQuestionIndex - 1);
     }

@@ -6,4 +6,8 @@ export interface QuestionState {
   isGetQuestionsByQuizIdLoading: boolean;
   isGetQuestionsByQuizIdSuccessful: boolean;
   getQuestionsByQuizIdErrorMessage: string;
+
+  isDeleteQuestionLoading: boolean;
+  isDeleteQuestionSuccessful: boolean;
+  deleteQuestionErrorMessage: string;
 }

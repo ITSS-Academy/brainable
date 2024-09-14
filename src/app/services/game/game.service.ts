@@ -78,7 +78,9 @@ export class GameService {
         console.log('clientId', clientId);
       });
       this.store.dispatch(GameActions.storePin({ pin: pin }));
-      this.router.navigate([`/guest/${pin}/waiting`]);
+      this.router.navigate([`/guest/${pin}/waiting`]).then(() => {
+        this.socket.off('navigateToEnterName');
+      });
     });
   }
 
@@ -100,7 +102,6 @@ export class GameService {
 
   startGame(pin: string): void {
     this.socket.emit('startGame', pin);
-
   }
 
   listenForNavigationCountDown(pin: string): void {
@@ -204,8 +205,6 @@ export class GameService {
   nextQuestion(pin: string): void {
     this.socket.emit('nextQuestion', pin);
   }
-
-
 
   endGame(pin: string): void {
     this.socket.emit('endGame', pin);
