@@ -1,7 +1,7 @@
 import { Quiz } from './quiz.model';
 
 export interface Categories {
-  uid: string;
+  uid: string ;
   name: string;
   imgUrl: string;
 }
@@ -11,4 +11,9 @@ export interface CategoriesByUid {
   name: string;
   imgUrl: string;
   quizzes: Quiz[];
+}
+
+export interface checkDialog {
+  categories: Categories[];
+  description: string;
 }

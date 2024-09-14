@@ -4,6 +4,7 @@ import {
   OnDestroy,
   OnInit,
   inject,
+  Input,
 } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -23,8 +24,8 @@ import { DialogCreateComponent } from './components/dialog-create/dialog-create.
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SettingBarComponent } from './components/setting-bar/setting-bar.component';
 import { JsonPipe, NgIf } from '@angular/common';
-import {GameService} from "../../../services/game/game.service";
-import {Categories} from "../../../models/categories.model";
+import { GameService } from '../../../services/game/game.service';
+import { Categories } from '../../../models/categories.model';
 
 @Component({
   selector: 'app-creator',
@@ -53,13 +54,19 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   quizDefault: Quiz = {
     id: '',
     title: 'Untitled Quiz',
-    description: '',
+    description: this.quiz?.description || '',
     isPublic: true,
     totalQuestions: 0,
     imgUrl: '',
     createdAt: new Date(),
     authorId: <Profile>{},
-    category: <Categories>{},
+    category:
+      this.quiz?.category ||
+      <Categories>{
+        uid: 'caa70846-38d8-44b8-9e86-935a793f8be7',
+        imgUrl: 'Ice breaker',
+        name: 'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/ellipse1.png?alt=media&token=87a505f6-7e07-4b79-ad51-4e3990b21d5e',
+      },
     questions: [
       {
         id: '',
@@ -92,7 +99,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
-
     this.store.select('auth', 'idToken').subscribe((idToken) => {
       this.idToken = idToken;
     });
@@ -100,10 +106,17 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
       console.log(quiz);
       if (quiz) {
-        console.log(quiz.id);
         this.quiz = this.deepClone(quiz);
       }
     });
+    this.store
+      .select('quiz', 'questionErrorIndex')
+      .subscribe((questionErrorIndex) => {
+        if (questionErrorIndex !== null) {
+          this.currentQuestionIndex = questionErrorIndex;
+          this.activeQuestion(questionErrorIndex);
+        }
+      });
     if (id) {
       this.isEdit = true;
       this.subscriptions.push(
@@ -124,9 +137,9 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '60%';
       dialogConfig.maxWidth = '85vw';
+      dialogConfig.disableClose = true;
       dialogConfig.panelClass = 'custom-dialog-container';
       this.dialog.open(DialogCreateComponent, dialogConfig);
-
       this.store.dispatch(
         QuizActions.storeDefaultQuiz({
           quiz: this.deepClone(this.quizDefault),
@@ -136,19 +149,22 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(QuizActions.storeQuestionErrorIndex({ index: 0 }));
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();
-
-
     });
   }
-
 
   activeQuestion(index: number): void {
     this.currentQuestionIndex = index;
   }
 
   addQuestion(): void {
+    this.store.dispatch(
+      QuizActions.storeQuestionErrorIndex({
+        index: this.quiz.questions.length - 1,
+      }),
+    );
     this.store.dispatch(QuizActions.addNewQuestion());
     this.activeQuestion(this.quiz.questions.length - 1);
     setTimeout(() => {

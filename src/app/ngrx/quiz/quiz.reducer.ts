@@ -6,7 +6,6 @@ import { Question, QuestionCheck } from '../../models/question.model';
 import { Profile } from '../../models/profile.model';
 import { Categories } from '../../models/categories.model';
 
-
 export const initialState: QuizState = {
   quizzes: [],
   isGetAllQuizLoading: false,
@@ -30,6 +29,8 @@ export const initialState: QuizState = {
   isDeleteQuizLoading: false,
   isDeleteQuizSuccessful: false,
   deleteQuizErrorMessage: '',
+
+  questionErrorIndex: 0,
 };
 
 export const quizReducer = createReducer(
@@ -39,7 +40,6 @@ export const quizReducer = createReducer(
       ...state,
       isGetAllQuizLoading: true,
     };
-
   }),
   on(QuizActions.getAllQuizSuccess, (state, { quiz }) => {
     return {
@@ -83,14 +83,12 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.getQuizById, (state, action) => {
-
     return {
       ...state,
       isGetQuizByIdLoading: true,
     };
   }),
   on(QuizActions.getQuizByIdSuccess, (state, { quiz, type }) => {
-
     return {
       ...state,
       quiz: quiz,
@@ -103,7 +101,7 @@ export const quizReducer = createReducer(
           option3: true,
           option4: true,
         };
-      },),
+      }),
       isGetQuizByIdLoading: false,
       isGetQuizByIdSuccessful: true,
     };
@@ -152,16 +150,33 @@ export const quizReducer = createReducer(
       ...state,
       quiz: {
         ...state.quiz,
-        questions: [...state.quiz.questions, {} as Question],
+        questions: [
+          ...state.quiz.questions,
+          {
+            id: '',
+            question: '',
+            answer: 0,
+            option1: '',
+            option2: '',
+            option3: '',
+            option4: '',
+            imgUrl: '',
+            timeLimit: 10,
+            points: 1,
+          } as Question,
+        ],
       },
-      quizCheck: [...state.quizCheck, {
-        question: false,
-        answer: false,
-        option1: false,
-        option2: false,
-        option3: false,
-        option4: false,
-      } as QuestionCheck],
+      quizCheck: [
+        ...state.quizCheck,
+        {
+          question: false,
+          answer: false,
+          option1: false,
+          option2: false,
+          option3: false,
+          option4: false,
+        } as QuestionCheck,
+      ],
     };
   }),
   on(QuizActions.duplicateQuestionByIndex, (state, { index, type }) => {
@@ -188,14 +203,14 @@ export const quizReducer = createReducer(
     updatedQuestions[index] = question;
     const updatedQuizCheck = [...state.quizCheck];
     updatedQuizCheck[index] = {
-      question: question.question.trim() !== '',
+      question: (question.question || '').trim() !== '',
       answer: question.answer !== 0,
-      option1: question.option1.trim() !== '',
-      option2: question.option2.trim() !== '',
-      option3: question.option3.trim() !== '',
-      option4: question.option4.trim() !== '',
+      option1: (question.option1 || '').trim() !== '',
+      option2: (question.option2 || '').trim() !== '',
+      option3: (question.option3 || '').trim() !== '',
+      option4: (question.option4 || '').trim() !== '',
     };
-console.log(state.quizCheck);
+    console.log(state.quizCheck);
     return {
       ...state,
       quiz: {
@@ -203,9 +218,9 @@ console.log(state.quizCheck);
         questions: updatedQuestions,
       },
       quizCheck: updatedQuizCheck,
-
     };
   }),
+
   on(QuizActions.updateQuestionByImport, (state, { questions, type }) => {
     return {
       ...state,
@@ -221,8 +236,10 @@ console.log(state.quizCheck);
           option2: true,
           option3: true,
           option4: true,
+          points: true,
+          timeLimit: true,
         };
-      })
+      }),
     };
   }),
   on(QuizActions.updateQuestionByImportWord, (state, { questions, type }) => {
@@ -240,8 +257,10 @@ console.log(state.quizCheck);
           option2: true,
           option3: true,
           option4: true,
+          points: true,
+          timeLimit: true,
         };
-      })
+      }),
     };
   }),
   on(QuizActions.updateQuestionByImportCSV, (state, { questions, type }) => {
@@ -259,8 +278,10 @@ console.log(state.quizCheck);
           option2: true,
           option3: true,
           option4: true,
+          points: true,
+          timeLimit: true,
         };
-      })
+      }),
     };
   }),
   on(QuizActions.saveDraft, (state, { questions, type }) => {
@@ -273,6 +294,7 @@ console.log(state.quizCheck);
     };
   }),
   on(QuizActions.updateSetting, (state, { setting, type }) => {
+    console.log(setting.category);
     return {
       ...state,
       quiz: {
@@ -357,6 +379,29 @@ console.log(state.quizCheck);
       isDeleteQuizLoading: false,
       isDeleteQuizSuccessful: false,
       deleteQuizErrorMessage: '',
+
+      questionErrorIndex: 0,
+    };
+  }),
+  on(QuizActions.storeQuestionErrorIndex, (state, { index }) => {
+    return {
+      ...state,
+      questionErrorIndex: index,
+    };
+  }),
+  on(QuizActions.clearQuizCheck, (state, { type }) => {
+    return {
+      ...state,
+      quizCheck: [
+        {
+          question: false,
+          answer: false,
+          option1: false,
+          option2: false,
+          option3: false,
+          option4: false,
+        } as QuestionCheck,
+      ],
     };
   }),
 );

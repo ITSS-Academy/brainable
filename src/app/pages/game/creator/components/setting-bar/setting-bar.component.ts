@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Question } from '../../../../../models/question.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -8,10 +8,15 @@ import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
 import { AsyncPipe } from '@angular/common';
-import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogContent,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 import * as QuizActions from '../../../../../ngrx/quiz/quiz.actions';
+import { SettingBarResponsiveDialogComponent } from '../setting-bar-responsive-dialog/setting-bar-responsive-dialog.component';
 
 @Component({
   selector: 'app-setting-bar',
@@ -37,6 +42,8 @@ export class SettingBarComponent implements OnInit, OnDestroy {
   );
   changeEvent = new BehaviorSubject<any>(null);
 
+  dialog = inject(MatDialog);
+
   constructor(
     private store: Store<{ auth: AuthState; categories: CategoriesState }>,
   ) {}
@@ -59,6 +66,8 @@ export class SettingBarComponent implements OnInit, OnDestroy {
     );
   }
 
+
+
   onTimeLimitChange(event: any) {
     console.log('Selected time limit:', event.value);
     this.question = { ...this.question, timeLimit: event.value };
@@ -70,9 +79,15 @@ export class SettingBarComponent implements OnInit, OnDestroy {
     );
   }
 
-  // closeDialog(): void {
-  //   this.dialogRef.close();
-  // }
+
+  saveChanges() {
+    this.store.dispatch(
+      QuizActions.updateQuestionByIndex({
+        question: this.question,
+        index: this.index,
+      }),
+    );
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

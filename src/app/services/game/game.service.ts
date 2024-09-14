@@ -78,7 +78,9 @@ export class GameService {
         console.log('clientId', clientId);
       });
       this.store.dispatch(GameActions.storePin({ pin: pin }));
-      this.router.navigate([`/guest/${pin}/waiting`]);
+      this.router.navigate([`/guest/${pin}/waiting`]).then(() => {
+        this.socket.off('navigateToEnterName');
+      });
     });
   }
 
@@ -254,20 +256,22 @@ export class GameService {
 
   listenForNavigateToRanking(pin: string) {
     this.socket.on('sendRanking', (rank: any) => {
+      console.log('sendRanking');
+      this.rank = rank;
       this.router.navigate([`/guest/${pin}/game-result`]).then(() => {
-        console.log('Off socket Rank');
+        this.socket.off('sendRanking');
       });
     });
   }
 
-  receiveRanking(): Observable<any> {
-    return new Observable((observer) => {
-      this.socket.on('sendRanking', (rank: any) => {
-        observer.next(rank);
-        observer.complete();
-      });
-    });
-  }
+  // receiveRanking(): Observable<any> {
+  //   return new Observable((observer) => {
+  //     this.socket.on('sendRanking', (rank: any) => {
+  //       observer.next(rank);
+  //       observer.complete();
+  //     });
+  //   });
+  // }
 
   receiveLastQuestionScore(): Observable<any> {
     console.log('receiveLastQuestionScore');

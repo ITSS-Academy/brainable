@@ -85,7 +85,7 @@ export class AnswerComponent implements OnInit, OnDestroy {
     const answerData: SendAnswer = {
       pin: this.pin,
       questionId: this.questionId,
-      playerName: this.playerId,
+      playerName: this.playerId as string,
       answer: answer as number,
       time: this.timeElapsed,
     };
