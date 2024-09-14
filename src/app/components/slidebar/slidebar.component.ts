@@ -109,6 +109,7 @@ export class SlidebarComponent implements OnInit {
         this.store.dispatch(ProfileActions.clearState());
       }
     });
+    this.returnToHome();
   }
 
   returnToHome() {

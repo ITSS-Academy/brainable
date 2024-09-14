@@ -56,13 +56,13 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   quizDefault: Quiz = {
     id: '',
     title: 'Untitled Quiz',
-    description: this.quiz?.description ||  '',
+    description: '',
     isPublic: true,
     totalQuestions: 0,
     imgUrl: '',
     createdAt: new Date(),
     authorId: <Profile>{},
-    category: this.quiz?.category || <Categories>{
+    category: <Categories>{
       uid: 'caa70846-38d8-44b8-9e86-935a793f8be7',
       imgUrl: 'Ice breaker',
       name: 'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/ellipse1.png?alt=media&token=87a505f6-7e07-4b79-ad51-4e3990b21d5e',
@@ -141,7 +141,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       dialogConfig.disableClose = true;
       dialogConfig.panelClass = 'custom-dialog-container';
       this.dialog.open(DialogCreateComponent, dialogConfig);
-
       this.store.dispatch(
         QuizActions.storeDefaultQuiz({
           quiz: this.deepClone(this.quizDefault),
