@@ -70,9 +70,9 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
           this.settings.title = quiz.title;
-          this.settings.description = '';
+          this.settings.description = quiz?.description || '';
           this.settings.isPublic = quiz.isPublic;
-          this.settings.category = {
+          this.settings.category = quiz?.category || {
             ...quiz.category,
             uid: 'caa70846-38d8-44b8-9e86-935a793f8be7',
             name: 'Ice breaker',
@@ -202,7 +202,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange(event: MatRadioChange): void {
-    
+
     if (event.value === 'public') {
       this.settings.isPublic = true;
     }
@@ -218,7 +218,12 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(event: any) {
-    this.settings.category = { ...this.listCategories[event.value] };
+    let newCategory = {
+      uid: this.listCategories[event.value].uid,
+      name: this.listCategories[event.value].name,
+      imgUrl: this.listCategories[event.value].imgUrl,
+    };
+    this.settings.category = { ...newCategory };
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );

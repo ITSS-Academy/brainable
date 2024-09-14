@@ -116,6 +116,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   deleteQuiz() {
+    console.log(this.quiz.id);
     this.store.dispatch(
       QuizActions.deleteQuiz({ idToken: this.idToken, id: this.quiz.id }),
     );
