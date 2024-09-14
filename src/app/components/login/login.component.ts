@@ -14,7 +14,7 @@ import { AuthState } from '../../ngrx/auth/auth.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  constructor(private store: Store<{ auth: AuthState }>) {}
+  constructor(private store: Store<{ auth: AuthState }>,) {}
 
   signWithGoogle() {
     this.store.dispatch(AuthActions.login());

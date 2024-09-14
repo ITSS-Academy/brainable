@@ -101,12 +101,12 @@ export class DialogCreateComponent {
 
       rows.forEach((row, index) => {
         const questionObj: Partial<Question> = {
-          question: row[0],
-          option1: row[1],
-          option2: row[2],
-          option3: row[3],
-          option4: row[4],
-          answer: row[5],
+          question: String(row[0]),
+          option1: String(row[1]),
+          option2: String(row[2]),
+          option3: String(row[3]),
+          option4: String(row[4]),
+          answer: Number(row[5]),
         };
 
         // Validate each row for missing fields
@@ -303,11 +303,11 @@ export class DialogCreateComponent {
           return {
             id: '',
             imgUrl: '',
-            question: row['question'],
-            option1: row['option1'],
-            option2: row['option2'],
-            option3: row['option3'],
-            option4: row['option4'],
+            question: String(row['question']),
+            option1: String(row['option1']),
+            option2: String(row['option2']),
+            option3:String( row['option3']),
+            option4: String(row['option4']),
             answer: Number(row.answer),
             timeLimit: 10,
             points: 1,
