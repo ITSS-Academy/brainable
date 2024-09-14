@@ -132,10 +132,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const quizUpdate: QuizDTO = {
         quiz: this.quiz,
       };
+      console.log(quizUpdate);
+
       this.store.dispatch(
         QuizActions.updateQuiz({ idToken: this.idToken, quiz: quizUpdate }),
       );
     }
+
   }
 
   convertToQuestionDTO(question: Question): QuestionDTO {

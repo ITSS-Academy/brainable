@@ -203,6 +203,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange(event: MatRadioChange): void {
+
     if (event.value === 'public') {
       this.settings.isPublic = true;
     }
