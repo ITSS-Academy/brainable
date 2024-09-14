@@ -135,6 +135,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
                 this.uploadedFileURL = url;
                 this.store.dispatch(StorageActions.storeImageUploadSuccess());
                 this.question.imgUrl = this.uploadedFileURL;
+                console.log(this.uploadedFileURL);
                 this.store.dispatch(
                   QuizActions.updateQuestionByIndex({
                     question: this.question,

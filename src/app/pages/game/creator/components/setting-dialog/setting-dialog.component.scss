@@ -4,6 +4,11 @@ h1 {
   //margin-top: 12px;
 }
 
+.loading {
+  position: relative;
+  z-index: 9999;
+}
+
 .dialog-content {
   display: flex;
   align-items: start;

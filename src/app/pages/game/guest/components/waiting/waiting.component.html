@@ -12,7 +12,7 @@
       <img src="assets/images/logo/brainable-white.png" alt="logo" />
       <div class="nickname-container">
         <div class="enter-nickname">
-          <input
+          <textarea
             type="text"
             name=""
             id=""
@@ -20,7 +20,7 @@
             [(ngModel)]="nickname"
             (keydown)="onKey($event)"
             maxlength="15"
-          />
+          ></textarea>
           <button class="btn-join" mat-flat-button (click)="joinGame()">
             Join
           </button>
