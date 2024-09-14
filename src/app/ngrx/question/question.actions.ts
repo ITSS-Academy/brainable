@@ -15,3 +15,17 @@ export const getQuestionsByQuizIdFailure = createAction(
   '[Question] Get Questions By Quiz Id Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const deleteQuestion = createAction(
+  '[Question] Delete Question',
+  props<{ idToken: string; questionId: string }>(),
+);
+
+export const deleteQuestionSuccess = createAction(
+  '[Question] Delete Question Success',
+);
+
+export const deleteQuestionFailure = createAction(
+  '[Question] Delete Question Failure',
+  props<{ errorMessage: string }>(),
+);

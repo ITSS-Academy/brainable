@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { GameService } from '../../../../../services/game/game.service';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-game-result',
@@ -25,7 +26,10 @@ export class GameResultComponent {
     'assets/images/bronze.png',
   ];
 
-  constructor(private gameService: GameService) {
+  constructor(
+    private gameService: GameService,
+    private socket: Socket,
+  ) {
     console.log('GameResultComponent');
     this.rank = this.gameService.rank;
   }
