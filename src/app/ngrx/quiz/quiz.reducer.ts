@@ -115,7 +115,8 @@ export const quizReducer = createReducer(
     };
   }),
 
-  on(QuizActions.updateQuiz, (state, action) => {
+  on(QuizActions.updateQuiz, (state, {type}) => {
+    console.log(type);
     return {
       ...state,
       isUpdateQuizLoading: true,
@@ -123,6 +124,7 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.updateQuizSuccess, (state, { type }) => {
+    console.log(type);
     return {
       ...state,
       isUpdateQuizLoading: false,
@@ -131,6 +133,7 @@ export const quizReducer = createReducer(
   }),
 
   on(QuizActions.updateQuizFailure, (state, { errorMessage }) => {
+    console.log(errorMessage);
     return {
       ...state,
       isUpdateQuizLoading: false,
@@ -307,6 +310,7 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.deleteQuestionByIndex, (state, { index, type }) => {
+    console.log(index);
     if (!Array.isArray(state.quiz.questions)) {
       return state;
     }

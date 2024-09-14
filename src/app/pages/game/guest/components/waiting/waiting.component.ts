@@ -33,6 +33,8 @@ export class WaitingComponent implements OnInit, OnDestroy {
           if (pin) {
             this.pin = pin as string;
             this.gameService.listenForNavigationCountDown(this.pin);
+            this.gameService.checkRoomExist(this.pin);
+            this.gameService.listenForNavigateToEnterName(this.pin)
           }
         }
       }),

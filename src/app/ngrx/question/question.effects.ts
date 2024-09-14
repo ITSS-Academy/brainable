@@ -11,4 +11,19 @@ export class QuestionEffects {
     private actions$: Actions,
     private questionService: QuestionService,
   ) {}
+
+  deleteQuestion$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(QuestionActions.deleteQuestion),
+      switchMap((action) => {
+        return this.questionService.deleteQuestion(action.idToken,action.questionId);
+      }),
+      map(() => {
+        return QuestionActions.deleteQuestionSuccess();
+      }),
+      catchError((error) => {
+        return of(QuestionActions.deleteQuestionFailure({ errorMessage: error }));
+      }),
+    );
+  })
 }
