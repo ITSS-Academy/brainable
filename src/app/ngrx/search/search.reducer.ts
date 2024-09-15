@@ -30,4 +30,12 @@ export const searchReducer = createReducer(
       searchError: errorMessage,
     };
   }),
+  on(SearchActions.clearSearchResults, (state) => {
+    return {
+      ...state,
+      searchResults: [],
+      isSearchingSuccess: false,
+      searchError: '',
+    };
+  }),
 );

@@ -1,5 +1,10 @@
 <div class="container">
   <div class="library-container">
+    @if (searchResults.length === 0 ) {
+      <div class="empty-box">
+        <img src="assets/images/empty-box.png" alt="" />
+      </div>
+    } @else {
     <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
       <div class="quiz-list">
         @for (item of searchResults; track $index) {
@@ -38,6 +43,7 @@
         }
       </div>
     </cdk-virtual-scroll-viewport>
+
     <div
       style="
         width: 1px;
@@ -54,6 +60,7 @@
         <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
       </div>
       <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
+
         <div class="quiz-content">
           @for (question of questions; track $index) {
             <mat-card appearance="outlined">
@@ -119,5 +126,6 @@
         </div>
       </cdk-virtual-scroll-viewport>
     </div>
+    }
   </div>
 </div>

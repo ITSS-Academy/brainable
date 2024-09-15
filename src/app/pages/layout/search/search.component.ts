@@ -11,6 +11,7 @@ import {QuizState} from "../../../ngrx/quiz/quiz.state";
 import * as QuizActions from "../../../ngrx/quiz/quiz.actions";
 import {Quiz} from "../../../models/quiz.model";
 import {GetQuizByIdPipe} from "../../../pipes/get-quiz-by-id.pipe";
+import * as SearchActions from "../../../ngrx/search/search.actions";
 
 @Component({
   selector: 'app-search',
@@ -37,7 +38,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.push(
       this.store.select('search', 'searchResults').subscribe((data) => {
-        console.log('searchResults', data);
         this.searchResults = data as SearchModel[];
         if (this.searchResults.length > 0) {
           this.activeQuiz(0);
@@ -61,5 +61,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.store.dispatch(SearchActions.clearSearchResults());
+
   }
 }
