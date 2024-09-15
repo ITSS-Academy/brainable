@@ -13,8 +13,8 @@ import { Store } from '@ngrx/store';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import mammoth from 'mammoth';
 import * as Papa from 'papaparse';
-import { SettingDialogComponent } from '../setting-dialog/setting-dialog.component';
 import { DialogImportNotificationComponent } from '../dialog-import-notification/dialog-import-notification.component';
+import {AlertService} from "../../../../../services/alert/alert.service";
 @Component({
   selector: 'app-dialog-create',
   standalone: true,
@@ -26,6 +26,7 @@ export class DialogCreateComponent {
   constructor(
     private dialogRef: MatDialogRef<DialogCreateComponent>,
     private store: Store<{ quiz: QuizState }>,
+    private alertService: AlertService
   ) {}
 
   handleFileInput(event: any) {
@@ -39,8 +40,7 @@ export class DialogCreateComponent {
       } else if (fileName.endsWith('.csv')) {
         this.onFileSelectedCSV(event);
       } else {
-        this.openDialog(['Unsupported file type']);
-        console.error('Unsupported file type');
+        this.alertService.showAlertError('Unsupported file type', 'Error', 3000, 'start' , 'bottom');
       }
     }
   }
@@ -78,18 +78,7 @@ export class DialogCreateComponent {
 
       if (!isValidHeaders) {
         // Open the dialog to notify about header mismatch
-        this.openDialog([
-          'The file headers do not match the expected format. Expected: ' +
-          expectedHeaders.join(', ') +
-          ', but received: ' +
-          headers.join(', '),
-        ]);
-        console.log(
-          'Invalid file format. Expected headers:',
-          expectedHeaders,
-          'but received:',
-          headers,
-        );
+        this.alertService.showAlertError('The file headers do not match the expected format', 'Error', 3000, 'start' , 'bottom');
         return;
       }
 
@@ -134,8 +123,7 @@ export class DialogCreateComponent {
 
       // If there are missing fields, open the dialog
       if (missingFieldsMessages.length > 0) {
-        this.openDialog(missingFieldsMessages);
-        console.log('Missing fields:', missingFieldsMessages);
+        this.alertService.showAlertError('Import failed!, Missing fields', 'Error', 3000, 'start' , 'bottom');
         (event.target as HTMLInputElement).value = '';
         return;
       }
@@ -267,14 +255,7 @@ export class DialogCreateComponent {
 
     // If the file contains any invalid questions, show the dialog and stop the import
     if (!isValid) {
-      this.openDialog(['Unsupported format. Please make sure the file has all required fields: ' +
-      'Question: ' +
-      'Option1: ' +
-      'Option2: ' +
-      'Option3: ' +
-      'Option4: ' +
-      'Answer.', ...missingFields]); // Show the dialog with missing fields
-      console.error('Invalid questions detected. Import canceled.');
+      this.alertService.showAlertError('Import failed!, Missing fields', 'Error', 3000, 'start' , 'bottom');
 
       // Reset the file input element after an error
       this.resetFileInput(event);
@@ -398,8 +379,8 @@ export class DialogCreateComponent {
 
         // Notify the user if there are missing fields
         if (missingDataMessages.length > 0) {
-          this.openDialog(missingDataMessages); // Open dialog with missing fields
-          console.log('Missing fields:', missingDataMessages);
+          this.alertService.showAlertError('Missing fields', 'Error', 3000, 'start' , 'bottom');
+
 
           // Reset the file input element after an error
           if (event.target) {
@@ -421,7 +402,7 @@ export class DialogCreateComponent {
         }
       },
       error: (error) => {
-        this.openDialog(['Error parsing CSV file. Please try again.']); // Notify user of error in dialog
+        this.alertService.showAlertError('Error parsing CSV file. Please try again.', 'Error', 3000, 'start' , 'bottom');
 
         // Reset the file input element in case of error
         if (event.target) {
@@ -443,6 +424,32 @@ export class DialogCreateComponent {
     dialogConfig.data = { messages };
 
     this.dialog.open(DialogImportNotificationComponent, dialogConfig);
+  }
+
+  // Function to get missing fields from a question object
+  getMissingFields(questionObj: Partial<Question>): string[] {
+    const missingFields: string[] = [];
+
+    if (!questionObj.question || questionObj.question.trim() === '') {
+      missingFields.push('Question');
+    }
+    if (!questionObj.option1 || questionObj.option1.trim() === '') {
+      missingFields.push('Option1');
+    }
+    if (!questionObj.option2 || questionObj.option2.trim() === '') {
+      missingFields.push('Option2');
+    }
+    if (!questionObj.option3 || questionObj.option3.trim() === '') {
+      missingFields.push('Option3');
+    }
+    if (!questionObj.option4 || questionObj.option4.trim() === '') {
+      missingFields.push('Option4');
+    }
+    if (typeof questionObj.answer !== 'number') {
+      missingFields.push('Answer');
+    }
+
+    return missingFields;
   }
 
   closeDialog(): void {
