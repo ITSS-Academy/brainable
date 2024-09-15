@@ -7,6 +7,7 @@ import { GameService } from '../../../../../services/game/game.service';
 import { Router } from '@angular/router';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import { QRCodeModule } from 'angularx-qrcode';
+import * as string_decoder from 'node:string_decoder';
 
 @Component({
   selector: 'app-lobby',
@@ -17,7 +18,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 })
 export class LobbyComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  guests: string[] = [];
+  guests: any[] = [];
   isMusicPlaying = true;
   pin: string = '';
   qrCodeValue: string = '';
@@ -34,7 +35,18 @@ export class LobbyComponent implements OnInit, OnDestroy {
           this.qrCodeValue = `https://brainable.io.vn/guest/${this.pin}/waiting`;
 
           this.gameService.listenForGuestJoined().subscribe((guest) => {
-            this.guests.push(guest.username);
+            this.guests.push({
+              userName: guest.username,
+              playerId: guest.playerId,
+            });
+          });
+
+          this.gameService.listenForClientGuessLeft().subscribe((guest) => {
+            console.log(guest.username, guest.playerId);
+            this.gameService.kickPlayer(this.pin, guest.playerId);
+            this.guests = this.guests.filter(
+              (g) => g.playerId !== guest.playerId,
+            );
           });
         }
       }),
@@ -78,6 +90,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.gameService.endListeningForClientGuessLeft();
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.store.dispatch(
       GameActions.storeTotalPlayers({ totalPlayers: this.guests.length }),

@@ -141,7 +141,6 @@ export class DialogCreateComponent {
       }
 
       // Log the valid formatted data for debugging
-      console.log('Formatted data:', formattedData);
 
       // Dispatch the formatted data to the store
       this.store.dispatch(
@@ -284,7 +283,6 @@ export class DialogCreateComponent {
 
     // Process valid questions if all passed validation
     this.closeDialog();
-    console.log(this.questions);
     this.store.dispatch(
       QuizActions.updateQuestionByImportWord({ questions: this.questions }),
     );
@@ -363,7 +361,6 @@ export class DialogCreateComponent {
     Papa.parse(file, {
       header: true, // Parse with headers
       complete: (result) => {
-        console.log('Parsed CSV data:', result.data);
         const missingDataMessages: string[] = [];
 
         this.parsedData = result.data.map((row: any, index: number) => {
@@ -424,7 +421,6 @@ export class DialogCreateComponent {
         }
       },
       error: (error) => {
-        console.error('Error parsing CSV:', error);
         this.openDialog(['Error parsing CSV file. Please try again.']); // Notify user of error in dialog
 
         // Reset the file input element in case of error

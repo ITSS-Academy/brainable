@@ -28,7 +28,6 @@ export class SettingBarResponsiveDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.question = data.question;
-    console.log(this.question);
   }
 
   onPointsChange(event: any) {
@@ -42,7 +41,6 @@ export class SettingBarResponsiveDialogComponent {
   }
 
   onTimeLimitChange(event: any) {
-    console.log('Selected time limit:', event.value);
     this.question = { ...this.question, timeLimit: event.value };
     this.store.dispatch(
       QuizActions.updateQuestionByIndex({
