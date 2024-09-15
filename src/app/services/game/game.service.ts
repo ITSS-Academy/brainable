@@ -100,6 +100,18 @@ export class GameService {
     });
   }
 
+  listenForClientGuessLeft(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('guestLeft', (guest: string) => {
+        observer.next(guest);
+      });
+    });
+  }
+
+  kickPlayer(pin: string, playerName: string): void {
+    this.socket.emit('kickPlayer', { pin, playerName });
+  }
+
   startGame(pin: string): void {
     this.socket.emit('startGame', pin);
   }

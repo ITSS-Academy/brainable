@@ -36,6 +36,12 @@ export class LobbyComponent implements OnInit, OnDestroy {
           this.gameService.listenForGuestJoined().subscribe((guest) => {
             this.guests.push(guest.username);
           });
+
+          this.gameService.listenForClientGuessLeft().subscribe((guest) => {
+            console.log(guest);
+            this.gameService.kickPlayer(this.pin, String(guest));
+            this.guests = this.guests.filter((g) => g !== guest);
+          });
         }
       }),
     );
