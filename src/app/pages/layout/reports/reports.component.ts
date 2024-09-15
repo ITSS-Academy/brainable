@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { clearStateReport } from '../../../ngrx/gameReport/gameReport.action';
+import { Store } from '@ngrx/store';
+import { GameReportState } from '../../../ngrx/gameReport/gameReport.state';
 
 @Component({
   selector: 'app-reports',
@@ -8,4 +11,10 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
 })
-export class ReportsComponent {}
+export class ReportsComponent implements OnDestroy {
+  constructor(private store: Store<{ gameReport: GameReportState }>) {}
+
+  ngOnDestroy() {
+    this.store.dispatch(clearStateReport());
+  }
+}

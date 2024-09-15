@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   Input,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -16,6 +17,7 @@ import { PlayerRecord } from '../../../../../models/playerRecord.model';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { clearStateReport } from '../../../../../ngrx/gameReport/gameReport.action';
 
 @Component({
   selector: 'app-players',
