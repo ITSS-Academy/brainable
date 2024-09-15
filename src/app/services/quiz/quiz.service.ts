@@ -42,6 +42,15 @@ export class QuizService {
   }
 
   getQuizById(id: string) {
-    return this.http.get(`${environment.apiUrl}/quiz/${id}`, {});
+    return new Promise<Quiz>(async (resolve, reject) => {
+      try {
+        const res = await this.http.get<Quiz>(`${environment.apiUrl}/quiz/${id}`).toPromise();
+        if (res) {
+          resolve(res);
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 }
