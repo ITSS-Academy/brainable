@@ -30,6 +30,8 @@ import { SettingBarComponent } from '../setting-bar/setting-bar.component';
 import { SnowflakeId } from '@akashrajpurohit/snowflake-id';
 import { MissingField } from '../../../../../models/question.model';
 import { SettingBarResponsiveDialogComponent } from '../setting-bar-responsive-dialog/setting-bar-responsive-dialog.component';
+import { StorageState } from '../../../../../ngrx/storage/storage.state';
+import * as StorageActions from '../../../../../ngrx/storage/storage.action';
 
 @Component({
   selector: 'app-main-content',
@@ -56,10 +58,14 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       auth: AuthState;
       question: QuestionState;
       quiz: QuizState;
+      storage: StorageState;
     }>,
   ) {
     //console.log(this.ReadExcel);
   }
+
+  isUpdateLoading$ = this.store.select('storage', 'isLoading');
+  isUpdateSuccess$ = this.store.select('storage', 'isPostSuccess');
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -107,6 +113,8 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   selectedImage: string | ArrayBuffer = '';
 
   uploadQuestionFile(input: HTMLInputElement) {
+    this.store.dispatch(StorageActions.storeImageUpload());
+
     const snowflake = SnowflakeId({
       workerId: 1,
       epoch: 1597017600000,
@@ -124,7 +132,9 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
             getDownloadURL(snapshot.ref)
               .then((url) => {
                 this.uploadedFileURL = url;
+                this.store.dispatch(StorageActions.storeImageUploadSuccess());
                 this.question.imgUrl = this.uploadedFileURL;
+                console.log(this.uploadedFileURL);
                 this.store.dispatch(
                   QuizActions.updateQuestionByIndex({
                     question: this.question,

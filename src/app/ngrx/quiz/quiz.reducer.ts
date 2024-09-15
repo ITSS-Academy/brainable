@@ -293,6 +293,7 @@ export const quizReducer = createReducer(
     };
   }),
   on(QuizActions.updateSetting, (state, { setting, type }) => {
+    console.log(setting.category);
     return {
       ...state,
       quiz: {

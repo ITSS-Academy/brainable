@@ -25,6 +25,8 @@ import { Categories } from '../../../../../models/categories.model';
 import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
 import { SnowflakeId } from '@akashrajpurohit/snowflake-id';
+import * as StorageActions from '../../../../../ngrx/storage/storage.action';
+import { StorageState } from '../../../../../ngrx/storage/storage.state';
 
 @Component({
   selector: 'app-setting-dialog',
@@ -52,7 +54,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     imgUrl: '',
     category: <Categories>{},
   };
-
   uploadedFileUrl: string = '';
 
   constructor(
@@ -60,26 +61,31 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       auth: AuthState;
       quiz: QuizState;
       categories: CategoriesState;
+      storage: StorageState;
     }>,
     private storage: Storage,
     private dialogRef: MatDialogRef<SettingDialogComponent>,
   ) {}
 
+  isUpdateLoading$ = this.store.select('storage', 'isSettingUpload');
+  isUpdateSuccess$ = this.store.select('storage', 'isSettingUploadSuccess');
+
   ngOnInit() {
     this.subscription.push(
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
+          console.log(this.settings.category);
           this.settings.title = quiz.title;
           this.settings.description = quiz?.description || '';
           this.settings.isPublic = quiz.isPublic;
           this.settings.category = quiz?.category || {
-            ...quiz.category,
             uid: 'caa70846-38d8-44b8-9e86-935a793f8be7',
             name: 'Ice breaker',
             imgUrl:
               'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/ellipse1.png?alt=media&token=87a505f6-7e07-4b79-ad51-4e3990b21d5e',
           };
           this.settings.imgUrl = quiz.imgUrl;
+          console.log('this.setting', this.settings);
         }
       }),
       this.store.select('categories', 'categories').subscribe((categories) => {
@@ -134,6 +140,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   // }
 
   uploadQuizFile(input: HTMLInputElement) {
+    this.store.dispatch(StorageActions.storeSettingUpload());
     const snowflake = SnowflakeId({
       workerId: 1,
       epoch: 1597017600000,
@@ -151,6 +158,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
             getDownloadURL(snapshot.ref)
               .then((url) => {
                 this.uploadedFileUrl = url;
+                this.store.dispatch(StorageActions.storeSettingUploadSuccess());
                 this.settings.imgUrl = this.uploadedFileUrl;
                 this.store.dispatch(
                   QuizActions.updateSetting({
@@ -165,7 +173,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectImage(event: any) {
+  selectImage(event: any): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
@@ -173,9 +181,8 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       reader.onload = (e) =>
         (this.selectedImage = reader.result as string | ArrayBuffer);
       reader.readAsDataURL(file);
+      this.uploadQuizFile(fileInput);
     }
-    this.uploadQuizFile(fileInput);
-    this.selectedImage = '';
   }
 
   removeImage() {
@@ -201,7 +208,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange(event: MatRadioChange): void {
-
     if (event.value === 'public') {
       this.settings.isPublic = true;
     }
@@ -211,6 +217,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   saveChanges(): void {
+    console.log('save', this.settings);
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
@@ -226,6 +233,12 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
+    this.store.select('quiz', 'quiz').subscribe((quiz) => {
+      if (quiz) {
+        console.log(quiz);
+        this.quiz = quiz;
+      }
+    });
   }
 
   ngOnDestroy() {

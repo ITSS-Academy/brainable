@@ -101,7 +101,6 @@ export class GameService {
 
   startGame(pin: string): void {
     this.socket.emit('startGame', pin);
-
   }
 
   listenForNavigationCountDown(pin: string): void {
@@ -202,8 +201,6 @@ export class GameService {
   nextQuestion(pin: string): void {
     this.socket.emit('nextQuestion', pin);
   }
-
-
 
   endGame(pin: string): void {
     this.socket.emit('endGame', pin);

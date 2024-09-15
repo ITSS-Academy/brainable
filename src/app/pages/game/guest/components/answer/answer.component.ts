@@ -82,10 +82,11 @@ export class AnswerComponent implements OnInit, OnDestroy {
     const answerData: SendAnswer = {
       pin: this.pin,
       questionId: this.questionId,
-      playerName: this.playerId,
+      playerName: this.playerId as string,
       answer: answer as number,
       time: this.timeElapsed,
     };
+    console.log(answerData);
     if (this.isCheckTime < 1000) {
       setTimeout(() => {
         this.gameService.sendAnswer(answerData);

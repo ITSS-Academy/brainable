@@ -36,6 +36,11 @@ export class SettingBarComponent implements OnInit, OnDestroy {
   @Input() index!: number;
   subscriptions: Subscription[] = [];
   listCategories: Categories[] = [];
+  isGettingCategories$ = this.store.select(
+    'categories',
+    'isGetAllCategoriesSuccessful',
+  );
+  changeEvent = new BehaviorSubject<any>(null);
 
   dialog = inject(MatDialog);
 
@@ -61,6 +66,8 @@ export class SettingBarComponent implements OnInit, OnDestroy {
     );
   }
 
+
+
   onTimeLimitChange(event: any) {
     this.question = { ...this.question, timeLimit: event.value };
     this.store.dispatch(
@@ -70,7 +77,6 @@ export class SettingBarComponent implements OnInit, OnDestroy {
       }),
     );
   }
-
 
 
   saveChanges() {
