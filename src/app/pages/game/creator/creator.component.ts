@@ -105,7 +105,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
 
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
-      console.log(quiz);
       if (quiz) {
         this.quiz = this.deepClone(quiz);
       }
@@ -175,7 +174,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   deleteQuestion(index: number, id: string) {
-    console.log(index);
     this.store.dispatch(QuizActions.deleteQuestionByIndex({ index: index }));
     this.store.dispatch(QuestionActions.deleteQuestion({ idToken: this.idToken, questionId: id }));
     if (this.currentQuestionIndex === index && this.quiz.questions.length > 0) {

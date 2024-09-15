@@ -61,7 +61,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }),
       this.store.select('quiz', 'quizCheck').subscribe((quizCheck) => {
         this.quizCheck = quizCheck;
-        console.log(this.quizCheck);
       }),
       this.store
         .select('quiz', 'isUpdateQuizSuccessful')
@@ -132,7 +131,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const quizUpdate: QuizDTO = {
         quiz: this.quiz,
       };
-      console.log(quizUpdate);
 
       this.store.dispatch(
         QuizActions.updateQuiz({ idToken: this.idToken, quiz: quizUpdate }),

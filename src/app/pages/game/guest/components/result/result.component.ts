@@ -39,13 +39,11 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('ResultComponent');
     this.gameService.listenForNavigateToNextQuestion(this.pin);
     this.gameService.listenForNavigateToRanking(this.pin);
     this.subscription.push(
       this.gameService.receiveCorrectAnswer().subscribe((correctAnswer) => {
         if (correctAnswer !== null || correctAnswer !== '') {
-          console.log('correctAnswer', correctAnswer);
           this.correctAnswer = correctAnswer.correctAnswer;
           this.isCorrect = this.playerAnswer === this.correctAnswer;
           if (this.isCorrect) {
@@ -69,7 +67,6 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('re des');
     this.subscription.forEach((s) => s.unsubscribe());
   }
 }

@@ -19,7 +19,6 @@ const initialState: PlayerRecordState = {
 export const playerRecordReducer = createReducer(
   initialState,
   on(PlayerRecordActions.createPlayerRecord, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isGetPlayerRecordsLoading: true,
@@ -27,7 +26,6 @@ export const playerRecordReducer = createReducer(
   }),
 
   on(PlayerRecordActions.createPlayerRecordSuccess, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isGetPlayerRecordsLoading: false,
@@ -38,7 +36,6 @@ export const playerRecordReducer = createReducer(
   on(
     PlayerRecordActions.createPlayerRecordFailure,
     (state, { errorMessage }) => {
-      console.log(errorMessage);
       return {
         ...state,
         isGetPlayerRecordsLoading: false,

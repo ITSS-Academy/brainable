@@ -26,7 +26,6 @@ export class GameResultComponent {
   ];
 
   constructor(private gameService: GameService) {
-    console.log('GameResultComponent');
     this.rank = this.gameService.rank;
   }
 }

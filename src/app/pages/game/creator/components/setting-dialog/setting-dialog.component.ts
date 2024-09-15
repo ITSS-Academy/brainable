@@ -145,7 +145,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       const file = files.item(i);
       if (file) {
         let newId = snowflake.generate();
-        console.log(newId);
         const storageRef = ref(this.storage, newId);
         uploadBytesResumable(storageRef, file)
           .then((snapshot) => {

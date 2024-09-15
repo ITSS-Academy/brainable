@@ -52,7 +52,6 @@ export class DialogComponent {
 
   changActiveQuestion(index: number) {
     this.dialogRef.close();
-    console.log('change active question', index);
     this.store.dispatch(QuizActions.storeQuestionErrorIndex({ index }));
   }
 }

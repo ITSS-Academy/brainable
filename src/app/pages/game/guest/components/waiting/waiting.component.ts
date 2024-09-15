@@ -50,7 +50,6 @@ export class WaitingComponent implements OnInit, OnDestroy {
         GameActions.storePlayerName({ playerName: this.nickname }),
       );
       this.gameService.listenForErrors().subscribe((error) => {
-        console.log(error);
         if (error === 'Username already exists in the room') {
           alert('Username already exists in the room');
         }

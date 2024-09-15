@@ -62,7 +62,6 @@ export class SettingBarComponent implements OnInit, OnDestroy {
   }
 
   onTimeLimitChange(event: any) {
-    console.log('Selected time limit:', event.value);
     this.question = { ...this.question, timeLimit: event.value };
     this.store.dispatch(
       QuizActions.updateQuestionByIndex({

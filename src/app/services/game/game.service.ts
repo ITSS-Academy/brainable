@@ -75,7 +75,6 @@ export class GameService {
     this.socket.on('navigateToEnterName', (clientId: string) => {
       this.store.dispatch(GameActions.storeClientId({ clientId: clientId }));
       this.store.select('game', 'clientId').subscribe((clientId) => {
-        console.log('clientId', clientId);
       });
       this.store.dispatch(GameActions.storePin({ pin: pin }));
       this.router.navigate([`/guest/${pin}/waiting`]).then(() => {
@@ -115,7 +114,6 @@ export class GameService {
 
   listenForNavigateChooseAnswer(pin: string) {
     this.socket.on('chooseAnswer', () => {
-      console.log('chooseAnswerdmmmmmmmmmmmmmmmmmmmmmmmmm');
       this.router.navigate([`/guest/${pin}/answer`]).then(() => {
         this.socket.off('chooseAnswer');
       });
@@ -132,7 +130,6 @@ export class GameService {
 
   listenForNavigateToNextQuestion(pin: string): void {
     this.socket.on('navigateToNextQuestion', () => {
-      console.log('nav to countdownnnnnn');
       this.router.navigate([`/guest/${pin}/countdown-to-question`]).then(() => {
         this.socket.off('navigateToNextQuestion');
       });
@@ -164,7 +161,6 @@ export class GameService {
   listenForPlayerSubmittedAnswer(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('playerSubmittedAnswer', (answer: any) => {
-        console.log('playerSubmittedAnswer');
         observer.next(answer);
       });
     });
@@ -249,7 +245,6 @@ export class GameService {
   }
 
   getLastQuestionScore(pin: string, gameId: string) {
-    console.log('getLastQuestionScore');
     this.socket.emit('getLastQuestionScore', { pin, gameId });
   }
 
@@ -259,7 +254,6 @@ export class GameService {
 
   listenForNavigateToRanking(pin: string) {
     this.socket.on('sendRanking', (rank: any) => {
-      console.log('sendRanking');
       this.rank = rank;
       this.router.navigate([`/guest/${pin}/game-result`]).then(() => {
         this.socket.off('sendRanking');
@@ -277,7 +271,6 @@ export class GameService {
   // }
 
   receiveLastQuestionScore(): Observable<any> {
-    console.log('receiveLastQuestionScore');
     return new Observable((observer) => {
       this.socket.on('lastQuestionScore', (lastQuestionScore: any) => {
         observer.next(lastQuestionScore);

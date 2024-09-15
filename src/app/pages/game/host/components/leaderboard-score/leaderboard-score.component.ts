@@ -48,7 +48,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.gameService.listenForTop5().subscribe((top5) => {
       this.result = top5;
-      console.log('result: ', this.result);
       this.createLeaderboard('rootElement');
       this.renderLeaderboard(this.result);
       (async () =>
@@ -57,7 +56,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.store.select('game', 'previousResult').subscribe((prevResult) => {
         this.prevResult = prevResult as LeaderboardEntry[];
-        console.log('prevresult', this.prevResult);
       }),
     );
   }
@@ -157,7 +155,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     }
 
     const changes = this.calcChange(prevLeaderboard, leaderboard);
-    console.log('changes: ', changes); // Log changes for debugging
 
     // Wait for 1 second before starting the animation
     await new Promise((resolve) => setTimeout(resolve, 1000));

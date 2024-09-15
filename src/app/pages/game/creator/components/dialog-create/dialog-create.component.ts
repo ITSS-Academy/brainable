@@ -39,7 +39,7 @@ export class DialogCreateComponent {
       } else if (fileName.endsWith('.csv')) {
         this.onFileSelectedCSV(event);
       } else {
-        console.error('Unsupported file type');
+        // console.error('Unsupported file type');
       }
     }
   }
@@ -101,11 +101,11 @@ export class DialogCreateComponent {
 
       rows.forEach((row, index) => {
         const questionObj: Partial<Question> = {
-          question: row[0],
-          option1: row[1],
-          option2: row[2],
-          option3: row[3],
-          option4: row[4],
+          question:String( row[0]),
+          option1: String(row[1]) ,
+          option2: String(row[2]),
+          option3: String(row[3]),
+          option4:String( row[4]),
           answer: row[5],
         };
 
@@ -134,12 +134,10 @@ export class DialogCreateComponent {
       // If there are missing fields, open the dialog
       if (missingFieldsMessages.length > 0) {
         this.openDialog(missingFieldsMessages);
-        console.log('Missing fields:', missingFieldsMessages);
         return;
       }
 
       // Log the valid formatted data for debugging
-      console.log('Formatted data:', formattedData);
 
       // Dispatch the formatted data to the store
       this.store.dispatch(
@@ -212,7 +210,6 @@ export class DialogCreateComponent {
     }
 
     this.closeDialog();
-    console.log(this.questions);
     this.store.dispatch(
       QuizActions.updateQuestionByImportWord({ questions: this.questions }),
     );
@@ -280,7 +277,6 @@ export class DialogCreateComponent {
     Papa.parse(file, {
       header: true, // Parse with headers
       complete: (result) => {
-        console.log('Parsed CSV data:', result.data);
         const missingDataMessages: string[] = [];
 
         this.parsedData = result.data.map((row: any, index: number) => {
@@ -317,7 +313,6 @@ export class DialogCreateComponent {
         // Notify the user via dialog if there are missing fields
         if (missingDataMessages.length > 0) {
           this.openDialog(missingDataMessages); // Open dialog with missing fields
-          console.log('Missing fields:', missingDataMessages);
         } else {
           // Dispatch the action if no issues are found
           this.store.dispatch(
@@ -329,7 +324,6 @@ export class DialogCreateComponent {
         }
       },
       error: (error) => {
-        console.error('Error parsing CSV:', error);
         this.openDialog(['Error parsing CSV file. Please try again.']); // Notify user of error in dialog
       },
     });
