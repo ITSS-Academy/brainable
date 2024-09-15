@@ -6,11 +6,33 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option1}}</span>
-          <span class="number">{{questionRecord.countA}}</span>
+          <span class="ans">{{ questionRecord.question.option1 }}</span>
+          <span class="number">{{ questionRecord.countA }}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="calculatePercentage(questionRecord.countA, (gameReport$|async)?.gameRecords!)" class="process-bar-correct"></mat-progress-bar>
+          @if (questionRecord.question.answer == 1) {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countA,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-correct"
+            ></mat-progress-bar>
+          } @else {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countA,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-wrong"
+            ></mat-progress-bar>
+          }
         </div>
       </div>
     </div>
@@ -20,11 +42,33 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option2}}</span>
-          <span class="number">{{questionRecord.countB}}</span>
+          <span class="ans">{{ questionRecord.question.option2 }}</span>
+          <span class="number">{{ questionRecord.countB }}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countB" class="process-bar-correct"></mat-progress-bar>
+          @if (questionRecord.question.answer == 2) {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countB,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-correct"
+            ></mat-progress-bar>
+          } @else {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countB,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-wrong"
+            ></mat-progress-bar>
+          }
         </div>
       </div>
     </div>
@@ -34,11 +78,33 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option3}}</span>
-          <span class="number">{{questionRecord.countC}}</span>
+          <span class="ans">{{ questionRecord.question.option3 }}</span>
+          <span class="number">{{ questionRecord.countC }}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countC" class="process-bar-correct"></mat-progress-bar>
+          @if (questionRecord.question.answer == 3) {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countC,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-correct"
+            ></mat-progress-bar>
+          } @else {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countC,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-wrong"
+            ></mat-progress-bar>
+          }
         </div>
       </div>
     </div>
@@ -48,11 +114,33 @@
       </div>
       <div class="ques-info">
         <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option4}}</span>
-          <span class="number">{{questionRecord.countD}}</span>
+          <span class="ans">{{ questionRecord.question.option4 }}</span>
+          <span class="number">{{ questionRecord.countD }}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countD" class="process-bar-wrong"></mat-progress-bar>
+          @if (questionRecord.question.answer == 4) {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countD,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-correct"
+            ></mat-progress-bar>
+          } @else {
+            <mat-progress-bar
+              mode="determinate"
+              [value]="
+                calculatePercentage(
+                  questionRecord.countD,
+                  (gameReport$ | async)?.gameRecords!
+                )
+              "
+              class="process-bar-wrong"
+            ></mat-progress-bar>
+          }
         </div>
       </div>
     </div>
