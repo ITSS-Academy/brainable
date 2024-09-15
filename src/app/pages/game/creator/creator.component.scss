@@ -227,7 +227,6 @@ app-main-content {
   }
 
   .question-type,
-  .question-content .icons,
   .question-overview .answers,
   #question-list .btn .add-question-btn,
   .timer {
@@ -276,7 +275,7 @@ app-main-content {
 
         .question-type-respond {
           display: block !important;
-          height: 100%;
+          height: 90%;
           margin-right: 4px;
           margin-left: 12px;
         }
@@ -285,6 +284,19 @@ app-main-content {
           width: 90px !important;
           height: 60px !important;
           margin: unset !important;
+          position: relative;
+
+          .icons {
+            display: block;
+            position: absolute;
+            top: 20px;
+            left: -18px;
+
+            mat-icon {
+              font-size: 16px;
+              height: 20px;
+            }
+          }
 
           .question-overview {
             display: flex;

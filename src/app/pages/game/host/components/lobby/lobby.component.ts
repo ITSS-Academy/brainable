@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
@@ -8,11 +8,14 @@ import { Router } from '@angular/router';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import { QRCodeModule } from 'angularx-qrcode';
 import * as string_decoder from 'node:string_decoder';
+import { QrDialogComponent } from '../qr-dialog/qr-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-lobby',
   standalone: true,
-  imports: [MaterialModule, QRCodeModule],
+  imports: [MaterialModule, QRCodeModule, NgClass],
   templateUrl: './lobby.component.html',
   styleUrl: './lobby.component.scss',
 })
@@ -22,6 +25,9 @@ export class LobbyComponent implements OnInit, OnDestroy {
   isMusicPlaying = true;
   pin: string = '';
   qrCodeValue: string = '';
+  isQrDialogOpen = false;
+
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private store: Store<{ game: GameState }>,
@@ -87,6 +93,15 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   isStartGameDisabled(): boolean {
     return this.guests.length < 0;
+  }
+
+  openQrDialog() {
+    const dialogRef = this.dialog.open(QrDialogComponent);
+    this.isQrDialogOpen = true;
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.isQrDialogOpen = false;
+    });
   }
 
   ngOnDestroy(): void {
