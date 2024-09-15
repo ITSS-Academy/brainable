@@ -74,7 +74,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
-          console.log(this.settings.category);
           this.settings.title = quiz.title;
           this.settings.description = quiz?.description || '';
           this.settings.isPublic = quiz.isPublic;
@@ -85,7 +84,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
               'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/ellipse1.png?alt=media&token=87a505f6-7e07-4b79-ad51-4e3990b21d5e',
           };
           this.settings.imgUrl = quiz.imgUrl;
-          console.log('this.setting', this.settings);
         }
       }),
       this.store.select('categories', 'categories').subscribe((categories) => {
@@ -217,7 +215,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   saveChanges(): void {
-    console.log('save', this.settings);
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
@@ -235,7 +232,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     );
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
       if (quiz) {
-        console.log(quiz);
         this.quiz = quiz;
       }
     });
