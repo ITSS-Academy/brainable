@@ -67,7 +67,7 @@ export class PlayersComponent implements AfterViewInit, OnInit {
   }
 
   calculatePercentage(num1: number, total: number): string {
-    return ((num1 / total) * 100).toFixed(0) + '%';
+    return ((num1 / total) * 100).toFixed(0);
   }
 
   ngAfterViewInit() {}

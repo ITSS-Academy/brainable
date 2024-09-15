@@ -449,17 +449,6 @@ export class DialogCreateComponent {
 
   dialog = inject(MatDialog);
 
-  openDialog(messages: string[]) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '60%';
-    dialogConfig.maxWidth = '85vw';
-    dialogConfig.panelClass = 'custom-dialog-container';
-
-    dialogConfig.data = { messages };
-
-    this.dialog.open(DialogImportNotificationComponent, dialogConfig);
-  }
-
   // Function to get missing fields from a question object
   // getMissingFields(questionObj: Partial<Question>): string[] {
   //   const missingFields: string[] = [];
