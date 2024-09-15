@@ -102,16 +102,16 @@ export class DialogCreateComponent {
 
       rows.forEach((row, index) => {
         const questionObj: Partial<Question> = {
-          question: row[0] !== undefined && row[0] !== null ? String(row[0]) : '',
-          option1: row[1] !== undefined && row[1] !== null ? String(row[1]) : '',
-          option2: row[2] !== undefined && row[2] !== null ? String(row[2]) : '',
-          option3: row[3] !== undefined && row[3] !== null ? String(row[3]) : '',
-          option4: row[4] !== undefined && row[4] !== null ? String(row[4]) : '',
-          answer: row[5] !== undefined && row[5] !== null ? Number(row[5]) : NaN, // Convert answer to number
+          question: row[0] ? String(row[0]).trim() : '',
+          option1: row[1] ? String(row[1]).trim() : '',
+          option2: row[2] ? String(row[2]).trim() : '',
+          option3: row[3] ? String(row[3]).trim() : '',
+          option4: row[4] ? String(row[4]).trim() : '',
+          answer: row[5] !== undefined && row[5] !== null && row[5] !== '' ? Number(row[5]) : NaN, // Improved answer validation
         };
 
         // Validate each row for missing fields
-        const missingFields = this.getMissingFields(questionObj);
+        const missingFields = this.getMissingFieldsExcel(questionObj);
         if (missingFields.length > 0) {
           missingFieldsMessages.push(
             `Row ${index + 2}: Missing fields: ${missingFields.join(', ')}`,
@@ -125,7 +125,7 @@ export class DialogCreateComponent {
             option2: questionObj.option2!,
             option3: questionObj.option3!,
             option4: questionObj.option4!,
-            answer: questionObj.answer!,
+            answer: questionObj.answer!, // This should now correctly handle the answer field
             timeLimit: 10,
             points: 1,
           });
@@ -152,6 +152,31 @@ export class DialogCreateComponent {
     };
   }
 
+  getMissingFieldsExcel(questionObj: Partial<Question>): string[] {
+    const missingFields: string[] = [];
+
+    if (!questionObj.question || questionObj.question.trim() === '') {
+      missingFields.push('Question');
+    }
+    if (!questionObj.option1 || questionObj.option1.trim() === '') {
+      missingFields.push('Option1');
+    }
+    if (!questionObj.option2 || questionObj.option2.trim() === '') {
+      missingFields.push('Option2');
+    }
+    if (!questionObj.option3 || questionObj.option3.trim() === '') {
+      missingFields.push('Option3');
+    }
+    if (!questionObj.option4 || questionObj.option4.trim() === '') {
+      missingFields.push('Option4');
+    }
+    // Check if answer is NaN or an empty value
+    if (isNaN(questionObj.answer!) || questionObj.answer === null) {
+      missingFields.push('Answer');
+    }
+
+    return missingFields;
+  }
 
   questions: Question[] = []; // Declare questions array to store parsed data
 
@@ -202,7 +227,7 @@ export class DialogCreateComponent {
           const tempMissingFields: string[] = []; // Temp array for missing fields of the current question
           if (!this.isValidQuestion(questionObj, tempMissingFields)) {
             isValid = false; // Mark the entire file as invalid if any question fails validation
-            missingFields.push(...tempMissingFields); // Collect missing fields for dialog
+            missingFields.push(`In one of the questions: ${tempMissingFields.join(', ')} is missing.`); // Collect missing fields for dialog
           }
           this.questions.push(questionObj as Question);
         }
@@ -221,7 +246,8 @@ export class DialogCreateComponent {
       } else if (line.startsWith('Option4:')) {
         questionObj.option4 = line.replace('Option4:', '').trim();
       } else if (line.startsWith('Answer:')) {
-        questionObj.answer = Number(line.replace('Answer:', '').trim());
+        const answerText = line.replace('Answer:', '').trim();
+        questionObj.answer = !isNaN(Number(answerText)) ? Number(answerText) : NaN; // Ensure answer is a valid number
       } else if (line.startsWith('Time limit:')) {
         questionObj.timeLimit = Number(line.replace('Time limit:', '').trim());
       } else if (line.startsWith('Points:')) {
@@ -234,7 +260,7 @@ export class DialogCreateComponent {
       const tempMissingFields: string[] = [];
       if (!this.isValidQuestion(questionObj, tempMissingFields)) {
         isValid = false;
-        missingFields.push(...tempMissingFields);
+        missingFields.push(`In the last question: ${tempMissingFields.join(', ')} is missing.`);
       } else {
         this.questions.push(questionObj as Question);
       }
@@ -242,7 +268,13 @@ export class DialogCreateComponent {
 
     // If the file contains any invalid questions, show the dialog and stop the import
     if (!isValid) {
-      this.openDialog(missingFields); // Show the dialog with missing fields
+      this.openDialog(['Unsupported format. Please make sure the file has all required fields: ' +
+      'Question: ' +
+      'Option1: ' +
+      'Option2: ' +
+      'Option3: ' +
+      'Option4: ' +
+      'Answer.', ...missingFields]); // Show the dialog with missing fields
       console.error('Invalid questions detected. Import canceled.');
 
       // Reset the file input element after an error
@@ -304,13 +336,14 @@ export class DialogCreateComponent {
     ) {
       missingFields.push('Option4');
     }
-    if (typeof questionObj.answer !== 'number') {
+    if (isNaN(questionObj.answer!)) {
       missingFields.push('Answer');
     }
 
     // If any missing fields are detected, mark the question as invalid
     return missingFields.length === 0;
   }
+
 
 
 
@@ -414,32 +447,6 @@ export class DialogCreateComponent {
     dialogConfig.data = { messages };
 
     this.dialog.open(DialogImportNotificationComponent, dialogConfig);
-  }
-
-  // Function to get missing fields from a question object
-  getMissingFields(questionObj: Partial<Question>): string[] {
-    const missingFields: string[] = [];
-
-    if (!questionObj.question || questionObj.question.trim() === '') {
-      missingFields.push('Question');
-    }
-    if (!questionObj.option1 || questionObj.option1.trim() === '') {
-      missingFields.push('Option1');
-    }
-    if (!questionObj.option2 || questionObj.option2.trim() === '') {
-      missingFields.push('Option2');
-    }
-    if (!questionObj.option3 || questionObj.option3.trim() === '') {
-      missingFields.push('Option3');
-    }
-    if (!questionObj.option4 || questionObj.option4.trim() === '') {
-      missingFields.push('Option4');
-    }
-    if (typeof questionObj.answer !== 'number') {
-      missingFields.push('Answer');
-    }
-
-    return missingFields;
   }
 
   closeDialog(): void {
