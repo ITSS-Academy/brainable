@@ -123,7 +123,7 @@ export class DialogCreateComponent {
 
       // If there are missing fields, open the dialog
       if (missingFieldsMessages.length > 0) {
-        this.alertService.showAlertError('Import failed!, Missing fields', 'Error', 3000, 'start' , 'bottom');
+        this.alertService.showAlertError('Import failed! Missing fields', 'Error', 3000, 'start' , 'bottom');
         (event.target as HTMLInputElement).value = '';
         return;
       }
@@ -205,56 +205,92 @@ export class DialogCreateComponent {
     let isValid = true; // Variable to track overall validity
     const missingFields: string[] = []; // Accumulate all missing fields
 
+    // Variables to track the required fields in the expected order
+    let questionExists = false;
+    let option1Exists = false;
+    let option2Exists = false;
+    let option3Exists = false;
+    let option4Exists = false;
+    let answerExists = false;
+
     lines.forEach((line) => {
       if (line.startsWith('Question:')) {
-        // Validate and push the previous question before starting a new one
-        if (questionObj.question) {
-          const tempMissingFields: string[] = []; // Temp array for missing fields of the current question
-          if (!this.isValidQuestion(questionObj, tempMissingFields)) {
-            isValid = false; // Mark the entire file as invalid if any question fails validation
-            missingFields.push(`In one of the questions: ${tempMissingFields.join(', ')} is missing.`); // Collect missing fields for dialog
-          }
-          this.questions.push(questionObj as Question);
+        // Before starting a new question, check if the previous question is valid
+        if (questionExists && option1Exists && option2Exists && option3Exists && option4Exists && answerExists) {
+          this.questions.push(questionObj as Question); // Push the completed question
+        } else if (questionExists) {
+          isValid = false; // If any of the options or answer is missing, mark as invalid
+          missingFields.push('Incomplete question structure found. Missing fields in one of the questions.');
         }
-        // Initialize a new question object
+
+        // Reset the tracking variables for the new question
+        questionExists = true;
+        option1Exists = option2Exists = option3Exists = option4Exists = answerExists = false;
         questionObj = {
           question: line.replace('Question:', '').trim(),
           timeLimit: 10,
           points: 1,
         };
       } else if (line.startsWith('Option1:')) {
-        questionObj.option1 = line.replace('Option1:', '').trim();
+        const option1Text = line.replace('Option1:', '').trim();
+        if (option1Text === '') {
+          option1Exists = false; // Mark option as missing
+          missingFields.push('Option1');
+        } else {
+          questionObj.option1 = option1Text;
+          option1Exists = true;
+        }
       } else if (line.startsWith('Option2:')) {
-        questionObj.option2 = line.replace('Option2:', '').trim();
+        const option2Text = line.replace('Option2:', '').trim();
+        if (option2Text === '') {
+          option2Exists = false; // Mark option as missing
+          missingFields.push('Option2');
+        } else {
+          questionObj.option2 = option2Text;
+          option2Exists = true;
+        }
       } else if (line.startsWith('Option3:')) {
-        questionObj.option3 = line.replace('Option3:', '').trim();
+        const option3Text = line.replace('Option3:', '').trim();
+        if (option3Text === '') {
+          option3Exists = false; // Mark option as missing
+          missingFields.push('Option3');
+        } else {
+          questionObj.option3 = option3Text;
+          option3Exists = true;
+        }
       } else if (line.startsWith('Option4:')) {
-        questionObj.option4 = line.replace('Option4:', '').trim();
+        const option4Text = line.replace('Option4:', '').trim();
+        if (option4Text === '') {
+          option4Exists = false; // Mark option as missing
+          missingFields.push('Option4');
+        } else {
+          questionObj.option4 = option4Text;
+          option4Exists = true;
+        }
       } else if (line.startsWith('Answer:')) {
         const answerText = line.replace('Answer:', '').trim();
-        questionObj.answer = !isNaN(Number(answerText)) ? Number(answerText) : NaN; // Ensure answer is a valid number
-      } else if (line.startsWith('Time limit:')) {
-        questionObj.timeLimit = Number(line.replace('Time limit:', '').trim());
-      } else if (line.startsWith('Points:')) {
-        questionObj.points = Number(line.replace('Points:', '').trim());
+        if (answerText === '' || isNaN(Number(answerText))) {
+          answerExists = false; // Ensure answer is valid and not missing
+          missingFields.push('Answer');
+        } else {
+          questionObj.answer = Number(answerText);
+          answerExists = true;
+        }
       }
     });
 
-    // Validate the last question object
-    if (questionObj.question) {
-      const tempMissingFields: string[] = [];
-      if (!this.isValidQuestion(questionObj, tempMissingFields)) {
-        isValid = false;
-        missingFields.push(`In the last question: ${tempMissingFields.join(', ')} is missing.`);
-      } else {
-        this.questions.push(questionObj as Question);
-      }
+    // Validate the last question after the loop finishes
+    if (questionExists && option1Exists && option2Exists && option3Exists && option4Exists && answerExists) {
+      this.questions.push(questionObj as Question); // Push the last question
+    } else {
+      isValid = false;
+      missingFields.push('Incomplete question structure found in the last question.');
     }
 
-    // If the file contains any invalid questions, show the dialog and stop the import
+    // If any question is invalid, show an error and stop the import
     if (!isValid) {
-      this.alertService.showAlertError('Import failed!, Missing fields', 'Error', 3000, 'start' , 'bottom');
-
+      // this.alertService.showAlertError(`Import failed! Missing fields: ${missingFields.join(', ')}`, 'Error', 3000, 'start', 'bottom');
+      this.alertService.showAlertError(`Import failed! Missing fields:`, 'Error', 3000, 'start', 'bottom');
       // Reset the file input element after an error
       this.resetFileInput(event);
       return; // Stop further processing
@@ -270,6 +306,10 @@ export class DialogCreateComponent {
     this.resetFileInput(event);
   }
 
+
+
+
+
 // Function to reset the file input field to allow re-importing
   resetFileInput(event: any) {
     if (event.target) {
@@ -278,52 +318,48 @@ export class DialogCreateComponent {
   }
 
 // Function to validate the question object and notify user of missing fields
-  isValidQuestion(questionObj: Partial<Question>, missingFields: string[]): boolean {
-    // Clear the missing fields for this validation
-    missingFields.length = 0;
-
-    // Check each required field and log if missing
-    if (
-      typeof questionObj.question !== 'string' ||
-      questionObj.question.trim() === ''
-    ) {
-      missingFields.push('Question');
-    }
-    if (
-      typeof questionObj.option1 !== 'string' ||
-      questionObj.option1.trim() === ''
-    ) {
-      missingFields.push('Option1');
-    }
-    if (
-      typeof questionObj.option2 !== 'string' ||
-      questionObj.option2.trim() === ''
-    ) {
-      missingFields.push('Option2');
-    }
-    if (
-      typeof questionObj.option3 !== 'string' ||
-      questionObj.option3.trim() === ''
-    ) {
-      missingFields.push('Option3');
-    }
-    if (
-      typeof questionObj.option4 !== 'string' ||
-      questionObj.option4.trim() === ''
-    ) {
-      missingFields.push('Option4');
-    }
-    if (isNaN(questionObj.answer!)) {
-      missingFields.push('Answer');
-    }
-
-    // If any missing fields are detected, mark the question as invalid
-    return missingFields.length === 0;
-  }
-
-
-
-
+//   isValidQuestion(questionObj: Partial<Question>, missingFields: string[]): boolean {
+//     // Clear the missing fields for this validation
+//     missingFields.length = 0;
+//
+//     // Check each required field and log if missing
+//     if (
+//       typeof questionObj.question !== 'string' ||
+//       questionObj.question.trim() === ''
+//     ) {
+//       missingFields.push('Question');
+//     }
+//     if (
+//       typeof questionObj.option1 !== 'string' ||
+//       questionObj.option1.trim() === ''
+//     ) {
+//       missingFields.push('Option1');
+//     }
+//     if (
+//       typeof questionObj.option2 !== 'string' ||
+//       questionObj.option2.trim() === ''
+//     ) {
+//       missingFields.push('Option2');
+//     }
+//     if (
+//       typeof questionObj.option3 !== 'string' ||
+//       questionObj.option3.trim() === ''
+//     ) {
+//       missingFields.push('Option3');
+//     }
+//     if (
+//       typeof questionObj.option4 !== 'string' ||
+//       questionObj.option4.trim() === ''
+//     ) {
+//       missingFields.push('Option4');
+//     }
+//     if (isNaN(questionObj.answer!)) {
+//       missingFields.push('Answer');
+//     }
+//
+//     // If any missing fields are detected, mark the question as invalid
+//     return missingFields.length === 0;
+//   }
 
   parsedData: any[] = []; // Declare parsedData to store the CSV data
 
@@ -377,7 +413,7 @@ export class DialogCreateComponent {
 
         // Notify the user if there are missing fields
         if (missingDataMessages.length > 0) {
-          this.alertService.showAlertError('Missing fields', 'Error', 3000, 'start' , 'bottom');
+          this.alertService.showAlertError('Import failed! Missing fields', 'Error', 3000, 'start' , 'bottom');
 
 
           // Reset the file input element after an error
@@ -425,30 +461,30 @@ export class DialogCreateComponent {
   }
 
   // Function to get missing fields from a question object
-  getMissingFields(questionObj: Partial<Question>): string[] {
-    const missingFields: string[] = [];
-
-    if (!questionObj.question || questionObj.question.trim() === '') {
-      missingFields.push('Question');
-    }
-    if (!questionObj.option1 || questionObj.option1.trim() === '') {
-      missingFields.push('Option1');
-    }
-    if (!questionObj.option2 || questionObj.option2.trim() === '') {
-      missingFields.push('Option2');
-    }
-    if (!questionObj.option3 || questionObj.option3.trim() === '') {
-      missingFields.push('Option3');
-    }
-    if (!questionObj.option4 || questionObj.option4.trim() === '') {
-      missingFields.push('Option4');
-    }
-    if (typeof questionObj.answer !== 'number') {
-      missingFields.push('Answer');
-    }
-
-    return missingFields;
-  }
+  // getMissingFields(questionObj: Partial<Question>): string[] {
+  //   const missingFields: string[] = [];
+  //
+  //   if (!questionObj.question || questionObj.question.trim() === '') {
+  //     missingFields.push('Question');
+  //   }
+  //   if (!questionObj.option1 || questionObj.option1.trim() === '') {
+  //     missingFields.push('Option1');
+  //   }
+  //   if (!questionObj.option2 || questionObj.option2.trim() === '') {
+  //     missingFields.push('Option2');
+  //   }
+  //   if (!questionObj.option3 || questionObj.option3.trim() === '') {
+  //     missingFields.push('Option3');
+  //   }
+  //   if (!questionObj.option4 || questionObj.option4.trim() === '') {
+  //     missingFields.push('Option4');
+  //   }
+  //   if (typeof questionObj.answer !== 'number') {
+  //     missingFields.push('Answer');
+  //   }
+  //
+  //   return missingFields;
+  // }
 
   closeDialog(): void {
     this.dialogRef.close();
