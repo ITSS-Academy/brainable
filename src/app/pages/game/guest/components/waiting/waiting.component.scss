@@ -72,14 +72,17 @@
         background-color: var(--md-sys-color-surface-container-lowest);
         border-radius: 12px;
 
-        input {
+        textarea {
           width: 90%;
           height: 40px;
-          padding: 0 16px;
+          padding: 9px 16px;
           border: 2px solid var(--md-sys-color-outline-variant);
           border-radius: 20px;
           outline: none;
           font-size: 18px;
+          resize: none;
+          overflow: hidden;
+          font-family: "Arial", sans-serif;
         }
 
         .btn-join {
@@ -132,5 +135,9 @@
 @media screen and (max-width: 576px) {
   .waiting-content h5 {
     font-size: 22px;
+  }
+
+  .enter-nickname {
+    width: 280px !important;
   }
 }

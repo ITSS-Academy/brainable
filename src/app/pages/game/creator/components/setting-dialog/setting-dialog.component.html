@@ -46,9 +46,15 @@
           />
           <label class="label-upload" for="uploadBtn-quiz">
             <div class="media-library"></div>
-            <button mat-flat-button (click)="triggerFileInput($event)">
-              Change
-            </button>
+            @if (isUpdateLoading$ | async) {
+              <div class="loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </div>
+            } @else {
+              <button mat-flat-button (click)="triggerFileInput($event)">
+                Change
+              </button>
+            }
           </label>
         } @else {
           <div class="img-container">

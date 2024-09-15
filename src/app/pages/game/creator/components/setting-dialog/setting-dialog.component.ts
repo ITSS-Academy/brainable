@@ -54,7 +54,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     imgUrl: '',
     category: <Categories>{},
   };
-
   uploadedFileUrl: string = '';
 
   constructor(
@@ -68,10 +67,8 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<SettingDialogComponent>,
   ) {}
 
-  isSettingUploadSuccess$ = this.store.select(
-    'storage',
-    'isSettingUploadSuccess',
-  );
+  isUpdateLoading$ = this.store.select('storage', 'isSettingUpload');
+  isUpdateSuccess$ = this.store.select('storage', 'isSettingUploadSuccess');
 
   ngOnInit() {
     this.subscription.push(
@@ -177,7 +174,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectImage(event: any) {
+  selectImage(event: any): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
@@ -185,9 +182,8 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       reader.onload = (e) =>
         (this.selectedImage = reader.result as string | ArrayBuffer);
       reader.readAsDataURL(file);
+      this.uploadQuizFile(fileInput);
     }
-    this.uploadQuizFile(fileInput);
-    this.selectedImage = '';
   }
 
   removeImage() {
@@ -213,7 +209,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange(event: MatRadioChange): void {
-
     if (event.value === 'public') {
       this.settings.isPublic = true;
     }
