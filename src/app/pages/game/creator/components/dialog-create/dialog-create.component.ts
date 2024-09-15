@@ -290,7 +290,7 @@ export class DialogCreateComponent {
     // If any question is invalid, show an error and stop the import
     if (!isValid) {
       // this.alertService.showAlertError(`Import failed! Missing fields: ${missingFields.join(', ')}`, 'Error', 3000, 'start', 'bottom');
-      this.alertService.showAlertError(`Import failed! Missing fields:`, 'Error', 3000, 'start', 'bottom');
+      this.alertService.showAlertError(`Import failed! Unsupported format or Missing fields`, 'Error', 3000, 'start', 'bottom');
       // Reset the file input element after an error
       this.resetFileInput(event);
       return; // Stop further processing
