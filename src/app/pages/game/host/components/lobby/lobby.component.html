@@ -32,7 +32,12 @@
   </div>
 
   <div class="buttons">
-    <button class="btn-join" mat-flat-button (click)="startGame()" [disabled]="isStartGameDisabled()">
+    <button
+      class="btn-join"
+      mat-flat-button
+      (click)="startGame()"
+      [disabled]="isStartGameDisabled()"
+    >
       Start Game
     </button>
   </div>
@@ -41,9 +46,8 @@
     <div class="players">
       @if (guests.length > 0) {
         @for (guest of guests; track $index) {
-
           <div class="player">
-            <div class="player-name">{{ guest }}</div>
+            <div class="player-name">{{ guest.userName }}</div>
           </div>
         }
       } @else {
@@ -55,7 +59,7 @@
   </div>
 
   <div class="footer">
-    <img src="assets/images/logo/brainable-white.png" alt="" class="logo"/>
+    <img src="assets/images/logo/brainable-white.png" alt="" class="logo" />
 
     <div class="game-info">
       <div class="number-of-players">
