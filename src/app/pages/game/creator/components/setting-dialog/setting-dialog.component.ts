@@ -25,6 +25,8 @@ import { Categories } from '../../../../../models/categories.model';
 import { CategoriesState } from '../../../../../ngrx/categories/categories.state';
 import * as CategoriesActions from '../../../../../ngrx/categories/categories.actions';
 import { SnowflakeId } from '@akashrajpurohit/snowflake-id';
+import * as StorageActions from '../../../../../ngrx/storage/storage.action';
+import { StorageState } from '../../../../../ngrx/storage/storage.state';
 
 @Component({
   selector: 'app-setting-dialog',
@@ -52,7 +54,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     imgUrl: '',
     category: <Categories>{},
   };
-
   uploadedFileUrl: string = '';
 
   constructor(
@@ -60,10 +61,14 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       auth: AuthState;
       quiz: QuizState;
       categories: CategoriesState;
+      storage: StorageState;
     }>,
     private storage: Storage,
     private dialogRef: MatDialogRef<SettingDialogComponent>,
   ) {}
+
+  isUpdateLoading$ = this.store.select('storage', 'isSettingUpload');
+  isUpdateSuccess$ = this.store.select('storage', 'isSettingUploadSuccess');
 
   ngOnInit() {
     this.subscription.push(
@@ -135,6 +140,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   // }
 
   uploadQuizFile(input: HTMLInputElement) {
+    this.store.dispatch(StorageActions.storeSettingUpload());
     const snowflake = SnowflakeId({
       workerId: 1,
       epoch: 1597017600000,
@@ -153,6 +159,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
             getDownloadURL(snapshot.ref)
               .then((url) => {
                 this.uploadedFileUrl = url;
+                this.store.dispatch(StorageActions.storeSettingUploadSuccess());
                 this.settings.imgUrl = this.uploadedFileUrl;
                 this.store.dispatch(
                   QuizActions.updateSetting({
@@ -167,7 +174,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectImage(event: any) {
+  selectImage(event: any): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
@@ -175,9 +182,8 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       reader.onload = (e) =>
         (this.selectedImage = reader.result as string | ArrayBuffer);
       reader.readAsDataURL(file);
+      this.uploadQuizFile(fileInput);
     }
-    this.uploadQuizFile(fileInput);
-    this.selectedImage = '';
   }
 
   removeImage() {
@@ -203,7 +209,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange(event: MatRadioChange): void {
-
     if (event.value === 'public') {
       this.settings.isPublic = true;
     }
