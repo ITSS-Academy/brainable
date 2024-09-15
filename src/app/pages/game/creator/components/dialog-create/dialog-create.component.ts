@@ -39,6 +39,7 @@ export class DialogCreateComponent {
       } else if (fileName.endsWith('.csv')) {
         this.onFileSelectedCSV(event);
       } else {
+        this.openDialog(['Unsupported file type']);
         console.error('Unsupported file type');
       }
     }
