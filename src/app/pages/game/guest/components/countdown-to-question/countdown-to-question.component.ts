@@ -49,7 +49,6 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('CountdownToQuestionComponent');
     this.gameService.listenForNavigateChooseAnswer(this.pin);
     this.startCountdown();
     this.subscription.push(
@@ -81,7 +80,6 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('countdown destroy');
     this.subscription.forEach((s) => s.unsubscribe());
     clearInterval(this.countdownInterval);
   }

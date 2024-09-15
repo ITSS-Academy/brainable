@@ -73,7 +73,6 @@ export class QuizComponent implements OnInit, OnDestroy {
       }),
       this.store.select('gameReport', 'gameId').subscribe((gameId) => {
         if (gameId) {
-          console.log(gameId);
         }
       }),
     );
