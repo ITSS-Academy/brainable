@@ -112,6 +112,10 @@ export class GameService {
     this.socket.emit('kickPlayer', { pin, playerName });
   }
 
+  endListeningForClientGuessLeft(): void {
+    this.socket.off('guestLeft');
+  }
+
   startGame(pin: string): void {
     this.socket.emit('startGame', pin);
   }

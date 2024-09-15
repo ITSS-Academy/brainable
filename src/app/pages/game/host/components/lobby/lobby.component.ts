@@ -84,6 +84,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.gameService.endListeningForClientGuessLeft();
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.store.dispatch(
       GameActions.storeTotalPlayers({ totalPlayers: this.guests.length }),
