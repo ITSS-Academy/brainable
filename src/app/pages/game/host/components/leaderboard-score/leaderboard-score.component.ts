@@ -166,9 +166,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
       ) as HTMLElement[];
 
       if (childrenArray.length !== changes.length) {
-        console.error(
-          'Mismatch between number of rows and changes. Check data consistency.',
-        );
+
         return;
       }
 

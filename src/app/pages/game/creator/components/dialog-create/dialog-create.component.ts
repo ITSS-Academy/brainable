@@ -144,7 +144,6 @@ export class DialogCreateComponent {
 
   readWord(event: any) {
     if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
-      console.error("No file selected.");
       return;
     }
 
@@ -154,7 +153,6 @@ export class DialogCreateComponent {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         if (!e || !e.target || !e.target.result) {
-          console.error("File reader encountered an error.");
           return;
         }
 
@@ -166,7 +164,7 @@ export class DialogCreateComponent {
             const extractedText = result.value;
             this.parseText(extractedText, event); // Ensure event is passed to parseText
           })
-          .catch((err) => console.error('Error reading Word file:', err));
+          .catch((err) => {});
       };
 
       reader.readAsArrayBuffer(file);
