@@ -24,7 +24,7 @@
           <span class="number">{{questionRecord.countB}}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countB" class="process-bar-correct"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="calculatePercentage(questionRecord.countB, (gameReport$|async)?.gameRecords!)" class="process-bar-correct"></mat-progress-bar>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
           <span class="number">{{questionRecord.countC}}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countC" class="process-bar-correct"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="calculatePercentage(questionRecord.countC, (gameReport$|async)?.gameRecords!)" class="process-bar-correct"></mat-progress-bar>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
           <span class="number">{{questionRecord.countD}}</span>
         </div>
         <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countD" class="process-bar-wrong"></mat-progress-bar>
+          <mat-progress-bar mode="determinate" [value]="calculatePercentage(questionRecord.countD, (gameReport$|async)?.gameRecords!)" class="process-bar-correct"></mat-progress-bar>
         </div>
       </div>
     </div>
