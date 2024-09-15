@@ -83,7 +83,7 @@ export class GameService {
     });
   }
 
-  listenForGuestJoined(): Observable<{ username: string }> {
+  listenForGuestJoined(): Observable<{ username: string; playerId: string }> {
     return new Observable((observer) => {
       this.socket.on('guestJoined', (guest: any) => {
         observer.next(guest);
@@ -97,6 +97,22 @@ export class GameService {
         observer.next(guest);
       });
     });
+  }
+
+  listenForClientGuessLeft(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('guestLeft', (guest: string) => {
+        observer.next(guest);
+      });
+    });
+  }
+
+  kickPlayer(pin: string, playerId: string): void {
+    this.socket.emit('kickPlayer', { pin, playerId });
+  }
+
+  endListeningForClientGuessLeft(): void {
+    this.socket.off('guestLeft');
   }
 
   startGame(pin: string): void {

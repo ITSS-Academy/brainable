@@ -40,3 +40,5 @@ export const createGameReportFailure = createAction(
   '[GameReport] Create Game Report Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const clearStateReport = createAction('[GameReport] Clear State');

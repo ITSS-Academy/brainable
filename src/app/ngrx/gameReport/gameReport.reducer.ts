@@ -91,4 +91,7 @@ export const gameReportReducer = createReducer(
       createGameReportErrorMessage: errorMessage,
     };
   }),
+  on(GameReportActions.clearStateReport, (state) => {
+    return initialState;
+  }),
 );
