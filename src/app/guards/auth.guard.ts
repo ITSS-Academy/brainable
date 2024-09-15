@@ -4,6 +4,8 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../components/login/login.component';
+import { Store } from '@ngrx/store';
+import { GameState } from '../ngrx/game/game.state';
 
 export const canActivateLibrary: CanActivateFn = () => {
   const router = inject(Router);
@@ -89,6 +91,21 @@ export const canActiveHost: CanActivateFn = () => {
         }
       }),
     );
+};
+
+export const canActiveGame: CanActivateFn = () => {
+  const router = inject(Router);
+  const store = inject(Store<{ game: GameState }>);
+  return store.select('game', 'pin').pipe(
+    map((pin) => {
+      if (pin) {
+        return true;
+      } else {
+        router.navigate(['/join']);
+        return false;
+      }
+    }),
+  );
 };
 
 export class authGuard {}
