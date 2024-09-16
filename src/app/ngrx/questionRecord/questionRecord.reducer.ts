@@ -68,4 +68,7 @@ export const questionRecordReducer = createReducer(
       };
     },
   ),
+  on(QuestionRecordActions.clearStateQuestionRecord, (state) => {
+    return initialState;
+  })
 );

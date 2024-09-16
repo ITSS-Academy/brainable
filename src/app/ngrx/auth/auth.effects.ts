@@ -34,7 +34,9 @@ export class AuthEffects {
         return this.authService.logout();
       }),
       map(() => {
+
         return AuthActions.logoutSuccess();
+
       }),
       catchError((error) => {
         return of(AuthActions.logoutFailure({ errorMessage: error }));

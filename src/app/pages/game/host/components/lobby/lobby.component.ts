@@ -76,7 +76,15 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  startGame() {
+  startGame( ): void {
+    if (this.guests.length === 0) {
+      // If no players, show a message to the host
+      return;
+
+    }
+
+
+    // If there are players, proceed with starting the game
     this.gameService.startGame(this.pin);
     let newGame: GameReport = {
       id: '',
@@ -97,6 +105,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
     this.router.navigate([`/host/${this.pin}/countdown`]);
   }
 
+  dissableStartButton(): boolean {
+    return this.guests.length === 0
+  }
+
+
   song = new Audio();
 
   playMusic() {
@@ -116,9 +129,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
     this.song.volume = vl.target.value;
   }
 
-  isStartGameDisabled(): boolean {
-    return this.guests.length < 0;
-  }
+
 
   openQrDialog() {
     const dialogRef = this.dialog.open(QrDialogComponent);

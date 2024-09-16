@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 import { MaterialModule } from '../../../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../../../shared/modules/shared.module';
 import { QuestionRecord } from '../../../../../../../models/questionRecord.model';
 import { GameReportState } from '../../../../../../../ngrx/gameReport/gameReport.state';
 import { Store } from '@ngrx/store';
+import {clearStateReport} from "../../../../../../../ngrx/gameReport/gameReport.action";
 
 @Component({
   selector: 'app-quiz-result',

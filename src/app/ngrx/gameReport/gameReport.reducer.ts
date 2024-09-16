@@ -92,6 +92,7 @@ export const gameReportReducer = createReducer(
     };
   }),
   on(GameReportActions.clearStateReport, (state) => {
+    console.log('clearStateReport');
     return initialState;
   }),
 );
