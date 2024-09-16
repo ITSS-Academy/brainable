@@ -58,6 +58,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
         this.prevResult = prevResult as LeaderboardEntry[];
       }),
     );
+    this.playMusic();
   }
 
   nextClicked() {
@@ -70,6 +71,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       GameActions.storePreviousResult({ previousResult: this.result }),
     );
+    this.pauseMusic();
   }
 
   @ViewChild('rootElement', { static: true }) rootElement!: ElementRef;
@@ -166,7 +168,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
       ) as HTMLElement[];
 
       if (childrenArray.length !== changes.length) {
-
         return;
       }
 
@@ -196,5 +197,18 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  song = new Audio();
+
+  playMusic() {
+    this.song.src = 'assets/music/top5-leaderboard.mp3';
+    this.song.load();
+    this.song.play().then();
+  }
+
+  pauseMusic() {
+    this.song.pause();
+    // this.isMusicPlaying = false;
   }
 }
