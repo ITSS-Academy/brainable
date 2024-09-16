@@ -482,7 +482,7 @@ export class DialogCreateComponent {
   downloadFile(event: MouseEvent, type: 'docx' | 'xlsx' | 'csv'): void {
     // Define the path to the file
     const wordFile = '../../../../assets/example-file/Question.docx';
-    const excelFile = '../../../../assets/example-file/test.xlsx';
+    const excelFile = '../../../../assets/example-file/Question.xlsx';
     const csvFile = '../../../../assets/example-file/Question.csv';
     const exampleFiles = [
       { type: 'docx', path: wordFile },
