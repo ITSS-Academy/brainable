@@ -75,8 +75,8 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(clearStateReport());
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.store.dispatch(clearStateReport());
   }
 
   ngAfterViewInit() {
