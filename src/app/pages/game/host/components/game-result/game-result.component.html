@@ -15,38 +15,38 @@
 
   <div class="content">
     <div class="first-place">
-      <div class="name first-place-name">{{ result[0].playerName }}</div>
+      <div class="name first-place-name">{{ result[0].playerName ?? "" }}</div>
       <div class="result">
         <iframe
           class="ribbon"
           src="https://lottie.host/embed/e5f8ce7e-a6a6-4c73-b848-57390c019aec/ByKATft4Wn.json"
         ></iframe>
         <img src="assets/images/rainbow-diamond.png" alt="" class="rank" />
-        <div class="score">{{ result[0].score }}</div>
+        <div class="score">{{ result[0].score ?? "" }}</div>
       </div>
     </div>
 
     <div class="second-place">
-      <div class="name second-place-name">{{ result[1].playerName }}</div>
+      <div class="name second-place-name">{{ result[1].playerName ?? "" }}</div>
       <div class="result">
         <iframe
           class="ribbon"
           src="https://lottie.host/embed/e5f8ce7e-a6a6-4c73-b848-57390c019aec/ByKATft4Wn.json"
         ></iframe>
         <img src="assets/images/pearl.png" alt="" class="rank" />
-        <div class="score">{{ result[1].score }}</div>
+        <div class="score">{{ result[1].score ?? "" }}</div>
       </div>
     </div>
 
     <div class="third-place">
-      <div class="name third-place-name">{{ result[2].playerName }}</div>
+      <div class="name third-place-name">{{ result[2].playerName ?? "" }}</div>
       <div class="result">
         <iframe
           class="ribbon"
           src="https://lottie.host/embed/e5f8ce7e-a6a6-4c73-b848-57390c019aec/ByKATft4Wn.json"
         ></iframe>
         <img src="assets/images/amethyst.png" alt="" class="rank" />
-        <div class="score">{{ result[2].score }}</div>
+        <div class="score">{{ result[2].score ?? "" }}</div>
       </div>
     </div>
   </div>
