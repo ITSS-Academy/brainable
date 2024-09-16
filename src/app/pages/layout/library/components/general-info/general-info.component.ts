@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
 import { GameReport } from '../../../../../models/gameReport.model';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
-import {AlertService} from "../../../../../services/alert/alert.service";
+import { AlertService } from '../../../../../services/alert/alert.service';
 
 @Component({
   selector: 'app-general-info',
@@ -60,7 +60,13 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
         .select('quiz', 'isDeleteQuizSuccessful')
         .subscribe((isDeleteQuizSuccessful) => {
           if (isDeleteQuizSuccessful) {
-            this.alertService.showAlert('Quiz deleted successfully', 'Close', 3000, 'end', 'top');
+            this.alertService.showAlert(
+              'Quiz deleted successfully',
+              'Close',
+              3000,
+              'end',
+              'top',
+            );
             this.store.dispatch(QuizActions.clearQuizState());
             this.store.dispatch(
               QuizActions.getAllQuiz({ idToken: this.idToken }),
@@ -88,22 +94,22 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
     this.gameService.createRoom(pin);
     this.router.navigate([`/host/${pin}/lobby`]);
 
-    let newGame: GameReport = {
-      id: '',
-      quizId: this.quiz,
-      createdAt: new Date(),
-      gameRecords: [],
-      hostId: '',
-      index: 0,
-      joinCode: pin,
-      totalQuestions: 0,
-    };
-    this.store.dispatch(
-      GameReportActions.createGameReport({
-        idToken: this.idToken,
-        gameReport: newGame,
-      }),
-    );
+    // let newGame: GameReport = {
+    //   id: '',
+    //   quizId: this.quiz,
+    //   createdAt: new Date(),
+    //   gameRecords: [],
+    //   hostId: '',
+    //   index: 0,
+    //   joinCode: pin,
+    //   totalQuestions: 0,
+    // };
+    // this.store.dispatch(
+    //   GameReportActions.createGameReport({
+    //     idToken: this.idToken,
+    //     gameReport: newGame,
+    //   }),
+    // );
   }
 
   generatePin(): string {

@@ -7,10 +7,14 @@ import { GameService } from '../../../../../services/game/game.service';
 import { Router } from '@angular/router';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import { QRCodeModule } from 'angularx-qrcode';
-import * as string_decoder from 'node:string_decoder';
 import { QrDialogComponent } from '../qr-dialog/qr-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NgClass } from '@angular/common';
+import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
+import { Quiz } from '../../../../../models/quiz.model';
+import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
+import { AuthState } from '../../../../../ngrx/auth/auth.state';
+import { GameReport } from '../../../../../models/gameReport.model';
 
 @Component({
   selector: 'app-lobby',
@@ -26,15 +30,22 @@ export class LobbyComponent implements OnInit, OnDestroy {
   pin: string = '';
   qrCodeValue: string = '';
   isQrDialogOpen = false;
+  quiz!: Quiz;
+  idToken!: string;
 
   readonly dialog = inject(MatDialog);
 
   constructor(
-    private store: Store<{ game: GameState }>,
+    private store: Store<{ game: GameState; quiz: QuizState; auth: AuthState }>,
     private gameService: GameService,
     private router: Router,
   ) {
     this.subscriptions.push(
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        if (idToken) {
+          this.idToken = idToken as string;
+        }
+      }),
       this.store.select('game', 'pin').subscribe((pin) => {
         if (pin) {
           this.pin = pin as string;
@@ -55,19 +66,34 @@ export class LobbyComponent implements OnInit, OnDestroy {
           });
         }
       }),
+      this.store.select('quiz', 'quiz').subscribe((quiz) => {
+        this.quiz = quiz;
+      }),
     );
 
     this.playMusic();
-
-    // document.addEventListener('click', this.playMusic.bind(this), {
-    //   once: true,
-    // });
   }
 
   ngOnInit(): void {}
 
   startGame() {
     this.gameService.startGame(this.pin);
+    let newGame: GameReport = {
+      id: '',
+      quizId: this.quiz,
+      createdAt: new Date(),
+      gameRecords: [],
+      hostId: '',
+      index: 0,
+      joinCode: this.pin,
+      totalQuestions: 0,
+    };
+    this.store.dispatch(
+      GameReportActions.createGameReport({
+        idToken: this.idToken,
+        gameReport: newGame,
+      }),
+    );
     this.router.navigate([`/host/${this.pin}/countdown`]);
   }
 
