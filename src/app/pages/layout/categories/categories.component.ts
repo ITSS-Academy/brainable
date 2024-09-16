@@ -111,22 +111,22 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.gameService.createRoom(pin);
     this.router.navigate([`/host/${pin}/lobby`]);
 
-    let newGame: GameReport = {
-      id: '',
-      quizId: quiz,
-      createdAt: new Date(),
-      gameRecords: [],
-      hostId: '',
-      index: 0,
-      joinCode: pin,
-      totalQuestions: 0,
-    };
-    this.store.dispatch(
-      GameReportActions.createGameReport({
-        idToken: this.idToken,
-        gameReport: newGame,
-      }),
-    );
+    // let newGame: GameReport = {
+    //   id: '',
+    //   quizId: quiz,
+    //   createdAt: new Date(),
+    //   gameRecords: [],
+    //   hostId: '',
+    //   index: 0,
+    //   joinCode: pin,
+    //   totalQuestions: 0,
+    // };
+    // this.store.dispatch(
+    //   GameReportActions.createGameReport({
+    //     idToken: this.idToken,
+    //     gameReport: newGame,
+    //   }),
+    // );
   }
 
   generatePin(): string {

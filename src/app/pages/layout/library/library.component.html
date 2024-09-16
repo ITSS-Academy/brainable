@@ -2,7 +2,7 @@
   <div class="profile-container">
     <app-profile-info></app-profile-info>
   </div>
-  @if (getListQuizSuccess$ | async){
+  @if (getListQuizSuccess$ | async) {
     <div class="library-container">
       @if (listQuiz.length === 0) {
         <div class="empty-box">
@@ -23,11 +23,11 @@
 
         <div
           style="
-          width: 1px;
-          height: 100%;
-          background-color: #e0e0e0;
-          margin-left: 10px;
-        "
+            width: 1px;
+            height: 100%;
+            background-color: #e0e0e0;
+            margin-left: 10px;
+          "
           class="straight-line"
         ></div>
 
@@ -49,6 +49,10 @@
           </cdk-virtual-scroll-viewport>
         </div>
       }
+    </div>
+  } @else {
+    <div class="loading-container">
+      <app-loading></app-loading>
     </div>
   }
 </div>
