@@ -124,7 +124,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
 
     for (let i = 0; i < files.length; i++) {
       let newId = snowflake.generate();
-      console.log(newId);
       const file = files.item(i);
       if (file) {
         const storageRef = ref(this.storage, newId);
@@ -304,7 +303,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onSettingClick() {
-    console.log('Setting clicked');
   }
 
   openDialog() {

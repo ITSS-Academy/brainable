@@ -94,7 +94,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
         points: this.questions[this.currentQuestion].points,
         timeLimit: this.questions[this.currentQuestion].timeLimit,
       };
-      console.log(data)
       this.gameService.sendQuestion(data);
     }
     this.imgUrl = this.questions[this.currentQuestion].imgUrl;

@@ -63,10 +63,7 @@
             style="display: flex; align-items: center; gap: 0.2rem"
           >
             No answer
-            <span
-              style="color: orange"
-              class="material-symbols-outlined"
-            >
+            <span style="color: orange" class="material-symbols-outlined">
               error
             </span>
           </div>
@@ -83,7 +80,12 @@
             <mat-progress-spinner
               class="example-margin"
               mode="determinate"
-              value="90"
+              [value]="
+                calculatePercentage(
+                  row.correctCount,
+                  (gameReport$ | async)!.totalQuestions
+                )
+              "
               diameter="50"
             >
             </mat-progress-spinner>
@@ -93,7 +95,7 @@
                   row.correctCount,
                   (gameReport$ | async)!.totalQuestions
                 )
-              }}
+              }}%
             </span>
           </div>
         </td>
@@ -101,7 +103,7 @@
 
       <!-- <ng-container matColumnDef="question-incorrect">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Accuracy</th>
-        
+
       </ng-container> -->
 
       <!-- <ng-container matColumnDef="score">

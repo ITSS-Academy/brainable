@@ -1,0 +1,16 @@
+.qr-code-container {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+qrcode {
+  width: 350px;
+  height: 350px;
+  margin: 0 8px;
+}

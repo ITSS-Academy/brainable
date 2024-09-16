@@ -54,7 +54,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     imgUrl: '',
     category: <Categories>{},
   };
-
   uploadedFileUrl: string = '';
 
   constructor(
@@ -68,16 +67,13 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<SettingDialogComponent>,
   ) {}
 
-  isSettingUploadSuccess$ = this.store.select(
-    'storage',
-    'isSettingUploadSuccess',
-  );
+  isUpdateLoading$ = this.store.select('storage', 'isSettingUpload');
+  isUpdateSuccess$ = this.store.select('storage', 'isSettingUploadSuccess');
 
   ngOnInit() {
     this.subscription.push(
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
-          console.log(this.settings.category);
           this.settings.title = quiz.title;
           this.settings.description = quiz?.description || '';
           this.settings.isPublic = quiz.isPublic;
@@ -88,7 +84,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
               'https://firebasestorage.googleapis.com/v0/b/brainable-d5919.appspot.com/o/ellipse1.png?alt=media&token=87a505f6-7e07-4b79-ad51-4e3990b21d5e',
           };
           this.settings.imgUrl = quiz.imgUrl;
-          console.log('this.setting', this.settings);
         }
       }),
       this.store.select('categories', 'categories').subscribe((categories) => {
@@ -155,7 +150,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       const file = files.item(i);
       if (file) {
         let newId = snowflake.generate();
-        console.log(newId);
         const storageRef = ref(this.storage, newId);
         uploadBytesResumable(storageRef, file)
           .then((snapshot) => {
@@ -177,7 +171,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectImage(event: any) {
+  selectImage(event: any): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
@@ -185,9 +179,8 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
       reader.onload = (e) =>
         (this.selectedImage = reader.result as string | ArrayBuffer);
       reader.readAsDataURL(file);
+      this.uploadQuizFile(fileInput);
     }
-    this.uploadQuizFile(fileInput);
-    this.selectedImage = '';
   }
 
   removeImage() {
@@ -213,7 +206,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange(event: MatRadioChange): void {
-
     if (event.value === 'public') {
       this.settings.isPublic = true;
     }
@@ -223,7 +215,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   saveChanges(): void {
-    console.log('save', this.settings);
     this.store.dispatch(
       QuizActions.updateSetting({ setting: { ...this.settings } }),
     );
@@ -241,7 +232,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
     );
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
       if (quiz) {
-        console.log(quiz);
         this.quiz = quiz;
       }
     });

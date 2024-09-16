@@ -17,7 +17,8 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 import { GameReport } from '../../../../../models/gameReport.model';
-import {DatePipe, SlicePipe} from '@angular/common';
+import { DatePipe, SlicePipe } from '@angular/common';
+import { clearStateReport } from '../../../../../ngrx/gameReport/gameReport.action';
 
 @Component({
   selector: 'app-report-list',
@@ -59,10 +60,12 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
               this.dataSource = new MatTableDataSource(users);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              this.paginator.page.subscribe(() => {});
-              this.sort.sortChange.subscribe((sortState: Sort) => {
-                this.customSort(sortState);
-              });
+              // this.paginator.page.subscribe(() => {});
+              if (this.sort) {
+                this.sort.sortChange.subscribe((sortState: Sort) => {
+                  this.customSort(sortState);
+                });
+              }
               // console.log(users);
             }
           });
@@ -72,6 +75,7 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(clearStateReport());
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 

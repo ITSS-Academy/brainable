@@ -28,9 +28,7 @@ export class GameResultComponent {
 
   constructor(
     private gameService: GameService,
-    private socket: Socket,
   ) {
-    console.log('GameResultComponent');
     this.rank = this.gameService.rank;
   }
 }

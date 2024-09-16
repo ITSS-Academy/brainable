@@ -25,6 +25,7 @@ import { SettingDialogComponent } from '../setting-dialog/setting-dialog.compone
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialogCreateComponent } from '../dialog-create/dialog-create.component';
 import { MainContentComponent } from '../main-content/main-content.component';
+import {AlertService} from "../../../../../services/alert/alert.service";
 
 @Component({
   selector: 'app-header',
@@ -49,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{ auth: AuthState; quiz: QuizState }>,
     private router: Router,
+    private alertService: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -61,12 +63,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }),
       this.store.select('quiz', 'quizCheck').subscribe((quizCheck) => {
         this.quizCheck = quizCheck;
-        console.log(this.quizCheck);
       }),
       this.store
         .select('quiz', 'isUpdateQuizSuccessful')
         .subscribe((isUpdateQuizSuccessful) => {
           if (isUpdateQuizSuccessful) {
+            this.alertService.showAlert('Quiz updated successfully', 'Close', 3000, 'end', 'top');
             this.router.navigate(['/library']);
             this.store.dispatch(QuizActions.clearQuizState());
           }
@@ -75,6 +77,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         .select('quiz', 'isCreateQuizSuccessful')
         .subscribe((isCreateQuizSuccessful) => {
           if (isCreateQuizSuccessful) {
+            this.alertService.showAlert('Quiz created successfully', 'Close', 3000, 'end', 'top');
             this.router.navigate(['/library']);
             this.store.dispatch(QuizActions.clearQuizState());
           }
@@ -132,7 +135,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const quizUpdate: QuizDTO = {
         quiz: this.quiz,
       };
-      console.log(quizUpdate);
 
       this.store.dispatch(
         QuizActions.updateQuiz({ idToken: this.idToken, quiz: quizUpdate }),

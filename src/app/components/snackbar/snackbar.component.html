@@ -1,0 +1,14 @@
+<div id="snack-bar-container">
+  <span matSnackBarLabel class="label">
+    {{ data.message }}
+  </span>
+  <span matSnackBarActions>
+    <button
+      mat-button
+      matSnackBarAction
+      (click)="snackBarRef.dismissWithAction()"
+    >
+      {{ data.action }}
+    </button>
+  </span>
+</div>

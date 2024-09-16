@@ -10,13 +10,23 @@
       <span class="pin">{{ pin }}</span>
     </div>
 
-    <div class="qr-code-container">
+    <div
+      class="qr-code-container"
+      [ngClass]="{ 'hidden-small-qr': isQrDialogOpen }"
+    >
       <qrcode
         [qrdata]="this.qrCodeValue"
         [width]="118"
         [elementType]="'img'"
         [margin]="2"
       ></qrcode>
+
+      <div class="zoom-container">
+        <div class="overlay"></div>
+        <button class="zoom-qr-code" (click)="openQrDialog()">
+          <mat-icon>zoom_out_map</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -41,9 +51,8 @@
     <div class="players">
       @if (guests.length > 0) {
         @for (guest of guests; track $index) {
-
           <div class="player">
-            <div class="player-name">{{ guest }}</div>
+            <div class="player-name">{{ guest.userName }}</div>
           </div>
         }
       } @else {
@@ -55,7 +64,7 @@
   </div>
 
   <div class="footer">
-    <img src="assets/images/logo/brainable-white.png" alt="" class="logo"/>
+    <img src="assets/images/logo/brainable-white.png" alt="" class="logo" />
 
     <div class="game-info">
       <div class="number-of-players">

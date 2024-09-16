@@ -48,7 +48,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.gameService.listenForTop5().subscribe((top5) => {
       this.result = top5;
-      console.log('result: ', this.result);
       this.createLeaderboard('rootElement');
       this.renderLeaderboard(this.result);
       (async () =>
@@ -57,9 +56,9 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.store.select('game', 'previousResult').subscribe((prevResult) => {
         this.prevResult = prevResult as LeaderboardEntry[];
-        console.log('prevresult', this.prevResult);
       }),
     );
+    this.playMusic();
   }
 
   nextClicked() {
@@ -72,6 +71,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       GameActions.storePreviousResult({ previousResult: this.result }),
     );
+    this.pauseMusic();
   }
 
   @ViewChild('rootElement', { static: true }) rootElement!: ElementRef;
@@ -158,7 +158,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
 
 
     const changes = this.calcChange(prevLeaderboard, leaderboard);
-    console.log('changes: ', changes); // Log changes for debugging
 
     // Wait for 1 second before starting the animation
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -170,9 +169,6 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
       ) as HTMLElement[];
 
       if (childrenArray.length !== changes.length) {
-        console.error(
-          'Mismatch between number of rows and changes. Check data consistency.',
-        );
         return;
       }
 
@@ -202,5 +198,18 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  song = new Audio();
+
+  playMusic() {
+    this.song.src = 'assets/music/top5-leaderboard.mp3';
+    this.song.load();
+    this.song.play().then();
+  }
+
+  pauseMusic() {
+    this.song.pause();
+    // this.isMusicPlaying = false;
   }
 }

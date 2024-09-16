@@ -44,7 +44,6 @@ export const questionRecordReducer = createReducer(
   ),
 
   on(QuestionRecordActions.createQuestionRecord, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isCreateQuestionRecordLoading: true,
@@ -53,7 +52,6 @@ export const questionRecordReducer = createReducer(
     };
   }),
   on(QuestionRecordActions.createQuestionRecordSuccess, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isCreateQuestionRecordLoading: false,
@@ -63,7 +61,6 @@ export const questionRecordReducer = createReducer(
   on(
     QuestionRecordActions.createQuestionRecordFailure,
     (state, { errorMessage }) => {
-      console.log(errorMessage);
       return {
         ...state,
         isCreateQuestionRecordLoading: false,

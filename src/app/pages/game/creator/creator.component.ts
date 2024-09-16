@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../ngrx/quiz/quiz.state';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import * as QuizActions from '../../../ngrx/quiz/quiz.actions';
 import { Quiz, QuizDTO } from '../../../models/quiz.model';
 import { LoadingComponent } from '../../loading/loading.component';
@@ -26,7 +26,7 @@ import { SettingBarComponent } from './components/setting-bar/setting-bar.compon
 import { JsonPipe, NgIf } from '@angular/common';
 import { GameService } from '../../../services/game/game.service';
 import { Categories } from '../../../models/categories.model';
-import {QuestionState} from "../../../ngrx/question/question.state";
+import { QuestionState } from '../../../ngrx/question/question.state';
 import * as QuestionActions from '../../../ngrx/question/question.actions';
 
 @Component({
@@ -52,6 +52,7 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   quiz!: Quiz;
   isEdit = false;
   dialog = inject(MatDialog);
+  isCreateQuizLoading$: Observable<boolean>;
 
   quizDefault: Quiz = {
     id: '',
@@ -94,9 +95,14 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
       auth: AuthState;
       quiz: QuizState;
       profile: Profile;
-      question: QuestionState
+      question: QuestionState;
     }>,
-  ) {}
+  ) {
+    this.isCreateQuizLoading$ = this.store.select(
+      'quiz',
+      'isCreateQuizLoading',
+    );
+  }
 
   ngOnInit(): void {
     const { id } = this.activatedRoute.snapshot.params;
@@ -105,7 +111,6 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
 
     this.store.select('quiz', 'quiz').subscribe((quiz) => {
-      console.log(quiz);
       if (quiz) {
         this.quiz = this.deepClone(quiz);
       }
@@ -174,9 +179,10 @@ export class CreatorComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   deleteQuestion(index: number, id: string) {
-    console.log(index);
     this.store.dispatch(QuizActions.deleteQuestionByIndex({ index: index }));
-    this.store.dispatch(QuestionActions.deleteQuestion({ idToken: this.idToken, questionId: id }));
+    this.store.dispatch(
+      QuestionActions.deleteQuestion({ idToken: this.idToken, questionId: id }),
+    );
     if (this.currentQuestionIndex === index && this.quiz.questions.length > 0) {
       this.activeQuestion(this.currentQuestionIndex - 1);
     }

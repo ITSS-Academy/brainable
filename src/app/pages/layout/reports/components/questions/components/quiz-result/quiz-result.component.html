@@ -1,60 +1,150 @@
 <div class="container">
   <div class="question-multiple-choice">
-    <div class="circle-and-number-container">
-      <div class="circle-container">
-        <span class="letter">A</span>
-      </div>
-      <div class="ques-info">
-        <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option1}}</span>
-          <span class="number">{{questionRecord.countA}}</span>
+    @if (questionRecord) {
+      <div class="circle-and-number-container">
+        <div class="circle-container">
+          <span class="letter">A</span>
         </div>
-        <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="calculatePercentage(questionRecord.countA, (gameReport$|async)?.gameRecords!)" class="process-bar-correct"></mat-progress-bar>
-        </div>
-      </div>
-    </div>
-    <div class="circle-and-number-container">
-      <div class="circle-container">
-        <span class="letter">B</span>
-      </div>
-      <div class="ques-info">
-        <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option2}}</span>
-          <span class="number">{{questionRecord.countB}}</span>
-        </div>
-        <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countB" class="process-bar-correct"></mat-progress-bar>
-        </div>
-      </div>
-    </div>
-    <div class="circle-and-number-container">
-      <div class="circle-container">
-        <span class="letter">C</span>
-      </div>
-      <div class="ques-info">
-        <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option3}}</span>
-          <span class="number">{{questionRecord.countC}}</span>
-        </div>
-        <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countC" class="process-bar-correct"></mat-progress-bar>
+        <div class="ques-info">
+          <div class="ques-ans">
+            <span class="ans">{{ questionRecord.question.option1 }}</span>
+            <span class="number">{{ questionRecord.countA }}</span>
+          </div>
+          <div class="progress-bar-container">
+            @if (questionRecord.question.answer == 1) {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countA,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-correct"
+              ></mat-progress-bar>
+            } @else {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countA,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-wrong"
+              ></mat-progress-bar>
+            }
+          </div>
         </div>
       </div>
-    </div>
-    <div class="circle-and-number-container">
-      <div class="circle-container">
-        <span class="letter">D</span>
-      </div>
-      <div class="ques-info">
-        <div class="ques-ans">
-          <span class="ans">{{questionRecord.question.option4}}</span>
-          <span class="number">{{questionRecord.countD}}</span>
+      <div class="circle-and-number-container">
+        <div class="circle-container">
+          <span class="letter">B</span>
         </div>
-        <div class="progress-bar-container">
-          <mat-progress-bar mode="determinate" [value]="questionRecord.countD" class="process-bar-wrong"></mat-progress-bar>
+        <div class="ques-info">
+          <div class="ques-ans">
+            <span class="ans">{{ questionRecord.question.option2 }}</span>
+            <span class="number">{{ questionRecord.countB }}</span>
+          </div>
+          <div class="progress-bar-container">
+            @if (questionRecord.question.answer == 2) {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countB,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-correct"
+              ></mat-progress-bar>
+            } @else {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countB,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-wrong"
+              ></mat-progress-bar>
+            }
+          </div>
         </div>
       </div>
-    </div>
+      <div class="circle-and-number-container">
+        <div class="circle-container">
+          <span class="letter">C</span>
+        </div>
+        <div class="ques-info">
+          <div class="ques-ans">
+            <span class="ans">{{ questionRecord.question.option3 }}</span>
+            <span class="number">{{ questionRecord.countC }}</span>
+          </div>
+          <div class="progress-bar-container">
+            @if (questionRecord.question.answer == 3) {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countC,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-correct"
+              ></mat-progress-bar>
+            } @else {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countC,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-wrong"
+              ></mat-progress-bar>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="circle-and-number-container">
+        <div class="circle-container">
+          <span class="letter">D</span>
+        </div>
+        <div class="ques-info">
+          <div class="ques-ans">
+            <span class="ans">{{ questionRecord.question.option4 }}</span>
+            <span class="number">{{ questionRecord.countD }}</span>
+          </div>
+          <div class="progress-bar-container">
+            @if (questionRecord.question.answer == 4) {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countD,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-correct"
+              ></mat-progress-bar>
+            } @else {
+              <mat-progress-bar
+                mode="determinate"
+                [value]="
+                  calculatePercentage(
+                    questionRecord.countD,
+                    (gameReport$ | async)?.gameRecords!
+                  )
+                "
+                class="process-bar-wrong"
+              ></mat-progress-bar>
+            }
+          </div>
+        </div>
+      </div>
+    }
   </div>
 </div>

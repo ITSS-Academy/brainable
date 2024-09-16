@@ -15,3 +15,6 @@ export const searchFailure = createAction(
   '[Search] Search Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const clearSearchResults = createAction('[Search] Clear Search Results');
+

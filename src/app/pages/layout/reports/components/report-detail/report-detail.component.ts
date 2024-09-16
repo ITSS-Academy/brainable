@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
@@ -11,6 +11,7 @@ import { GameReport } from '../../../../../models/gameReport.model';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { PlayerRecord } from '../../../../../models/playerRecord.model';
+import { clearStateReport } from '../../../../../ngrx/gameReport/gameReport.action';
 
 @Component({
   selector: 'app-report-detail',
@@ -25,7 +26,7 @@ import { PlayerRecord } from '../../../../../models/playerRecord.model';
   templateUrl: './report-detail.component.html',
   styleUrl: './report-detail.component.scss',
 })
-export class ReportDetailComponent implements OnInit {
+export class ReportDetailComponent implements OnInit, OnDestroy {
   gameReport$ = this.store.select('gameReport');
   currentReport!: GameReport;
   gameRecords!: PlayerRecord[] | undefined;
@@ -45,5 +46,9 @@ export class ReportDetailComponent implements OnInit {
         );
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(clearStateReport());
   }
 }

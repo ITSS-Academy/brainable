@@ -1,4 +1,7 @@
-@if (!isGetQuizByIdSuccessful && !isCreateNewQuiz) {
+@if (
+  (!isGetQuizByIdSuccessful && !isCreateNewQuiz) ||
+  (isCreateQuizLoading$ | async)
+) {
   <div class="loading-container">
     <app-loading></app-loading>
   </div>

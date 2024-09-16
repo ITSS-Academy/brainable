@@ -49,7 +49,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('AnswerComponent');
     this.startTimer();
 
     this.subscription.push(
@@ -70,11 +69,9 @@ export class AnswerComponent implements OnInit, OnDestroy {
       }),
       this.gameService.listenForReceiveQuestion().subscribe((questionId) => {
         this.questionId = questionId;
-        console.log(this.questionId);
       }),
     );
 
-    console.log(this.pin);
     this.gameService.listenForNavigateToResults(this.pin);
   }
 
@@ -89,7 +86,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
       answer: answer as number,
       time: this.timeElapsed,
     };
-    console.log(answerData);
     if (this.isCheckTime < 1000) {
       setTimeout(() => {
         this.gameService.sendAnswer(answerData);
@@ -100,7 +96,6 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('AnswerComponent destroyed');
     if (!this.isChoosing) {
       this.chooseAnswer(0);
     }

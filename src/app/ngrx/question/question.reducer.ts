@@ -16,7 +16,6 @@ export const initialState: QuestionState = {
 export const questionReducer = createReducer(
   initialState,
   on(QuestionActions.deleteQuestion, (state, {type}) => {
-    console.log(type)
     return {
       ...state,
       isDeleteQuestionLoading: true,
@@ -26,7 +25,6 @@ export const questionReducer = createReducer(
     }
   ),
   on(QuestionActions.deleteQuestionSuccess, (state, {type}) => {
-    console.log(type)
     return {
       ...state,
       isDeleteQuestionLoading: false,
@@ -35,7 +33,6 @@ export const questionReducer = createReducer(
     };
   }),
   on(QuestionActions.deleteQuestionFailure, (state, {errorMessage}) => {
-    console.log(errorMessage)
     return {
       ...state,
       isDeleteQuestionLoading: false,
