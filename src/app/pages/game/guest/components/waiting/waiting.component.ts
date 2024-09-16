@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import emojiRegex from 'emoji-regex';
+import { AlertService } from '../../../../../services/alert/alert.service';
 
 @Component({
   selector: 'app-waiting',
@@ -25,6 +26,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{ game: GameState }>,
     private gameService: GameService,
+    private alertService: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -86,8 +88,14 @@ export class WaitingComponent implements OnInit, OnDestroy {
         GameActions.storePlayerName({ playerName: this.nickname }),
       );
       this.gameService.listenForErrors().subscribe((error) => {
-        if (error === 'Username already exists in the room') {
-          alert('Username already exists in the room');
+        if (error === 'Room not found') {
+          this.alertService.showAlertError(
+            'Username already exists in the room',
+            'Error',
+            3000,
+            'start',
+            'bottom',
+          );
         }
       });
     }
