@@ -1,6 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { QuestionRecord } from '../../../../../../../models/questionRecord.model';
+import {clearStateReport} from "../../../../../../../ngrx/gameReport/gameReport.action";
+import {Store} from "@ngrx/store";
+import {GameReportState} from "../../../../../../../ngrx/gameReport/gameReport.state";
+
+
 
 @Component({
   selector: 'app-answer-status-bar',
@@ -9,14 +14,16 @@ import { QuestionRecord } from '../../../../../../../models/questionRecord.model
   templateUrl: './answer-status-bar.component.html',
   styleUrl: './answer-status-bar.component.scss',
 })
-export class AnswerStatusBarComponent implements OnInit {
+export class AnswerStatusBarComponent implements OnInit, OnDestroy{
   @Input() questionRecord!: QuestionRecord;
 
   inCorrectCount: number = 0;
   correctCount: number = 0;
   totalCount: number = 0;
 
-  constructor() {}
+  constructor(
+    private store: Store<{ gameReport: GameReportState }>,
+  ) {}
 
   ngOnInit(): void {
     const correctAnswer = this.questionRecord.question.answer;
@@ -40,5 +47,9 @@ export class AnswerStatusBarComponent implements OnInit {
 
   calculatePercentage(numAns: number, totalPlayer: number): number {
     return (numAns / totalPlayer) * 100;
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(clearStateReport());
   }
 }

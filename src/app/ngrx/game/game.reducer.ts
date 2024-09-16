@@ -17,6 +17,7 @@ export const initialState: GameState = {
 export const gameReducer = createReducer(
   initialState,
   on(GameActions.storePin, (state, { pin, type }) => {
+    console.log(type);
     return {
       ...state,
       pin: pin,

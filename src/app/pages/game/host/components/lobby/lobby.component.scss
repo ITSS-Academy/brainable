@@ -205,9 +205,13 @@ qrcode {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 16px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.player-name{
+  font-size: 30px ;
 }
 
 .player {
