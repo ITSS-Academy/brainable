@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Question } from '../../../models/question.model';
 import { Store } from '@ngrx/store';
 import { MaterialModule } from '../../../shared/modules/material.module';
@@ -16,6 +16,7 @@ import * as GameActions from '../../../ngrx/game/game.actions';
 import { GameService } from '../../../services/game/game.service';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
+import { LoadingComponent } from '../../loading/loading.component';
 
 @Component({
   selector: 'app-search',
@@ -26,6 +27,7 @@ import { Socket } from 'ngx-socket-io';
     NgIf,
     GetQuizByIdPipe,
     AsyncPipe,
+    LoadingComponent,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
@@ -36,6 +38,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   questions!: Question[];
   quiz!: Quiz;
   isPlaying: boolean = false;
+  isSearchSuccess$: Observable<boolean>;
 
   showAnswer: boolean = false;
 
@@ -47,7 +50,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     private gameService: GameService,
     private router: Router,
     private socket: Socket,
-  ) {}
+  ) {
+    this.isSearchSuccess$ = this.store.select('search', 'isSearchingSuccess');
+  }
 
   ngOnInit(): void {
     this.subscription.push(
