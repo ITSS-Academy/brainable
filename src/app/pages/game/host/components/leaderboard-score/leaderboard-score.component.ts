@@ -156,6 +156,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
       return;
     }
 
+
     const changes = this.calcChange(prevLeaderboard, leaderboard);
     console.log('changes: ', changes); // Log changes for debugging
 
