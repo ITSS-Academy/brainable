@@ -79,7 +79,6 @@ export class GameResultComponent implements OnInit, OnDestroy {
     this.song.src = 'assets/music/top3-leaderboard.mp3';
     this.song.load();
     this.song.play().then();
-    this.song.loop = true;
   }
 
   pauseMusic() {
