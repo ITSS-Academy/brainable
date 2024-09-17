@@ -60,10 +60,12 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
               this.dataSource = new MatTableDataSource(users);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              this.paginator.page.subscribe(() => {});
-              this.sort.sortChange.subscribe((sortState: Sort) => {
-                this.customSort(sortState);
-              });
+              // this.paginator.page.subscribe(() => {});
+              if (this.sort) {
+                this.sort.sortChange.subscribe((sortState: Sort) => {
+                  this.customSort(sortState);
+                });
+              }
               // console.log(users);
             }
           });

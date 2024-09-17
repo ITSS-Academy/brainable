@@ -100,6 +100,7 @@
           ease-in 13s hidden,
           ease-in 1s top3 13s,
           shake 1s ease infinite 15s;
+        z-index: 1000;
       }
 
       .result {

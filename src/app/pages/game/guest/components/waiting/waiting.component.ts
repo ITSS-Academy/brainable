@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
@@ -21,6 +21,9 @@ export class WaitingComponent implements OnInit, OnDestroy {
   pin!: string;
   isJoining: boolean = false;
   isEmptyInput = false;
+
+  @ViewChild('containerRef') containerRef!: ElementRef;
+  selectedImageIndex: number | null = null;
 
   constructor(
     private store: Store<{ game: GameState }>,
@@ -103,6 +106,18 @@ export class WaitingComponent implements OnInit, OnDestroy {
       this.joinGame();
     }
   }
+
+  backGroundChange(imageUrl: string, index: number) {
+    if (this.containerRef) {
+      this.containerRef.nativeElement.style.backgroundImage = `url('${imageUrl}')`;
+      this.containerRef.nativeElement.style.backgroundSize = 'cover';
+      this.containerRef.nativeElement.style.backgroundRepeat = 'no-repeat';
+      this.containerRef.nativeElement.style.backgroundPosition = 'center';
+    }
+      this.selectedImageIndex = index;
+  }
+
+
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

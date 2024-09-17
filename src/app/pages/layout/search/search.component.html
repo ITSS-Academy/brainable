@@ -1,131 +1,183 @@
 <div class="container">
   <div class="library-container">
-    @if (searchResults.length === 0 ) {
-      <div class="empty-box">
-        <img src="assets/images/empty-box.png" alt="" />
+    @if (!(isSearchSuccess$ | async)) {
+      <div class="loading-container">
+        <app-loading></app-loading>
       </div>
     } @else {
-    <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
-      <div class="quiz-list">
-        @for (item of searchResults; track $index) {
-          <mat-card appearance="outlined" (click)="activeQuiz($index)">
-            <mat-card-content>
-              <div class="quiz-detail">
-                <div class="quiz-detail__img">
-                  <img [src]="(item._id | getQuizById | async)?.imgUrl " alt=""/>
-                </div>
-                <div class="quiz-detail__info">
-                  <div class="row-info">
-                    <p class="question">{{ (item._id | getQuizById | async)?.title }}</p>
-                    <div class="row-info">
-                      <div class="num-questions">
-                        <mat-icon fontIcon="list"></mat-icon>
-                        <span
-                        >{{ (item._id | getQuizById | async)?.totalQuestions }} Question</span
-                        >
-                      </div>
-                      <div class="category">
-                        <img
-                          [src]="(item._id | getQuizById | async)?.category?.imgUrl"
-                          alt="menu Pic"
-                        />
-                        <span>{{(item._id | getQuizById | async)?.category?.name }}</span>
-                      </div>
+      @if (searchResults.length === 0) {
+        <div class="empty-box">
+          <img src="assets/images/empty-box.png" alt="" />
+        </div>
+      } @else {
+        <cdk-virtual-scroll-viewport itemSize="50" class="library-scroll">
+          <div class="quiz-list">
+            @for (item of searchResults; track $index) {
+              <mat-card appearance="outlined" (click)="activeQuiz($index)">
+                <mat-card-content>
+                  <div class="quiz-detail">
+                    <div class="quiz-detail__img">
+                      <img
+                        [src]="(item._id | getQuizById | async)?.imgUrl"
+                        alt=""
+                      />
                     </div>
-                    <div class="row-creator">
-                      <button mat-flat-button>Play</button>
+                    <div class="quiz-detail__info">
+                      <div class="row-info">
+                        <p class="question">
+                          {{ (item._id | getQuizById | async)?.title }}
+                        </p>
+                        <div class="row-info">
+                          <div class="num-questions">
+                            <mat-icon fontIcon="list"></mat-icon>
+                            <span
+                              >{{
+                                (item._id | getQuizById | async)?.totalQuestions
+                              }}
+                              Question</span
+                            >
+                          </div>
+                          <div class="category">
+                            <img
+                              [src]="
+                                (item._id | getQuizById | async)?.category
+                                  ?.imgUrl
+                              "
+                              alt="menu Pic"
+                            />
+                            <span>{{
+                              (item._id | getQuizById | async)?.category?.name
+                            }}</span>
+                          </div>
+                        </div>
+                        <div class="row-creator">
+                          <button mat-flat-button (click)="playGame($index)">
+                            Host live
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
-      </div>
-    </cdk-virtual-scroll-viewport>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </cdk-virtual-scroll-viewport>
 
-    <div
-      style="
-        width: 1px;
-        height: 100%;
-        background-color: #e0e0e0;
-        margin-left: 10px;
-      "
-      class="straight-line"
-    ></div>
+        <div
+          style="
+            width: 1px;
+            height: 100%;
+            background-color: #e0e0e0;
+            margin-left: 10px;
+          "
+          class="straight-line"
+        ></div>
 
-    <div class="content-container">
-      <div class="quiz-detail__header">
-        <span class="number-question"></span>
-        <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
-      </div>
-      <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
-
-        <div class="quiz-content">
-          @for (question of questions; track $index) {
-            <mat-card appearance="outlined">
-              <mat-card-content>
-                <mat-list>
-                  <mat-list-item class="content">
-                    <div class="quiz-detail">
-                      <div class="quiz-detail__title">
-                        <span class="order">Single Choice</span>
-                        <p class="question">{{ question.question }}</p>
-                      </div>
-                      <div class="quiz-detail__img">
-                        <img [src]="question.imgUrl" alt=""/>
-                      </div>
-                    </div>
-                  </mat-list-item>
-                  @if (showAnswer) {
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option1 }}</p>
+        <div class="content-container">
+          <div class="quiz-detail__header">
+            <span class="number-question"></span>
+            <span class="btn-show" (click)="toggleAnswer()">Show answer</span>
+          </div>
+          <cdk-virtual-scroll-viewport itemSize="50" class="quiz-scroll">
+            <div class="quiz-content">
+              @for (question of questions; track $index) {
+                <mat-card appearance="outlined">
+                  <mat-card-content>
+                    <mat-list>
+                      <mat-list-item class="content">
+                        <div class="quiz-detail">
+                          <div class="quiz-detail__title">
+                            <span class="order">Single Choice</span>
+                            <p class="question">{{ question.question }}</p>
+                          </div>
+                          <div class="quiz-detail__img">
+                            <img [src]="question.imgUrl" alt="" />
+                          </div>
                         </div>
-                        <mat-icon *ngIf="question.answer === 1" class="answer-icon__check">check</mat-icon>
-                        <mat-icon *ngIf="question.answer !== 1" class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option2 }}</p>
-                        </div>
-                        <mat-icon *ngIf="question.answer === 2" class="answer-icon__check">check</mat-icon>
-                        <mat-icon *ngIf="question.answer !== 2" class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option3 }}</p>
-                        </div>
-                        <mat-icon *ngIf="question.answer === 3" class="answer-icon__check">check</mat-icon>
-                        <mat-icon *ngIf="question.answer !== 3" class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                      <div class="answer-detail">
-                        <div class="answer-detail__content">
-                          <p class="answer">{{ question.option4 }}</p>
-                        </div>
-                        <mat-icon *ngIf="question.answer === 4" class="answer-icon__check">check</mat-icon>
-                        <mat-icon *ngIf="question.answer !== 4" class="answer-icon__wrong">close</mat-icon>
-                      </div>
-                    </mat-list-item>
-                  }
-                </mat-list>
-              </mat-card-content>
-            </mat-card>
-          }
+                      </mat-list-item>
+                      @if (showAnswer) {
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                          <div class="answer-detail">
+                            <div class="answer-detail__content">
+                              <p class="answer">{{ question.option1 }}</p>
+                            </div>
+                            <mat-icon
+                              *ngIf="question.answer === 1"
+                              class="answer-icon__check"
+                              >check
+                            </mat-icon>
+                            <mat-icon
+                              *ngIf="question.answer !== 1"
+                              class="answer-icon__wrong"
+                              >close
+                            </mat-icon>
+                          </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                          <div class="answer-detail">
+                            <div class="answer-detail__content">
+                              <p class="answer">{{ question.option2 }}</p>
+                            </div>
+                            <mat-icon
+                              *ngIf="question.answer === 2"
+                              class="answer-icon__check"
+                              >check
+                            </mat-icon>
+                            <mat-icon
+                              *ngIf="question.answer !== 2"
+                              class="answer-icon__wrong"
+                              >close
+                            </mat-icon>
+                          </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                          <div class="answer-detail">
+                            <div class="answer-detail__content">
+                              <p class="answer">{{ question.option3 }}</p>
+                            </div>
+                            <mat-icon
+                              *ngIf="question.answer === 3"
+                              class="answer-icon__check"
+                              >check
+                            </mat-icon>
+                            <mat-icon
+                              *ngIf="question.answer !== 3"
+                              class="answer-icon__wrong"
+                              >close
+                            </mat-icon>
+                          </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                          <div class="answer-detail">
+                            <div class="answer-detail__content">
+                              <p class="answer">{{ question.option4 }}</p>
+                            </div>
+                            <mat-icon
+                              *ngIf="question.answer === 4"
+                              class="answer-icon__check"
+                              >check
+                            </mat-icon>
+                            <mat-icon
+                              *ngIf="question.answer !== 4"
+                              class="answer-icon__wrong"
+                              >close
+                            </mat-icon>
+                          </div>
+                        </mat-list-item>
+                      }
+                    </mat-list>
+                  </mat-card-content>
+                </mat-card>
+              }
+            </div>
+          </cdk-virtual-scroll-viewport>
         </div>
-      </cdk-virtual-scroll-viewport>
-    </div>
+      }
     }
   </div>
 </div>

@@ -65,9 +65,14 @@ export class GameResultComponent implements OnInit, OnDestroy {
         }),
       );
     });
-    this.gameService.receiveLeaderboard().subscribe((data) => {
-      this.result = data;
-    });
+    this.gameService
+      .receiveLeaderboard()
+      .subscribe((data: { playerName: string; score: number }[]) => {
+        while (data.length < 3) {
+          data.push({ playerName: '', score: 0 });
+        }
+        this.result = data;
+      });
     setTimeout(() => {
       this.showConfetti = true;
     }, 14000);
@@ -79,7 +84,6 @@ export class GameResultComponent implements OnInit, OnDestroy {
     this.song.src = 'assets/music/top3-leaderboard.mp3';
     this.song.load();
     this.song.play().then();
-    this.song.loop = true;
   }
 
   pauseMusic() {

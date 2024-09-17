@@ -21,7 +21,7 @@ import { GameService } from '../../../services/game/game.service';
 import { GameReport } from '../../../models/gameReport.model';
 import * as GameReportActions from '../../../ngrx/gameReport/gameReport.action';
 import { GameReportState } from '../../../ngrx/gameReport/gameReport.state';
-import {Socket} from "ngx-socket-io";
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-quiz',
@@ -56,7 +56,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }>,
     private gameService: GameService,
     private router: Router,
-    private socket: Socket
+    private socket: Socket,
   ) {
     this.quizId = this.activatedRoute.snapshot.params['id'];
   }
@@ -97,22 +97,22 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.gameService.createRoom(pin);
     this.router.navigate([`/host/${pin}/lobby`]);
 
-    let newGame: GameReport = {
-      id: '',
-      quizId: this.quiz,
-      createdAt: new Date(),
-      gameRecords: [],
-      hostId: '',
-      index: 0,
-      joinCode: pin,
-      totalQuestions: 0,
-    };
-    this.store.dispatch(
-      GameReportActions.createGameReport({
-        idToken: this.idToken,
-        gameReport: newGame,
-      }),
-    );
+    // let newGame: GameReport = {
+    //   id: '',
+    //   quizId: this.quiz,
+    //   createdAt: new Date(),
+    //   gameRecords: [],
+    //   hostId: '',
+    //   index: 0,
+    //   joinCode: pin,
+    //   totalQuestions: 0,
+    // };
+    // this.store.dispatch(
+    //   GameReportActions.createGameReport({
+    //     idToken: this.idToken,
+    //     gameReport: newGame,
+    //   }),
+    // );
   }
 
   generatePin(): string {

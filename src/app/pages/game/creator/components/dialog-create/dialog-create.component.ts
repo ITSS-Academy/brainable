@@ -14,7 +14,8 @@ import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import mammoth from 'mammoth';
 import * as Papa from 'papaparse';
 import { DialogImportNotificationComponent } from '../dialog-import-notification/dialog-import-notification.component';
-import {AlertService} from "../../../../../services/alert/alert.service";
+import { AlertService } from '../../../../../services/alert/alert.service';
+
 @Component({
   selector: 'app-dialog-create',
   standalone: true,
@@ -26,7 +27,7 @@ export class DialogCreateComponent {
   constructor(
     private dialogRef: MatDialogRef<DialogCreateComponent>,
     private store: Store<{ quiz: QuizState }>,
-    private alertService: AlertService
+    private alertService: AlertService,
   ) {}
 
   handleFileInput(event: any) {
@@ -40,7 +41,13 @@ export class DialogCreateComponent {
       } else if (fileName.endsWith('.csv')) {
         this.onFileSelectedCSV(event);
       } else {
-        this.alertService.showAlertError('Unsupported file type', 'Error', 3000, 'start' , 'bottom');
+        this.alertService.showAlertError(
+          'Unsupported file type',
+          'Error',
+          3000,
+          'start',
+          'bottom',
+        );
       }
     }
   }
@@ -78,7 +85,13 @@ export class DialogCreateComponent {
 
       if (!isValidHeaders) {
         // Open the dialog to notify about header mismatch
-        this.alertService.showAlertError('The file headers do not match the expected format', 'Error', 3000, 'start' , 'bottom');
+        this.alertService.showAlertError(
+          'The file headers do not match the expected format',
+          'Error',
+          3000,
+          'start',
+          'bottom',
+        );
         return;
       }
 
@@ -96,7 +109,10 @@ export class DialogCreateComponent {
           option2: row[2] ? String(row[2]).trim() : '',
           option3: row[3] ? String(row[3]).trim() : '',
           option4: row[4] ? String(row[4]).trim() : '',
-          answer: row[5] !== undefined && row[5] !== null && row[5] !== '' ? Number(row[5]) : NaN, // Improved answer validation
+          answer:
+            row[5] !== undefined && row[5] !== null && row[5] !== ''
+              ? Number(row[5])
+              : NaN, // Improved answer validation
         };
 
         // Validate each row for missing fields
@@ -123,7 +139,13 @@ export class DialogCreateComponent {
 
       // If there are missing fields, open the dialog
       if (missingFieldsMessages.length > 0) {
-        this.alertService.showAlertError('Import failed! Missing fields', 'Error', 3000, 'start' , 'bottom');
+        this.alertService.showAlertError(
+          'Import failed! Missing fields',
+          'Error',
+          3000,
+          'start',
+          'bottom',
+        );
         (event.target as HTMLInputElement).value = '';
         return;
       }
@@ -168,7 +190,12 @@ export class DialogCreateComponent {
   questions: Question[] = []; // Declare questions array to store parsed data
 
   readWord(event: any) {
-    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+    if (
+      !event ||
+      !event.target ||
+      !event.target.files ||
+      event.target.files.length === 0
+    ) {
       return;
     }
 
@@ -216,16 +243,30 @@ export class DialogCreateComponent {
     lines.forEach((line) => {
       if (line.startsWith('Question:')) {
         // Before starting a new question, check if the previous question is valid
-        if (questionExists && option1Exists && option2Exists && option3Exists && option4Exists && answerExists) {
+        if (
+          questionExists &&
+          option1Exists &&
+          option2Exists &&
+          option3Exists &&
+          option4Exists &&
+          answerExists
+        ) {
           this.questions.push(questionObj as Question); // Push the completed question
         } else if (questionExists) {
           isValid = false; // If any of the options or answer is missing, mark as invalid
-          missingFields.push('Incomplete question structure found. Missing fields in one of the questions.');
+          missingFields.push(
+            'Incomplete question structure found. Missing fields in one of the questions.',
+          );
         }
 
         // Reset the tracking variables for the new question
         questionExists = true;
-        option1Exists = option2Exists = option3Exists = option4Exists = answerExists = false;
+        option1Exists =
+          option2Exists =
+          option3Exists =
+          option4Exists =
+          answerExists =
+            false;
         questionObj = {
           question: line.replace('Question:', '').trim(),
           timeLimit: 10,
@@ -280,17 +321,32 @@ export class DialogCreateComponent {
     });
 
     // Validate the last question after the loop finishes
-    if (questionExists && option1Exists && option2Exists && option3Exists && option4Exists && answerExists) {
+    if (
+      questionExists &&
+      option1Exists &&
+      option2Exists &&
+      option3Exists &&
+      option4Exists &&
+      answerExists
+    ) {
       this.questions.push(questionObj as Question); // Push the last question
     } else {
       isValid = false;
-      missingFields.push('Incomplete question structure found in the last question.');
+      missingFields.push(
+        'Incomplete question structure found in the last question.',
+      );
     }
 
     // If any question is invalid, show an error and stop the import
     if (!isValid) {
       // this.alertService.showAlertError(`Import failed! Missing fields: ${missingFields.join(', ')}`, 'Error', 3000, 'start', 'bottom');
-      this.alertService.showAlertError(`Import failed! Unsupported format or Missing fields`, 'Error', 3000, 'start', 'bottom');
+      this.alertService.showAlertError(
+        `Import failed! Unsupported format or Missing fields`,
+        'Error',
+        3000,
+        'start',
+        'bottom',
+      );
       // Reset the file input element after an error
       this.resetFileInput(event);
       return; // Stop further processing
@@ -306,60 +362,56 @@ export class DialogCreateComponent {
     this.resetFileInput(event);
   }
 
-
-
-
-
-// Function to reset the file input field to allow re-importing
+  // Function to reset the file input field to allow re-importing
   resetFileInput(event: any) {
     if (event.target) {
       (event.target as HTMLInputElement).value = ''; // Reset the input element
     }
   }
 
-// Function to validate the question object and notify user of missing fields
-//   isValidQuestion(questionObj: Partial<Question>, missingFields: string[]): boolean {
-//     // Clear the missing fields for this validation
-//     missingFields.length = 0;
-//
-//     // Check each required field and log if missing
-//     if (
-//       typeof questionObj.question !== 'string' ||
-//       questionObj.question.trim() === ''
-//     ) {
-//       missingFields.push('Question');
-//     }
-//     if (
-//       typeof questionObj.option1 !== 'string' ||
-//       questionObj.option1.trim() === ''
-//     ) {
-//       missingFields.push('Option1');
-//     }
-//     if (
-//       typeof questionObj.option2 !== 'string' ||
-//       questionObj.option2.trim() === ''
-//     ) {
-//       missingFields.push('Option2');
-//     }
-//     if (
-//       typeof questionObj.option3 !== 'string' ||
-//       questionObj.option3.trim() === ''
-//     ) {
-//       missingFields.push('Option3');
-//     }
-//     if (
-//       typeof questionObj.option4 !== 'string' ||
-//       questionObj.option4.trim() === ''
-//     ) {
-//       missingFields.push('Option4');
-//     }
-//     if (isNaN(questionObj.answer!)) {
-//       missingFields.push('Answer');
-//     }
-//
-//     // If any missing fields are detected, mark the question as invalid
-//     return missingFields.length === 0;
-//   }
+  // Function to validate the question object and notify user of missing fields
+  //   isValidQuestion(questionObj: Partial<Question>, missingFields: string[]): boolean {
+  //     // Clear the missing fields for this validation
+  //     missingFields.length = 0;
+  //
+  //     // Check each required field and log if missing
+  //     if (
+  //       typeof questionObj.question !== 'string' ||
+  //       questionObj.question.trim() === ''
+  //     ) {
+  //       missingFields.push('Question');
+  //     }
+  //     if (
+  //       typeof questionObj.option1 !== 'string' ||
+  //       questionObj.option1.trim() === ''
+  //     ) {
+  //       missingFields.push('Option1');
+  //     }
+  //     if (
+  //       typeof questionObj.option2 !== 'string' ||
+  //       questionObj.option2.trim() === ''
+  //     ) {
+  //       missingFields.push('Option2');
+  //     }
+  //     if (
+  //       typeof questionObj.option3 !== 'string' ||
+  //       questionObj.option3.trim() === ''
+  //     ) {
+  //       missingFields.push('Option3');
+  //     }
+  //     if (
+  //       typeof questionObj.option4 !== 'string' ||
+  //       questionObj.option4.trim() === ''
+  //     ) {
+  //       missingFields.push('Option4');
+  //     }
+  //     if (isNaN(questionObj.answer!)) {
+  //       missingFields.push('Answer');
+  //     }
+  //
+  //     // If any missing fields are detected, mark the question as invalid
+  //     return missingFields.length === 0;
+  //   }
 
   parsedData: any[] = []; // Declare parsedData to store the CSV data
 
@@ -400,12 +452,12 @@ export class DialogCreateComponent {
           return {
             id: '',
             imgUrl: '',
-            question: String(row['question']),  // Ensure question is a string
-            option1: String(row['option1']),    // Ensure option1 is a string
-            option2: String(row['option2']),    // Ensure option2 is a string
-            option3: String(row['option3']),    // Ensure option3 is a string
-            option4: String(row['option4']),    // Ensure option4 is a string
-            answer: Number(row.answer),         // Ensure answer is a number
+            question: String(row['question']), // Ensure question is a string
+            option1: String(row['option1']), // Ensure option1 is a string
+            option2: String(row['option2']), // Ensure option2 is a string
+            option3: String(row['option3']), // Ensure option3 is a string
+            option4: String(row['option4']), // Ensure option4 is a string
+            answer: Number(row.answer), // Ensure answer is a number
             timeLimit: 10,
             points: 1,
           };
@@ -413,8 +465,13 @@ export class DialogCreateComponent {
 
         // Notify the user if there are missing fields
         if (missingDataMessages.length > 0) {
-          this.alertService.showAlertError('Import failed! Missing fields', 'Error', 3000, 'start' , 'bottom');
-
+          this.alertService.showAlertError(
+            'Import failed! Missing fields',
+            'Error',
+            3000,
+            'start',
+            'bottom',
+          );
 
           // Reset the file input element after an error
           if (event.target) {
@@ -436,7 +493,13 @@ export class DialogCreateComponent {
         }
       },
       error: (error) => {
-        this.alertService.showAlertError('Error parsing CSV file. Please try again.', 'Error', 3000, 'start' , 'bottom');
+        this.alertService.showAlertError(
+          'Error parsing CSV file. Please try again.',
+          'Error',
+          3000,
+          'start',
+          'bottom',
+        );
 
         // Reset the file input element in case of error
         if (event.target) {
@@ -445,7 +508,6 @@ export class DialogCreateComponent {
       },
     });
   }
-
 
   dialog = inject(MatDialog);
 
@@ -481,9 +543,9 @@ export class DialogCreateComponent {
 
   downloadFile(event: MouseEvent, type: 'docx' | 'xlsx' | 'csv'): void {
     // Define the path to the file
-    const wordFile = '../../../../assets/example-file/Question.docx';
-    const excelFile = '../../../../assets/example-file/Question.xlsx';
-    const csvFile = '../../../../assets/example-file/Question.csv';
+    const wordFile = '../../../../assets/example-file/example.docx';
+    const excelFile = '../../../../assets/example-file/example.xlsx';
+    const csvFile = '../../../../assets/example-file/example.csv';
     const exampleFiles = [
       { type: 'docx', path: wordFile },
       { type: 'xlsx', path: excelFile },
