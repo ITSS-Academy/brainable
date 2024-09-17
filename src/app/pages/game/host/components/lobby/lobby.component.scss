@@ -215,9 +215,13 @@ qrcode {
 }
 
 .player {
-  animation:
-    2s player-animation infinite,
+  animation: //2s player-animation infinite,
     0.3s jump-in ease-in;
+}
+
+.player-name {
+  font-size: 32px;
+  line-height: 32px;
 }
 
 .join-info-respond {

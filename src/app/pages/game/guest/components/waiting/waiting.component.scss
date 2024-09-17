@@ -112,7 +112,43 @@
       }
     }
   }
+
+  .back-frem{
+    width: 100%;
+    max-width: 30rem;
+    height: 6rem;
+    background-color: white;
+    border-radius: 23px;
+    position: fixed;
+    top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .back-frem .back-chang{
+    width: 91px;
+    height: 91px;
+    background-color: wheat;
+    overflow: hidden;
+    border-radius: 23px;
+    cursor: pointer;
+    transition: border 0.3s ease;
+  }
+
+  .back-frem .back-chang img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .back-frem .back-chang.selected {
+    border: 4px solid black; /* Highlight the selected image with an orange border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: Add a subtle shadow */
+  }
 }
+
+
 
 @keyframes shake {
   0% {
@@ -139,5 +175,45 @@
 
   .enter-nickname {
     width: 280px !important;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .back-frem {
+    width: 100%; /* Full width for mobile responsiveness */
+    max-width: 30rem; /* Max width for larger screens */
+    height: 6rem;
+    background-color: white;
+    border-radius: 23px;
+    position: fixed;
+    top: 10px;
+    display: flex;
+    justify-content: flex-start; /* Align images to the start */
+    align-items: center;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding: 0 10px; /* Add padding to avoid edge cutoffs */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+  }
+
+  .back-frem::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+  }
+
+  .back-frem .back-chang {
+    min-width: 91px; /* Set a minimum width to make it work well with scrolling */
+    height: 91px;
+    background-color: wheat;
+    overflow: hidden;
+    border-radius: 23px;
+    cursor: pointer;
+    margin-right: 10px; /* Add margin to create space between images */
+    flex-shrink: 0; /* Prevent shrinking of the items */
+    transition: border 0.3s ease; /* Smooth transition */
+  }
+
+  .back-frem .back-chang img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }

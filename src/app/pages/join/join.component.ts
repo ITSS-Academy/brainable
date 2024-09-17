@@ -86,7 +86,10 @@ export class JoinComponent implements OnInit, OnDestroy {
 
   joinGame() {
     if (this.pin.length == 0) {
-      this.isEmptyInput = !this.isEmptyInput;
+      this.isEmptyInput = true;
+      setTimeout(() => {
+        this.isEmptyInput = false;
+      }, 3000);
       return;
     }
     this.gameService.listenForNavigateToEnterName(this.pin);

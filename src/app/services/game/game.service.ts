@@ -126,6 +126,8 @@ export class GameService {
     });
   }
 
+
+
   listenForNavigateChooseAnswer(pin: string) {
     this.socket.on('chooseAnswer', () => {
       this.router.navigate([`/guest/${pin}/answer`]).then(() => {

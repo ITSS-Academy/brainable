@@ -74,6 +74,7 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
       this.store
         .select('game', 'currentQuestion')
         .subscribe((currentQuestion) => {
+          console.log(currentQuestion);
           this.currentQuestion = currentQuestion as number;
           this.questionRecord.question = this.questions[currentQuestion];
         }),
