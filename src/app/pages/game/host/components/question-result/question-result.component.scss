@@ -91,6 +91,12 @@ mat-icon {
   margin: 0 8px;
 }
 
+.answer-text {
+  color: var(--md-sys-color-surface-container-low);
+  font-size: 20px;
+
+}
+
 .number-of-answers {
   font-size: 18px;
   color: var(--md-sys-color-surface-container-lowest);
@@ -122,7 +128,7 @@ mat-icon {
 
 .answer.red .ans-icon {
   rotate: -90deg;
-  font-size: 30px;
+  font-size: 40px;
   padding-right: 4px;
 }
 
@@ -133,7 +139,7 @@ mat-icon {
 
 .answer.blue .ans-icon {
   rotate: 45deg;
-  font-size: 16px;
+  font-size: 24px;
 }
 
 .answer.yellow {
@@ -142,7 +148,7 @@ mat-icon {
 }
 
 .answer.yellow .ans-icon {
-  font-size: 20px;
+  font-size: 28px;
 }
 
 .answer.green {
@@ -151,7 +157,7 @@ mat-icon {
 }
 
 .answer.green .ans-icon {
-  font-size: 20px;
+  font-size: 28px;
 }
 
 .result .answer.red {
@@ -169,3 +175,4 @@ mat-icon {
 .result .answer.green {
   background-color: #00712d;
 }
+

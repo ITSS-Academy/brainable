@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { LoginComponent } from '../../../../../components/login/login.component';
 import { AnswerStatusBarComponent } from './components/answer-status-bar/answer-status-bar.component';
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -12,6 +12,7 @@ import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state
 import * as QuestionRecordActions from '../../../../../ngrx/questionRecord/questionRecord.actions';
 import { QuestionRecordState } from '../../../../../ngrx/questionRecord/questionRecord.state';
 import { QuestionRecord } from '../../../../../models/questionRecord.model';
+import {clearStateReport} from "../../../../../ngrx/gameReport/gameReport.action";
 
 @Component({
   selector: 'app-questions',
@@ -28,7 +29,7 @@ import { QuestionRecord } from '../../../../../models/questionRecord.model';
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.scss',
 })
-export class QuestionsComponent implements OnInit {
+export class QuestionsComponent implements OnInit, OnDestroy{
   questionRecord$ = this.store.select('questionRecord', 'questionRecords');
 
   constructor(
@@ -55,5 +56,9 @@ export class QuestionsComponent implements OnInit {
         );
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(QuestionRecordActions.clearStateQuestionRecord());
   }
 }

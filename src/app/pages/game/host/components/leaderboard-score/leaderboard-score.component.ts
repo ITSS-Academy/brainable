@@ -157,6 +157,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
       return;
     }
 
+
     const changes = this.calcChange(prevLeaderboard, leaderboard);
 
     // Wait for 1 second before starting the animation
