@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrx/auth/auth.state';
 import { QuestionState } from '../../../ngrx/question/question.state';
@@ -17,6 +23,7 @@ import * as GameActions from '../../../ngrx/game/game.actions';
 import { CountdownToQuestionComponent } from './components/countdown-to-question/countdown-to-question.component';
 import { HostLeftSnackbarComponent } from './components/host-left-snackbar/host-left-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BackgroundImgState } from '../../../ngrx/background-img/background-img.state';
 
 @Component({
   selector: 'app-guest',
@@ -40,13 +47,25 @@ export class GuestComponent implements OnInit {
       question: QuestionState;
       auth: AuthState;
       game: GameState;
+      background: BackgroundImgState;
     }>,
     private gameService: GameService,
     private router: Router,
+    private el: ElementRef,
+    private renderer: Renderer2,
   ) {}
 
   ngOnInit(): void {
+    this.backgroundImg$.subscribe((img) => {
+      this.renderer.setStyle(
+        this.el.nativeElement.querySelector('.container'),
+        'background-image',
+        `url(${img})`,
+      );
+    });
+
     this.gameService.listenForErrors().subscribe((error) => {
+      console.log(error);
       if (error === 'Host has left the game') {
         this.openSnackBar();
 
@@ -61,6 +80,7 @@ export class GuestComponent implements OnInit {
     // this.openSnackBar();
   }
 
+  backgroundImg$ = this.store.select('background', 'img');
   //   Snackbar handle
   private _snackBar = inject(MatSnackBar);
 

@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
@@ -6,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { GameService } from '../../../../../services/game/game.service';
 import { SendAnswer } from '../../../../../models/game.model';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
+import { BackgroundImgState } from '../../../../../ngrx/background-img/background-img.state';
 
 @Component({
   selector: 'app-answer',
@@ -44,11 +51,22 @@ export class AnswerComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private store: Store<{ game: GameState }>,
+    private store: Store<{ game: GameState; background: BackgroundImgState }>,
     private gameService: GameService,
+    private renderer: Renderer2,
+    private el: ElementRef,
   ) {}
 
+  backgroundImg$ = this.store.select('background', 'img');
+
   ngOnInit() {
+    this.backgroundImg$.subscribe((img) => {
+      this.renderer.setStyle(
+        this.el.nativeElement.querySelector('#container'),
+        'background-image',
+        `url(${img})`,
+      );
+    });
     this.startTimer();
 
     this.subscription.push(

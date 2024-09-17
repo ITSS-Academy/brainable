@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -7,6 +13,7 @@ import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
+import { BackgroundImgState } from '../../../../../ngrx/background-img/background-img.state';
 
 @Component({
   selector: 'app-result',
@@ -28,8 +35,14 @@ export class ResultComponent implements OnInit, OnDestroy {
   showScore1: number = 0;
 
   constructor(
-    private store: Store<{ game: GameState; quiz: QuizState }>,
+    private store: Store<{
+      game: GameState;
+      quiz: QuizState;
+      background: BackgroundImgState;
+    }>,
     private gameService: GameService,
+    private renderer: Renderer2,
+    private el: ElementRef,
   ) {
     this.subscription.push(
       this.store
@@ -38,7 +51,16 @@ export class ResultComponent implements OnInit, OnDestroy {
     );
   }
 
+  backgroundImg$ = this.store.select('background', 'img');
+
   ngOnInit(): void {
+    this.backgroundImg$.subscribe((img) => {
+      this.renderer.setStyle(
+        this.el.nativeElement.querySelector('#container'),
+        'background-image',
+        `url(${img})`,
+      );
+    });
     this.gameService.listenForNavigateToNextQuestion(this.pin);
     this.gameService.listenForNavigateToRanking(this.pin);
     this.subscription.push(

@@ -32,6 +32,7 @@ import { QuestionRecordEffects } from './ngrx/questionRecord/questionRecord.effe
 import { playerRecordReducer } from './ngrx/playerRecord/playerRecord.reducer';
 import { PlayerRecordEffect } from './ngrx/playerRecord/playerRecord.effect';
 import { storageReducer } from './ngrx/storage/storage.reducer';
+import { backgroundImgReducer } from './ngrx/background-img/background-img.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -49,6 +50,7 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'search', reducer: searchReducer }),
     provideState({ name: 'playerRecord', reducer: playerRecordReducer }),
     provideState({ name: 'storage', reducer: storageReducer }),
+    provideState({ name: 'background', reducer: backgroundImgReducer }),
     provideEffects([
       AuthEffects,
       ProfileEffects,

@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
@@ -8,6 +14,8 @@ import { MatButton } from '@angular/material/button';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import emojiRegex from 'emoji-regex';
 import { AlertService } from '../../../../../services/alert/alert.service';
+import { BackgroundImgState } from '../../../../../ngrx/background-img/background-img.state';
+import * as BackgroundImgActions from '../../../../../ngrx/background-img/background-img.actions';
 
 @Component({
   selector: 'app-waiting',
@@ -26,8 +34,10 @@ export class WaitingComponent implements OnInit, OnDestroy {
   @ViewChild('containerRef') containerRef!: ElementRef;
   selectedImageIndex: number | null = null;
 
+  imgUrls = 'assets/images/z5714813450402_17d12c1680cfb5a3fede63bf191ee94c.jpg';
+
   constructor(
-    private store: Store<{ game: GameState }>,
+    private store: Store<{ game: GameState; background: BackgroundImgState }>,
     private gameService: GameService,
     private alertService: AlertService,
   ) {}
@@ -45,20 +55,6 @@ export class WaitingComponent implements OnInit, OnDestroy {
         }
       }),
     );
-  }
-
-  convertToUnicode(input: string): string {
-    return Array.from(input)
-      .map((char) => {
-        const code = char.codePointAt(0);
-        return code ? code.toString(16) : char;
-      })
-      .join('');
-  }
-
-  unicodeToIcon(unicode: string): string {
-    const codePoint = parseInt(unicode.replace(/\\u{|}/g, ''), 16);
-    return String.fromCodePoint(codePoint);
   }
 
   joinGame(): void {
@@ -117,17 +113,19 @@ export class WaitingComponent implements OnInit, OnDestroy {
 
   backGroundChange(imageUrl: string, index: number) {
     if (this.containerRef) {
+      this.imgUrls = imageUrl;
       this.containerRef.nativeElement.style.backgroundImage = `url('${imageUrl}')`;
       this.containerRef.nativeElement.style.backgroundSize = 'cover';
       this.containerRef.nativeElement.style.backgroundRepeat = 'no-repeat';
       this.containerRef.nativeElement.style.backgroundPosition = 'center';
     }
-      this.selectedImageIndex = index;
+    this.selectedImageIndex = index;
   }
 
-
-
   ngOnDestroy(): void {
+    this.store.dispatch(
+      BackgroundImgActions.storeBackgroundImg({ img: this.imgUrls }),
+    );
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }
