@@ -75,11 +75,18 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(clearStateReport());
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.store.dispatch(clearStateReport());
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.paginator.page.subscribe(() => {});
+    this.sort.sortChange.subscribe((sortState: Sort) => {
+      this.customSort(sortState);
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

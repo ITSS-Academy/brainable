@@ -32,3 +32,7 @@ export const createQuestionRecordFailure = createAction(
   '[QuestionReport] Create Question Record Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const clearStateQuestionRecord = createAction(
+  '[QuestionRecord] Clear State',
+);

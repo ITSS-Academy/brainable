@@ -29,7 +29,7 @@ import {clearStateReport} from "../../../../../ngrx/gameReport/gameReport.action
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.scss',
 })
-export class QuestionsComponent implements OnInit, OnDestroy {
+export class QuestionsComponent implements OnInit {
   questionRecord$ = this.store.select('questionRecord', 'questionRecords');
 
   constructor(
@@ -56,8 +56,5 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         );
       }
     });
-  }
-  ngOnDestroy() {
-    this.store.dispatch(clearStateReport());
   }
 }
