@@ -22,6 +22,7 @@ import { GameReport } from '../../../../../models/gameReport.model';
 import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
 import { AlertService } from '../../../../../services/alert/alert.service';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-general-info',
@@ -49,6 +50,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
     }>,
     private gameService: GameService,
     private alertService: AlertService,
+    private socket: Socket,
   ) {}
 
   ngOnInit() {
@@ -83,6 +85,7 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
 
   playGame() {
     const pin = this.generatePin();
+    this.socket.connect();
     this.store.dispatch(GameActions.storePin({ pin }));
     this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: this.quiz }));
     this.store.dispatch(

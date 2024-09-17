@@ -80,7 +80,6 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.gameService.endListeningForChooseAnswer();
     this.subscription.forEach((s) => s.unsubscribe());
     clearInterval(this.countdownInterval);
   }

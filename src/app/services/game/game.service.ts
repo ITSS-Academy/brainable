@@ -134,10 +134,6 @@ export class GameService {
     });
   }
 
-  endListeningForChooseAnswer(): void {
-    this.socket.off('chooseAnswer');
-  }
-
   listenForNavigateToResults(pin: string): void {
     this.socket.on('navigateToResults', () => {
       this.router.navigate([`/guest/${pin}/result`]).then(() => {

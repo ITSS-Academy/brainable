@@ -90,7 +90,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
       this.gameService.listenForErrors().subscribe((error) => {
         if (error === 'Room not found') {
           this.alertService.showAlertError(
-            'Username already exists in the room',
+            'Room not found',
             'Error',
             3000,
             'start',
