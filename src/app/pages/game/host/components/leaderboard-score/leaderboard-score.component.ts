@@ -46,6 +46,7 @@ export class LeaderboardScoreComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(GameActions.nextQuestion());
     this.gameService.listenForTop5().subscribe((top5) => {
       this.result = top5;
       this.createLeaderboard('rootElement');
