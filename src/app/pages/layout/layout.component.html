@@ -1,8 +1,8 @@
 <div class="container">
-  <div class="slide-bar" [ngClass]="{'hidden': !isSlideBarVisible}">
-    <app-slidebar></app-slidebar>
+  <div class="slide-bar" [ngClass]="{ hidden: !isSlideBarVisible }">
+    <app-slidebar (emitter)="onLinkActivated()"></app-slidebar>
   </div>
-  <div class="main-content" [ngClass]="{'disabled': isSlideBarVisible}">
+  <div class="main-content" [ngClass]="{ disabled: isSlideBarVisible }">
     <div class="header">
       <app-header (menuClick)="onMenuClick()"></app-header>
     </div>
@@ -11,4 +11,3 @@
     </div>
   </div>
 </div>
-

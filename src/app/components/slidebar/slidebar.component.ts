@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -45,6 +45,8 @@ export class SlidebarComponent implements OnInit {
 
   dialog = inject(MatDialog);
 
+  @Output() emitter: EventEmitter<void> = new EventEmitter();
+
   constructor(
     private router: Router,
     private store: Store<{ profile: ProfileState; auth: AuthState }>,
@@ -77,6 +79,7 @@ export class SlidebarComponent implements OnInit {
 
   setActive(link: any) {
     this.activeLink = link;
+    this.emitter.emit();
     this.router.navigateByUrl(link.route).then();
   }
 

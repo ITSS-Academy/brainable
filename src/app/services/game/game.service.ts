@@ -126,12 +126,19 @@ export class GameService {
     });
   }
 
-
-
   listenForNavigateChooseAnswer(pin: string) {
     this.socket.on('chooseAnswer', () => {
       this.router.navigate([`/guest/${pin}/answer`]).then(() => {
         this.socket.off('chooseAnswer');
+      });
+    });
+  }
+
+  receiveScored(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('sendScore', (score: any) => {
+        observer.next(score);
+        observer.complete();
       });
     });
   }
