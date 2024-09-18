@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
@@ -16,7 +23,7 @@ import { AlertService } from '../../../../../services/alert/alert.service';
   templateUrl: './waiting.component.html',
   styleUrl: './waiting.component.scss',
 })
-export class WaitingComponent implements OnInit, OnDestroy {
+export class WaitingComponent implements OnInit, OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
   nickname: string = '';
   pin!: string;
@@ -114,5 +121,13 @@ export class WaitingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  @ViewChild('nicknameInput') nicknameInput!: ElementRef;
+
+  ngAfterViewInit() {
+    if (!this.isJoining) {
+      this.nicknameInput.nativeElement.focus();
+    }
   }
 }

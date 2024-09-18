@@ -125,8 +125,10 @@ export class QuestionResultComponent implements OnInit, OnDestroy {
   }
 
   calculateHeight(answerCount: number): string {
-    const baseHeight = 25; // base height in pixels
-    const additionalHeightPerAnswer = 10; // additional height per answer in pixels
+    const isLargeScreen = window.innerWidth >= 1921; // Check if the screen is 2k or larger
+    const baseHeight = isLargeScreen ? 51 : 25; // Set base height based on screen size
+    const additionalHeightPerAnswer = isLargeScreen ? 25 : 10; // Additional height per answer in pixels
+
     return `${baseHeight + answerCount * additionalHeightPerAnswer}px !important`;
   }
 

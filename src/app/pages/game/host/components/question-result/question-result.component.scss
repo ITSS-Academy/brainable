@@ -23,9 +23,10 @@
   align-items: center;
   width: fit-content;
   //height: 50px;
-  font-size: 30px;
-  line-height: 34px;
-  margin: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  margin: 12px 8px 8px 8px;
   text-align: center;
   padding: 8px 12px;
   border-radius: 4px;
@@ -35,7 +36,7 @@
 
 .result {
   width: 100%;
-  height: 40%;
+  height: 50%;
   display: flex;
   justify-content: center;
   align-items: end;
@@ -60,7 +61,7 @@
 
 .answers {
   width: 100%;
-  height: 40%;
+  height: 35%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -78,9 +79,7 @@
 }
 
 .answer-text {
-  font-size: 18px;
   color: var(--md-sys-color-surface-container-lowest);
-  padding-right: 32px;
 }
 
 mat-icon {
@@ -91,14 +90,9 @@ mat-icon {
   margin: 0 8px;
 }
 
-.answer-text {
-  color: var(--md-sys-color-surface-container-low);
-  font-size: 20px;
-
-}
-
 .number-of-answers {
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--md-sys-color-surface-container-lowest);
 }
 
@@ -128,7 +122,7 @@ mat-icon {
 
 .answer.red .ans-icon {
   rotate: -90deg;
-  font-size: 40px;
+  font-size: 30px;
   padding-right: 4px;
 }
 
@@ -139,7 +133,7 @@ mat-icon {
 
 .answer.blue .ans-icon {
   rotate: 45deg;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .answer.yellow {
@@ -148,7 +142,7 @@ mat-icon {
 }
 
 .answer.yellow .ans-icon {
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .answer.green {
@@ -157,7 +151,7 @@ mat-icon {
 }
 
 .answer.green .ans-icon {
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .result .answer.red {
@@ -176,3 +170,63 @@ mat-icon {
   background-color: #00712d;
 }
 
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .question {
+    font-size: 50px;
+    line-height: 62px;
+    padding: 12px;
+  }
+
+  button {
+    width: 170px;
+    height: 80px;
+    font-size: 35px;
+  }
+
+  .result .answer {
+    width: 340px;
+    height: 44px !important;
+  }
+
+  .number-of-answers {
+    font-size: 30px;
+    line-height: 50px;
+  }
+
+  .check {
+    font-size: 40px !important;
+  }
+
+  .answer-text {
+    font-size: 40px;
+    line-height: 56px;
+  }
+
+  mat-icon {
+    width: 55px;
+    height: 55px;
+  }
+
+  .answer.red .ans-icon {
+    font-size: 60px;
+  }
+
+  .answer.blue .ans-icon {
+    font-size: 36px;
+  }
+
+  .answer.yellow .ans-icon,
+  .answer.green .ans-icon {
+    font-size: 40px;
+  }
+
+  .right,
+  .wrong {
+    font-size: 55px !important;
+  }
+
+  .answer-text {
+    margin-right: 60px;
+    margin-left: 12px;
+  }
+}
