@@ -89,6 +89,11 @@
 
   .profile-header {
     width: 100%;
+
+    .profile-picture{
+      width: 110px;
+      height: 105px;
+    }
   }
 
   .profile-stats {
@@ -115,7 +120,55 @@
   }
 }
 
+@media screen and (max-width: 450px){
+  .container {
+    padding: 0 25px;
+  }
 
+  .profile-header {
+    .profile-picture {
+      width: 90px;
+      height: 85px;
+    }
+
+    .profile-info {
+      gap: 10px;
+
+      .name {
+        font-size: 20px;
+      }
+
+      .mail {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+@media  screen and (max-width: 380px) {
+  .container {
+    padding: 0 25px;
+  }
+  .profile-header {
+    .profile-picture {
+      width: 80px;
+      height: 75px;
+    }
+
+    .profile-info {
+      gap: 5px;
+
+      .name {
+        font-size: 18px;
+      }
+
+      .mail {
+        font-size: 12px;
+      }
+    }
+  }
+
+}
 
 
 
