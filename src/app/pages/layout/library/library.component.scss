@@ -9,6 +9,7 @@
   .profile-container {
     width: 100%;
     height: 150px;
+    transition: height 0.3s ease; /* Thêm chuyển đổi mượt mà */
   }
 
   .library-container {
@@ -16,6 +17,7 @@
     height: calc(100% - 170px);
     display: flex;
     margin-top: 20px;
+    transition: margin-top 0.3s ease; /* Chuyển đổi mượt mà khi thay đổi margin */
 
     .empty-box {
       width: 100%;
@@ -26,15 +28,22 @@
       img {
         width: 300px;
         height: 300px;
+        transition: transform 0.3s ease; /* Hiệu ứng zoom khi hover */
+      }
+
+      img:hover {
+        transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
       }
     }
 
     .library-scroll {
       width: 60%;
       height: 100%;
+      overflow-y: auto;
+      transition: width 0.3s ease; /* Chuyển đổi mượt mà khi thay đổi kích thước */
 
       &::-webkit-scrollbar {
-        display: none; /* Safari and Chrome */
+        display: none; /* Ẩn scrollbar trên Safari và Chrome */
       }
 
       .quiz-list {
@@ -42,6 +51,7 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        margin-top: 29px;
       }
     }
 
@@ -49,13 +59,16 @@
       width: 40%;
       height: 100%;
       margin-left: 10px;
+      transition: width 0.3s ease, margin-left 0.3s ease; /* Mượt mà khi thay đổi chiều rộng và margin */
 
       .quiz-scroll {
         width: 100%;
-        height: 405px;
+        height: 650px;
+        overflow-y: auto;
+        transition: height 0.3s ease;
 
         &::-webkit-scrollbar {
-          display: none; /* Safari and Chrome */
+          display: none; /* Ẩn scrollbar trên Safari và Chrome */
         }
 
         .quiz-content {
@@ -79,10 +92,14 @@
     .library-container {
       width: 100%;
       height: calc(100% - 270px);
+      display: flex;
+      flex-direction: column;
+      transition: height 0.3s ease; /* Chuyển đổi mượt mà khi thay đổi chiều cao */
 
       .library-scroll {
         width: 100%;
-        height: 100%;
+        height: 60%;
+        transition: height 0.3s ease;
 
         .quiz-list {
           width: 100%;
@@ -90,7 +107,18 @@
       }
 
       .content-container {
-        display: none;
+        display: flex;
+        width: 100%;
+        height: 48%;
+        margin-left: 0;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        transition: height 0.3s ease;
+
+        .quiz-scroll {
+          height: 100%;
+        }
       }
 
       .straight-line {
@@ -105,11 +133,13 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
+  transition: margin-bottom 0.3s ease; /* Thêm hiệu ứng chuyển đổi khi thay đổi khoảng cách */
 
   .number-question {
     font-size: 16px;
     font-weight: 700;
     color: var(--md-sys-color-on-surface);
+    transition: color 0.3s ease; /* Mượt mà khi thay đổi màu chữ */
   }
 
   .btn-show {
@@ -118,6 +148,12 @@
     color: var(--md-sys-color-on-surface);
     cursor: pointer;
     text-decoration: underline;
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Mượt mà khi thay đổi màu và gạch chân */
+
+    &:hover {
+      color: #215145; /* Đổi màu khi hover */
+      text-decoration: none; /* Bỏ gạch chân khi hover */
+    }
   }
 }
 
@@ -128,5 +164,18 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Apply a filter to the background */
+  background: rgba(0, 0, 0, 0.5); /* Màu nền tối khi loading */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s ease-out; /* Hiệu ứng fade in */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
