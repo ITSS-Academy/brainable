@@ -291,3 +291,44 @@
     }
   }
 }
+
+@media (min-width: 1921px) and (max-width: 2560px) {
+  #container {
+    .header {
+      .logo {
+        width: 600px;
+      }
+
+      button {
+        width: 170px;
+        height: 80px;
+        font-size: 35px;
+      }
+    }
+
+    .content {
+      .name {
+        font-size: 2.5rem !important;
+        line-height: 2.5rem;
+      }
+
+      .result {
+        width: 300px;
+
+        .rank {
+          height: 120px;
+          margin: 45px 0;
+        }
+
+        .score {
+          font-size: 2.2rem;
+        }
+
+        iframe {
+          width: 200px;
+          height: 200px;
+        }
+      }
+    }
+  }
+}

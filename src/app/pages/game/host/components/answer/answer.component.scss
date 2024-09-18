@@ -25,9 +25,11 @@
   border-radius: 4px;
   background-color: var(--md-sys-color-on-primary);
   flex-basis: 90%;
-  font-size: 30px;
-  line-height: 34px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
   margin-top: 12px;
+  text-align: center;
 }
 
 .content {
@@ -52,8 +54,9 @@
 }
 
 .img-container {
-  width: 450px;
-  height: 300px;
+  width: 385px;
+  height: 255px;
+  border-radius: 4px;
 }
 
 .img-container img {
@@ -102,7 +105,7 @@
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  height: 40%;
+  height: 35%;
 }
 
 #container .answers .answer {
@@ -118,10 +121,7 @@
 //}
 
 .answer-text {
-  font-size: 18px;
   color: var(--md-sys-color-surface-container-low);
-  font-size: 20px;
-
 }
 
 #container .answer mat-icon {
@@ -168,4 +168,94 @@
 
 .answer.green mat-icon {
   font-size: 20px;
+}
+
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .question {
+    font-size: 50px;
+    line-height: 62px;
+    padding: 12px;
+  }
+
+  button {
+    width: 170px;
+    height: 80px;
+    font-size: 35px;
+  }
+
+  .result .answer {
+    width: 340px;
+    height: 44px !important;
+    align-items: center;
+  }
+
+  .check {
+    font-size: 40px !important;
+  }
+
+  .answer-text {
+    font-size: 40px;
+    line-height: 56px;
+  }
+
+  mat-icon {
+    width: 55px;
+    height: 55px;
+  }
+
+  .answer.red mat-icon {
+    font-size: 60px;
+  }
+
+  .answer.blue mat-icon {
+    font-size: 36px;
+  }
+
+  .answer.yellow mat-icon,
+  .answer.green mat-icon {
+    font-size: 40px;
+  }
+
+  .right,
+  .wrong {
+    font-size: 55px !important;
+  }
+
+  .img-container {
+    width: 900px;
+    height: 650px;
+    border-radius: 4px;
+  }
+
+  .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .time {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+  }
+
+  .number-of-answers {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .number-of-answers .number {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .number-of-answers .text {
+    font-size: 40px;
+    line-height: 40px;
+    padding: 12px 20px;
+    border-radius: 8px;
+  }
 }

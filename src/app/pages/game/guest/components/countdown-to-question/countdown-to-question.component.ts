@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { NgClass, NgIf } from '@angular/common';
@@ -8,6 +14,7 @@ import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
 import { Subscription } from 'rxjs';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
+import { BackgroundImgState } from '../../../../../ngrx/background-img/background-img.state';
 
 @Component({
   selector: 'app-countdown-to-question',
@@ -31,8 +38,10 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private store: Store<{ game: GameState }>,
+    private store: Store<{ game: GameState; background: BackgroundImgState }>,
     private gameService: GameService,
+    private renderer: Renderer2,
+    private el: ElementRef,
   ) {
     this.subscription.push(
       this.store.select('game', 'pin').subscribe((pin) => {
@@ -48,7 +57,16 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
     );
   }
 
+  backgroundImg$ = this.store.select('background', 'img');
+
   ngOnInit() {
+    this.backgroundImg$.subscribe((img) => {
+      this.renderer.setStyle(
+        this.el.nativeElement.querySelector('#container'),
+        'background-image',
+        `url(${img})`,
+      );
+    });
     this.gameService.listenForNavigateChooseAnswer(this.pin);
     this.startCountdown();
     this.subscription.push(
@@ -80,7 +98,6 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.gameService.endListeningForChooseAnswer();
     this.subscription.forEach((s) => s.unsubscribe());
     clearInterval(this.countdownInterval);
   }

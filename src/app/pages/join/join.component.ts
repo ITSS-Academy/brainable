@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -11,6 +18,10 @@ import { SharedModule } from '../../shared/modules/shared.module';
 import { GameState } from '../../ngrx/game/game.state';
 import * as GameActions from '../../ngrx/game/game.actions';
 import { GameService } from '../../services/game/game.service';
+import { SnackbarErrorComponent } from '../../components/snackbar-error/snackbar-error.component';
+import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertService } from '../../services/alert/alert.service';
 
 @Component({
   selector: 'app-join',
@@ -19,7 +30,7 @@ import { GameService } from '../../services/game/game.service';
   templateUrl: './join.component.html',
   styleUrl: './join.component.scss',
 })
-export class JoinComponent implements OnInit, OnDestroy {
+export class JoinComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private store: Store<{
       profile: ProfileState;
@@ -28,6 +39,7 @@ export class JoinComponent implements OnInit, OnDestroy {
     }>,
     private router: Router,
     private gameService: GameService,
+    private alertService: AlertService,
   ) {}
 
   pin: string = '';
@@ -46,11 +58,11 @@ export class JoinComponent implements OnInit, OnDestroy {
     this.gameService.listenForErrors().subscribe((error) => {
       if (error === 'Room not found') {
         this.isCheckRoom = false;
-        alert('Room not found');
+        this.openAlert('Room not found');
       }
       if (error === 'Game has already started') {
         this.isCheckRoom = false;
-        alert('Game has already started');
+        this.openAlert('Game has already started');
       }
     });
     this.subscriptions.push(
@@ -75,6 +87,10 @@ export class JoinComponent implements OnInit, OnDestroy {
     this.router.navigate(['/home']);
   }
 
+  openAlert(message: string) {
+    this.alertService.showAlertError(message, 'Error', 3000, 'start', 'bottom');
+  }
+
   joinGame() {
     if (this.pin.length == 0) {
       this.isEmptyInput = true;
@@ -91,6 +107,12 @@ export class JoinComponent implements OnInit, OnDestroy {
     if (event.key === 'Enter') {
       this.joinGame();
     }
+  }
+
+  @ViewChild('pinInput') pinInput!: ElementRef;
+
+  ngAfterViewInit() {
+    this.pinInput.nativeElement.focus();
   }
 
   ngOnDestroy(): void {

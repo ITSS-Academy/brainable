@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
@@ -8,6 +15,8 @@ import { MatButton } from '@angular/material/button';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
 import emojiRegex from 'emoji-regex';
 import { AlertService } from '../../../../../services/alert/alert.service';
+import { BackgroundImgState } from '../../../../../ngrx/background-img/background-img.state';
+import * as BackgroundImgActions from '../../../../../ngrx/background-img/background-img.actions';
 
 @Component({
   selector: 'app-waiting',
@@ -16,7 +25,7 @@ import { AlertService } from '../../../../../services/alert/alert.service';
   templateUrl: './waiting.component.html',
   styleUrl: './waiting.component.scss',
 })
-export class WaitingComponent implements OnInit, OnDestroy {
+export class WaitingComponent implements OnInit, OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
   nickname: string = '';
   pin!: string;
@@ -26,8 +35,10 @@ export class WaitingComponent implements OnInit, OnDestroy {
   @ViewChild('containerRef') containerRef!: ElementRef;
   selectedImageIndex: number | null = null;
 
+  imgUrls = 'assets/images/z5714813450402_17d12c1680cfb5a3fede63bf191ee94c.jpg';
+
   constructor(
-    private store: Store<{ game: GameState }>,
+    private store: Store<{ game: GameState; background: BackgroundImgState }>,
     private gameService: GameService,
     private alertService: AlertService,
   ) {}
@@ -45,20 +56,6 @@ export class WaitingComponent implements OnInit, OnDestroy {
         }
       }),
     );
-  }
-
-  convertToUnicode(input: string): string {
-    return Array.from(input)
-      .map((char) => {
-        const code = char.codePointAt(0);
-        return code ? code.toString(16) : char;
-      })
-      .join('');
-  }
-
-  unicodeToIcon(unicode: string): string {
-    const codePoint = parseInt(unicode.replace(/\\u{|}/g, ''), 16);
-    return String.fromCodePoint(codePoint);
   }
 
   joinGame(): void {
@@ -93,7 +90,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
       this.gameService.listenForErrors().subscribe((error) => {
         if (error === 'Room not found') {
           this.alertService.showAlertError(
-            'Username already exists in the room',
+            'Room not found',
             'Error',
             3000,
             'start',
@@ -117,17 +114,27 @@ export class WaitingComponent implements OnInit, OnDestroy {
 
   backGroundChange(imageUrl: string, index: number) {
     if (this.containerRef) {
+      this.imgUrls = imageUrl;
       this.containerRef.nativeElement.style.backgroundImage = `url('${imageUrl}')`;
       this.containerRef.nativeElement.style.backgroundSize = 'cover';
       this.containerRef.nativeElement.style.backgroundRepeat = 'no-repeat';
       this.containerRef.nativeElement.style.backgroundPosition = 'center';
     }
-      this.selectedImageIndex = index;
+    this.selectedImageIndex = index;
   }
 
-
-
   ngOnDestroy(): void {
+    this.store.dispatch(
+      BackgroundImgActions.storeBackgroundImg({ img: this.imgUrls }),
+    );
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  @ViewChild('nicknameInput') nicknameInput!: ElementRef;
+
+  ngAfterViewInit() {
+    if (!this.isJoining) {
+      this.nicknameInput.nativeElement.focus();
+    }
   }
 }

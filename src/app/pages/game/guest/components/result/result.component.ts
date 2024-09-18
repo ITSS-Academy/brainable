@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -7,6 +13,9 @@ import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
 import { Router } from '@angular/router';
 import { GameService } from '../../../../../services/game/game.service';
 import * as GameActions from '../../../../../ngrx/game/game.actions';
+import { BackgroundImgState } from '../../../../../ngrx/background-img/background-img.state';
+import { ReceivedScoreState } from '../../../../../ngrx/receivedScore/receivedScore.state';
+import * as ReceivedScoreActions from '../../../../../ngrx/receivedScore/receivedScore.actions';
 
 @Component({
   selector: 'app-result',
@@ -26,10 +35,18 @@ export class ResultComponent implements OnInit, OnDestroy {
   score = 0;
   time = 0;
   showScore1: number = 0;
+  score2!: number;
 
   constructor(
-    private store: Store<{ game: GameState; quiz: QuizState }>,
+    private store: Store<{
+      game: GameState;
+      quiz: QuizState;
+      background: BackgroundImgState;
+      receivedScore: ReceivedScoreState;
+    }>,
     private gameService: GameService,
+    private renderer: Renderer2,
+    private el: ElementRef,
   ) {
     this.subscription.push(
       this.store
@@ -38,7 +55,25 @@ export class ResultComponent implements OnInit, OnDestroy {
     );
   }
 
+  receivedScore$ = this.store.select('receivedScore', 'receivedScore');
+  backgroundImg$ = this.store.select('background', 'img');
+
   ngOnInit(): void {
+    this.backgroundImg$.subscribe((img) => {
+      this.renderer.setStyle(
+        this.el.nativeElement.querySelector('#container'),
+        'background-image',
+        `url(${img})`,
+      );
+    });
+    this.gameService.receiveScored().subscribe((score) => {
+      this.store.dispatch(
+        ReceivedScoreActions.storeReceivedScore({ receivedScore: score }),
+      );
+    }),
+      this.receivedScore$.subscribe((score) => {
+        this.score2 = score;
+      });
     this.gameService.listenForNavigateToNextQuestion(this.pin);
     this.gameService.listenForNavigateToRanking(this.pin);
     this.subscription.push(

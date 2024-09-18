@@ -205,13 +205,9 @@ qrcode {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px;
+  padding: 10px 16px;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.player-name{
-  font-size: 30px ;
 }
 
 .player {
@@ -220,8 +216,7 @@ qrcode {
 }
 
 .player-name {
-  font-size: 32px;
-  line-height: 32px;
+  font-size: 24px;
 }
 
 .join-info-respond {
@@ -285,5 +280,89 @@ qrcode {
 
   .vertical-range {
     display: none;
+  }
+}
+
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .player {
+    border-radius: 8px;
+  }
+
+  .player-name {
+    font-size: 50px;
+    line-height: 54px;
+  }
+
+  .game-link {
+    width: 400px;
+    height: 200px;
+    gap: 16px;
+
+    span,
+    b {
+      font-size: 30px;
+      line-height: 30px;
+    }
+  }
+
+  .game-pin {
+    width: 490px;
+    height: 200px;
+    gap: 16px;
+  }
+
+  .game-pin .title {
+    font-size: 30px;
+    line-height: 30px;
+    margin-left: 24px;
+  }
+
+  .game-pin .pin {
+    font-size: 74px;
+    line-height: 74px;
+  }
+
+  qrcode {
+    width: 200px;
+    height: 200px;
+    margin: 0 8px;
+  }
+
+  .qr-code-container {
+    width: 200px;
+    height: 200px;
+  }
+
+  .buttons {
+    padding-right: 34px;
+  }
+
+  button {
+    height: 80px;
+    font-size: 32px;
+  }
+
+  .waiting {
+    font-size: 55px;
+    line-height: 61px;
+  }
+
+  .logo {
+    width: unset;
+    height: 55px;
+  }
+
+  .number-of-players {
+    font-size: 30px;
+  }
+
+  .footer {
+    padding: 0 34px;
+
+    mat-icon {
+      width: 50px;
+      height: 50px;
+      font-size: 50px;
+    }
   }
 }

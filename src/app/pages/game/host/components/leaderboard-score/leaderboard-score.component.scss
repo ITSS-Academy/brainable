@@ -69,3 +69,15 @@
 //
 //  }
 //}
+
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .btn-home {
+    width: 150px;
+    height: 80px;
+    font-size: 32px;
+  }
+
+  .logo {
+    width: 600px;
+  }
+}
