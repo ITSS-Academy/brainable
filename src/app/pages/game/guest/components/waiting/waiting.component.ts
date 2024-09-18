@@ -1,8 +1,9 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
-  ElementRef,
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -24,7 +25,7 @@ import * as BackgroundImgActions from '../../../../../ngrx/background-img/backgr
   templateUrl: './waiting.component.html',
   styleUrl: './waiting.component.scss',
 })
-export class WaitingComponent implements OnInit, OnDestroy {
+export class WaitingComponent implements OnInit, OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
   nickname: string = '';
   pin!: string;
@@ -127,5 +128,13 @@ export class WaitingComponent implements OnInit, OnDestroy {
       BackgroundImgActions.storeBackgroundImg({ img: this.imgUrls }),
     );
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  @ViewChild('nicknameInput') nicknameInput!: ElementRef;
+
+  ngAfterViewInit() {
+    if (!this.isJoining) {
+      this.nicknameInput.nativeElement.focus();
+    }
   }
 }

@@ -23,7 +23,9 @@
   align-items: center;
   opacity: 0;
   transform: rotate(0deg);
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition:
+    transform 0.5s ease-in-out,
+    opacity 0.5s ease-in-out;
 }
 
 .square.hidden {
@@ -49,7 +51,6 @@
   animation: scaleUp-3 0.5s forwards;
 }
 
-
 .square.active-2 {
   opacity: 1;
   transform: rotate(45deg);
@@ -57,7 +58,6 @@
 
 .square.active-2 .number {
   animation: scaleUp-2 0.5s forwards;
-
 }
 
 .square.active-1 {
@@ -81,7 +81,6 @@
   transform: scale(0.5);
   animation: scaleUp 2s forwards;
 }
-
 
 @keyframes scaleUp-3 {
   0% {
@@ -113,5 +112,20 @@
   100% {
     opacity: 1;
     transform: scale(1) rotate(-90deg);
+  }
+}
+
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .square {
+    width: 400px;
+    height: 400px;
+  }
+
+  .number {
+    font-size: 10rem;
+  }
+
+  .final-text {
+    font-size: 10rem;
   }
 }

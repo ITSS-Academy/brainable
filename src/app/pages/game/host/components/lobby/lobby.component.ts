@@ -1,4 +1,10 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { Store } from '@ngrx/store';
 import { GameState } from '../../../../../ngrx/game/game.state';
@@ -72,17 +78,16 @@ export class LobbyComponent implements OnInit, OnDestroy {
     );
 
     this.playMusic();
+    this.checkScreenSize();
   }
 
   ngOnInit(): void {}
 
-  startGame( ): void {
+  startGame(): void {
     if (this.guests.length === 0) {
       // If no players, show a message to the host
       return;
-
     }
-
 
     // If there are players, proceed with starting the game
     this.gameService.startGame(this.pin);
@@ -106,9 +111,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   dissableStartButton(): boolean {
-    return this.guests.length === 0
+    return this.guests.length === 0;
   }
-
 
   song = new Audio();
 
@@ -129,8 +133,6 @@ export class LobbyComponent implements OnInit, OnDestroy {
     this.song.volume = vl.target.value;
   }
 
-
-
   openQrDialog() {
     const dialogRef = this.dialog.open(QrDialogComponent);
     this.isQrDialogOpen = true;
@@ -147,5 +149,16 @@ export class LobbyComponent implements OnInit, OnDestroy {
       GameActions.storeTotalPlayers({ totalPlayers: this.guests.length }),
     );
     this.pauseMusic();
+  }
+
+  isLargeScreen: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isLargeScreen = window.innerWidth >= 1921;
   }
 }

@@ -1,4 +1,11 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -23,7 +30,7 @@ import { AlertService } from '../../services/alert/alert.service';
   templateUrl: './join.component.html',
   styleUrl: './join.component.scss',
 })
-export class JoinComponent implements OnInit, OnDestroy {
+export class JoinComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private store: Store<{
       profile: ProfileState;
@@ -100,6 +107,12 @@ export class JoinComponent implements OnInit, OnDestroy {
     if (event.key === 'Enter') {
       this.joinGame();
     }
+  }
+
+  @ViewChild('pinInput') pinInput!: ElementRef;
+
+  ngAfterViewInit() {
+    this.pinInput.nativeElement.focus();
   }
 
   ngOnDestroy(): void {
