@@ -134,8 +134,13 @@ export class GameService {
     });
   }
 
-  endListeningForChooseAnswer(): void {
-    this.socket.off('chooseAnswer');
+  receiveScored(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('sendScore', (score: any) => {
+        observer.next(score);
+        observer.complete();
+      });
+    });
   }
 
   listenForNavigateToResults(pin: string): void {

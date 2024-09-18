@@ -18,6 +18,10 @@ import { SharedModule } from '../../shared/modules/shared.module';
 import { GameState } from '../../ngrx/game/game.state';
 import * as GameActions from '../../ngrx/game/game.actions';
 import { GameService } from '../../services/game/game.service';
+import { SnackbarErrorComponent } from '../../components/snackbar-error/snackbar-error.component';
+import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertService } from '../../services/alert/alert.service';
 
 @Component({
   selector: 'app-join',
@@ -35,6 +39,7 @@ export class JoinComponent implements OnInit, OnDestroy, AfterViewInit {
     }>,
     private router: Router,
     private gameService: GameService,
+    private alertService: AlertService,
   ) {}
 
   pin: string = '';
@@ -53,11 +58,11 @@ export class JoinComponent implements OnInit, OnDestroy, AfterViewInit {
     this.gameService.listenForErrors().subscribe((error) => {
       if (error === 'Room not found') {
         this.isCheckRoom = false;
-        alert('Room not found');
+        this.openAlert('Room not found');
       }
       if (error === 'Game has already started') {
         this.isCheckRoom = false;
-        alert('Game has already started');
+        this.openAlert('Game has already started');
       }
     });
     this.subscriptions.push(
@@ -80,6 +85,10 @@ export class JoinComponent implements OnInit, OnDestroy, AfterViewInit {
 
   homePage() {
     this.router.navigate(['/home']);
+  }
+
+  openAlert(message: string) {
+    this.alertService.showAlertError(message, 'Error', 3000, 'start', 'bottom');
   }
 
   joinGame() {

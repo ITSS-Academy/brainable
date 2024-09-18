@@ -1,4 +1,4 @@
-<div id="container">
+<div id="container" #containerRef>
   @if (isJoining) {
     <div class="waiting-content">
       <h2>You're in!</h2>
@@ -26,6 +26,9 @@
             Join
           </button>
         </div>
+
+
+
         @if (isEmptyInput) {
           <div class="empty-input">
             <p class="text">Please enter nickname!</p>
@@ -34,4 +37,32 @@
       </div>
     </div>
   }
+
+  <div class="back-frem">
+    <div class="back-chang"
+         [class.selected]="selectedImageIndex === 0"
+         (click)="backGroundChange('assets/images/2162.jpg', 0)">
+      <img src="assets/images/2162.jpg" alt="Background 1">
+    </div>
+    <div class="back-chang"
+         [class.selected]="selectedImageIndex === 1"
+         (click)="backGroundChange('assets/images/6920163d-ce8f-43cc-97c2-8427dcf0a9b9.webp', 1)">
+      <img src="assets/images/6920163d-ce8f-43cc-97c2-8427dcf0a9b9.webp" alt="Background 2">
+    </div>
+    <div class="back-chang"
+         [class.selected]="selectedImageIndex === 2"
+         (click)="backGroundChange('assets/images/quiz.png', 2)">
+      <img src="assets/images/quiz.png" alt="Background 3">
+    </div>
+    <div class="back-chang"
+         [class.selected]="selectedImageIndex === 3"
+         (click)="backGroundChange('assets/images/z5714813450402_17d12c1680cfb5a3fede63bf191ee94c.jpg', 3)">
+      <img src="assets/images/z5714813450402_17d12c1680cfb5a3fede63bf191ee94c.jpg" alt="Background 4">
+    </div>
+    <div class="back-chang"
+         [class.selected]="selectedImageIndex === 4"
+         (click)="backGroundChange('assets/images/pink-room-with-pink-board-with-clock-it-clock-wall_1020495-675394.jpg', 4)">
+      <img src="assets/images/pink-room-with-pink-board-with-clock-it-clock-wall_1020495-675394.jpg" alt="Background 4">
+    </div>
+  </div>
 </div>

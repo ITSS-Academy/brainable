@@ -24,6 +24,7 @@ import { QuizState } from '../../../ngrx/quiz/quiz.state';
 import { GameState } from '../../../ngrx/game/game.state';
 import { GameReportState } from '../../../ngrx/gameReport/gameReport.state';
 import { GameService } from '../../../services/game/game.service';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-categories',
@@ -66,6 +67,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       gameReport: GameReportState;
     }>,
     private gameService: GameService,
+    private socket: Socket,
   ) {
     this.categoryId = this.activatedRoute.snapshot.params['id'];
   }
@@ -100,6 +102,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   playGame(quiz: Quiz) {
     const pin = this.generatePin();
+    this.socket.connect();
     this.store.dispatch(GameActions.storePin({ pin }));
     this.store.dispatch(QuizActions.storeCurrentQuiz({ quiz: quiz }));
     this.store.dispatch(
