@@ -38,4 +38,8 @@ export class LayoutComponent {
   onMenuClick(): void {
     this.isSlideBarVisible = true;
   }
+
+  onLinkActivated(): void {
+    this.isSlideBarVisible = false;
+  }
 }
