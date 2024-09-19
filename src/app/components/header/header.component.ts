@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, inject, OnInit, Output} from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { Router, RouterLink } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
@@ -27,6 +27,8 @@ export class HeaderComponent implements OnInit {
 
   searchValue = '';
 
+
+
   constructor(
     private store: Store<{
       auth: AuthState;
@@ -34,6 +36,7 @@ export class HeaderComponent implements OnInit {
       search: SearchState;
     }>,
     private router: Router,
+    private elementRef: ElementRef,
   ) {}
 
   ngOnInit(): void {
@@ -76,9 +79,22 @@ export class HeaderComponent implements OnInit {
 
   hideSearch() {
     this.isSearch = false;
+
   }
 
   onEnterPress() {
     this.store.dispatch(SearchActions.search({ query: this.searchValue }));
   }
+
+  // Bắt sự kiện nhấp chuột trên toàn bộ trang
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const targetElement = event.target as HTMLElement;
+    // Kiểm tra nếu click không nằm trong phần tử có ô tìm kiếm
+    if (this.isSearch && !this.elementRef.nativeElement.contains(targetElement)) {
+      this.hideSearch();
+    }
+  }
+
+
 }

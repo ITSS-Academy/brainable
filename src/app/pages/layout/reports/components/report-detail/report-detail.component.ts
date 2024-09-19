@@ -26,7 +26,7 @@ import { clearStateReport } from '../../../../../ngrx/gameReport/gameReport.acti
   templateUrl: './report-detail.component.html',
   styleUrl: './report-detail.component.scss',
 })
-export class ReportDetailComponent implements OnInit, OnDestroy{
+export class ReportDetailComponent implements OnInit{
   gameReport$ = this.store.select('gameReport');
   currentReport!: GameReport;
   gameRecords!: PlayerRecord[] | undefined;
@@ -48,7 +48,7 @@ export class ReportDetailComponent implements OnInit, OnDestroy{
     });
   }
 
-  ngOnDestroy(): void {
-    this.store.dispatch(clearStateReport());
-  }
+  // ngOnDestroy(): void {
+  //   this.store.dispatch(clearStateReport());
+  // }
 }

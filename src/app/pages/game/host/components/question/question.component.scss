@@ -41,6 +41,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   animation: fadeIn 0.3s;
 }
 
@@ -76,4 +77,23 @@
 mat-progress-bar {
   width: 95%;
   height: 8px !important;
+}
+
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .logo {
+    width: 600px;
+  }
+
+  .question .text {
+    font-size: 60px;
+    line-height: 68px;
+  }
+
+  .number-of-questions {
+    font-size: 60px;
+  }
+
+  mat-progress-bar {
+    height: 32px !important;
+  }
 }

@@ -1,15 +1,14 @@
 <div class="container">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. Mia"
+      #input
+    />
+  </mat-form-field>
   <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
-        #input
-      />
-    </mat-form-field>
-
     <div>
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- ID Column -->
@@ -58,51 +57,31 @@
     </div>
   </cdk-virtual-scroll-viewport>
 
+
   <div class="card-container">
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
-        #input
-      />
-    </mat-form-field>
-    @for (report of gameReports$ | async | slice: 0 : 10; track $index) {
+    <ng-container *ngFor="let report of dataSource.filteredData | slice: 0:5; let i = index">
       <mat-card class="card-quiz-card">
         <mat-card-content>
           <div class="num-more">
             <p class="id" (click)="onRowClicked(report)">
-              No. {{ $index + 1 }}
+              No. {{ i + 1 }}
             </p>
-<!--            <div class="more-icon">-->
-<!--              <mat-icon-->
-<!--                [matMenuTriggerFor]="menu"-->
-<!--                aria-hidden="false"-->
-<!--                aria-label="More vert icon"-->
-<!--                fontIcon="more_vert"-->
-<!--              ></mat-icon>-->
-<!--            </div>-->
-            <!-- Menu for more options -->
-<!--            <mat-menu #menu="matMenu">-->
-<!--              <button mat-menu-item >-->
-<!--                <mat-icon>delete</mat-icon>-->
-<!--                <span>Delete</span>-->
-<!--              </button>-->
-<!--            </mat-menu>-->
           </div>
           <div (click)="onRowClicked(report)">
             <h6 class="name">{{ report.quizId.title }}</h6>
-            <!--          <p class="JoinCode">Join code: {{ report.joinCode }}</p>-->
             <p class="createDate">{{ report.createdAt | date }}</p>
-            <!--          <p>{{ report.gameRecords }}</p>-->
           </div>
         </mat-card-content>
       </mat-card>
-    }
+    </ng-container>
     <mat-paginator
+      [length]="dataSource.filteredData.length"
       [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageSize]="5"
+      [pageIndex]="page - 1"
+      (page)="onPageChange($event)"
       aria-label="Select page of users"
     ></mat-paginator>
   </div>
+
 </div>

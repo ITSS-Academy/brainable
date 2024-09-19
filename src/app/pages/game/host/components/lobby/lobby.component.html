@@ -16,7 +16,7 @@
     >
       <qrcode
         [qrdata]="this.qrCodeValue"
-        [width]="118"
+        [width]="isLargeScreen ? 200 : 118"
         [elementType]="'img'"
         [margin]="2"
       ></qrcode>
@@ -42,7 +42,12 @@
   </div>
 
   <div class="buttons">
-    <button class="btn-join" mat-flat-button  (click)="startGame()" [disabled]="dissableStartButton()"  >
+    <button
+      class="btn-join"
+      mat-flat-button
+      (click)="startGame()"
+      [disabled]="dissableStartButton()"
+    >
       Start Game
     </button>
   </div>

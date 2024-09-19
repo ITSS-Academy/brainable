@@ -115,7 +115,7 @@
 
   .back-frem{
     width: 100%;
-    max-width: 35rem;
+    max-width: 50rem;
     height: 7rem;
     background-color: white;
     border-radius: 23px;
@@ -218,13 +218,13 @@
     flex-shrink: 0;
   }
 
-  @media screen and ( max-width: 2568px) {
-    #container{
-      width: 2568px;
-    }
-
-    .back-frem{
-      width: 3000px;
-    }
-  }
+  //@media screen and ( max-width: 2568px) {
+  //  #container{
+  //    width: 2568px;
+  //  }
+  //
+  //  .back-frem{
+  //    width: 3000px;
+  //  }
+  //}
 }

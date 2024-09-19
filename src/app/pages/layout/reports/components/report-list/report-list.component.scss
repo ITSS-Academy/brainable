@@ -41,6 +41,15 @@ th {
 }
 
 @media screen and (max-width: 576px) {
+
+  mat-form-field {
+    width: 100%; /* Ensure it occupies full width on smaller screens */
+  }
+
+  .container {
+    padding: 5px; /* Adjust padding to make better use of space */
+  }
+
   .example-viewport {
     display: none;
   }
