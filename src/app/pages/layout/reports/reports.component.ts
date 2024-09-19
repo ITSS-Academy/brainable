@@ -11,6 +11,11 @@ import { GameReportState } from '../../../ngrx/gameReport/gameReport.state';
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
 })
-export class ReportsComponent{
+export class ReportsComponent implements OnDestroy {
   constructor(private store: Store<{ gameReport: GameReportState }>) {}
+
+  ngOnDestroy(): void {
+    this.store.dispatch(clearStateReport());
+  }
 }
+

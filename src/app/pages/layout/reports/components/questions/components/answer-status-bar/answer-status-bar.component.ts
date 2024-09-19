@@ -4,7 +4,7 @@ import { QuestionRecord } from '../../../../../../../models/questionRecord.model
 import {clearStateReport} from "../../../../../../../ngrx/gameReport/gameReport.action";
 import {Store} from "@ngrx/store";
 import {GameReportState} from "../../../../../../../ngrx/gameReport/gameReport.state";
-
+import { clearStateQuestionRecord } from "../../../../../../../ngrx/questionRecord/questionRecord.actions";
 
 
 @Component({
@@ -14,7 +14,7 @@ import {GameReportState} from "../../../../../../../ngrx/gameReport/gameReport.s
   templateUrl: './answer-status-bar.component.html',
   styleUrl: './answer-status-bar.component.scss',
 })
-export class AnswerStatusBarComponent implements OnInit, OnDestroy{
+export class AnswerStatusBarComponent implements OnInit, OnDestroy {
   @Input() questionRecord!: QuestionRecord;
 
   inCorrectCount: number = 0;
@@ -50,6 +50,6 @@ export class AnswerStatusBarComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(clearStateReport());
+    this.store.dispatch(clearStateQuestionRecord());
   }
 }

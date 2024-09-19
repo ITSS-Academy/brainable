@@ -32,6 +32,8 @@ import { MissingField } from '../../../../../models/question.model';
 import { SettingBarResponsiveDialogComponent } from '../setting-bar-responsive-dialog/setting-bar-responsive-dialog.component';
 import { StorageState } from '../../../../../ngrx/storage/storage.state';
 import * as StorageActions from '../../../../../ngrx/storage/storage.action';
+import { ChangeDetectorRef, Renderer2} from "@angular/core";
+
 
 @Component({
   selector: 'app-main-content',
@@ -61,7 +63,6 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       storage: StorageState;
     }>,
   ) {
-    //console.log(this.ReadExcel);
   }
 
   isUpdateLoading$ = this.store.select('storage', 'isLoading');
@@ -76,6 +77,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
           this.updateCharCountQuestion();
         } else if (data.type == 'option1') {
           this.question.option1 = data.data;
+          console.log(this.question.option1);
           this.updateCharCountAnswer(1);
         } else if (data.type == 'option2') {
           this.question.option2 = data.data;
@@ -83,6 +85,9 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
         } else if (data.type == 'option3') {
           this.question.option3 = data.data;
           this.updateCharCountAnswer(3);
+        } else if (data.type == 'option4') {
+          this.question.option4 = data.data;
+          this.updateCharCountAnswer(4);
         }
         this.store.dispatch(
           QuizActions.updateQuestionByIndex({
@@ -324,4 +329,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
       }
     });
   }
+
+
+
 }

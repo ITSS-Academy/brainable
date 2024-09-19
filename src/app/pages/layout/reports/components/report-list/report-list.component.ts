@@ -1,29 +1,23 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MaterialModule } from '../../../../../shared/modules/material.module';
-import { SharedModule } from '../../../../../shared/modules/shared.module';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { GameReportState } from '../../../../../ngrx/gameReport/gameReport.state';
-import { Store } from '@ngrx/store';
-import { AuthState } from '../../../../../ngrx/auth/auth.state';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
+import {MaterialModule} from '../../../../../shared/modules/material.module';
+import {SharedModule} from '../../../../../shared/modules/shared.module';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatSort, Sort} from '@angular/material/sort';
+import {Router} from '@angular/router';
+import {Observable, Subscription} from 'rxjs';
+import {GameReportState} from '../../../../../ngrx/gameReport/gameReport.state';
+import {Store} from '@ngrx/store';
+import {AuthState} from '../../../../../ngrx/auth/auth.state';
 import * as GameReportActions from '../../../../../ngrx/gameReport/gameReport.action';
-import { GameReport } from '../../../../../models/gameReport.model';
-import { DatePipe, SlicePipe } from '@angular/common';
-import { clearStateReport } from '../../../../../ngrx/gameReport/gameReport.action';
+import {clearStateReport} from '../../../../../ngrx/gameReport/gameReport.action';
+import {GameReport} from '../../../../../models/gameReport.model';
+import {DatePipe, NgForOf, SlicePipe} from '@angular/common';
 
 @Component({
   selector: 'app-report-list',
   standalone: true,
-  imports: [MaterialModule, SharedModule, DatePipe, SlicePipe],
+  imports: [MaterialModule, SharedModule, DatePipe, SlicePipe, NgForOf],
   templateUrl: './report-list.component.html',
   styleUrl: './report-list.component.scss',
 })
@@ -35,7 +29,7 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
   );
 
   dataSource!: MatTableDataSource<GameReport>;
-
+  page: number = 1;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -44,7 +38,11 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
     private route: Router,
     private store: Store<{ auth: AuthState; gameReport: GameReportState }>,
+    private cdr: ChangeDetectorRef,
   ) {}
+
+  start = 0;
+  end = 5;
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -60,18 +58,42 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
               this.dataSource = new MatTableDataSource(users);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              // this.paginator.page.subscribe(() => {});
+              this.dataSource.filterPredicate = (data: GameReport, filter: string) => {
+                return data.quizId.title.toLowerCase().includes(filter) || data.joinCode.toLowerCase().includes(filter);
+              };
+              //this.updatePaginatedData();
               if (this.sort) {
                 this.sort.sortChange.subscribe((sortState: Sort) => {
                   this.customSort(sortState);
                 });
               }
-              // console.log(users);
             }
           });
         }
       }),
     );
+    this.setupDataSource();
+  }
+
+  setupDataSource(): void {
+    this.dataSource = new MatTableDataSource(this.filteredReports());
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  filteredReports(): GameReport[] {
+    return this.dataSource.filteredData;
+  }
+
+  onPageChange(event: any): void {
+    this.page = event.pageIndex + 1; // Update current page
+    this.cdr.detectChanges();
+  }
+
+  paginatedReports(): GameReport[] {
+    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+    const endIndex = startIndex + this.paginator.pageSize;
+    return this.dataSource.filteredData.slice(startIndex, endIndex);
   }
 
   ngOnDestroy(): void {
@@ -86,15 +108,16 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
     this.sort.sortChange.subscribe((sortState: Sort) => {
       this.customSort(sortState);
     });
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
+    this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+    this.cdr.detectChanges();
   }
 
   createNewReport(report: GameReport, index: number): GameReport {
@@ -138,5 +161,11 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
 
   onRowClicked(row: any) {
     this.route.navigate([`/reports/${row.id}`]);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.start = event.pageIndex * event.pageSize;
+    this.end = this.start + event.pageSize;
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 }

@@ -41,6 +41,15 @@ th {
 }
 
 @media screen and (max-width: 576px) {
+
+  mat-form-field {
+    width: 100%; /* Ensure it occupies full width on smaller screens */
+  }
+
+  .container {
+    padding: 5px; /* Adjust padding to make better use of space */
+  }
+
   .example-viewport {
     display: none;
   }
@@ -62,12 +71,11 @@ th {
     //border: 1px solid #4a4153;
     justify-content: space-between;
     box-sizing: border-box;
-    //padding: 12px;
-    line-height: 10px;
+    padding: 12px;
+    line-height: 20px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     background-color: #f0f0f0;
-    font-size: 12px;
-    height: 100px;
+    font-size: 16px;
   }
 
   .card-quiz-card h6 {

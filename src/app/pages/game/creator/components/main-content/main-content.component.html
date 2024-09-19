@@ -67,7 +67,7 @@
     <div
       class="answer"
       [ngClass]="{
-        red: question.option1 != undefined && question.option1 !== '',
+        red: question.option1 != undefined && (question.option1.match('[/^\\S.*(?:\\r?\\n\\S.*)*$/u]') || question.option1 !== ''),
       }"
     >
       <div class="noti">
