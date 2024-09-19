@@ -137,6 +137,7 @@ export class GameService {
   receiveScored(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('sendScore', (score: any) => {
+        console.log('re',score);
         observer.next(score);
         observer.complete();
       });

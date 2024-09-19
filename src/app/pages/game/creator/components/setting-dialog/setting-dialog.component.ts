@@ -1,13 +1,13 @@
 import {
   Component,
-  ElementRef,
+  ElementRef, OnChanges,
   OnDestroy,
-  OnInit,
+  OnInit, SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
-import { Subscription } from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../ngrx/auth/auth.state';
 import { QuizState } from '../../../../../ngrx/quiz/quiz.state';
@@ -35,8 +35,10 @@ import { StorageState } from '../../../../../ngrx/storage/storage.state';
   templateUrl: './setting-dialog.component.html',
   styleUrl: './setting-dialog.component.scss',
 })
-export class SettingDialogComponent implements OnInit, OnDestroy {
+export class SettingDialogComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('imageContainer') imageContainer!: ElementRef;
+
+  changeEvent = new BehaviorSubject<any>(null);
 
   quiz!: Quiz;
   listCategories: Categories[] = [];
@@ -48,7 +50,7 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   categoryValue: number = 0;
 
   settings = {
-    title: '',
+    title: 'Untitled Quiz',
     description: '',
     isPublic: false,
     imgUrl: '',
@@ -71,10 +73,25 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   isUpdateSuccess$ = this.store.select('storage', 'isSettingUploadSuccess');
 
   ngOnInit() {
+    this.updateCharCountTitle()
+    this.updateCharCountDescription()
     this.subscription.push(
+      this.changeEvent.subscribe((data) => {
+        if (data) return;
+        if (data.type == 'question') {
+          this.settings.title = data.title;
+          this.updateCharCountTitle()
+        } else if (data.type == 'description') {
+          this.settings.description = data.description;
+           this.updateCharCountDescription()
+         }
+
+        }
+      ),
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz) {
-          this.settings.title = quiz.title;
+
+          this.settings.title = quiz.title || 'Untitled Quiz';
           this.settings.description = quiz?.description || '';
           this.settings.isPublic = quiz.isPublic;
           this.settings.category = quiz?.category || {
@@ -105,37 +122,6 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
   }
 
   selectedImage: string | ArrayBuffer = '';
-
-  // selectedImage!: File | null;
-  //
-  // selectImage(event: any): void {
-  //   const fileInput = event.target as HTMLInputElement;
-  //
-  //   if (fileInput.files && fileInput.files.length > 0) {
-  //     this.selectedImage = fileInput.files[0];
-  //     console.log(this.selectedImage);
-  //     this.processFiles(fileInput.files[0]);
-  //   }
-  // }
-  //
-  // processFiles(file: File): void {
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       const imageSrc = e.target.result;
-  //       this.insertImageIntoContainer(imageSrc);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-  //
-  // insertImageIntoContainer(imageSrc: string): void {
-  //   const container = this.imageContainer.nativeElement;
-  //   const containerWidth = container.clientWidth;
-  //   const imgElement = document.createElement('div');
-  //   imgElement.innerHTML = `<img style="height: 36vh; width: ${containerWidth}px; object-fit: scale-down" src="${imageSrc}" class="post-image" alt="Selected Image" />`;
-  //   container.appendChild(imgElement);
-  // }
 
   uploadQuizFile(input: HTMLInputElement) {
     this.store.dispatch(StorageActions.storeSettingUpload());
@@ -239,5 +225,40 @@ export class SettingDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.forEach((sub) => sub.unsubscribe());
+  }
+
+
+  charCountTitle = 75;
+  charCountDescription = 300;
+
+  updateCharCountTitle(): void {
+    if (this.settings.title) {
+      this.charCountTitle = 75 - this.settings.title.length;
+    } else {
+      this.charCountTitle = 75;
+    }  }
+  resetCharCount() {
+    this.charCountTitle = 75; // Đặt lại giới hạn ký tự tiêu đề về 75
+    this.charCountDescription = 300; // Đặt lại giới hạn ký tự mô tả về 300
+    if (this.settings.title) {
+      this.updateCharCountTitle();
+      this.updateCharCountDescription();
+    } else {
+      this.settings.title = '';
+      this.settings.description = '';
+    }
+  }
+
+  updateCharCountDescription(): void {
+    if (this.settings.description) {
+      this.charCountDescription = 300 - this.settings.description.length;
+    } else {
+      this.charCountDescription = 300;
+    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['question']) {
+      this.resetCharCount();
+    }
   }
 }
