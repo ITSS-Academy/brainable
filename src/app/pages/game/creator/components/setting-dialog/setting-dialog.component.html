@@ -10,11 +10,24 @@
           [(ngModel)]="settings.title"
           type="text"
           placeholder="Enter your title..."
+          (input)="changeEvent.next({ type: 'title', data: settings.title });updateCharCountTitle()"
+          maxlength="75"
         />
+        <span class="char-count">{{ charCountTitle }}</span>
       </div>
       <div class="description">
         <label><b>Description</b></label>
-        <textarea [(ngModel)]="settings.description"></textarea>
+        <textarea
+          placeholder="Enter your description..."
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="3"
+          [(ngModel)]="settings.description"
+          (input)="changeEvent.next({ type: 'description', data: settings.description });updateCharCountDescription()"
+          maxlength="300"
+        ></textarea>
+        <span class="char-count-ds">{{ charCountDescription }}</span>
+
       </div>
 
       <div class="category">
