@@ -23,15 +23,31 @@ h1 {
       margin-bottom: 14px;
       display: flex;
       flex-direction: column;
+      position: relative;
 
       input {
         width: 90%;
         font-size: 16px;
         margin-top: 5px;
-        padding: 8px;
+        padding: 8px 8px 8px 8px; /* Điều chỉnh padding */
         border: 1px solid #ccc;
         outline: none;
         border-radius: 4px;
+        box-sizing: border-box;
+
+        /* Thêm không gian cho char-count */
+        padding-right: 40px; /* Khoảng trống bên phải cho char-count */
+      }
+
+      .char-count {
+        width: 88%;
+        align-items: flex-end;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--md-sys-color-outline);
+        justify-content: flex-end;
+        margin-top: -28px;
+        margin-left: 85%;
       }
     }
 
@@ -45,11 +61,26 @@ h1 {
         height: 150px;
         font-size: 16px;
         margin-top: 5px;
-        padding: 8px;
+        padding: 8px 8px 8px 8px; /* Điều chỉnh padding */
         border: 1px solid #ccc;
         outline: none;
         border-radius: 4px;
         resize: none;
+
+        /* Thêm không gian cho char-count-ds */
+        padding-bottom: 40px; /* Khoảng trống bên dưới cho char-count-ds */
+      }
+
+      .char-count-ds {
+        width: 88%;
+        display: flex;
+        align-items: flex-start;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--md-sys-color-outline);
+        bottom: 10px;
+        justify-content: flex-end;
+        margin-top: -4%;
       }
     }
   }
@@ -150,28 +181,80 @@ h1 {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1290px) {
   .dialog-content {
-    flex-direction: column;
+    flex-direction: row; /* Giữ hướng là hàng */
 
     .left {
-      width: 100%;
+      width: 55%;
+      margin-bottom: 0;
 
       .title {
         input {
-          width: 100%;
+          width: 95%;
+        }
+
+        .char-count {
+          width: 92%;
+          margin-top: -25px;
         }
       }
 
       .description {
         textarea {
-          width: 100%;
+          width: 95%;
+        }
+
+        .char-count-ds {
+          width: 92%;
+          margin-top: -25px;
         }
       }
     }
 
     .right {
-      width: 100%;
+      width: 45%;
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .dialog-content {
+    flex-direction: column; /* Thay đổi hướng thành cột */
+
+    .left {
+      width: 100%; /* Đặt chiều rộng thành 100% */
+
+      .title {
+        input {
+          width: 100%; /* Đảm bảo input chiếm 100% chiều rộng */
+          padding-right: 40px; /* Giữ khoảng trống cho char-count */
+        }
+
+        .char-count {
+          width: 95%;
+          margin-top: -28px;
+        }
+      }
+
+      .description {
+        textarea {
+          width: 100%; /* Đảm bảo textarea chiếm 100% chiều rộng */
+          padding-bottom: 40px; /* Giữ khoảng trống cho char-count-ds */
+        }
+
+        .char-count-ds {
+          width: 95%;
+          margin-top: -28px;
+        }
+      }
+    }
+
+    .right {
+      width: 100%; /* Đặt chiều rộng thành 100% */
+      margin-top: 20px; /* Thêm khoảng cách trên nếu cần */
     }
   }
 }
