@@ -1,5 +1,13 @@
 :host {
   --mdc-outlined-card-container-color: #ffffff;
+
+  &::ng-deep
+  .cdk-virtual-scroll-orientation-vertical
+  .cdk-virtual-scroll-content-wrapper {
+    min-width: auto; // Override the min-width
+    width: 100%; // Ensure full width
+    box-sizing: border-box; // Include padding in width
+  }
 }
 
 .container {
@@ -9,7 +17,7 @@
   .profile-container {
     width: 100%;
     height: 150px;
-    transition: height 0.3s ease; /* Thêm chuyển đổi mượt mà */
+    transition: height 0.3s ease;
   }
 
   .library-container {
@@ -17,7 +25,7 @@
     height: calc(100% - 170px);
     display: flex;
     margin-top: 20px;
-    transition: margin-top 0.3s ease; /* Chuyển đổi mượt mà khi thay đổi margin */
+    transition: margin-top 0.3s ease;
 
     .empty-box {
       width: 100%;
@@ -28,11 +36,11 @@
       img {
         width: 300px;
         height: 300px;
-        transition: transform 0.3s ease; /* Hiệu ứng zoom khi hover */
-      }
+        transition: transform 0.3s ease;
 
-      img:hover {
-        transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+        &:hover {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -40,10 +48,10 @@
       width: 60%;
       height: 100%;
       overflow-y: auto;
-      transition: width 0.3s ease; /* Chuyển đổi mượt mà khi thay đổi kích thước */
+      transition: width 0.3s ease;
 
       &::-webkit-scrollbar {
-        display: none; /* Ẩn scrollbar trên Safari và Chrome */
+        display: none; /* Safari and Chrome */
       }
 
       .quiz-list {
@@ -51,7 +59,6 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        margin-top: 29px;
       }
     }
 
@@ -59,16 +66,17 @@
       width: 40%;
       height: 100%;
       margin-left: 10px;
-      transition: width 0.3s ease, margin-left 0.3s ease; /* Mượt mà khi thay đổi chiều rộng và margin */
+      transition: width 0.3s ease,
+      margin-left 0.3s ease;
 
       .quiz-scroll {
         width: 100%;
-        height: 650px;
+        height: 405px;
         overflow-y: auto;
         transition: height 0.3s ease;
 
         &::-webkit-scrollbar {
-          display: none; /* Ẩn scrollbar trên Safari và Chrome */
+          display: none; /* Safari and Chrome */
         }
 
         .quiz-content {
@@ -83,22 +91,22 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
   .container {
     .profile-container {
-      height: 250px;
+      height: 110px;
     }
 
     .library-container {
       width: 100%;
-      height: calc(100% - 270px);
+      height: calc(100% - 110px);
       display: flex;
       flex-direction: column;
-      transition: height 0.3s ease; /* Chuyển đổi mượt mà khi thay đổi chiều cao */
+      transition: height 0.3s ease;
 
       .library-scroll {
         width: 100%;
-        height: 60%;
+        height: 48%;
         transition: height 0.3s ease;
 
         .quiz-list {
@@ -109,7 +117,7 @@
       .content-container {
         display: flex;
         width: 100%;
-        height: 48%;
+        height: 50%;
         margin-left: 0;
         flex-direction: column;
         justify-content: flex-start;
@@ -133,13 +141,11 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
-  transition: margin-bottom 0.3s ease; /* Thêm hiệu ứng chuyển đổi khi thay đổi khoảng cách */
 
   .number-question {
     font-size: 16px;
     font-weight: 700;
     color: var(--md-sys-color-on-surface);
-    transition: color 0.3s ease; /* Mượt mà khi thay đổi màu chữ */
   }
 
   .btn-show {
@@ -148,34 +154,50 @@
     color: var(--md-sys-color-on-surface);
     cursor: pointer;
     text-decoration: underline;
-    transition: color 0.3s ease, text-decoration 0.3s ease; /* Mượt mà khi thay đổi màu và gạch chân */
-
-    &:hover {
-      color: #215145; /* Đổi màu khi hover */
-      text-decoration: none; /* Bỏ gạch chân khi hover */
-    }
   }
 }
 
-.loading-container {
-  position: absolute;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Màu nền tối khi loading */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 0.5s ease-out; /* Hiệu ứng fade in */
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+//@media screen and (max-width: 576px) {
+//  .container {
+//    .profile-container {
+//      height: 160px;
+//    }
+//
+//    .library-container {
+//      width: 100%;
+//      height: calc(100% - 160px);
+//      display: flex;
+//      flex-direction: column;
+//      transition: height 0.3s ease;
+//
+//      .library-scroll {
+//        width: 100%;
+//        height: 48%;
+//        transition: height 0.3s ease;
+//
+//        .quiz-list {
+//          width: 100%;
+//        }
+//      }
+//
+//      .content-container {
+//        display: flex;
+//        width: 100%;
+//        height: 50%;
+//        margin-left: 0;
+//        flex-direction: column;
+//        justify-content: flex-start;
+//        align-items: center;
+//        transition: height 0.3s ease;
+//
+//        .quiz-scroll {
+//          height: 100%;
+//        }
+//      }
+//
+//      .straight-line {
+//        display: none;
+//      }
+//    }
+//  }
+//}

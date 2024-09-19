@@ -2,21 +2,18 @@
   <mat-card-content>
     <div class="quiz-detail">
       <div class="quiz-detail__img">
-        <img
-          [src]="quiz.imgUrl"
-          alt="">
+        <img [src]="quiz.imgUrl" alt="" />
       </div>
       <div class="quiz-detail__info">
         <div class="row-info">
-          <p class="question">{{ quiz.title }}
-          </p>
+          <p class="question">{{ quiz.title }}</p>
           <div class="row-info">
             <div class="num-questions">
               <mat-icon fontIcon="list"></mat-icon>
               <span>{{ quiz.totalQuestions }} Question</span>
             </div>
             <div class="category">
-              <img [src]="quiz.category.imgUrl" alt="menu Pic">
+              <img [src]="quiz.category.imgUrl" alt="menu Pic" />
               <span>{{ quiz.category.name }}</span>
             </div>
           </div>
@@ -25,14 +22,13 @@
           </div>
         </div>
         <div class="row-button">
-          <button mat-icon-button>
-            <mat-icon (click)="editQuiz()">edit</mat-icon>
+          <button mat-icon-button (click)="editQuiz()">
+            <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button>
-            <mat-icon (click)="deleteQuiz()">delete</mat-icon>
+          <button mat-icon-button (click)="deleteQuiz()">
+            <mat-icon>delete</mat-icon>
           </button>
         </div>
-
       </div>
     </div>
   </mat-card-content>
