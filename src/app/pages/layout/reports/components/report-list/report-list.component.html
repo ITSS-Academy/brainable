@@ -59,27 +59,27 @@
 
 
   <div class="card-container">
-    <ng-container *ngFor="let report of dataSource.filteredData | slice: 0:5; let i = index">
+    <ng-container *ngFor="let report of dataSource.filteredData | slice: start:end; let i = index">
       <mat-card class="card-quiz-card">
         <mat-card-content>
           <div class="num-more">
             <p class="id" (click)="onRowClicked(report)">
-              No. {{ i + 1 }}
+              No. {{ report.index }}
             </p>
           </div>
           <div (click)="onRowClicked(report)">
             <h6 class="name">{{ report.quizId.title }}</h6>
+            <p class="joinCode">Join code: {{ report.joinCode }}</p>
             <p class="createDate">{{ report.createdAt | date }}</p>
           </div>
         </mat-card-content>
       </mat-card>
     </ng-container>
     <mat-paginator
-      [length]="dataSource.filteredData.length"
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      [pageSize]="5"
-      [pageIndex]="page - 1"
-      (page)="onPageChange($event)"
+      [length]="(gameReports$ | async)?.length"
+      [hidePageSize]="true"
+      [pageSizeOptions]="[5]"
+      (page)="handlePageEvent($event)"
       aria-label="Select page of users"
     ></mat-paginator>
   </div>

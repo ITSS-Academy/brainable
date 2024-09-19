@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRe
 import {MaterialModule} from '../../../../../shared/modules/material.module';
 import {SharedModule} from '../../../../../shared/modules/shared.module';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort, Sort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
@@ -40,6 +40,9 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
     private store: Store<{ auth: AuthState; gameReport: GameReportState }>,
     private cdr: ChangeDetectorRef,
   ) {}
+
+  start = 0;
+  end = 5;
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -158,5 +161,11 @@ export class ReportListComponent implements AfterViewInit, OnInit, OnDestroy {
 
   onRowClicked(row: any) {
     this.route.navigate([`/reports/${row.id}`]);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.start = event.pageIndex * event.pageSize;
+    this.end = this.start + event.pageSize;
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 }

@@ -77,6 +77,7 @@ export class MainContentComponent implements OnInit, OnDestroy, OnChanges {
           this.updateCharCountQuestion();
         } else if (data.type == 'option1') {
           this.question.option1 = data.data;
+          console.log(this.question.option1);
           this.updateCharCountAnswer(1);
         } else if (data.type == 'option2') {
           this.question.option2 = data.data;
