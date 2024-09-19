@@ -91,7 +91,7 @@ export class CountdownToQuestionComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.showFinalText = true;
           this.hideCircle = true;
-          this.router.navigate([`/guest/${this.pin}/answer`]); // Hide squares after countdown
+          // this.router.navigate([`/guest/${this.pin}/answer`]); // Hide squares after countdown
         }, 1000);
       }
     }, 1000);

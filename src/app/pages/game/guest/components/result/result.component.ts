@@ -47,6 +47,7 @@ export class ResultComponent implements OnInit, OnDestroy {
     private gameService: GameService,
     private renderer: Renderer2,
     private el: ElementRef,
+    private router: Router,
   ) {
     this.subscription.push(
       this.store

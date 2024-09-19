@@ -1,3 +1,11 @@
+:host::ng-deep
+  .cdk-virtual-scroll-orientation-vertical
+  .cdk-virtual-scroll-content-wrapper {
+  min-width: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .loading-container {
   position: absolute;
   z-index: 999;
@@ -278,20 +286,22 @@ mat-card:hover {
   padding: 0 4px;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
   .container {
     .category-info-container {
-      height: 250px;
+      height: 100px;
     }
 
     .library-container {
       width: 100%;
       height: calc(100% - 110px);
       padding: 8px 0;
+      display: flex;
+      flex-direction: column;
 
       .library-scroll {
         width: 100%;
-        height: 100%;
+        height: 48%;
 
         .quiz-list {
           width: 100%;
@@ -299,7 +309,17 @@ mat-card:hover {
       }
 
       .content-container {
-        display: none;
+        display: flex;
+        width: 100%;
+        height: 50%;
+        margin-left: 0;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        .quiz-scroll {
+          height: 100%;
+        }
       }
 
       .straight-line {
