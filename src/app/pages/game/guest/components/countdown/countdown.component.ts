@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import * as GameActions from '../../../../../ngrx/game/game.actions';
   templateUrl: './countdown.component.html',
   styleUrl: './countdown.component.scss',
 })
-export class CountdownComponent implements OnInit {
+export class CountdownComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   countdownNumbers = [3, 2, 1];
   activeNumber = 3;
@@ -21,6 +21,7 @@ export class CountdownComponent implements OnInit {
   hideSquares = false;
   hiddenNumbers: Set<number> = new Set(); // Track hidden numbers
   pin!: string;
+  countdownInterval!: NodeJS.Timeout;
 
   constructor(
     private router: Router,
@@ -40,9 +41,13 @@ export class CountdownComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    clearInterval(this.countdownInterval);
+  }
+
   startCountdown() {
     let index = 0;
-    const countdownInterval = setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       if (index > 0) {
         this.hiddenNumbers.add(this.countdownNumbers[index - 1]); // Hide the previous number
       }
@@ -50,7 +55,7 @@ export class CountdownComponent implements OnInit {
       index++;
 
       if (index > this.countdownNumbers.length) {
-        clearInterval(countdownInterval);
+        clearInterval(this.countdownInterval);
         this.showFinalText = true;
         this.hideSquares = true; // Hide squares after countdown
         this.router.navigate([`/guest/${this.pin}/countdown-to-question`]);
